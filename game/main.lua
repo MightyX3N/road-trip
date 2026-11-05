@@ -3,6 +3,7 @@
 local android = require("android")
 local config = require("config")
 local ui = require("ui")
+local map = require("map")
 
 local lg = love.graphics
 
@@ -405,6 +406,7 @@ end
 local RAIL_ITEMS = {
   { screen = "home", label = "Home", icon = "home" },
   { screen = "apps", label = "Apps", icon = "widgets" },
+  { screen = "map", label = "Map", icon = "map" },
   { screen = "media", label = "Media", icon = "media" },
   { screen = "settings", label = "Settings", icon = "gear" },
 }
@@ -427,19 +429,7 @@ local function drawRail()
   ui.hit({ kind = "voice" }, RAIL / 2 - 36, vy, 72, 72)
 end
 
--- pill button; returns its width
-local function pill(id, label, x, y, h, style)
-  local size = h >= 60 and 18 or 16
-  local w = ui.textWidth(label, "bold", size) + (h >= 60 and 72 or 44)
-  local bg = style == "primary" and ui.c.text or style == "accent" and ui.c.accent
-    or (style == "off" or style == "off2") and ui.c.chipHi or nil
-  local fg = style == "primary" and ui.c.bg or style == "accent" and ui.c.onAccent or style == "off" and ui.c.dim
-    or style == "off2" and ui.c.text2 or ui.c.muted
-  if bg then ui.rect(bg, x, y, w, h, h / 2) end
-  ui.text(label, "bold", size, fg, x, y + (h - ui.fontHeight("bold", size)) / 2, "center", w)
-  if id then ui.hit(id, x, y, w, h) end
-  return w
-end
+local pill = ui.pill -- shared with map.lua
 
 ----------------------------------------------------------------------------------------------
 -- paged app grid (Apps screen and the favorites picker)
@@ -602,6 +592,26 @@ local function navWidget(x, y, w, h)
   ui.rect(ui.c.card, x, y, w, h, 26)
   local nav = state.nav
   local pad = 28
+
+  -- Road Trip navigating by itself
+  local g = map.guidance()
+  if g then
+    ui.hit({ kind = "openMap" }, x, y, w, h)
+    ui.text("Navigation · Road Trip", "bold", 14, ui.c.muted, x + pad, y + 24)
+    local sq = math.min(132, h * 0.34)
+    local sx, sy = x + pad, y + 64
+    ui.rect(ui.c.accent, sx, sy, sq, sq, 28)
+    ui.icon(g.icon, sx + sq * 0.2, sy + sq * 0.2, sq * 0.6, ui.c.onAccent, 2.4)
+    local tx = sx + sq + 28
+    local tw = x + w - pad - tx
+    ui.text(ui.fit(g.title, "bold", 46, tw), "bold", 46, ui.c.text, tx, sy + 4)
+    ui.text(ui.fit(g.text or "", "semibold", 22, tw), "semibold", 22, ui.hex("C9C6BE"), tx, sy + 70)
+    local sub = g.arrival .. " arrival · " .. map.fmtDur(g.remTime) .. " · " .. map.fmtDist(g.remaining)
+    ui.rect(ui.c.bg, x + 16, y + h - 16 - 64, w - 32, 64, 20)
+    ui.text(ui.fit(sub, "bold", 20, w - 72), "bold", 20, ui.c.text, x + 36, y + h - 16 - 64 + (64 - ui.fontHeight("bold", 20)) / 2)
+    return
+  end
+
   if nav.active then
     ui.hit({ kind = "openNav", pkg = nav.pkg }, x, y, w, h)
     ui.text(ui.fit("Navigation · " .. (nav.app or ""), "bold", 14, w - pad * 2), "bold", 14, ui.c.muted, x + pad, y + 24)
@@ -637,13 +647,14 @@ local function navWidget(x, y, w, h)
     pill({ kind = "mediaAccess" }, "Allow", x + pad, y + h - pad - 56, 56, "accent")
     return
   end
-  ui.text("Not navigating", "bold", 26, ui.c.text, x + pad, y + 92)
-  ui.text(ui.fit("Start a route in your nav app and the next turn shows here", "semibold", 16, w - pad * 2),
+  ui.text("Where to?", "bold", 26, ui.c.text, x + pad, y + 92)
+  ui.text(ui.fit("Navigate with Road Trip's map, or your nav app's next turn shows here", "semibold", 16, w - pad * 2),
     "semibold", 16, ui.c.muted, x + pad, y + 132)
   local bx = x + pad
+  bx = bx + pill({ kind = "openMapSearch" }, "Search a place", bx, y + h - pad - 56, 56, "accent") + 12
   for i, app in ipairs(installedNavApps()) do
-    if i > 2 then break end
-    bx = bx + pill({ kind = "openNav", pkg = app.pkg }, "Open " .. app.label, bx, y + h - pad - 56, 56, i == 1 and "accent" or "off2") + 12
+    if i > 1 then break end
+    bx = bx + pill({ kind = "openNav", pkg = app.pkg }, "Open " .. app.label, bx, y + h - pad - 56, 56, "off2") + 12
   end
 end
 
@@ -1223,8 +1234,11 @@ function love.draw()
     elseif state.screen == "apps" then drawApps()
     elseif state.screen == "settings" then drawSettings()
     elseif state.screen == "diag" then drawDiagnostics()
+    elseif state.screen == "map" then
+      map.drawMap(RAIL, 0, W - RAIL, H)
+      map.drawUI(RAIL, 0, W - RAIL, H)
     else drawMedia() end
-    drawTopBar()
+    if state.screen ~= "map" then drawTopBar() end -- the map runs edge to edge
     drawRail()
   end
   drawMenu()
@@ -1294,7 +1308,14 @@ local function activate(id, vx)
     toast("Switch on Road Trip: now playing")
   elseif k == "tile" and id.grid == "favs" then togglePick(id.app)
   elseif k == "tile" or k == "fav" then launch(id.app)
-  elseif k == "rail" then state.screen = id.screen
+  elseif k:sub(1, 4) == "map:" then map.activate(id)
+  elseif k == "openMap" or k == "openMapSearch" then
+    state.screen = "map"
+    map.open()
+    if k == "openMapSearch" then map.openSearch() end
+  elseif k == "rail" then
+    state.screen = id.screen
+    if id.screen == "map" then map.open() end
   elseif k == "voice" then android.voice()
   elseif k == "setHome" then
     state.menu = nil
@@ -1368,6 +1389,7 @@ local function goHome()
   end
   state.menu = nil
   if state.city then closeCity() end
+  if map.wantsText() then map.back() end
   state.screen = "home"
   state.dirty = true
 end
@@ -1401,6 +1423,12 @@ function love.mousemoved(x, y)
   local vx, vy = x / ui.S, y / ui.S
   local dx = vx - press.x
   if math.abs(dx) > 12 or math.abs(vy - press.y) > 12 then press.moved = true end
+  if press.moved and press.id and press.id.kind == "map:pan" then
+    map.pan(vx - (press.lastX or press.x), vy - (press.lastY or press.y))
+    press.lastX, press.lastY = vx, vy
+    state.dirty = true
+    return
+  end
   if press.pager and press.moved then
     local g = state.pagerArea[press.pager]
     local maxX = pageCount(g) - 1
@@ -1435,6 +1463,11 @@ function love.mousereleased(x, y, button)
 end
 
 function love.textinput(t)
+  if state.screen == "map" and map.wantsText() then
+    map.textinput(t)
+    state.dirty = true
+    return
+  end
   if state.city then
     state.city.text = state.city.text .. t
     state.dirty = true
@@ -1442,6 +1475,11 @@ function love.textinput(t)
 end
 
 function love.keypressed(key)
+  if state.screen == "map" and map.wantsText() then
+    map.keypressed(key)
+    state.dirty = true
+    return
+  end
   if state.city then
     if key == "backspace" then
       local u8 = require("utf8")
@@ -1459,6 +1497,8 @@ function love.keypressed(key)
   -- Android's back button arrives as "escape"
   if state.screen == "diag" then
     state.screen = "settings"
+  elseif state.screen == "map" and not state.menu and map.back() then
+    -- closed the map's search or route overview
   elseif state.menu then
     state.menu = nil
   elseif state.screen == "favs" then
@@ -1487,6 +1527,8 @@ function love.load()
   ui.setAccent(config.get("accent"))
   lg.setBackgroundColor(ui.c.bg)
   layout(lg.getDimensions())
+  map.init({ android = android, config = config, ui = ui,
+    app = { toast = toast, dirty = function() state.dirty = true end } })
   -- show a frame first, load apps right after (see love.update)
   state.needRefresh, state.firstLoad, state.drew = true, true, false
   burst()
@@ -1507,6 +1549,7 @@ function love.visible(v)
 end
 
 function love.update(dt)
+  map.update(dt, state.screen == "map")
   if state.needRefresh and state.drew then
     state.needRefresh = false
     refreshApps()
@@ -1603,6 +1646,7 @@ end
 
 local function animating()
   if press or state.toast or state.city or love.timer.getTime() < state.burstUntil then return true end
+  if state.screen == "map" and map.busy() then return true end
   for _, pg in pairs(state.pagers) do
     if math.abs((pg.page - 1) - pg.x) > 0.001 then return true end
   end

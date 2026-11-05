@@ -79,6 +79,15 @@ public final class LauncherBridge {
                 case "fetch":
                     data = Net.get(a.getString("url"));
                     break;
+                case "download":
+                    data = Net.download(a.getString("url"), a.getString("path"));
+                    break;
+                case "locationStart":
+                    data = LocationBridge.start(ctx);
+                    break;
+                case "location":
+                    data = LocationBridge.status(ctx);
+                    break;
                 case "fetchResult":
                     data = Net.result(a.getInt("id"));
                     break;

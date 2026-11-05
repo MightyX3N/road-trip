@@ -2,15 +2,17 @@
 
 An Android car launcher written in Lua on LÖVE.
 
-Right now: **Home** opens first, with your favorite apps along the bottom and spaces for
-the map, radio, weather and calendar widgets (those arrive in later updates). **Apps** has
+Right now: **Home** opens first, with your favorite apps along the bottom, the next turn,
+now playing, weather and your next calendar event (radio arrives in a later update). **Apps** has
 every app in a paged grid; tap to open, swipe between pages, long-press for a menu to add
 or remove a favorite or open the app's info page. On first launch you pick 3 to 5
 favorite apps; change them any time with the pencil button on Home or by long-pressing a
 favorite. **Media** and the Now playing widget on Home show and control whatever's playing
 in any app, and the Navigation widget shows your next turn from Google Maps, Waze and
 other nav apps (both need notification access, which Road Trip asks for). Home also shows the weather for your city (pick it in Settings) and your next calendar
-event. **Settings** has everything else: Keep in front, permissions, favorites, accent colour and updates. The voice button opens the device's
+event. **Map** shows where you are, searches places, offers route choices and guides you turn
+by turn, finding a new route if you leave it; the next turn also shows on Home. It needs
+location access (Road Trip asks) and a GPS in the device. **Settings** has everything else: Keep in front, permissions, favorites, accent colour and updates. The voice button opens the device's
 assistant.
 
 ## Get the APK (no Android tools needed)
@@ -136,3 +138,11 @@ FFI: it gets the JNI environment and activity from SDL (SDL3 in LÖVE 12, SDL2 i
 loads the bridge class through the activity's class loader (plain `FindClass` can't see
 app classes from SDL's thread), and calls one static method. Arguments and results are
 JSON; Java escapes all non-ASCII so JNI's modified UTF-8 never gets in the way.
+
+## Map data
+
+Map data © [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors. Tiles
+from [OpenFreeMap](https://openfreemap.org), place search by [Photon](https://photon.komoot.io),
+routes by the [FOSSGIS OSRM server](https://routing.openstreetmap.de). None of them need an
+account or key. Road Trip asks the routing server for at most one route at a time, and
+waits at least 15 seconds between new routes while you drive.

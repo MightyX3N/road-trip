@@ -7,6 +7,9 @@
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <!-- in-app updates: check Wi-Fi, and install a downloaded new version (Android asks first) -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- Map: your position (Android asks first) -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <!-- Calendar widget: your next event (Android asks first) -->
     <uses-permission android:name="android.permission.READ_CALENDAR" />
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />

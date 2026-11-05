@@ -321,8 +321,22 @@ local function stubCall(method, args)
   elseif method == "fetch" then
     stubFetches[#stubFetches + 1] = args.url
     return #stubFetches
+  elseif method == "download" then
+    stubFetches[#stubFetches + 1] = "download:" .. args.url
+    return #stubFetches
+  elseif method == "locationStart" then
+    return true
+  elseif method == "location" then
+    return { permission = true, fix = { lat = 55.6761, lon = 12.5683, accuracy = 8, speed = -1, bearing = -1, ageMs = 500, provider = "stub" } }
   elseif method == "fetchResult" then
     local url = stubFetches[args.id] or ""
+    if url:find("^download:") then return { done = true, ok = false, error = "no downloads on desktop" } end
+    if url:find("photon") then
+      return { done = true, ok = true, body = '{"features":[{"geometry":{"coordinates":[12.5681,55.6737]},"properties":{"name":"Tivoli Gardens","street":"Vesterbrogade","city":"Copenhagen","country":"Denmark"}},{"geometry":{"coordinates":[12.6,55.7]},"properties":{"name":"Nyhavn","city":"Copenhagen","country":"Denmark"}}]}' }
+    end
+    if url:find("routed%-car") then
+      return { done = true, ok = true, body = '{"code":"Ok","routes":[{"distance":2400,"duration":420,"geometry":"_ibagBsz`pVvJtL","legs":[{"steps":[{"distance":1200,"duration":200,"name":"Vesterbrogade","maneuver":{"type":"depart","modifier":"straight","location":[12.5683,55.6761]}},{"distance":1200,"duration":220,"name":"Bernstorffsgade","maneuver":{"type":"turn","modifier":"right","location":[12.565,55.672]}},{"distance":0,"duration":0,"name":"","maneuver":{"type":"arrive","location":[12.5681,55.6737]}}]}]},{"distance":2700,"duration":480,"geometry":"_ibagBsz`pVvJtL","legs":[{"steps":[]}]}]}' }
+    end
     if url:find("geocoding") then
       return { done = true, ok = true, body = '{"results":[{"name":"Copenhagen","admin1":"Capital Region","country":"Denmark","latitude":55.68,"longitude":12.57},{"name":"Copenhagen","admin1":"New York","country":"United States","latitude":43.89,"longitude":-75.67}]}' }
     end
@@ -374,6 +388,11 @@ function M.navStatus(dir) return M.call("navStatus", { dir = dir }) end
 -- background HTTPS GET: fetch() returns an id, fetchResult(id) -> { done, ok, body?, error? }
 function M.fetch(url) return M.call("fetch", { url = url }) end
 function M.fetchResult(id) return M.call("fetchResult", { id = id }) end
+-- background download to an absolute path; poll with fetchResult(id)
+function M.download(url, path) return M.call("download", { url = url, path = path }) end
+-- position: locationStart() asks for permission and starts listening; location() -> { permission, fix? }
+function M.locationStart() return M.call("locationStart") end
+function M.location() return M.call("location") end
 -- calendar: { permission, events = { { title, begin, end, allDay, location } } } (times in ms)
 function M.calendar() return M.call("calendar") end
 function M.calendarAllow() return M.call("calendarAllow") end

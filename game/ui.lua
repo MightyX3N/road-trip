@@ -248,9 +248,67 @@ function icons.gear()
   end
 end
 
-function icons.turn() -- generic "turn right" when the nav app gives no arrow
+function icons.turn() -- turn right
   lg.line(8, 20, 8, 10, 17, 10)
   lg.line(14, 6, 18, 10, 14, 14)
+end
+
+local function mirrored(f)
+  return function()
+    lg.push()
+    lg.translate(24, 0)
+    lg.scale(-1, 1)
+    f()
+    lg.pop()
+  end
+end
+
+icons.turnLeft = mirrored(icons.turn)
+
+function icons.straight()
+  lg.line(12, 20, 12, 5)
+  lg.line(7, 10, 12, 5, 17, 10)
+end
+
+function icons.slightRight()
+  lg.line(9, 20, 9, 13, 16, 6)
+  lg.line(11, 6, 16, 6, 16, 11)
+end
+icons.slightLeft = mirrored(icons.slightRight)
+
+function icons.uturn()
+  lg.line(8, 20, 8, 10)
+  lg.arc("line", "open", 12, 10, 4, math.pi, 2 * math.pi, 12)
+  lg.line(16, 10, 16, 16)
+  lg.line(13, 13, 16, 16, 19, 13)
+end
+
+function icons.roundabout()
+  lg.circle("line", 12, 10, 4, 20)
+  lg.line(12, 14, 12, 21)
+  lg.line(15, 7, 19, 3)
+  lg.line(15, 3, 19, 3, 19, 7)
+end
+
+function icons.search()
+  lg.circle("line", 11, 11, 6.5, 24)
+  lg.line(16, 16, 20, 20)
+end
+
+function icons.minus() lg.line(5, 12, 19, 12) end
+
+function icons.locate()
+  lg.circle("line", 12, 12, 6.5, 24)
+  lg.circle("fill", 12, 12, 2.5, 16)
+  lg.line(12, 2, 12, 5.5) lg.line(12, 18.5, 12, 22) lg.line(2, 12, 5.5, 12) lg.line(18.5, 12, 22, 12)
+end
+
+function icons.navArrow() lg.polygon("fill", 12, 3, 19, 21, 12, 17, 5, 21) end
+
+function icons.map()
+  lg.line(9, 4, 3, 6, 3, 20, 9, 18, 15, 20, 21, 18, 21, 4, 15, 6, 9, 4)
+  lg.line(9, 4, 9, 18)
+  lg.line(15, 6, 15, 20)
 end
 
 -- transport controls are solid shapes
@@ -284,6 +342,22 @@ function ui.icon(name, x, y, size, color, width)
   lg.setLineJoin("bevel")
   icons[name]()
   lg.pop()
+end
+
+-- pill button; style: "primary" (light), "accent", "off" (dimmed), "off2" (quiet), nil (text only).
+-- Returns its width.
+function ui.pill(id, label, x, y, h, style)
+  local size = h >= 60 and 18 or 16
+  local w = ui.textWidth(label, "bold", size) + (h >= 60 and 72 or 44)
+  local c = ui.c
+  local bg = style == "primary" and c.text or style == "accent" and c.accent
+    or (style == "off" or style == "off2") and c.chipHi or nil
+  local fg = style == "primary" and c.bg or style == "accent" and c.onAccent or style == "off" and c.dim
+    or style == "off2" and c.text2 or c.muted
+  if bg then ui.rect(bg, x, y, w, h, h / 2) end
+  ui.text(label, "bold", size, fg, x, y + (h - ui.fontHeight("bold", size)) / 2, "center", w)
+  if id then ui.hit(id, x, y, w, h) end
+  return w
 end
 
 ----------------------------------------------------------------------------------------------
