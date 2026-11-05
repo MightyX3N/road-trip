@@ -70,6 +70,15 @@ public final class LauncherBridge {
                 case "openStockLauncher":
                     data = openStockLauncher(ctx, a.optLong("pauseMs", 120_000));
                     break;
+                case "mediaStatus":
+                    data = MediaListener.status(ctx, a.optString("artDir", null));
+                    break;
+                case "mediaCommand":
+                    data = MediaListener.command(ctx, a.getString("action"), a.optLong("posMs", 0));
+                    break;
+                case "openMediaAccess":
+                    data = MediaListener.openAccess(ctx);
+                    break;
                 case "homePresses":
                     data = RoadTripActivity.homePresses;
                     break;

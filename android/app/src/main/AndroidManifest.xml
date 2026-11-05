@@ -61,6 +61,17 @@
             </intent-filter>
         </activity>
 
+        <!-- Notification access: the only way to see and control other apps' playback -->
+        <service
+            android:name="app.roadtrip.MediaListener"
+            android:exported="true"
+            android:label="@string/roadtrip_media_label"
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
+            <intent-filter>
+                <action android:name="android.service.notification.NotificationListenerService" />
+            </intent-filter>
+        </service>
+
         <!-- Hands downloaded updates to Android's installer -->
         <provider
             android:name="androidx.core.content.FileProvider"

@@ -28,7 +28,10 @@ local state = {
   guard = { serviceOn = true, enabled = true, stock = {} },
   update = { state = "idle" }, -- from Updater.java: idle|checking|none|available|downloading|ready|permission|error|offline
   manualCheck = false,         -- the user asked; report "up to date" too
-  timers = { update = 0, guard = 0, autoCheck = 0, home = 0 },
+  timers = { update = 0, guard = 0, autoCheck = 0, home = 0, media = 0 },
+  media = { access = true },   -- from MediaListener.java: { access, current? }
+  mediaAt = 0,                 -- when `media` was read, to move the progress bar between reads
+  art = {},                    -- album art file -> image
   homeSeen = nil,              -- last Home-press count from Java
   burstUntil = 0,              -- draw every frame until then (Android settles the screen after resume)
   error = nil,
@@ -91,6 +94,62 @@ local function pollUpdate()
   if changed then state.dirty = true end
 end
 
+----------------------------------------------------------------------------------------------
+-- media (what's playing in any app)
+----------------------------------------------------------------------------------------------
+
+local function pollMedia()
+  love.filesystem.createDirectory("art")
+  local res = android.mediaStatus(love.filesystem.getSaveDirectory() .. "/art")
+  if type(res) ~= "table" then return end
+  local a, b = state.media.current, res.current
+  local changed = (res.access ~= state.media.access) or ((a == nil) ~= (b == nil))
+    or (a and b and (a.title ~= b.title or a.playing ~= b.playing or a.art ~= b.art or a.artist ~= b.artist))
+  state.media = res
+  state.mediaAt = love.timer.getTime()
+  if changed then state.dirty = true end
+end
+
+-- position now, moving it along since the last read while playing
+local function mediaPos(m)
+  local pos = m.positionMs or 0
+  if m.playing then pos = pos + (love.timer.getTime() - state.mediaAt) * 1000 * (m.speed or 1) end
+  if (m.durationMs or 0) > 0 then pos = math.min(pos, m.durationMs) end
+  return math.max(0, pos)
+end
+
+local function fmtTime(ms)
+  local s = math.floor(ms / 1000)
+  local h, m = math.floor(s / 3600), math.floor(s / 60) % 60
+  if h > 0 then return string.format("%d:%02d:%02d", h, m, s % 60) end
+  return string.format("%d:%02d", m, s % 60)
+end
+
+local function artImage(m)
+  if not (m and m.art) then return nil end
+  local img = state.art[m.art]
+  if img then return img end
+  local path = "art/" .. m.art
+  if not love.filesystem.getInfo(path) then return nil end
+  local ok, loaded = pcall(lg.newImage, path, { mipmaps = true })
+  if not ok then return nil end
+  loaded:setFilter("linear", "linear")
+  state.art = { [m.art] = loaded } -- keep only the current track's art
+  return loaded
+end
+
+local function mediaCommand(action, posMs)
+  local m = state.media.current
+  if m then
+    -- answer the tap now; the next read confirms it
+    if action == "toggle" then m.positionMs, m.playing, state.mediaAt = mediaPos(m), not m.playing, love.timer.getTime()
+    elseif action == "seek" then m.positionMs, state.mediaAt = posMs, love.timer.getTime() end
+  end
+  android.mediaCommand(action, posMs)
+  state.timers.media = 0.7 -- read again shortly
+  state.dirty = true
+end
+
 -- Cheap when nothing changed: Java keeps the list and only rebuilds it after an install,
 -- removal or update, and returns just a version number otherwise.
 local function refreshApps()
@@ -113,6 +172,7 @@ local function refreshApps()
   state.isHome = android.isDefaultHome() ~= false
   refreshGuard()
   pollUpdate()
+  pollMedia()
   state.dirty = true
 end
 
@@ -363,6 +423,54 @@ local function placeholderWidget(x, y, w, h, title, icon, note)
   end
 end
 
+-- prev / play-pause / next as three equal buttons
+local function transportRow(x, y, w, h, m)
+  local gap = 10
+  local bw = (w - gap * 2) / 3
+  local items = {
+    { action = "prev", icon = "prev", on = m.canPrev ~= false },
+    { action = "toggle", icon = m.playing and "pause" or "play", accent = true, on = true },
+    { action = "next", icon = "next", on = m.canNext ~= false },
+  }
+  for i, it in ipairs(items) do
+    local bx = x + (i - 1) * (bw + gap)
+    ui.rect(it.accent and ui.c.accent or ui.hex("22252A"), bx, y, bw, h, 16)
+    local s = math.min(26, h * 0.5)
+    local col = it.accent and ui.c.onAccent or (it.on and ui.c.text2 or ui.c.dim)
+    ui.icon(it.icon, bx + (bw - s) / 2, y + (h - s) / 2, s, col)
+    if it.on then ui.hit({ kind = "media", action = it.action }, bx, y, bw, h) end
+  end
+end
+
+local function nowPlayingWidget(x, y, w, h)
+  ui.rect(ui.c.card, x, y, w, h, 26)
+  local media = state.media
+  local m = media.current
+  ui.hit({ kind = "openMedia" }, x, y, w, h)
+  ui.text(m and ui.fit(m.app or "Now playing", "bold", 14, w - 44) or "Now playing", "bold", 14, ui.c.muted, x + 22, y + 20)
+  local pad = 22
+  if not media.access then
+    ui.text("See what's playing", "bold", 22, ui.c.text, x + pad, y + 56)
+    ui.text(ui.fit("in your music and video apps", "semibold", 15, w - pad * 2), "semibold", 15, ui.c.muted, x + pad, y + 88)
+    pill({ kind = "mediaAccess" }, "Allow", x + pad, y + h - 22 - 52, 52, "accent")
+    return
+  end
+  if not m then
+    ui.text("Nothing playing", "bold", 22, ui.c.text, x + pad, y + 56)
+    ui.text(ui.fit("Start music in any app", "semibold", 15, w - pad * 2), "semibold", 15, ui.c.muted, x + pad, y + 88)
+    return
+  end
+  ui.text(ui.fit(m.title ~= "" and m.title or (m.app or ""), "bold", 24, w - pad * 2), "bold", 24, ui.c.text, x + pad, y + 50)
+  ui.text(ui.fit(m.artist or "", "semibold", 16, w - pad * 2), "semibold", 16, ui.hex("B8B5AD"), x + pad, y + 84)
+  local dur = m.durationMs or 0
+  if dur > 0 then
+    local by = y + h - 22 - 52 - 18
+    ui.rect(ui.hex("2C2E33"), x + pad, by, w - pad * 2, 4, 2)
+    ui.rect(ui.c.accent, x + pad, by, (w - pad * 2) * (mediaPos(m) / dur), 4, 2)
+  end
+  transportRow(x + pad, y + h - 22 - 52, w - pad * 2, 52, m)
+end
+
 local function drawFavorites(x, y, w, h)
   ui.rect(ui.c.card, x, y, w, h, 26)
   local favs = favoriteApps()
@@ -415,7 +523,7 @@ local function drawHome()
 
   placeholderWidget(x, y, colW * 2 + gap, rowH * 2 + gap, "Map", "pin", "Live map and turn-by-turn arrive in a later update")
   local rx = x + (colW + gap) * 2
-  placeholderWidget(rx, y, colW, rowH, "Radio", "radio", "Coming soon")
+  nowPlayingWidget(rx, y, colW, rowH)
   local halfW = (colW - gap) / 2
   placeholderWidget(rx, y + rowH + gap, halfW, rowH, "Weather", "sun")
   placeholderWidget(rx + halfW + gap, y + rowH + gap, halfW, rowH, "Calendar", "calendar")
@@ -438,6 +546,89 @@ local function drawApps()
     local maxW = r * 2 + 48
     ui.text(ui.fit(app.label, "semibold", 19, maxW), "semibold", 19, ui.c.text2, cx - maxW / 2, cy + r + 12, "center", maxW)
   end)
+end
+
+----------------------------------------------------------------------------------------------
+-- Media (now playing)
+----------------------------------------------------------------------------------------------
+
+local function drawMedia()
+  local media = state.media
+  local m = media.current
+  local cx0, cw = RAIL, W - RAIL
+  local midY = TOP + (H - TOP) / 2
+
+  if not media.access then
+    local w, h = 640, 268
+    local x, y = cx0 + (cw - w) / 2, midY - h / 2
+    ui.rect(ui.c.card, x, y, w, h, 28)
+    ui.icon("media", x + 32, y + 34, 40, ui.c.accent, 1.6)
+    ui.text("See what's playing", "bold", 28, ui.c.text, x + 32, y + 92)
+    ui.text("Road Trip needs notification access to show and control music,", "semibold", 16, ui.hex("B8B5AD"), x + 32, y + 138)
+    ui.text("podcasts and video from your apps. It only reads what's playing.", "semibold", 16, ui.hex("B8B5AD"), x + 32, y + 162)
+    pill({ kind = "mediaAccess" }, "Allow", x + 32, y + h - 32 - 56, 56, "accent")
+    return
+  end
+
+  if not m then
+    local th = ui.fontHeight("bold", 28)
+    ui.text("Nothing is playing", "bold", 28, ui.c.text, cx0, midY - th, "center", cw)
+    ui.text("Start music in any app and it shows up here.", "semibold", 17, ui.c.muted, cx0, midY + 12, "center", cw)
+    return
+  end
+
+  -- artwork
+  local size = math.min(420, H - TOP - 88)
+  local ax, ay = cx0 + 56, TOP + (H - TOP - size) / 2
+  ui.rect(ui.hex("2A2620"), ax, ay, size, size, 28)
+  local img = artImage(m)
+  if img then
+    local inset = 14
+    local s = math.min((size - inset * 2) / img:getWidth(), (size - inset * 2) / img:getHeight())
+    local iw, ih = img:getWidth() * s, img:getHeight() * s
+    lg.setColor(1, 1, 1, 1)
+    lg.draw(img, ax + (size - iw) / 2, ay + (size - ih) / 2, 0, s, s)
+  else
+    local is = size * 0.28
+    ui.icon("media", ax + (size - is) / 2, ay + (size - is) / 2, is, ui.c.accent, 1.2)
+  end
+
+  -- details
+  local x1 = ax + size + 56
+  local w1 = W - 56 - x1
+  local yy = ay + math.max(0, (size - 340) / 2)
+  ui.text(ui.fit("Playing from " .. (m.app or ""), "bold", 15, w1), "bold", 15, ui.c.accent, x1, yy)
+  ui.text(ui.fit(m.title ~= "" and m.title or (m.app or ""), "bold", 40, w1), "bold", 40, ui.c.text, x1, yy + 26)
+  ui.text(ui.fit(m.artist or "", "semibold", 22, w1), "semibold", 22, ui.hex("B8B5AD"), x1, yy + 84)
+
+  local dur = m.durationMs or 0
+  local by = yy + 152
+  if dur > 0 then
+    local pos = mediaPos(m)
+    local frac = pos / dur
+    ui.rect(ui.hex("2C2E33"), x1, by, w1, 6, 3)
+    ui.rect(ui.c.accent, x1, by, w1 * frac, 6, 3)
+    ui.circle(ui.c.text, x1 + w1 * frac, by + 3, 10)
+    ui.text(fmtTime(pos), "semibold", 15, ui.c.muted, x1, by + 20)
+    ui.text("-" .. fmtTime(dur - pos), "semibold", 15, ui.c.muted, x1, by + 20, "right", w1)
+    if m.canSeek then ui.hit({ kind = "seek", x = x1, w = w1, dur = dur }, x1, by - 20, w1, 46) end
+  end
+
+  -- controls
+  local cy = by + 120
+  local total = 88 + 36 + 112 + 36 + 88
+  local bx = x1 + (w1 - total) / 2
+  local function round(action, icon, r, accent, on)
+    local ccx = bx + r
+    ui.circle(accent and ui.c.accent or ui.c.chip, ccx, cy, r)
+    local s = r * 0.8
+    ui.icon(icon, ccx - s / 2, cy - s / 2, s, accent and ui.c.onAccent or (on and ui.c.text2 or ui.c.dim))
+    if on then ui.hit({ kind = "media", action = action }, ccx - r, cy - r, r * 2, r * 2) end
+    bx = bx + r * 2 + 36
+  end
+  round("prev", "prev", 44, false, m.canPrev ~= false)
+  round("toggle", m.playing and "pause" or "play", 56, true, true)
+  round("next", "next", 44, false, m.canNext ~= false)
 end
 
 ----------------------------------------------------------------------------------------------
@@ -599,7 +790,7 @@ function love.draw()
   else
     if state.screen == "home" then drawHome()
     elseif state.screen == "apps" then drawApps()
-    else drawPlaceholder("Media is coming in a later update") end
+    else drawMedia() end
     drawTopBar()
     drawRail()
   end
@@ -629,9 +820,17 @@ local function togglePick(app)
   end
 end
 
-local function activate(id)
+local function activate(id, vx)
   local k = id.kind
-  if k == "tile" and id.grid == "favs" then togglePick(id.app)
+  if k == "media" then mediaCommand(id.action)
+  elseif k == "seek" then
+    local frac = math.max(0, math.min(1, ((vx or id.x) - id.x) / id.w))
+    mediaCommand("seek", math.floor(frac * id.dur))
+  elseif k == "openMedia" then state.screen = "media"
+  elseif k == "mediaAccess" then
+    android.openMediaAccess()
+    toast("Switch on Road Trip: now playing")
+  elseif k == "tile" and id.grid == "favs" then togglePick(id.app)
   elseif k == "tile" or k == "fav" then launch(id.app)
   elseif k == "rail" then state.screen = id.screen
   elseif k == "voice" then android.voice()
@@ -768,7 +967,7 @@ function love.mousereleased(x, y, button)
     end
   else
     local id = ui.hitAt(vx, vy)
-    if sameTarget(id, p.id) then activate(id) end
+    if sameTarget(id, p.id) then activate(id, vx) end
   end
 end
 
@@ -837,6 +1036,14 @@ function love.update(dt)
 
   local t = state.timers
   t.update, t.guard, t.autoCheck, t.home = t.update + dt, t.guard + dt, t.autoCheck + dt, t.home + dt
+  -- what's playing: once a second while it's on screen (Home's widget or Media)
+  if state.screen == "home" or state.screen == "media" then
+    t.media = t.media + dt
+    if t.media > 1 then
+      t.media = 0
+      pollMedia()
+    end
+  end
   if state.homeSeen and t.home > 0.25 then
     t.home = 0
     local n = android.homePresses()

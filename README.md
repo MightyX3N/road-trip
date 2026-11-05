@@ -7,7 +7,9 @@ the map, radio, weather and calendar widgets (those arrive in later updates). **
 every app in a paged grid; tap to open, swipe between pages, long-press for a menu to add
 or remove a favorite or open the app's info page. On first launch you pick 3 to 5
 favorite apps; change them any time with the pencil button on Home or by long-pressing a
-favorite. The voice button opens the device's assistant.
+favorite. **Media** and the Now playing widget on Home show and control whatever's playing
+in any app (allow notification access when asked). The voice button opens the device's
+assistant.
 
 ## Get the APK (no Android tools needed)
 

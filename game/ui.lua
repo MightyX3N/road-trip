@@ -182,6 +182,21 @@ function icons.check()
   lg.line(5, 12, 10, 17, 19, 7)
 end
 
+-- transport controls are solid shapes
+function icons.play() lg.polygon("fill", 7, 4.5, 20, 12, 7, 19.5) end
+function icons.pause()
+  lg.rectangle("fill", 6, 5, 4, 14, 1, 1)
+  lg.rectangle("fill", 14, 5, 4, 14, 1, 1)
+end
+function icons.prev()
+  lg.polygon("fill", 19, 5, 19, 19, 9, 12)
+  lg.rectangle("fill", 5, 5, 2.6, 14, 1, 1)
+end
+function icons.next()
+  lg.polygon("fill", 5, 5, 5, 19, 15, 12)
+  lg.rectangle("fill", 16.4, 5, 2.6, 14, 1, 1)
+end
+
 function icons.plus()
   lg.line(12, 5, 12, 19)
   lg.line(5, 12, 19, 12)

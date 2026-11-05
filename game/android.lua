@@ -316,6 +316,10 @@ local function stubCall(method, args)
     return { serviceOn = false, enabled = true, stock = { "com.example.stocklauncher" } }
   elseif method == "homePresses" then
     return 0
+  elseif method == "mediaStatus" then
+    return { access = true, current = { pkg = "com.example.music", app = "Music", title = "Desert Highway",
+      artist = "The Long Drives", album = "Mile Markers", durationMs = 241000, positionMs = 84000,
+      playing = true, speed = 1, canPrev = true, canNext = true, canSeek = true } }
   elseif method == "updateStatus" then
     return { state = "none", current = 0, currentName = "desktop", latest = 0, latestName = "", notes = "", progress = 0 }
   end
@@ -340,6 +344,10 @@ function M.openHomeSettings() return M.call("openHomeSettings") end
 function M.openAppInfo(app) return M.call("openAppInfo", { pkg = app.pkg }) end
 function M.voice() return M.call("voice") end
 function M.guardStatus() return M.call("guardStatus") end
+-- what's playing in any app (needs notification access); album art lands in artDir
+function M.mediaStatus(artDir) return M.call("mediaStatus", { artDir = artDir }) end
+function M.mediaCommand(action, posMs) return M.call("mediaCommand", { action = action, posMs = posMs }) end
+function M.openMediaAccess() return M.call("openMediaAccess") end
 -- how many times Home was pressed while Road Trip was running (only ever goes up)
 function M.homePresses() return M.call("homePresses") end
 function M.setGuardEnabled(on) return M.call("setGuardEnabled", { on = on }) end
