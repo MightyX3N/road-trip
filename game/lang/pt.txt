@@ -242,3 +242,17 @@ Configurações
 Favoritas
 País
 Populares
+Vídeo oculto enquanto você dirige
+O som continua. O vídeo volta quando você parar.
+Abrir o Road Trip
+Ocultar vídeo ao dirigir
+Apps de vídeo ficam cobertos pela próxima curva e pelo que está tocando
+Precisa do Manter à frente para saber qual app está aberto
+Quando a velocidade não é conhecida
+Sem sinal de GPS, ou sem GPS nesta central
+Ocultar vídeo
+Mostrar vídeo
+Próxima curva sobre outros apps
+Quando o Road Trip guia você e outro app está aberto
+Precisa do Manter à frente ou de permissão para aparecer sobre outros apps
+Ative o Road Trip e volte

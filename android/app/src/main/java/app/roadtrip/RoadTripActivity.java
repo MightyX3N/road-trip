@@ -13,6 +13,18 @@ public class RoadTripActivity extends GameActivity {
     static volatile int homePresses = 0;
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        Overlay.roadTripResumed = true;
+    }
+
+    @Override
+    protected void onPause() {
+        Overlay.roadTripResumed = false;
+        super.onPause();
+    }
+
+    @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         if (intent != null && Intent.ACTION_MAIN.equals(intent.getAction())

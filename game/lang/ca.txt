@@ -242,3 +242,17 @@ Ajustos
 Preferides
 País
 Populars
+Vídeo amagat mentre condueixes
+El so continua. El vídeo torna quan t'aturis.
+Obre Road Trip
+Amaga el vídeo en conduir
+Les apps de vídeo queden tapades pel proper gir i el que sona
+Necessita Mantenir al davant per saber quina app és oberta
+Quan no se sap la velocitat
+Sense senyal GPS, o sense GPS en aquesta caixa
+Amaga el vídeo
+Mostra el vídeo
+Proper gir damunt d'altres apps
+Quan Road Trip et guia i hi ha una altra app oberta
+Necessita Mantenir al davant o permís per mostrar-se damunt d'altres apps
+Activa Road Trip i torna

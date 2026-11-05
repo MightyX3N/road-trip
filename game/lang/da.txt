@@ -242,3 +242,17 @@ Indstillinger
 Favoritter
 Land
 Populære
+Video skjult under kørsel
+Lyden spiller videre. Videoen kommer tilbage, når du holder stille.
+Åbn Road Trip
+Skjul video under kørsel
+Videoapps dækkes af næste sving og det, der spiller
+Kræver Hold foran for at se, hvilken app der er åben
+Når farten ikke kendes
+Intet GPS-signal, eller ingen GPS i boksen
+Skjul video
+Vis video
+Næste sving over andre apps
+Når Road Trip guider dig, og en anden app er åben
+Kræver Hold foran eller tilladelse til at vise over andre apps
+Slå Road Trip til, og kom så tilbage

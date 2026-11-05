@@ -242,3 +242,17 @@ Stillingar
 Eftirlæti
 Land
 Vinsælt
+Myndband falið við akstur
+Hljóðið heldur áfram. Myndbandið kemur aftur þegar þú stoppar.
+Opna Road Trip
+Fela myndbönd við akstur
+Næsta beygja og það sem spilast hylur myndbandsforrit
+Þarf Halda fremst til að sjá hvaða forrit er opið
+Þegar hraðinn er óþekktur
+Ekkert GPS-merki, eða engin GPS í boxinu
+Fela myndband
+Sýna myndband
+Næsta beygja yfir öðrum forritum
+Þegar Road Trip leiðbeinir og annað forrit er opið
+Þarf Halda fremst eða leyfi til að birtast yfir öðrum forritum
+Kveiktu á Road Trip og komdu svo aftur

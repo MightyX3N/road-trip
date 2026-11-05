@@ -69,9 +69,12 @@ public class GuardService extends AccessibilityService {
     };
 
     static final String KEY_CONNECTED = "guard_connected"; // true while Android has the service bound
+    static volatile GuardService instance; // while bound: Road Trip's overlays use its windows
 
     @Override
     protected void onServiceConnected() {
+        instance = this;
+        Overlay.start(this);
         refreshStock(true);
         getSharedPreferences(PREFS, MODE_PRIVATE).edit().putBoolean(KEY_CONNECTED, true).apply();
         Log.i(TAG, "guard: connected, watching " + stock);
@@ -85,6 +88,8 @@ public class GuardService extends AccessibilityService {
             .putLong(KEY_UNBOUND_AT, System.currentTimeMillis())
             .commit();
         handler.removeCallbacks(bringBack);
+        if (instance == this) instance = null;
+        Overlay.hostGone(this);
         return super.onUnbind(intent);
     }
 
@@ -150,6 +155,7 @@ public class GuardService extends AccessibilityService {
         // the keyboard, system UI and popups don't change which app is in front
         if (p.equals("com.android.systemui") || p.contains("inputmethod")) return;
         String c = cls == null ? "" : cls.toString();
+        if (!c.startsWith("android.widget.") && !c.startsWith("android.app.Dialog")) Overlay.onWindow(this, p, c);
         // dialogs, menus and toasts report widget classes, not an activity: not a screen change
         if (c.startsWith("android.widget.") || c.startsWith("android.app.Dialog")) return;
         String said = eventText(event);

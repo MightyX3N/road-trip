@@ -242,3 +242,17 @@ Tetapan
 Kegemaran
 Negara
 Popular
+Video disembunyikan semasa memandu
+Bunyi terus dimainkan. Video kembali apabila anda berhenti.
+Buka Road Trip
+Sembunyikan video semasa memandu
+Apl video ditutup oleh belokan seterusnya dan apa yang dimainkan
+Memerlukan Kekal di hadapan untuk tahu apl mana yang dibuka
+Apabila kelajuan tidak diketahui
+Tiada isyarat GPS, atau tiada GPS dalam peranti ini
+Sembunyikan video
+Tunjukkan video
+Belokan seterusnya di atas apl lain
+Apabila Road Trip memandu anda dan apl lain dibuka
+Memerlukan Kekal di hadapan, atau kebenaran untuk dipaparkan di atas apl lain
+Hidupkan Road Trip, kemudian kembali

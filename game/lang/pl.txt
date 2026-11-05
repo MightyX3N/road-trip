@@ -242,3 +242,17 @@ Ustawienia
 Ulubione
 Kraj
 Popularne
+Wideo ukryte podczas jazdy
+Dźwięk gra dalej. Wideo wróci, gdy się zatrzymasz.
+Otwórz Road Trip
+Ukrywaj wideo podczas jazdy
+Aplikacje wideo zasłania następny skręt i to, co gra
+Wymaga Utrzymuj na wierzchu, by wiedzieć, która aplikacja jest otwarta
+Gdy prędkość jest nieznana
+Brak sygnału GPS lub brak GPS w urządzeniu
+Ukryj wideo
+Pokaż wideo
+Następny skręt nad innymi aplikacjami
+Gdy Road Trip prowadzi, a otwarta jest inna aplikacja
+Wymaga Utrzymuj na wierzchu lub zgody na wyświetlanie nad innymi aplikacjami
+Włącz Road Trip i wróć

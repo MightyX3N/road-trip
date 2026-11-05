@@ -242,3 +242,17 @@ Nustatymai
 Mėgstamos
 Šalis
 Populiarios
+Vaizdo įrašas paslėptas vairuojant
+Garsas groja toliau. Vaizdas grįš, kai sustosite.
+Atidaryti Road Trip
+Slėpti vaizdo įrašus vairuojant
+Vaizdo programas uždengia kitas posūkis ir tai, kas groja
+Reikia Laikyti priekyje, kad žinotų, kuri programa atidaryta
+Kai greitis nežinomas
+Nėra GPS signalo arba įrenginyje nėra GPS
+Slėpti vaizdą
+Rodyti vaizdą
+Kitas posūkis virš kitų programų
+Kai Road Trip veda, o atidaryta kita programa
+Reikia Laikyti priekyje arba leidimo rodyti virš kitų programų
+Įjunkite Road Trip ir grįžkite

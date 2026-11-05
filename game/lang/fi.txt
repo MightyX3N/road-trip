@@ -242,3 +242,17 @@ Asetukset
 Suosikit
 Maa
 Suositut
+Video piilotettu ajon ajaksi
+Ääni jatkuu. Video palaa, kun pysähdyt.
+Avaa Road Trip
+Piilota video ajon aikana
+Videosovellukset peitetään seuraavalla käännöksellä ja soivalla
+Tarvitsee Pidä edessä -toiminnon nähdäkseen avoimen sovelluksen
+Kun nopeutta ei tiedetä
+Ei GPS-signaalia tai laitteessa ei ole GPS:ää
+Piilota video
+Näytä video
+Seuraava käännös muiden sovellusten päällä
+Kun Road Trip opastaa ja toinen sovellus on auki
+Tarvitsee Pidä edessä -toiminnon tai luvan näkyä muiden sovellusten päällä
+Ota Road Trip käyttöön ja palaa sitten

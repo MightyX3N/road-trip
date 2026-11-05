@@ -13,6 +13,8 @@
     <!-- Calendar widget: your next event (Android asks first) -->
     <uses-permission android:name="android.permission.READ_CALENDAR" />
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <!-- the turn banner over other apps when Keep in front is off (Android asks first) -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <!-- Radio: keep playing in the background, with a media notification -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
@@ -52,6 +54,9 @@
         android:icon="@mipmap/ic_launcher"
         android:roundIcon="@mipmap/ic_launcher"
         android:label="${NAME}">
+        <!-- SDL reads SDL_ENV.* from the application's meta-data: keep Lua running behind
+             other apps, so Road Trip's guidance (and the turn banner) carries on -->
+        <meta-data android:name="SDL_ENV.SDL_ANDROID_BLOCK_ON_PAUSE" android:value="0" />
         <activity
             android:name="app.roadtrip.RoadTripActivity"
             android:exported="true"

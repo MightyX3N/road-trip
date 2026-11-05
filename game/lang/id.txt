@@ -242,3 +242,17 @@ Pengaturan
 Favorit
 Negara
 Populer
+Video disembunyikan saat berkendara
+Suara tetap diputar. Video kembali saat Anda berhenti.
+Buka Road Trip
+Sembunyikan video saat berkendara
+Aplikasi video ditutupi belokan berikutnya dan yang sedang diputar
+Perlu Tetap di depan untuk tahu aplikasi mana yang terbuka
+Saat kecepatan tidak diketahui
+Tidak ada sinyal GPS, atau tidak ada GPS di perangkat ini
+Sembunyikan video
+Tampilkan video
+Belokan berikutnya di atas aplikasi lain
+Saat Road Trip memandu Anda dan aplikasi lain terbuka
+Perlu Tetap di depan, atau izin tampil di atas aplikasi lain
+Aktifkan Road Trip, lalu kembali

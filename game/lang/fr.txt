@@ -242,3 +242,17 @@ Réglages
 Favoris
 Pays
 Populaires
+Vidéo masquée pendant la conduite
+Le son continue. La vidéo revient quand vous vous arrêtez.
+Ouvrir Road Trip
+Masquer la vidéo en roulant
+Les apps vidéo sont couvertes par le prochain virage et ce qui joue
+Nécessite Rester au premier plan pour savoir quelle app est ouverte
+Quand la vitesse est inconnue
+Pas de signal GPS, ou pas de GPS dans ce boîtier
+Masquer la vidéo
+Afficher la vidéo
+Prochain virage par-dessus les autres apps
+Quand Road Trip vous guide et qu'une autre app est ouverte
+Nécessite Rester au premier plan, ou l'autorisation de s'afficher par-dessus les autres apps
+Activez Road Trip, puis revenez

@@ -242,3 +242,17 @@ Instellingen
 Favorieten
 Land
 Populair
+Video verborgen tijdens het rijden
+Het geluid speelt door. De video komt terug als je stilstaat.
+Road Trip openen
+Video verbergen tijdens het rijden
+Video-apps worden bedekt door de volgende afslag en wat er speelt
+Heeft Op de voorgrond houden nodig om te zien welke app open is
+Als de snelheid onbekend is
+Geen gps-signaal, of geen gps in deze box
+Video verbergen
+Video tonen
+Volgende afslag boven andere apps
+Als Road Trip je begeleidt en een andere app open is
+Heeft Op de voorgrond houden nodig, of toestemming om over andere apps te tonen
+Zet Road Trip aan en kom dan terug

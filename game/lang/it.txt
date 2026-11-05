@@ -242,3 +242,17 @@ Impostazioni
 Preferite
 Paese
 Popolari
+Video nascosto durante la guida
+L'audio continua. Il video torna quando ti fermi.
+Apri Road Trip
+Nascondi i video durante la guida
+Le app video vengono coperte dalla prossima svolta e da ciò che suona
+Serve Tieni in primo piano per sapere quale app è aperta
+Quando la velocità non è nota
+Nessun segnale GPS, o nessun GPS in questo box
+Nascondi video
+Mostra video
+Prossima svolta sopra le altre app
+Quando Road Trip ti guida e un'altra app è aperta
+Serve Tieni in primo piano o il permesso di apparire sopra le altre app
+Attiva Road Trip, poi torna qui

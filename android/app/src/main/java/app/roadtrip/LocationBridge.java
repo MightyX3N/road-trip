@@ -97,6 +97,8 @@ final class LocationBridge {
         return o;
     }
 
+    static Location lastFix() { return last; }
+
     /** {permission, fix?: {lat, lon, accuracy, speed, bearing, ageMs, provider}} */
     static JSONObject status(Context ctx) throws Exception {
         JSONObject o = new JSONObject();

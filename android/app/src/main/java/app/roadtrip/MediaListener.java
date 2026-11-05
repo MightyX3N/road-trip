@@ -163,6 +163,70 @@ public class MediaListener extends NotificationListenerService {
         return o;
     }
 
+    /** The nav app's latest turn, for the video cover: {title, text, bitmap?}, or null. */
+    static synchronized JSONObject navNow() {
+        if (navKey == null) return null;
+        try {
+            JSONObject o = new JSONObject();
+            o.put("title", navTitle == null ? "" : navTitle);
+            o.put("text", navText == null ? "" : navText);
+            if (navIcon != null) o.put("bitmap", navIcon);
+            return o;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    /** What's playing, for the video cover. */
+    static final class Now {
+        String pkg = "", app = "", title = "", artist = "";
+        boolean playing;
+        Bitmap art;
+    }
+
+    static synchronized Now now(Context ctx) {
+        MediaController c = hasAccess(ctx) ? pick(ctx) : null;
+        PlaybackState ps = c == null ? null : c.getPlaybackState();
+        boolean extPlaying = ps != null && ps.getState() == PlaybackState.STATE_PLAYING;
+        // Road Trip's radio, unless another app is the one actually playing
+        try {
+            JSONObject r = RadioService.status();
+            String st = r.optString("state");
+            JSONObject s = r.optJSONObject("station");
+            if (s != null && !extPlaying && (st.equals("playing") || st.equals("connecting") || st.equals("paused"))) {
+                Now n = new Now();
+                n.pkg = ctx.getPackageName();
+                n.app = "Radio";
+                n.title = s.optString("name", "Radio");
+                n.artist = s.optString("sub", "");
+                n.playing = !st.equals("paused");
+                String a = s.optString("art", "");
+                if (!a.isEmpty()) n.art = android.graphics.BitmapFactory.decodeFile(a);
+                return n;
+            }
+        } catch (Throwable ignored) {}
+        if (c == null) return null;
+        Now n = new Now();
+        n.pkg = c.getPackageName();
+        try {
+            PackageManager pm = ctx.getPackageManager();
+            n.app = pm.getApplicationLabel(pm.getApplicationInfo(n.pkg, 0)).toString();
+        } catch (Throwable t) {
+            n.app = n.pkg;
+        }
+        MediaMetadata md = c.getMetadata();
+        if (md != null) {
+            n.title = first(md, MediaMetadata.METADATA_KEY_TITLE, MediaMetadata.METADATA_KEY_DISPLAY_TITLE);
+            n.artist = first(md, MediaMetadata.METADATA_KEY_ARTIST, MediaMetadata.METADATA_KEY_ALBUM_ARTIST,
+                MediaMetadata.METADATA_KEY_DISPLAY_SUBTITLE);
+            n.art = md.getBitmap(MediaMetadata.METADATA_KEY_ALBUM_ART);
+            if (n.art == null) n.art = md.getBitmap(MediaMetadata.METADATA_KEY_ART);
+            if (n.art == null) n.art = md.getBitmap(MediaMetadata.METADATA_KEY_DISPLAY_ICON);
+        }
+        n.playing = extPlaying;
+        return n;
+    }
+
     static boolean hasAccess(Context ctx) {
         String on = Settings.Secure.getString(ctx.getContentResolver(), "enabled_notification_listeners");
         if (on == null) return false;

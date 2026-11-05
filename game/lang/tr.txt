@@ -242,3 +242,17 @@ Ayarlar
 Favoriler
 Ülke
 Popüler
+Sürüş sırasında video gizlendi
+Ses çalmaya devam eder. Durduğunuzda video geri gelir.
+Road Trip'i aç
+Sürerken videoyu gizle
+Video uygulamaları sonraki dönüş ve çalan şeyle örtülür
+Hangi uygulamanın açık olduğunu görmek için Önde tut gerekir
+Hız bilinmediğinde
+GPS sinyali yok ya da bu kutuda GPS yok
+Videoyu gizle
+Videoyu göster
+Diğer uygulamaların üstünde sonraki dönüş
+Road Trip size yol gösterirken başka bir uygulama açıkken
+Önde tut ya da diğer uygulamaların üstünde gösterme izni gerekir
+Road Trip'i açın, sonra geri gelin

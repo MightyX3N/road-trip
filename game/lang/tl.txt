@@ -242,3 +242,17 @@ Settings
 Mga paborito
 Bansa
 Sikat
+Nakatago ang video habang nagmamaneho
+Tuloy ang tunog. Babalik ang video kapag huminto ka.
+Buksan ang Road Trip
+Itago ang video habang nagmamaneho
+Tinatakpan ang mga video app ng susunod na liko at ng tumutugtog
+Kailangan ang Panatilihin sa harap para malaman kung anong app ang bukas
+Kapag hindi alam ang bilis
+Walang GPS signal, o walang GPS sa box na ito
+Itago ang video
+Ipakita ang video
+Susunod na liko sa ibabaw ng ibang app
+Kapag ginagabayan ka ng Road Trip at may ibang app na bukas
+Kailangan ang Panatilihin sa harap, o pahintulot na lumabas sa ibabaw ng ibang app
+I-on ang Road Trip, pagkatapos bumalik

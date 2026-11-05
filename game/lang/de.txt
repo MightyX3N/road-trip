@@ -242,3 +242,17 @@ Einstellungen
 Favoriten
 Land
 Beliebt
+Video beim Fahren ausgeblendet
+Der Ton läuft weiter. Das Video kommt zurück, wenn du anhältst.
+Road Trip öffnen
+Video beim Fahren ausblenden
+Video-Apps werden von der nächsten Abbiegung und der Wiedergabe verdeckt
+Braucht Im Vordergrund halten, um die offene App zu erkennen
+Wenn das Tempo unbekannt ist
+Kein GPS-Signal oder kein GPS in dieser Box
+Video ausblenden
+Video zeigen
+Nächste Abbiegung über anderen Apps
+Wenn Road Trip dich führt und eine andere App offen ist
+Braucht Im Vordergrund halten oder die Erlaubnis, über anderen Apps zu erscheinen
+Schalte Road Trip ein und komm dann zurück

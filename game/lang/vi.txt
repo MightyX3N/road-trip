@@ -242,3 +242,17 @@ Cài đặt
 Yêu thích
 Quốc gia
 Phổ biến
+Đã ẩn video khi đang lái
+Âm thanh vẫn phát. Video sẽ hiện lại khi bạn dừng xe.
+Mở Road Trip
+Ẩn video khi lái xe
+Ứng dụng video được che bằng lượt rẽ tiếp theo và nội dung đang phát
+Cần Giữ phía trước để biết ứng dụng nào đang mở
+Khi không biết tốc độ
+Không có tín hiệu GPS, hoặc thiết bị không có GPS
+Ẩn video
+Hiện video
+Lượt rẽ tiếp theo trên ứng dụng khác
+Khi Road Trip đang dẫn đường và một ứng dụng khác đang mở
+Cần Giữ phía trước, hoặc quyền hiển thị trên ứng dụng khác
+Bật Road Trip rồi quay lại

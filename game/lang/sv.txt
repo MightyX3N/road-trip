@@ -242,3 +242,17 @@ Inställningar
 Favoriter
 Land
 Populära
+Video dold under körning
+Ljudet fortsätter. Videon kommer tillbaka när du stannar.
+Öppna Road Trip
+Dölj video under körning
+Videoappar täcks av nästa sväng och det som spelas
+Kräver Håll framme för att se vilken app som är öppen
+När farten inte är känd
+Ingen GPS-signal, eller ingen GPS i boxen
+Dölj video
+Visa video
+Nästa sväng över andra appar
+När Road Trip guidar dig och en annan app är öppen
+Kräver Håll framme eller tillstånd att visas över andra appar
+Slå på Road Trip och kom sedan tillbaka

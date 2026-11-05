@@ -242,3 +242,17 @@ Nastavenia
 Obľúbené
 Krajina
 Populárne
+Video skryté počas jazdy
+Zvuk hrá ďalej. Video sa vráti, keď zastavíte.
+Otvoriť Road Trip
+Skrývať video počas jazdy
+Video aplikácie zakryje ďalšia odbočka a to, čo hrá
+Vyžaduje Držať v popredí, aby rozpoznal otvorenú aplikáciu
+Keď rýchlosť nie je známa
+Žiadny signál GPS, alebo zariadenie nemá GPS
+Skryť video
+Zobraziť video
+Ďalšia odbočka nad inými aplikáciami
+Keď vás Road Trip vedie a je otvorená iná aplikácia
+Vyžaduje Držať v popredí alebo povolenie zobrazovať sa nad inými aplikáciami
+Zapnite Road Trip a vráťte sa

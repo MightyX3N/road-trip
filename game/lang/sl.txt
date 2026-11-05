@@ -242,3 +242,17 @@ Nastavitve
 Priljubljene
 Država
 Popularno
+Video skrit med vožnjo
+Zvok se predvaja naprej. Video se vrne, ko se ustaviš.
+Odpri Road Trip
+Skrij video med vožnjo
+Video aplikacije prekrije naslednji zavoj in to, kar se predvaja
+Potrebuje Drži v ospredju, da ve, katera aplikacija je odprta
+Ko hitrost ni znana
+Ni signala GPS ali naprava nima GPS
+Skrij video
+Pokaži video
+Naslednji zavoj čez druge aplikacije
+Ko te Road Trip vodi in je odprta druga aplikacija
+Potrebuje Drži v ospredju ali dovoljenje za prikaz čez druge aplikacije
+Vklopi Road Trip in se vrni

@@ -242,3 +242,17 @@ Seaded
 Lemmikud
 Riik
 Populaarne
+Video sõidu ajal peidetud
+Heli mängib edasi. Video tuleb tagasi, kui peatud.
+Ava Road Trip
+Peida video sõidu ajal
+Videorakendused kaetakse järgmise pöörde ja mängiva looga
+Vajab Hoia ees funktsiooni, et teada, milline rakendus on avatud
+Kui kiirus pole teada
+GPS-signaali pole või seadmes pole GPS-i
+Peida video
+Näita videot
+Järgmine pööre teiste rakenduste peal
+Kui Road Trip juhatab ja teine rakendus on avatud
+Vajab Hoia ees funktsiooni või luba kuvada teiste rakenduste peal
+Lülita Road Trip sisse ja tule tagasi

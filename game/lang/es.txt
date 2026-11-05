@@ -242,3 +242,17 @@ Ajustes
 Favoritas
 País
 Populares
+Vídeo oculto mientras conduces
+El sonido sigue. El vídeo vuelve cuando te detienes.
+Abrir Road Trip
+Ocultar vídeo al conducir
+Las apps de vídeo se cubren con el próximo giro y lo que suena
+Necesita Mantener al frente para saber qué app está abierta
+Cuando no se conoce la velocidad
+Sin señal GPS, o sin GPS en esta caja
+Ocultar vídeo
+Mostrar vídeo
+Próximo giro sobre otras apps
+Cuando Road Trip te guía y hay otra app abierta
+Necesita Mantener al frente o permiso para mostrarse sobre otras apps
+Activa Road Trip y luego vuelve

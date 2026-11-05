@@ -240,3 +240,17 @@ Settings
 Favorites
 Country
 Popular
+Video hidden while driving
+The sound keeps playing. The video comes back when you stop.
+Open Road Trip
+Hide video while driving
+Video apps are covered by the next turn and what's playing
+Needs Keep in front to see which app is open
+When the speed isn't known
+No GPS signal, or no GPS in this box
+Hide video
+Show video
+Next turn over other apps
+While Road Trip guides you and another app is open
+Needs Keep in front, or permission to show over other apps
+Switch on Road Trip, then come back

@@ -101,6 +101,23 @@ public final class LauncherBridge {
                     RadioService.setList(a.optJSONArray("list"));
                     data = true;
                     break;
+                case "overlayConfig":
+                    Overlay.configure(ctx, a);
+                    data = true;
+                    break;
+                case "overlayNav":
+                    Overlay.setNav(a.optJSONObject("nav"));
+                    data = true;
+                    break;
+                case "resumed":
+                    data = Overlay.roadTripResumed;
+                    break;
+                case "overlayStatus":
+                    data = Overlay.status(ctx);
+                    break;
+                case "overlayPermission":
+                    data = Overlay.openOverlaySettings(ctx);
+                    break;
                 case "uptime":
                     data = android.os.SystemClock.elapsedRealtime();
                     break;
@@ -136,6 +153,7 @@ public final class LauncherBridge {
                     d.put("watched", watched);
                     d.put("location", LocationBridge.providers(ctx));
                     d.put("radio", RadioService.status());
+                    d.put("overlay", Overlay.status(ctx));
                     data = d;
                     break;
                 }

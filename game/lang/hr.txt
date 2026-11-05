@@ -242,3 +242,17 @@ Postavke
 Omiljene
 Država
 Popularno
+Video skriven tijekom vožnje
+Zvuk se nastavlja. Video se vraća kad staneš.
+Otvori Road Trip
+Skrivaj video tijekom vožnje
+Video aplikacije prekriva sljedeće skretanje i ono što svira
+Treba Drži naprijed da zna koja je aplikacija otvorena
+Kad brzina nije poznata
+Nema GPS signala ili uređaj nema GPS
+Skrij video
+Prikaži video
+Sljedeće skretanje preko drugih aplikacija
+Kad te Road Trip vodi i otvorena je druga aplikacija
+Treba Drži naprijed ili dopuštenje za prikaz preko drugih aplikacija
+Uključi Road Trip i vrati se

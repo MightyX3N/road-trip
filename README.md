@@ -19,7 +19,11 @@ or can start from the middle of the map. **Radio** plays internet radio from
 (change it with Change country), popular ones worldwide, or search by name. Star stations to
 keep them as favorites; next and previous (on screen, in the notification or on the steering
 wheel) step through them. The last station plays again when the car starts (switch that off
-on the Radio screen). **Settings** has everything else: Keep in front, permissions, favorites, accent colour,
+on the Radio screen). While the car moves, video apps are covered by the next turn and what's playing (the
+sound keeps going; the video comes back once you've stopped for a few seconds). It needs
+Keep in front to see which app is open, and GPS speed; Settings chooses what happens
+without speed (hide video by default). While Road Trip guides you and another app is
+open, a next-turn banner sits at the top of the screen. **Settings** has everything else: Keep in front, permissions, favorites, accent colour,
 language and updates. Road Trip comes in 33 languages and follows the device's language
 unless you pick one; the translations are made by AI, so some words may be off. The voice button opens the device's
 assistant.

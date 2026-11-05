@@ -242,3 +242,17 @@ Setări
 Preferate
 Țară
 Populare
+Video ascuns în timpul condusului
+Sunetul continuă. Videoclipul revine când te oprești.
+Deschide Road Trip
+Ascunde video la volan
+Aplicațiile video sunt acoperite de următorul viraj și de ce se redă
+Necesită Păstrare în față ca să știe ce aplicație e deschisă
+Când viteza nu e cunoscută
+Fără semnal GPS sau fără GPS în unitate
+Ascunde video
+Arată video
+Următorul viraj peste alte aplicații
+Când Road Trip te ghidează și e deschisă altă aplicație
+Necesită Păstrare în față sau permisiunea de afișare peste alte aplicații
+Activează Road Trip, apoi revino

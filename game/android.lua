@@ -379,6 +379,12 @@ local function stubCall(method, args)
     return stubRadio or { state = "idle" }
   elseif method == "country" then
     return "DK"
+  elseif method == "overlayStatus" then
+    return { canDraw = false, guard = false, moving = false, why = "desktop", front = "", covering = false }
+  elseif method == "resumed" then
+    return true
+  elseif method == "overlayConfig" or method == "overlayNav" then
+    return true
   elseif method == "language" then
     return (os.getenv("RT_LANG") or "en")
   elseif method == "uptime" then
@@ -429,6 +435,11 @@ function M.radioList(list) return M.call("radioList", { list = list }) end
 function M.country() return M.call("country") end
 function M.uptime() return M.call("uptime") end
 function M.language() return M.call("language") end
+function M.overlayConfig(c) return M.call("overlayConfig", c) end
+function M.overlayNav(g) return M.call("overlayNav", { nav = g }) end
+function M.overlayStatus() return M.call("overlayStatus") end
+function M.overlayPermission() return M.call("overlayPermission") end
+function M.resumed() return M.call("resumed") end
 
 function M.calendar() return M.call("calendar") end
 function M.calendarAllow() return M.call("calendarAllow") end

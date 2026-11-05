@@ -30,6 +30,9 @@ local state = {
   toast = nil,       -- { text, untilT }
   isHome = true,
   guard = { serviceOn = true, enabled = true, stock = {} },
+  overlay = { canDraw = false },  -- from Overlay.java
+  foreground = true,              -- false while another app is in front (Lua keeps running)
+  navSent = false,
   update = { state = "idle" }, -- from Updater.java: idle|checking|none|available|downloading|ready|permission|error|offline
   manualCheck = false,         -- the user asked; report "up to date" too
   timers = { update = 0, guard = 0, autoCheck = 0, home = 0, media = 0, fetch = 0, slow = 0, diag = 0 },
@@ -63,7 +66,28 @@ end
 -- data
 ----------------------------------------------------------------------------------------------
 
+-- Road Trip's windows over other apps (Overlay.java): settings and their words
+local function sendOverlayConfig()
+  android.overlayConfig({
+    video = config.get("overlayVideo") ~= false,
+    banner = config.get("overlayBanner") ~= false,
+    noSpeed = config.get("overlayNoSpeed") or "block",
+    accent = config.get("accent") or "#F2A23A",
+    labels = {
+      coverTitle = T("Video hidden while driving"),
+      coverSub = T("The sound keeps playing. The video comes back when you stop."),
+      open = T("Open Road Trip"),
+    },
+  })
+end
+
+local function refreshOverlay()
+  local o = android.overlayStatus()
+  if type(o) == "table" then state.overlay = o end
+end
+
 local function refreshGuard()
+  refreshOverlay()
   local g = android.guardStatus()
   if type(g) ~= "table" then return end
   local changed = g.serviceOn ~= state.guard.serviceOn or g.enabled ~= state.guard.enabled
@@ -1008,6 +1032,17 @@ local function drawSettings()
       button = { T("Change"), { kind = "setHome" } } },
     { title = T("The box's own launcher"), sub = T("Open it for 2 minutes without Road Trip stepping in"),
       button = #(g.stock or {}) > 0 and { T("Open"), { kind = "stock" } } or nil },
+    { title = T("Hide video while driving"),
+      sub = g.serviceOn and T("Video apps are covered by the next turn and what's playing")
+        or T("Needs Keep in front to see which app is open"),
+      toggle = { config.get("overlayVideo") ~= false, { kind = "ovVideo" } } },
+    { title = T("When the speed isn't known"), sub = T("No GPS signal, or no GPS in this box"),
+      button = { (config.get("overlayNoSpeed") or "block") == "block" and T("Hide video") or T("Show video"), { kind = "ovNoSpeed" } } },
+    { title = T("Next turn over other apps"),
+      sub = (g.serviceOn or state.overlay.canDraw) and T("While Road Trip guides you and another app is open")
+        or T("Needs Keep in front, or permission to show over other apps"),
+      toggle = (g.serviceOn or state.overlay.canDraw) and { config.get("overlayBanner") ~= false, { kind = "ovBanner" } } or nil,
+      button = not (g.serviceOn or state.overlay.canDraw) and { T("Allow"), { kind = "ovAllow" }, "accent" } or nil },
   }
   local u = state.update
   local right = {
@@ -1085,7 +1120,12 @@ local function drawDiagnostics()
   ui.text(ui.fit("Radio: " .. tostring(r.state or "?") .. (r.error and (" · " .. r.error) or "")
     .. (r.station and r.station.url and (" · " .. r.station.url) or ""), "semibold", 14, W - x - 32),
     "semibold", 14, ui.c.text2, x, y + 72)
-  y = y + 112
+  local o = d.overlay or {}
+  ui.text(ui.fit("Overlay: front " .. tostring(o.front or "?") .. " · " .. tostring(o.why or "") .. " · moving "
+    .. tostring(o.moving) .. " · cover " .. tostring(o.covering) .. " · banner " .. tostring(o.bannerShown)
+    .. " · nav age " .. tostring(o.navAgeS) .. "s · draw " .. tostring(o.canDraw) .. " · guard " .. tostring(o.guard),
+    "semibold", 14, W - x - 32), "semibold", 14, ui.c.text2, x, y + 96)
+  y = y + 136
   local colW = (W - x - 32 - 24) / 2
   local function list(title, lines, lx)
     ui.text(title, "bold", 14, ui.c.muted, lx, y)
@@ -1364,9 +1404,22 @@ local function activate(id, vx)
     state.diag = android.diagnostics()
   elseif k == "diagBack" or k == "langBack" then state.screen = "settings"
   elseif k == "langOpen" then state.screen = "lang"
+  elseif k == "ovVideo" then
+    config.set("overlayVideo", config.get("overlayVideo") == false)
+    sendOverlayConfig()
+  elseif k == "ovBanner" then
+    config.set("overlayBanner", config.get("overlayBanner") == false)
+    sendOverlayConfig()
+  elseif k == "ovNoSpeed" then
+    config.set("overlayNoSpeed", (config.get("overlayNoSpeed") or "block") == "block" and "allow" or "block")
+    sendOverlayConfig()
+  elseif k == "ovAllow" then
+    android.overlayPermission()
+    toast(T("Switch on Road Trip, then come back"))
   elseif k == "langPick" then
     config.set("language", id.code)
     lang.set(lang.resolve(id.code, state.deviceLang))
+    sendOverlayConfig()
     if lang.code ~= "en" then toast(T("Translated by AI, so some words may be off")) end
   elseif k == "media" then mediaCommand(id.action)
   elseif k == "seek" then
@@ -1377,6 +1430,7 @@ local function activate(id, vx)
   elseif k == "accent" then
     config.set("accent", id.hex)
     ui.setAccent(id.hex)
+    sendOverlayConfig()
   elseif k == "wifiOnly" then config.set("updateWifiOnly", config.get("updateWifiOnly") == false)
   elseif k == "site" then love.system.openURL("https://mightyx3n.github.io/road-trip/")
   elseif k == "mediaAccess" then
@@ -1621,6 +1675,8 @@ function love.load()
   local dl = android.language()
   state.deviceLang = type(dl) == "string" and dl or "en"
   lang.set(lang.resolve(config.get("language"), state.deviceLang))
+  sendOverlayConfig()
+  refreshOverlay()
   ui.setAccent(config.get("accent"))
   lg.setBackgroundColor(ui.c.bg)
   layout(lg.getDimensions())
@@ -1636,6 +1692,7 @@ end
 function love.resize(w, h) layout(w, h) end
 
 function love.focus(f)
+  state.foreground = f
   -- back from an app: draw straight away, then catch installs, removals, home changes
   if f then
     state.needRefresh, state.drew = true, false
@@ -1644,6 +1701,7 @@ function love.focus(f)
 end
 
 function love.visible(v)
+  state.foreground = v
   if v then burst() end
 end
 
@@ -1665,6 +1723,31 @@ function love.update(dt)
   end
 
   local t = state.timers
+  -- in front or not: Android's own answer (focus events don't always arrive behind other apps)
+  t.resumed = (t.resumed or 0) + dt
+  if t.resumed > 0.25 then
+    t.resumed = 0
+    local r = android.resumed()
+    if type(r) == "boolean" and r ~= state.resumed then
+      state.resumed = r
+      state.foreground = r
+      if r then state.needRefresh, state.drew = true, false burst() end
+    end
+  end
+  -- Road Trip's next turn, for the banner over other apps (once a second)
+  t.nav = (t.nav or 0) + dt
+  if t.nav > 1 then
+    t.nav = 0
+    local g = map.guidance()
+    if g then
+      android.overlayNav({ title = g.title, text = g.text or "", icon = g.icon,
+        arrival = T("{time} arrival", { time = g.arrival }) })
+      state.navSent = true
+    elseif state.navSent then
+      android.overlayNav(nil)
+      state.navSent = false
+    end
+  end
   t.update, t.guard, t.autoCheck, t.home = t.update + dt, t.guard + dt, t.autoCheck + dt, t.home + dt
   -- background downloads (weather, city search)
   t.fetch = t.fetch + dt
@@ -1795,8 +1878,8 @@ function love.run()
     local now = love.timer.getTime()
     if now - lastDraw > 1 then state.dirty = true end
 
-    local busy = animating()
-    if (state.dirty or busy) and lg.isActive() then
+    local busy = state.foreground and animating()
+    if (state.dirty or busy) and state.foreground and lg.isActive() then
       lg.origin()
       lg.clear(lg.getBackgroundColor())
       love.draw()
@@ -1805,6 +1888,6 @@ function love.run()
       lastDraw = now
     end
 
-    love.timer.sleep(busy and 0.001 or 0.05)
+    love.timer.sleep(busy and 0.001 or (state.foreground and 0.05 or 0.2))
   end
 end

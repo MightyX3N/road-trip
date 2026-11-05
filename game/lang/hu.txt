@@ -242,3 +242,17 @@ Beállítások
 Kedvencek
 Ország
 Népszerű
+Videó elrejtve vezetés közben
+A hang tovább szól. A videó visszajön, ha megállsz.
+Road Trip megnyitása
+Videó elrejtése vezetés közben
+A videós alkalmazásokat a következő kanyar és a lejátszás takarja
+Az Előtérben tartás kell ahhoz, hogy lássa, melyik alkalmazás van nyitva
+Ha a sebesség nem ismert
+Nincs GPS-jel, vagy nincs GPS a dobozban
+Videó elrejtése
+Videó mutatása
+Következő kanyar más alkalmazások felett
+Amikor a Road Trip vezet, és más alkalmazás van nyitva
+Az Előtérben tartás vagy más alkalmazások feletti megjelenítés engedélye kell
+Kapcsold be a Road Tripet, majd gyere vissza
