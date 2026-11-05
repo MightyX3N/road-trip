@@ -1,0 +1,244 @@
+dom,lun,mar,mié,jue,vie,sáb
+ene,feb,mar,abr,may,jun,jul,ago,sep,oct,nov,dic
+Mantener al frente está activado
+Las actualizaciones solo funcionan en Android
+Buscando actualizaciones…
+Road Trip {v} está actualizado
+No se pudieron buscar actualizaciones ({error})
+Despejado
+Mayormente despejado
+Parcialmente nublado
+Nublado
+Niebla
+Llovizna
+Lluvia
+Nieve
+Chubascos
+Chubascos de nieve
+Tormenta
+Tiempo
+No se pudo buscar; revisa la conexión
+No hay lugares con ese nombre
+Descargando Road Trip {v}
+Sigue usando Road Trip; Android te pedirá instalar cuando termine
+Permite que Road Trip instale sus actualizaciones
+Activa "Permitir desde esta fuente", vuelve y toca Instalar
+Instalar
+Road Trip {v} está descargado
+Android te pide confirmar; tus ajustes y favoritos se mantienen
+La actualización no terminó
+Revisa la conexión y vuelve a intentarlo ({error})
+Reintentar
+Toca Actualizar para descargarla e instalarla
+Road Trip {v} está disponible
+Actualizar
+Road Trip aún no es tu app de inicio
+Elígela para que el botón Inicio la abra
+Usar como app de inicio
+La actualización desactivó Mantener al frente
+Android hace esto con las apps instaladas fuera de la tienda; un interruptor lo vuelve a activar
+Activar
+Mantener Road Trip al frente
+Evita que la caja vuelva a su propio lanzador
+© OpenFreeMap © OpenStreetMap
+Navegando con {app}
+tu app de navegación
+Abrir {app}
+¿A dónde vas?
+Permite la ubicación para ver dónde estás
+Permitir
+Esperando tu ubicación…
+Elige tu ciudad para ver el tiempo
+Cargando…
+Aún no hay datos
+Ver tu próximo evento
+Nada en los próximos dos días
+Hoy
+Mañana
+Evento
+Todo el día
+Ahora
+En {n} min
+En {n} h
+Reproduciendo
+Ver qué suena
+en tus apps de música y vídeo
+No suena nada
+Pon música en cualquier app, o la radio
+Reproducir {station}
+Abrir radio
+Elige de 3 a 5 apps favoritas para tenerlas aquí
+Road Trip necesita acceso a las notificaciones para mostrar y controlar la música,
+los podcasts y los vídeos de tus apps. Solo lee lo que suena.
+No suena nada ahora
+Pon música en cualquier app y aparecerá aquí.
+Sonando desde {app}
+Desactivado por la última actualización
+Desactivado: la caja puede volver a su propio lanzador
+Mantener al frente
+Activado: Road Trip vuelve si la caja cambia de lanzador
+En pausa
+Mantener al frente tras actualizar
+Se vuelve a activar tras cada actualización
+Actívalo a mano o permítelo una vez con adb (ver la web)
+Reproduciendo y navegación
+Permitido: lee lo que suena y tu próximo giro
+Necesita acceso a las notificaciones
+Abrir
+Calendario
+Permitido: tu próximo evento aparece en Inicio
+Mostrar tu próximo evento en Inicio
+App de inicio
+Road Trip se abre al pulsar Inicio
+Road Trip aún no es la app de inicio
+Cambiar
+El lanzador propio de la caja
+Ábrelo 2 minutos sin que Road Trip intervenga
+Apps favoritas
+{n} de {max} elegidas
+Editar
+Color de acento
+Idioma
+Traducido por IA, algunas palabras pueden no ser correctas
+Elige tu ciudad
+Elegir
+Actualizaciones
+Versión {v}
+Buscar ahora
+Buscar actualizaciones solo con Wi-Fi
+Búsqueda automática cada 6 horas
+Diagnóstico
+Lo que Mantener al frente vio e hizo
+Ver
+Acerca de Road Trip
+Sitio web
+Road Trip en esta caja
+Lo tuyo
+Volver a Ajustes
+Las traducciones de Road Trip están hechas por IA, así que algunas palabras pueden no ser perfectas.
+Automático
+ninguna aún
+Nada aún
+Cambios de pantalla (más recientes primero)
+Notificaciones de navegación
+Lugar para el tiempo
+Escribe una ciudad o pueblo
+Buscar
+Bienvenido a Road Trip
+Elige tus apps favoritas
+Elige de 3 a 5. Estarán en la parte inferior de tu pantalla de inicio, a un toque.
+Omitir por ahora
+Cancelar
+Continuar
+Listo
+Quitar de favoritos
+Favoritos llenos (5)
+Añadir a favoritos
+Info de la app
+Abrir el lanzador de la caja 2 minutos
+No se encontró otro lanzador
+Activar Mantener al frente
+Mantener al frente está activado · desactivar
+Mantener al frente está desactivado · activar
+Buscar actualizaciones
+App de inicio predeterminada
+Road Trip
+1 · Accesibilidad → toca Road Trip una vez
+2 · Info de la app → menú → Permitir ajustes restringidos
+3 · Accesibilidad → actívalo
+No se pudo abrir {app}
+Puedes elegir hasta {max}
+Tiempo en {place}
+la app de navegación
+Activa Road Trip: reproduciendo
+Busca Road Trip: mantener al frente y actívalo
+Mantener al frente está desactivado
+Elige al menos {min}
+Añadido a favoritos
+Quitado de favoritos
+Has llegado a tu destino
+Sigue por {street}
+Iniciar la ruta
+En la rotonda, toma la salida {n} hacia {street}
+En la rotonda, toma la salida {n}
+{n} min
+{h} h {m} min
+No se encontró ninguna ruta
+Nueva ruta
+Has llegado
+Después: {next}
+Lugar
+No se encontró nada
+Llegada {time}
+© OpenFreeMap © OpenMapTiles · datos © colaboradores de OpenStreetMap · rutas FOSSGIS OSRM
+Llegada
+Terminar
+Fuera de la ruta
+Recientes
+Buscando…
+Road Trip necesita tu ubicación para buscar rutas desde donde estás
+O empieza la ruta desde el centro del mapa:
+Desde el centro del mapa
+Permitir ubicación
+Buscando rutas…
+llegada {time}
+La más rápida
+Iniciar
+Incorpórate
+Incorpórate a {street}
+Toma la rampa
+Toma la rampa hacia {street}
+Toma la salida
+Toma la salida hacia {street}
+Mantente a la izquierda
+Mantente a la izquierda hacia {street}
+Mantente a la derecha
+Mantente a la derecha hacia {street}
+Da la vuelta
+Da la vuelta hacia {street}
+Sigue por {street}
+Gira a la izquierda
+Gira a la izquierda hacia {street}
+Gira a la derecha
+Gira a la derecha hacia {street}
+Gira ligeramente a la izquierda
+Gira ligeramente a la izquierda hacia {street}
+Gira ligeramente a la derecha
+Gira ligeramente a la derecha hacia {street}
+Gira bruscamente a la izquierda
+Gira bruscamente a la izquierda hacia {street}
+Gira bruscamente a la derecha
+Gira bruscamente a la derecha hacia {street}
+No se pudo conectar con Radio Browser; revisa la conexión
+No se encontraron emisoras
+No hay nada aquí
+Quitada de favoritas de radio
+Añadida a favoritas de radio
+{n} kbps
+Conectando…
+No se puede reproducir esta emisora
+En directo
+Radio por internet
+Elige una emisora a la derecha. Marca con una estrella las que te gusten para guardarlas como favoritas; siguiente y anterior en el volante pasan entre ellas.
+Reproducir al arrancar el coche
+La última emisora, al arrancar
+Anterior
+{n} de {total}
+Siguiente
+{n} emisoras
+Nombre de la emisora
+Lo más escuchado en {country}
+Cambiar país
+Aún no hay favoritas. Busca emisoras en País, Populares o Buscar y toca la estrella.
+Cargando emisoras…
+Reintentar
+Escribe el nombre de una emisora y pulsa Intro
+Radio
+Inicio
+Apps
+Mapa
+Multimedia
+Ajustes
+Favoritas
+País
+Populares

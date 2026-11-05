@@ -1,0 +1,244 @@
+sön,mån,tis,ons,tor,fre,lör
+jan,feb,mar,apr,maj,jun,jul,aug,sep,okt,nov,dec
+Håll framme är på
+Uppdateringar fungerar bara på Android
+Söker efter uppdateringar…
+Road Trip {v} är uppdaterad
+Kunde inte söka efter uppdateringar ({error})
+Klart
+Mest klart
+Halvklart
+Mulet
+Dimma
+Duggregn
+Regn
+Snö
+Skurar
+Snöbyar
+Åska
+Väder
+Kunde inte söka; kontrollera anslutningen
+Inga platser med det namnet
+Hämtar Road Trip {v}
+Fortsätt använda Road Trip; Android frågar om installation när den är klar
+Låt Road Trip installera sina uppdateringar
+Slå på "Tillåt från den här källan", kom sedan tillbaka och tryck på Installera
+Installera
+Road Trip {v} är hämtad
+Android ber dig bekräfta; dina inställningar och favoriter finns kvar
+Uppdateringen blev inte klar
+Kontrollera anslutningen och försök igen ({error})
+Försök igen
+Tryck på Uppdatera för att hämta och installera den
+Road Trip {v} finns
+Uppdatera
+Road Trip är inte din startapp än
+Välj den så att Hem-knappen öppnar den
+Välj som startapp
+Uppdateringen stängde av Håll framme
+Android gör så med sidladdade appar; en knapp slår på det igen
+Slå på
+Håll Road Trip framme
+Hindrar boxen från att byta tillbaka till sin egen startskärm
+© OpenFreeMap © OpenStreetMap
+Navigerar med {app}
+din navigeringsapp
+Öppna {app}
+Vart ska du?
+Tillåt plats för att se var du är
+Tillåt
+Väntar på din plats…
+Välj din stad för att se vädret
+Laddar…
+Inga data än
+Se din nästa händelse
+Inget de närmaste två dagarna
+I dag
+I morgon
+Händelse
+Hela dagen
+Nu
+Om {n} min
+Om {n} h
+Spelas nu
+Se vad som spelas
+i dina musik- och videoappar
+Inget spelas
+Starta musik i en app eller radion
+Spela {station}
+Öppna radion
+Välj 3 till 5 favoritappar så hamnar de här
+Road Trip behöver åtkomst till aviseringar för att visa och styra musik,
+poddar och video från dina appar. Den läser bara vad som spelas.
+Inget spelas just nu
+Starta musik i en app så visas den här.
+Spelas från {app}
+Avstängd av senaste uppdateringen
+Av: boxen kan byta tillbaka till sin egen startskärm
+Håll framme
+På: Road Trip kommer tillbaka om boxen byter startskärm
+Pausad
+Håll framme efter uppdateringar
+Slår på sig själv igen efter varje uppdatering
+Slå på igen för hand, eller tillåt det en gång med adb (se webbplatsen)
+Spelas nu och navigering
+Tillåtet: läser vad som spelas och din nästa sväng
+Behöver åtkomst till aviseringar
+Öppna
+Kalender
+Tillåtet: din nästa händelse visas på Hem
+Visa din nästa händelse på Hem
+Startapp
+Road Trip öppnas när du trycker på Hem
+Road Trip är inte startapp än
+Ändra
+Boxens egen startskärm
+Öppna den i 2 minuter utan att Road Trip kliver in
+Favoritappar
+{n} av {max} valda
+Redigera
+Accentfärg
+Språk
+Översatt av AI, så vissa ord kan vara fel
+Välj din stad
+Välj
+Uppdateringar
+Version {v}
+Sök nu
+Sök efter uppdateringar bara på Wi-Fi
+Automatisk sökning var 6:e timme
+Diagnostik
+Vad Håll framme såg och gjorde
+Visa
+Om Road Trip
+Webbplats
+Road Trip på den här boxen
+Ditt
+Tillbaka till Inställningar
+Road Trips översättningar är gjorda av AI, så vissa ord kanske inte är perfekta.
+Automatiskt
+inga än
+Inget än
+Skärmbyten (nyast först)
+Navigeringsaviseringar
+Plats för vädret
+Skriv en stad eller ort
+Sök
+Välkommen till Road Trip
+Välj dina favoritappar
+Välj 3 till 5. De ligger längst ned på startskärmen, ett tryck bort.
+Hoppa över
+Avbryt
+Fortsätt
+Klar
+Ta bort från favoriter
+Favoriterna är fulla (5)
+Lägg till i favoriter
+Appinfo
+Öppna boxens startskärm i 2 minuter
+Ingen annan startskärm hittades
+Slå på Håll framme
+Håll framme är på · stäng av
+Håll framme är av · slå på
+Sök efter uppdateringar
+Standardstartapp
+Road Trip
+1 · Tillgänglighet → tryck på Road Trip en gång
+2 · Appinfo → meny → Tillåt begränsade inställningar
+3 · Tillgänglighet → slå på den
+Kunde inte öppna {app}
+Du kan välja högst {max}
+Vädret för {place}
+navigeringsappen
+Slå på Road Trip: spelas nu
+Hitta Road Trip: håll framme och slå på den
+Håll framme är av
+Välj minst {min}
+Tillagd i favoriter
+Borttagen från favoriter
+Du är framme vid målet
+Kör längs {street}
+Starta rutten
+Ta avfart {n} i rondellen mot {street}
+Ta avfart {n} i rondellen
+{n} min
+{h} h {m} min
+Kunde inte hitta en rutt
+Ny rutt
+Du är framme
+Sedan: {next}
+Plats
+Inget hittades
+Framme {time}
+© OpenFreeMap © OpenMapTiles · data © OpenStreetMap-bidragsgivare · rutter FOSSGIS OSRM
+Ankomst
+Avsluta
+Utanför rutten
+Senaste
+Söker…
+Road Trip behöver åtkomst till platsen för att hitta rutter från dig
+Eller starta rutten från mitten av kartan:
+Från kartans mitt
+Tillåt plats
+Hittar rutter…
+framme {time}
+Snabbast
+Starta
+Kör in i trafiken
+Kör in på {street}
+Ta påfarten
+Ta påfarten mot {street}
+Ta avfarten
+Ta avfarten mot {street}
+Håll vänster
+Håll vänster mot {street}
+Håll höger
+Håll höger mot {street}
+Gör en U-sväng
+Gör en U-sväng in på {street}
+Fortsätt på {street}
+Sväng vänster
+Sväng vänster in på {street}
+Sväng höger
+Sväng höger in på {street}
+Sväng svagt vänster
+Sväng svagt vänster in på {street}
+Sväng svagt höger
+Sväng svagt höger in på {street}
+Sväng skarpt vänster
+Sväng skarpt vänster in på {street}
+Sväng skarpt höger
+Sväng skarpt höger in på {street}
+Kunde inte nå Radio Browser; kontrollera anslutningen
+Inga stationer hittades
+Inget här
+Borttagen från radiofavoriter
+Tillagd i radiofavoriter
+{n} kbps
+Ansluter…
+Kan inte spela den här stationen
+Direkt
+Webbradio
+Välj en station till höger. Stjärnmärk de du gillar för att spara dem som favoriter; rattens nästa och föregående bläddrar mellan dem.
+Spela när bilen startar
+Senaste stationen, vid start
+Föregående
+{n} av {total}
+Nästa
+{n} stationer
+Stationens namn
+Mest lyssnade i {country}
+Byt land
+Inga favoriter än. Hitta stationer under Land, Populära eller Sök och tryck på stjärnan.
+Laddar stationer…
+Försök igen
+Skriv en stations namn och tryck Enter
+Radio
+Hem
+Appar
+Karta
+Media
+Inställningar
+Favoriter
+Land
+Populära

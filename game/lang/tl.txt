@@ -1,0 +1,244 @@
+Lin,Lun,Mar,Miy,Huw,Biy,Sab
+Ene,Peb,Mar,Abr,May,Hun,Hul,Ago,Set,Okt,Nob,Dis
+Naka-on ang Panatilihin sa harap
+Gumagana lang ang mga update sa Android
+Naghahanap ng mga update…
+Pinakabago na ang Road Trip {v}
+Hindi makapaghanap ng mga update ({error})
+Maaliwalas
+Halos maaliwalas
+Bahagyang maulap
+Maulap
+Hamog
+Ambon
+Ulan
+Niyebe
+Pag-ulan
+Pag-ulan ng niyebe
+Kulog at kidlat
+Panahon
+Hindi makapaghanap; tingnan ang koneksyon
+Walang lugar na may ganyang pangalan
+Dina-download ang Road Trip {v}
+Patuloy na gamitin ang Road Trip; magtatanong ang Android na mag-install kapag tapos na
+Payagan ang Road Trip na mag-install ng mga update nito
+I-on ang "Payagan mula sa source na ito", bumalik, at i-tap ang I-install
+I-install
+Na-download na ang Road Trip {v}
+Hihingi ng kumpirmasyon ang Android; mananatili ang mga setting at paborito mo
+Hindi natapos ang update
+Tingnan ang koneksyon at subukang muli ({error})
+Subukan muli
+I-tap ang I-update para i-download at i-install ito
+Available na ang Road Trip {v}
+I-update
+Hindi pa home app mo ang Road Trip
+Itakda ito para buksan ito ng Home button
+Itakda bilang home app
+Pinatay ng update ang Panatilihin sa harap
+Ginagawa ito ng Android sa mga app na wala sa store; isang switch ang magbabalik nito
+I-on
+Panatilihin ang Road Trip sa harap
+Pinipigilan ang box na bumalik sa sarili nitong launcher
+© OpenFreeMap © OpenStreetMap
+Nagna-navigate gamit ang {app}
+ang nav app mo
+Buksan ang {app}
+Saan papunta?
+Payagan ang lokasyon para makita kung nasaan ka
+Payagan
+Hinihintay ang lokasyon mo…
+Piliin ang lungsod mo para makita ang panahon
+Naglo-load…
+Wala pang data
+Tingnan ang susunod mong event
+Wala sa susunod na dalawang araw
+Ngayon
+Bukas
+Event
+Buong araw
+Ngayon na
+Sa loob ng {n} min
+Sa loob ng {n} oras
+Tumutugtog ngayon
+Tingnan kung ano ang tumutugtog
+sa mga music at video app mo
+Walang tumutugtog
+Magpatugtog ng musika sa anumang app, o ang radyo
+I-play ang {station}
+Buksan ang radyo
+Pumili ng 3 hanggang 5 paboritong app para nandito sila
+Kailangan ng Road Trip ng access sa notification para ipakita at kontrolin ang musika,
+podcast at video mula sa mga app mo. Binabasa lang nito kung ano ang tumutugtog.
+Walang tumutugtog ngayon
+Magpatugtog ng musika sa anumang app at lalabas ito rito.
+Tumutugtog mula sa {app}
+Pinatay ng huling update
+Off: puwedeng bumalik ang box sa sarili nitong launcher
+Panatilihin sa harap
+On: bumabalik ang Road Trip kapag nagpalit ng launcher ang box
+Naka-pause
+Panatilihin sa harap pagkatapos ng update
+Kusang nag-o-on ulit pagkatapos ng bawat update
+I-on ulit nang mano-mano, o payagan nang isang beses gamit ang adb (tingnan ang website)
+Tumutugtog ngayon at navigation
+Pinayagan: binabasa kung ano ang tumutugtog at ang susunod mong liko
+Kailangan ng access sa notification
+Buksan
+Kalendaryo
+Pinayagan: lumalabas sa Home ang susunod mong event
+Ipakita sa Home ang susunod mong event
+Home app
+Bumubukas ang Road Trip kapag pinindot mo ang Home
+Hindi pa home app ang Road Trip
+Palitan
+Ang sariling launcher ng box
+Buksan ito nang 2 minuto nang hindi nakikialam ang Road Trip
+Mga paboritong app
+{n} sa {max} ang napili
+I-edit
+Kulay ng accent
+Wika
+Isinalin ng AI, kaya maaaring mali ang ilang salita
+Piliin ang lungsod mo
+Itakda
+Mga update
+Bersyon {v}
+Tingnan ngayon
+Maghanap ng update sa Wi-Fi lang
+Awtomatikong pagtingin tuwing 6 na oras
+Diagnostics
+Ang nakita at ginawa ng Panatilihin sa harap
+Ipakita
+Tungkol sa Road Trip
+Website
+Road Trip sa box na ito
+Iyo
+Bumalik sa Settings
+Gawa ng AI ang mga salin ng Road Trip, kaya maaaring hindi perpekto ang ilang salita.
+Awtomatiko
+wala pa
+Wala pa
+Mga pagpalit ng screen (pinakabago muna)
+Mga notification ng navigation
+Lokasyon para sa panahon
+Mag-type ng lungsod o bayan
+Maghanap
+Maligayang pagdating sa Road Trip
+Piliin ang mga paborito mong app
+Pumili ng 3 hanggang 5. Nasa ibaba sila ng home screen mo, isang tap lang.
+Laktawan muna
+Kanselahin
+Magpatuloy
+Tapos na
+Alisin sa mga paborito
+Puno na ang mga paborito (5)
+Idagdag sa mga paborito
+Impormasyon ng app
+Buksan ang launcher ng box nang 2 minuto
+Walang ibang launcher na nakita
+I-on ang Panatilihin sa harap
+Naka-on ang Panatilihin sa harap · i-off
+Naka-off ang Panatilihin sa harap · i-on
+Maghanap ng update
+Default na home app
+Road Trip
+1 · Accessibility → i-tap nang isang beses ang Road Trip
+2 · Impormasyon ng app → menu → Payagan ang restricted settings
+3 · Accessibility → i-on ito
+Hindi mabuksan ang {app}
+Puwede kang pumili ng hanggang {max}
+Panahon sa {place}
+ang nav app
+I-on ang Road Trip: tumutugtog ngayon
+Hanapin ang Road Trip: panatilihin sa harap at i-on ito
+Naka-off ang Panatilihin sa harap
+Pumili ng kahit {min}
+Idinagdag sa mga paborito
+Inalis sa mga paborito
+Nakarating ka na sa destinasyon
+Dumaan sa {street}
+Simulan ang ruta
+Sa rotonda, lumabas sa exit {n} papunta sa {street}
+Sa rotonda, lumabas sa exit {n}
+{n} min
+{h} oras {m} min
+Walang nakitang ruta
+Bagong ruta
+Nakarating ka na
+Pagkatapos: {next}
+Lugar
+Walang nakita
+Darating {time}
+© OpenFreeMap © OpenMapTiles · data © mga kontribyutor ng OpenStreetMap · ruta FOSSGIS OSRM
+Pagdating
+Tapusin
+Wala sa ruta
+Kamakailan
+Naghahanap…
+Kailangan ng Road Trip ang lokasyon para maghanap ng ruta mula sa iyo
+O simulan ang ruta mula sa gitna ng mapa:
+Mula sa gitna ng mapa
+Payagan ang lokasyon
+Naghahanap ng ruta…
+darating {time}
+Pinakamabilis
+Simulan
+Sumanib
+Sumanib sa {street}
+Pumasok sa ramp
+Pumasok sa ramp papunta sa {street}
+Lumabas sa exit
+Lumabas sa exit papunta sa {street}
+Manatili sa kaliwa
+Manatili sa kaliwa papunta sa {street}
+Manatili sa kanan
+Manatili sa kanan papunta sa {street}
+Mag-U-turn
+Mag-U-turn papunta sa {street}
+Magpatuloy sa {street}
+Kumaliwa
+Kumaliwa sa {street}
+Kumanan
+Kumanan sa {street}
+Bahagyang kumaliwa
+Bahagyang kumaliwa sa {street}
+Bahagyang kumanan
+Bahagyang kumanan sa {street}
+Matarik na kumaliwa
+Matarik na kumaliwa sa {street}
+Matarik na kumanan
+Matarik na kumanan sa {street}
+Hindi maabot ang Radio Browser; tingnan ang koneksyon
+Walang nakitang istasyon
+Walang laman dito
+Inalis sa mga paboritong istasyon
+Idinagdag sa mga paboritong istasyon
+{n} kbps
+Kumokonekta…
+Hindi ma-play ang istasyong ito
+Live
+Internet radio
+Pumili ng istasyon sa kanan. Lagyan ng bituin ang mga gusto mo para itabi bilang paborito; ang next at previous sa manibela ay lilipat sa pagitan nila.
+I-play kapag umandar ang kotse
+Ang huling istasyon, sa pagbukas
+Nakaraan
+{n} sa {total}
+Susunod
+{n} istasyon
+Pangalan ng istasyon
+Pinakapinakikinggan sa {country}
+Palitan ang bansa
+Wala pang paborito. Maghanap ng istasyon sa Bansa, Sikat o Maghanap at i-tap ang bituin.
+Naglo-load ng mga istasyon…
+Subukan muli
+Mag-type ng pangalan ng istasyon at pindutin ang Enter
+Radyo
+Home
+Mga app
+Mapa
+Media
+Settings
+Mga paborito
+Bansa
+Sikat

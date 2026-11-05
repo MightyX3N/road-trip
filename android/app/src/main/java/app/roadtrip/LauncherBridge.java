@@ -104,6 +104,9 @@ public final class LauncherBridge {
                 case "uptime":
                     data = android.os.SystemClock.elapsedRealtime();
                     break;
+                case "language":
+                    data = java.util.Locale.getDefault().getLanguage();
+                    break;
                 case "country":
                     data = java.util.Locale.getDefault().getCountry();
                     break;

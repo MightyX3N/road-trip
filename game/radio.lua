@@ -3,6 +3,7 @@
 -- other apps are open. Favorites, the last station and the country live in config.
 
 local lg = love.graphics
+local T = require("lang").T
 
 local M = {}
 local android, config, ui, json, app -- set by M.init
@@ -114,7 +115,7 @@ local function load(tab, force)
   api(path, function(d)
     if M.lists[tab] ~= l then return end
     l.busy = false
-    if d == nil then l.err = "Couldn't reach Radio Browser; check the connection" return end
+    if d == nil then l.err = T("Couldn't reach Radio Browser; check the connection") return end
     if tab == "countries" then
       local out = {}
       for _, c in ipairs(d) do
@@ -129,7 +130,7 @@ local function load(tab, force)
         config.set("radioCountryName", l.items[1].country)
       end
     end
-    if #l.items == 0 then l.err = tab == "search" and "No stations found" or "Nothing here" end
+    if #l.items == 0 then l.err = tab == "search" and T("No stations found") or T("Nothing here") end
     app.dirty()
   end)
 end
@@ -161,7 +162,7 @@ local function toggleFavorite(st)
   end
   if not found then out[#out + 1] = st end
   config.set("radioFavs", out)
-  app.toast(found and "Removed from radio favorites" or "Added to radio favorites")
+  app.toast(found and T("Removed from radio favorites") or T("Added to radio favorites"))
   sendList()
 end
 
@@ -207,7 +208,7 @@ local function subLine(st)
   if st.country and st.country ~= "" then parts[#parts + 1] = st.country end
   local tag = (st.tags or ""):match("^([^,]+)")
   if tag and tag ~= "" then parts[#parts + 1] = tag end
-  if (st.bitrate or 0) > 0 then parts[#parts + 1] = st.bitrate .. " kbps" end
+  if (st.bitrate or 0) > 0 then parts[#parts + 1] = T("{n} kbps", { n = st.bitrate }) end
   return table.concat(parts, " · ")
 end
 
@@ -216,7 +217,8 @@ function M.play(st)
   local art
   local e = icons[st.uuid]
   if e and e.img then art = love.filesystem.getSaveDirectory() .. "/" .. iconPath(st) end
-  android.radioPlay({ uuid = st.uuid, name = st.name, url = st.url, art = art, sub = subLine(st) })
+  android.radioPlay({ uuid = st.uuid, name = st.name, url = st.url, art = art, sub = subLine(st),
+    lConnecting = T("Connecting…"), lPaused = T("Paused"), lError = T("Can't play this station") })
   M.status = { state = "connecting", station = st }
   config.set("radioLast", st)
   config.set("radioWasPlaying", true)
@@ -388,10 +390,10 @@ end
 
 local function statusLine()
   local s = M.status
-  if s.state == "connecting" then return "Connecting…", ui.c.muted end
-  if s.state == "playing" then return "Live", ui.c.accent end
-  if s.state == "paused" then return "Paused", ui.c.muted end
-  if s.state == "error" then return s.error or "Can't play this station", ui.hex("F09A8A") end
+  if s.state == "connecting" then return T("Connecting…"), ui.c.muted end
+  if s.state == "playing" then return T("Live"), ui.c.accent end
+  if s.state == "paused" then return T("Paused"), ui.c.muted end
+  if s.state == "error" then return s.error or T("Can't play this station"), ui.hex("F09A8A") end
   return nil
 end
 
@@ -414,9 +416,8 @@ local function drawPlayer(x, y, w, h)
   local pad = 28
   if not st then
     ui.icon("radio", x + pad, y + pad, 44, ui.c.accent, 1.6)
-    ui.text("Internet radio", "bold", 28, ui.c.text, x + pad, y + 96)
-    ui.textWrap("Pick a station on the right. Star the ones you like to keep them as favorites; "
-      .. "steering-wheel next and previous step through them.", "semibold", 16, ui.c.muted, x + pad, y + 140, w - pad * 2, 5)
+    ui.text(T("Internet radio"), "bold", 28, ui.c.text, x + pad, y + 96)
+    ui.textWrap(T("Pick a station on the right. Star the ones you like to keep them as favorites; steering-wheel next and previous step through them."), "semibold", 16, ui.c.muted, x + pad, y + 140, w - pad * 2, 5)
   else
     local size = math.min(180, w - pad * 2, h * 0.34)
     logo(st, x + pad, y + pad, size, 24)
@@ -442,8 +443,8 @@ local function drawPlayer(x, y, w, h)
   -- autoplay switch along the bottom
   local by = y + h - 84
   ui.rect(ui.c.line, x + pad, by, w - pad * 2, 1)
-  ui.text("Play when the car starts", "bold", 16, ui.c.text2, x + pad, by + 22)
-  ui.text("The last station, on start-up", "semibold", 13, ui.c.muted, x + pad, by + 46)
+  ui.text(T("Play when the car starts"), "bold", 16, ui.c.text2, x + pad, by + 22)
+  ui.text(T("The last station, on start-up"), "semibold", 13, ui.c.muted, x + pad, by + 46)
   toggleSwitch({ kind = "radio:autoplay" }, config.get("radioAutoplay") ~= false, x + w - pad - 60, by + 24)
 end
 
@@ -465,11 +466,11 @@ local function drawRows(items, x, y, w, h, l, rowFn)
   end
   if pages > 1 then
     local py = y + h - 56
-    ui.pill(l.page > 1 and { kind = "radio:page", d = -1 } or nil, "Previous", x, py, 56, l.page > 1 and "off2" or "off")
-    local label = l.page .. " of " .. pages
+    ui.pill(l.page > 1 and { kind = "radio:page", d = -1 } or nil, T("Previous"), x, py, 56, l.page > 1 and "off2" or "off")
+    local label = T("{n} of {total}", { n = l.page, total = pages })
     ui.text(label, "semibold", 15, ui.c.muted, x, py + (56 - ui.fontHeight("semibold", 15)) / 2, "center", w)
-    local nw = ui.textWidth("Next", "bold", 16) + 44
-    ui.pill(l.page < pages and { kind = "radio:page", d = 1 } or nil, "Next", x + w - nw, py, 56, l.page < pages and "off2" or "off")
+    local nw = ui.textWidth(T("Next"), "bold", 16) + 44
+    ui.pill(l.page < pages and { kind = "radio:page", d = 1 } or nil, T("Next"), x + w - nw, py, 56, l.page < pages and "off2" or "off")
   end
 end
 
@@ -491,7 +492,7 @@ local function countryRow(c, x, y, w, h)
   local on = c.cc == countryCode()
   ui.rect(on and ui.c.accentBg or ui.c.card, x, y, w, h, 20)
   ui.text(ui.fit(c.name, "bold", 19, w - 180), "bold", 19, on and ui.c.accent or ui.c.text2, x + 24, y + (h - ui.fontHeight("bold", 19)) / 2)
-  ui.text(c.count .. " stations", "semibold", 14, ui.c.muted, x, y + (h - ui.fontHeight("semibold", 14)) / 2, "right", w - 24)
+  ui.text(T("{n} stations", { n = c.count }), "semibold", 14, ui.c.muted, x, y + (h - ui.fontHeight("semibold", 14)) / 2, "right", w - 24)
   ui.hit({ kind = "radio:country", country = c }, x, y, w, h)
 end
 
@@ -507,7 +508,7 @@ function M.draw(x0, y0, w, h)
   -- tabs
   local tx = lx
   for _, t in ipairs(TABS) do
-    local label = t.label
+    local label = T(t.label)
     if t.id == "country" then label = config.get("radioCountryName") or countryCode() end
     local on = M.tab == t.id or (t.id == "country" and M.tab == "countries")
     tx = tx + ui.pill({ kind = "radio:tab", tab = t.id }, label, tx, ly, 52, on and "accent" or "off2") + 10
@@ -525,16 +526,16 @@ function M.draw(x0, y0, w, h)
     end
     ui.icon("search", lx + 18, ly + 18, 24, ui.c.muted, 2.2)
     local blink = s.typing and math.floor(love.timer.getTime() * 2) % 2 == 0
-    local shown = s.text ~= "" and s.text or "Station name"
+    local shown = s.text ~= "" and s.text or T("Station name")
     ui.text(ui.fit(shown, "semibold", 19, lw - 80) .. (blink and "|" or ""), "semibold", 19,
       s.text ~= "" and ui.c.text or ui.c.dim, lx + 56, ly + (60 - ui.fontHeight("semibold", 19)) / 2)
     ui.hit({ kind = "radio:field" }, lx, ly, lw, 60)
     ly, lh = ly + 76, lh - 76
   elseif M.tab == "country" then
     local name = config.get("radioCountryName") or countryCode()
-    ui.text(ui.fit("Most listened in " .. name, "bold", 15, lw - 200), "bold", 15, ui.c.muted, lx + 4, ly + 12)
-    local cw = ui.textWidth("Change country", "bold", 16) + 44
-    ui.pill({ kind = "radio:tab", tab = "countries" }, "Change country", lx + lw - cw, ly, 44, "off2")
+    ui.text(ui.fit(T("Most listened in {country}", { country = name }), "bold", 15, lw - 200), "bold", 15, ui.c.muted, lx + 4, ly + 12)
+    local cw = ui.textWidth(T("Change country"), "bold", 16) + 44
+    ui.pill({ kind = "radio:tab", tab = "countries" }, T("Change country"), lx + lw - cw, ly, 44, "off2")
     ly, lh = ly + 60, lh - 60
   end
 
@@ -544,22 +545,22 @@ function M.draw(x0, y0, w, h)
     M.lists.favs = l
     items = favorites()
     if #items == 0 then
-      ui.textWrap("No favorites yet. Find stations under Country, Popular or Search and tap the star.",
+      ui.textWrap(T("No favorites yet. Find stations under Country, Popular or Search and tap the star."),
         "semibold", 17, ui.c.muted, lx + 4, ly + 8, lw, 3)
       return
     end
   else
     l = M.lists[M.tab]
     if not l then load(M.tab) l = M.lists[M.tab] end
-    if l.busy then ui.text("Loading stations…", "semibold", 17, ui.c.muted, lx + 4, ly + 8) return end
+    if l.busy then ui.text(T("Loading stations…"), "semibold", 17, ui.c.muted, lx + 4, ly + 8) return end
     if l.err and not (l.items and #l.items > 0) then
       ui.text(l.err, "semibold", 17, ui.hex("F09A8A"), lx + 4, ly + 8)
-      if M.tab ~= "search" then ui.pill({ kind = "radio:retry" }, "Try again", lx, ly + 44, 52, "off2") end
+      if M.tab ~= "search" then ui.pill({ kind = "radio:retry" }, T("Try again"), lx, ly + 44, 52, "off2") end
       return
     end
     items = l.items or {}
     if M.tab == "search" and #items == 0 then
-      ui.text("Type a station's name and press Enter", "semibold", 17, ui.c.muted, lx + 4, ly + 8)
+      ui.text(T("Type a station's name and press Enter"), "semibold", 17, ui.c.muted, lx + 4, ly + 8)
       return
     end
   end
@@ -572,11 +573,11 @@ function M.drawWidget(x, y, w, h)
   local pad = 22
   ui.rect(ui.c.card, x, y, w, h, 26)
   ui.hit({ kind = "radio:open" }, x, y, w, h)
-  ui.text("Radio", "bold", 14, ui.c.muted, x + pad, y + 20)
+  ui.text(T("Radio"), "bold", 14, ui.c.muted, x + pad, y + 20)
   local size = 56
   logo(st, x + w - pad - size, y + 16, size, 14)
   local tw = w - pad * 2 - size - 10
-  ui.text(ui.fit(st and st.name or "Radio", "bold", 24, tw), "bold", 24, ui.c.text, x + pad, y + 50)
+  ui.text(ui.fit(st and st.name or T("Radio"), "bold", 24, tw), "bold", 24, ui.c.text, x + pad, y + 50)
   local line, col = statusLine()
   ui.text(ui.fit(line or "", "semibold", 16, tw), "semibold", 16, col or ui.c.muted, x + pad, y + 84)
   local bh = 52

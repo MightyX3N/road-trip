@@ -1,0 +1,244 @@
+CN,T2,T3,T4,T5,T6,T7
+Th1,Th2,Th3,Th4,Th5,Th6,Th7,Th8,Th9,Th10,Th11,Th12
+Giữ phía trước đang bật
+Cập nhật chỉ hoạt động trên Android
+Đang kiểm tra cập nhật…
+Road Trip {v} đã là bản mới nhất
+Không kiểm tra được cập nhật ({error})
+Quang đãng
+Phần lớn quang đãng
+Có mây rải rác
+Nhiều mây
+Sương mù
+Mưa phùn
+Mưa
+Tuyết
+Mưa rào
+Mưa tuyết
+Dông
+Thời tiết
+Không tìm được; hãy kiểm tra kết nối
+Không có nơi nào tên như vậy
+Đang tải Road Trip {v}
+Cứ dùng Road Trip bình thường; Android sẽ hỏi cài đặt khi tải xong
+Cho phép Road Trip cài bản cập nhật
+Bật "Cho phép từ nguồn này", rồi quay lại và nhấn Cài đặt
+Cài đặt
+Đã tải Road Trip {v}
+Android sẽ yêu cầu xác nhận; cài đặt và mục yêu thích vẫn giữ nguyên
+Cập nhật chưa xong
+Kiểm tra kết nối rồi thử lại ({error})
+Thử lại
+Nhấn Cập nhật để tải và cài đặt
+Đã có Road Trip {v}
+Cập nhật
+Road Trip chưa phải ứng dụng màn hình chính của bạn
+Đặt nó để nút Trang chủ mở nó
+Đặt làm màn hình chính
+Bản cập nhật đã tắt Giữ phía trước
+Android làm vậy với ứng dụng ngoài cửa hàng; một công tắc sẽ bật lại
+Bật
+Giữ Road Trip ở phía trước
+Ngăn thiết bị quay về trình khởi chạy của nó
+© OpenFreeMap © OpenStreetMap
+Dẫn đường bằng {app}
+ứng dụng dẫn đường của bạn
+Mở {app}
+Đi đâu?
+Cho phép vị trí để biết bạn đang ở đâu
+Cho phép
+Đang chờ vị trí của bạn…
+Chọn thành phố để xem thời tiết
+Đang tải…
+Chưa có dữ liệu
+Xem sự kiện tiếp theo
+Không có gì trong hai ngày tới
+Hôm nay
+Ngày mai
+Sự kiện
+Cả ngày
+Bây giờ
+Sau {n} phút
+Sau {n} giờ
+Đang phát
+Xem đang phát gì
+trong ứng dụng nhạc và video của bạn
+Không có gì đang phát
+Bật nhạc trong ứng dụng bất kỳ, hoặc radio
+Phát {station}
+Mở radio
+Chọn 3 đến 5 ứng dụng yêu thích để đặt ở đây
+Road Trip cần quyền truy cập thông báo để hiển thị và điều khiển nhạc,
+podcast và video từ ứng dụng của bạn. Nó chỉ đọc nội dung đang phát.
+Hiện không có gì đang phát
+Bật nhạc trong ứng dụng bất kỳ và nó sẽ hiện ở đây.
+Đang phát từ {app}
+Đã bị tắt bởi bản cập nhật gần nhất
+Tắt: thiết bị có thể quay về trình khởi chạy của nó
+Giữ phía trước
+Bật: Road Trip quay lại nếu thiết bị đổi trình khởi chạy
+Đã tạm dừng
+Giữ phía trước sau khi cập nhật
+Tự bật lại sau mỗi lần cập nhật
+Bật lại thủ công, hoặc cho phép một lần bằng adb (xem trang web)
+Đang phát và dẫn đường
+Đã cho phép: đọc nội dung đang phát và lượt rẽ tiếp theo
+Cần quyền truy cập thông báo
+Mở
+Lịch
+Đã cho phép: sự kiện tiếp theo hiện ở Trang chủ
+Hiện sự kiện tiếp theo ở Trang chủ
+Ứng dụng màn hình chính
+Road Trip mở khi bạn nhấn Trang chủ
+Road Trip chưa phải ứng dụng màn hình chính
+Đổi
+Trình khởi chạy riêng của thiết bị
+Mở trong 2 phút mà Road Trip không can thiệp
+Ứng dụng yêu thích
+Đã chọn {n}/{max}
+Sửa
+Màu nhấn
+Ngôn ngữ
+Do AI dịch, một số từ có thể chưa đúng
+Chọn thành phố của bạn
+Đặt
+Cập nhật
+Phiên bản {v}
+Kiểm tra ngay
+Chỉ kiểm tra cập nhật qua Wi-Fi
+Tự động kiểm tra mỗi 6 giờ
+Chẩn đoán
+Những gì Giữ phía trước đã thấy và làm
+Xem
+Giới thiệu Road Trip
+Trang web
+Road Trip trên thiết bị này
+Của bạn
+Quay lại Cài đặt
+Bản dịch của Road Trip do AI thực hiện, nên một số từ có thể chưa hoàn hảo.
+Tự động
+chưa có
+Chưa có gì
+Thay đổi màn hình (mới nhất trước)
+Thông báo dẫn đường
+Nơi xem thời tiết
+Nhập thành phố hoặc thị trấn
+Tìm
+Chào mừng đến với Road Trip
+Chọn ứng dụng yêu thích
+Chọn từ 3 đến 5. Chúng nằm ở cuối màn hình chính, chỉ một chạm.
+Bỏ qua lúc này
+Hủy
+Tiếp tục
+Xong
+Xóa khỏi yêu thích
+Đã đủ mục yêu thích (5)
+Thêm vào yêu thích
+Thông tin ứng dụng
+Mở trình khởi chạy của thiết bị trong 2 phút
+Không tìm thấy trình khởi chạy khác
+Bật Giữ phía trước
+Giữ phía trước đang bật · tắt
+Giữ phía trước đang tắt · bật
+Kiểm tra cập nhật
+Ứng dụng màn hình chính mặc định
+Road Trip
+1 · Hỗ trợ tiếp cận → nhấn Road Trip một lần
+2 · Thông tin ứng dụng → menu → Cho phép cài đặt bị hạn chế
+3 · Hỗ trợ tiếp cận → bật lên
+Không mở được {app}
+Bạn có thể chọn tối đa {max}
+Thời tiết tại {place}
+ứng dụng dẫn đường
+Bật Road Trip: đang phát
+Tìm Road Trip: giữ phía trước và bật lên
+Giữ phía trước đang tắt
+Chọn ít nhất {min}
+Đã thêm vào yêu thích
+Đã xóa khỏi yêu thích
+Bạn đã đến nơi
+Đi theo {street}
+Bắt đầu lộ trình
+Tại vòng xuyến, đi lối ra thứ {n} vào {street}
+Tại vòng xuyến, đi lối ra thứ {n}
+{n} phút
+{h} giờ {m} phút
+Không tìm thấy lộ trình
+Lộ trình mới
+Bạn đã đến
+Sau đó: {next}
+Địa điểm
+Không tìm thấy gì
+Đến lúc {time}
+© OpenFreeMap © OpenMapTiles · dữ liệu © cộng tác viên OpenStreetMap · lộ trình FOSSGIS OSRM
+Giờ đến
+Kết thúc
+Lệch lộ trình
+Gần đây
+Đang tìm…
+Road Trip cần vị trí để tìm lộ trình từ chỗ bạn
+Hoặc bắt đầu lộ trình từ giữa bản đồ:
+Từ giữa bản đồ
+Cho phép vị trí
+Đang tìm lộ trình…
+đến lúc {time}
+Nhanh nhất
+Bắt đầu
+Nhập làn
+Nhập làn vào {street}
+Đi vào đường dẫn
+Đi vào đường dẫn tới {street}
+Đi lối ra
+Đi lối ra tới {street}
+Đi bên trái
+Đi bên trái tới {street}
+Đi bên phải
+Đi bên phải tới {street}
+Quay đầu
+Quay đầu vào {street}
+Đi tiếp trên {street}
+Rẽ trái
+Rẽ trái vào {street}
+Rẽ phải
+Rẽ phải vào {street}
+Chếch trái
+Chếch trái vào {street}
+Chếch phải
+Chếch phải vào {street}
+Rẽ gắt sang trái
+Rẽ gắt sang trái vào {street}
+Rẽ gắt sang phải
+Rẽ gắt sang phải vào {street}
+Không kết nối được Radio Browser; hãy kiểm tra kết nối
+Không tìm thấy đài nào
+Ở đây không có gì
+Đã xóa khỏi đài yêu thích
+Đã thêm vào đài yêu thích
+{n} kbps
+Đang kết nối…
+Không phát được đài này
+Trực tiếp
+Radio trực tuyến
+Chọn một đài ở bên phải. Gắn sao cho đài bạn thích để lưu vào yêu thích; nút tiếp và lùi trên vô lăng chuyển giữa các đài đó.
+Phát khi xe khởi động
+Đài gần nhất, khi khởi động
+Trước
+{n}/{total}
+Tiếp
+{n} đài
+Tên đài
+Nghe nhiều nhất ở {country}
+Đổi quốc gia
+Chưa có yêu thích. Tìm đài ở mục Quốc gia, Phổ biến hoặc Tìm rồi nhấn ngôi sao.
+Đang tải đài…
+Thử lại
+Nhập tên đài rồi nhấn Enter
+Radio
+Trang chủ
+Ứng dụng
+Bản đồ
+Phương tiện
+Cài đặt
+Yêu thích
+Quốc gia
+Phổ biến

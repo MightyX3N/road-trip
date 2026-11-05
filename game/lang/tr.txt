@@ -1,0 +1,244 @@
+Paz,Pzt,Sal,Çar,Per,Cum,Cmt
+Oca,Şub,Mar,Nis,May,Haz,Tem,Ağu,Eyl,Eki,Kas,Ara
+Önde tut açık
+Güncellemeler yalnızca Android'de çalışır
+Güncellemeler aranıyor…
+Road Trip {v} güncel
+Güncellemeler denetlenemedi ({error})
+Açık
+Çoğunlukla açık
+Parçalı bulutlu
+Bulutlu
+Sis
+Çisenti
+Yağmur
+Kar
+Sağanak
+Kar sağanağı
+Fırtına
+Hava
+Arama yapılamadı; bağlantıyı kontrol edin
+Bu adda yer yok
+Road Trip {v} indiriliyor
+Road Trip'i kullanmaya devam edin; bitince Android yüklemek için soracak
+Road Trip'in güncellemelerini yüklemesine izin verin
+"Bu kaynaktan izin ver"i açın, sonra geri gelip Yükle'ye dokunun
+Yükle
+Road Trip {v} indirildi
+Android onay ister; ayarlarınız ve favorileriniz kalır
+Güncelleme tamamlanmadı
+Bağlantıyı kontrol edip tekrar deneyin ({error})
+Tekrar dene
+İndirip yüklemek için Güncelle'ye dokunun
+Road Trip {v} hazır
+Güncelle
+Road Trip henüz ana ekran uygulamanız değil
+Ana ekran düğmesi açsın diye onu seçin
+Ana ekran uygulaması yap
+Güncelleme Önde tut'u kapattı
+Android bunu mağaza dışı uygulamalarda yapar; tek bir anahtar geri açar
+Aç
+Road Trip'i önde tut
+Kutunun kendi başlatıcısına dönmesini engeller
+© OpenFreeMap © OpenStreetMap
+{app} ile navigasyon
+navigasyon uygulamanız
+{app} uygulamasını aç
+Nereye?
+Nerede olduğunuzu görmek için konuma izin verin
+İzin ver
+Konumunuz bekleniyor…
+Havayı görmek için şehrinizi seçin
+Yükleniyor…
+Henüz veri yok
+Sonraki etkinliğinizi görün
+Önümüzdeki iki gün boş
+Bugün
+Yarın
+Etkinlik
+Tüm gün
+Şimdi
+{n} dk sonra
+{n} sa sonra
+Şimdi çalıyor
+Neyin çaldığını görün
+müzik ve video uygulamalarınızda
+Hiçbir şey çalmıyor
+Bir uygulamada müzik ya da radyo başlatın
+{station} çal
+Radyoyu aç
+Burada durmaları için 3–5 favori uygulama seçin
+Road Trip'in müziği gösterip kontrol etmesi için bildirim erişimi gerekir,
+uygulamalarınızdaki podcast ve videolar için de. Yalnızca neyin çaldığını okur.
+Şu an hiçbir şey çalmıyor
+Bir uygulamada müzik başlatın, burada görünür.
+{app} üzerinden çalıyor
+Son güncelleme kapattı
+Kapalı: kutu kendi başlatıcısına dönebilir
+Önde tut
+Açık: kutu başlatıcı değiştirirse Road Trip geri gelir
+Duraklatıldı
+Güncellemelerden sonra önde tut
+Her güncellemeden sonra kendini yeniden açar
+Elle yeniden açın ya da adb ile bir kez izin verin (web sitesine bakın)
+Şimdi çalıyor ve navigasyon
+İzinli: neyin çaldığını ve sonraki dönüşünüzü okur
+Bildirim erişimi gerekir
+Aç
+Takvim
+İzinli: sonraki etkinliğiniz Ana ekranda görünür
+Sonraki etkinliği Ana ekranda göster
+Ana ekran uygulaması
+Ana ekran düğmesine bastığınızda Road Trip açılır
+Road Trip henüz ana ekran uygulaması değil
+Değiştir
+Kutunun kendi başlatıcısı
+Road Trip karışmadan 2 dakika aç
+Favori uygulamalar
+{n}/{max} seçildi
+Düzenle
+Vurgu rengi
+Dil
+Yapay zekâ çevirdi, bazı kelimeler yanlış olabilir
+Şehrinizi seçin
+Seç
+Güncellemeler
+Sürüm {v}
+Şimdi denetle
+Güncellemeleri yalnızca Wi-Fi'de ara
+6 saatte bir otomatik denetim
+Tanılama
+Önde tut'un gördükleri ve yaptıkları
+Göster
+Road Trip hakkında
+Web sitesi
+Bu kutudaki Road Trip
+Sizin
+Ayarlar'a dön
+Road Trip çevirileri yapay zekâ ile yapıldı, bu yüzden bazı kelimeler kusursuz olmayabilir.
+Otomatik
+henüz yok
+Henüz bir şey yok
+Ekran değişimleri (en yeni önce)
+Navigasyon bildirimleri
+Hava için konum
+Bir şehir ya da kasaba yazın
+Ara
+Road Trip'e hoş geldiniz
+Favori uygulamalarınızı seçin
+3 ile 5 arası seçin. Ana ekranınızın altında, bir dokunuş uzakta dururlar.
+Şimdilik geç
+İptal
+Devam
+Tamam
+Favorilerden çıkar
+Favoriler dolu (5)
+Favorilere ekle
+Uygulama bilgisi
+Kutunun başlatıcısını 2 dakika aç
+Başka başlatıcı bulunamadı
+Önde tut'u aç
+Önde tut açık · kapat
+Önde tut kapalı · aç
+Güncellemeleri denetle
+Varsayılan ana ekran uygulaması
+Road Trip
+1 · Erişilebilirlik → Road Trip'e bir kez dokunun
+2 · Uygulama bilgisi → menü → Kısıtlanmış ayarlara izin ver
+3 · Erişilebilirlik → açın
+{app} açılamadı
+En fazla {max} seçebilirsiniz
+{place} için hava
+navigasyon uygulaması
+Road Trip: şimdi çalıyor'u açın
+Road Trip: önde tut'u bulun ve açın
+Önde tut kapalı
+En az {min} seçin
+Favorilere eklendi
+Favorilerden çıkarıldı
+Hedefinize vardınız
+{street} boyunca ilerleyin
+Rotayı başlat
+Döner kavşakta {n}. çıkıştan {street} yönüne çıkın
+Döner kavşakta {n}. çıkıştan çıkın
+{n} dk
+{h} sa {m} dk
+Rota bulunamadı
+Yeni rota
+Vardınız
+Sonra: {next}
+Yer
+Hiçbir şey bulunamadı
+Varış {time}
+© OpenFreeMap © OpenMapTiles · veri © OpenStreetMap katkıcıları · rotalar FOSSGIS OSRM
+Varış
+Bitir
+Rota dışında
+Son kullanılanlar
+Aranıyor…
+Road Trip'in sizden rota bulması için konum gerekir
+Ya da rotayı haritanın ortasından başlatın:
+Haritanın ortasından
+Konuma izin ver
+Rotalar bulunuyor…
+varış {time}
+En hızlı
+Başlat
+Trafiğe katılın
+{street} yoluna katılın
+Rampaya girin
+{street} yönündeki rampaya girin
+Çıkışa girin
+{street} yönündeki çıkışa girin
+Soldan devam edin
+{street} yönüne soldan devam edin
+Sağdan devam edin
+{street} yönüne sağdan devam edin
+U dönüşü yapın
+{street} üzerinde U dönüşü yapın
+{street} üzerinde devam edin
+Sola dönün
+{street} yoluna sola dönün
+Sağa dönün
+{street} yoluna sağa dönün
+Hafif sola dönün
+{street} yoluna hafif sola dönün
+Hafif sağa dönün
+{street} yoluna hafif sağa dönün
+Keskin sola dönün
+{street} yoluna keskin sola dönün
+Keskin sağa dönün
+{street} yoluna keskin sağa dönün
+Radio Browser'a ulaşılamadı; bağlantıyı kontrol edin
+İstasyon bulunamadı
+Burada bir şey yok
+Radyo favorilerinden çıkarıldı
+Radyo favorilerine eklendi
+{n} kbps
+Bağlanıyor…
+Bu istasyon çalınamıyor
+Canlı
+İnternet radyosu
+Sağdan bir istasyon seçin. Beğendiklerinizi favori olarak saklamak için yıldızlayın; direksiyondaki ileri ve geri tuşları aralarında geçiş yapar.
+Araba çalışınca çal
+Son istasyon, açılışta
+Önceki
+{n}/{total}
+Sonraki
+{n} istasyon
+İstasyon adı
+{country} içinde en çok dinlenenler
+Ülkeyi değiştir
+Henüz favori yok. Ülke, Popüler ya da Ara altında istasyon bulun ve yıldıza dokunun.
+İstasyonlar yükleniyor…
+Tekrar dene
+Bir istasyon adı yazıp Enter'a basın
+Radyo
+Ana ekran
+Uygulamalar
+Harita
+Medya
+Ayarlar
+Favoriler
+Ülke
+Popüler

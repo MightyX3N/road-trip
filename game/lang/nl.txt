@@ -1,0 +1,244 @@
+zo,ma,di,wo,do,vr,za
+jan,feb,mrt,apr,mei,jun,jul,aug,sep,okt,nov,dec
+Op de voorgrond houden staat aan
+Updates werken alleen op Android
+Zoeken naar updates…
+Road Trip {v} is bijgewerkt
+Kon niet zoeken naar updates ({error})
+Helder
+Overwegend helder
+Half bewolkt
+Bewolkt
+Mist
+Motregen
+Regen
+Sneeuw
+Buien
+Sneeuwbuien
+Onweer
+Weer
+Zoeken mislukt; controleer de verbinding
+Geen plaatsen met die naam
+Road Trip {v} downloaden
+Blijf Road Trip gewoon gebruiken; Android vraagt om te installeren als het klaar is
+Sta Road Trip toe updates te installeren
+Zet "Toestaan van deze bron" aan, kom terug en tik op Installeren
+Installeren
+Road Trip {v} is gedownload
+Android vraagt om te bevestigen; je instellingen en favorieten blijven
+De update is niet afgerond
+Controleer de verbinding en probeer het opnieuw ({error})
+Opnieuw
+Tik op Bijwerken om hem te downloaden en te installeren
+Road Trip {v} is beschikbaar
+Bijwerken
+Road Trip is nog niet je startapp
+Stel hem in zodat de Home-knop hem opent
+Instellen als startapp
+De update heeft Op de voorgrond houden uitgezet
+Android doet dit bij apps van buiten de winkel; één schakelaar zet het weer aan
+Aanzetten
+Houd Road Trip op de voorgrond
+Voorkomt dat de box terugspringt naar zijn eigen launcher
+© OpenFreeMap © OpenStreetMap
+Navigeren met {app}
+je navigatie-app
+{app} openen
+Waar naartoe?
+Sta locatie toe om te zien waar je bent
+Toestaan
+Wachten op je locatie…
+Kies je stad om het weer te zien
+Laden…
+Nog geen gegevens
+Zie je volgende afspraak
+Niets in de komende twee dagen
+Vandaag
+Morgen
+Afspraak
+Hele dag
+Nu
+Over {n} min
+Over {n} u
+Nu aan het spelen
+Zie wat er speelt
+in je muziek- en video-apps
+Er speelt niets
+Start muziek in een app, of de radio
+{station} afspelen
+Radio openen
+Kies 3 tot 5 favoriete apps om ze hier te hebben
+Road Trip heeft toegang tot meldingen nodig om muziek,
+podcasts en video uit je apps te tonen en te bedienen. Het leest alleen wat er speelt.
+Er speelt nu niets
+Start muziek in een app, dan verschijnt die hier.
+Speelt via {app}
+Uitgezet door de laatste update
+Uit: de box kan terugspringen naar zijn eigen launcher
+Op de voorgrond houden
+Aan: Road Trip komt terug als de box van launcher wisselt
+Gepauzeerd
+Op de voorgrond houden na updates
+Zet zichzelf weer aan na elke update
+Zet het weer met de hand aan, of sta het één keer toe met adb (zie de website)
+Nu aan het spelen en navigatie
+Toegestaan: leest wat er speelt en je volgende afslag
+Heeft toegang tot meldingen nodig
+Openen
+Agenda
+Toegestaan: je volgende afspraak staat op Start
+Toon je volgende afspraak op Start
+Startapp
+Road Trip opent als je op Home drukt
+Road Trip is nog niet de startapp
+Wijzigen
+De eigen launcher van de box
+Open hem 2 minuten zonder dat Road Trip ingrijpt
+Favoriete apps
+{n} van {max} gekozen
+Bewerken
+Accentkleur
+Taal
+Vertaald door AI, dus sommige woorden kunnen niet kloppen
+Kies je stad
+Instellen
+Updates
+Versie {v}
+Nu zoeken
+Alleen via wifi naar updates zoeken
+Automatisch zoeken, elke 6 uur
+Diagnose
+Wat Op de voorgrond houden zag en deed
+Tonen
+Over Road Trip
+Website
+Road Trip op deze box
+Van jou
+Terug naar Instellingen
+De vertalingen van Road Trip zijn gemaakt door AI, dus sommige woorden zijn misschien niet perfect.
+Automatisch
+nog geen
+Nog niets
+Schermwissels (nieuwste eerst)
+Navigatiemeldingen
+Plaats voor het weer
+Typ een stad of plaats
+Zoeken
+Welkom bij Road Trip
+Kies je favoriete apps
+Kies er 3 tot 5. Ze staan onderaan je startscherm, één tik verderop.
+Nu overslaan
+Annuleren
+Doorgaan
+Klaar
+Uit favorieten halen
+Favorieten zijn vol (5)
+Aan favorieten toevoegen
+App-info
+Open de launcher van de box voor 2 minuten
+Geen andere launcher gevonden
+Op de voorgrond houden aanzetten
+Op de voorgrond houden staat aan · uitzetten
+Op de voorgrond houden staat uit · aanzetten
+Zoeken naar updates
+Standaard startapp
+Road Trip
+1 · Toegankelijkheid → tik één keer op Road Trip
+2 · App-info → menu → Beperkte instellingen toestaan
+3 · Toegankelijkheid → zet het aan
+Kon {app} niet openen
+Je kunt er maximaal {max} kiezen
+Weer voor {place}
+de navigatie-app
+Zet Road Trip: nu aan het spelen aan
+Zoek Road Trip: op de voorgrond houden en zet het aan
+Op de voorgrond houden staat uit
+Kies er minstens {min}
+Aan favorieten toegevoegd
+Uit favorieten gehaald
+Je bent op je bestemming
+Volg {street}
+Start de route
+Neem op de rotonde afslag {n} naar {street}
+Neem op de rotonde afslag {n}
+{n} min
+{h} u {m} min
+Geen route gevonden
+Nieuwe route
+Je bent er
+Daarna: {next}
+Plaats
+Niets gevonden
+Aankomst {time}
+© OpenFreeMap © OpenMapTiles · gegevens © OpenStreetMap-bijdragers · routes FOSSGIS OSRM
+Aankomst
+Stoppen
+Van de route af
+Recent
+Zoeken…
+Road Trip heeft je locatie nodig om routes vanaf jou te vinden
+Of start de route vanaf het midden van de kaart:
+Vanaf het midden van de kaart
+Locatie toestaan
+Routes zoeken…
+aankomst {time}
+Snelst
+Starten
+Invoegen
+Invoegen op {street}
+Neem de oprit
+Neem de oprit naar {street}
+Neem de afslag
+Neem de afslag naar {street}
+Links aanhouden
+Links aanhouden naar {street}
+Rechts aanhouden
+Rechts aanhouden naar {street}
+Keer om
+Keer om naar {street}
+Ga verder over {street}
+Sla linksaf
+Sla linksaf naar {street}
+Sla rechtsaf
+Sla rechtsaf naar {street}
+Flauwe bocht naar links
+Flauwe bocht naar links naar {street}
+Flauwe bocht naar rechts
+Flauwe bocht naar rechts naar {street}
+Scherpe bocht naar links
+Scherpe bocht naar links naar {street}
+Scherpe bocht naar rechts
+Scherpe bocht naar rechts naar {street}
+Kon Radio Browser niet bereiken; controleer de verbinding
+Geen zenders gevonden
+Hier is niets
+Uit radiofavorieten gehaald
+Aan radiofavorieten toegevoegd
+{n} kbps
+Verbinden…
+Kan deze zender niet afspelen
+Live
+Internetradio
+Kies rechts een zender. Geef je favorieten een ster om ze te bewaren; volgende en vorige op het stuur bladeren erdoor.
+Afspelen als de auto start
+De laatste zender, bij het opstarten
+Vorige
+{n} van {total}
+Volgende
+{n} zenders
+Naam van de zender
+Meest beluisterd in {country}
+Land wijzigen
+Nog geen favorieten. Zoek zenders onder Land, Populair of Zoeken en tik op de ster.
+Zenders laden…
+Opnieuw
+Typ de naam van een zender en druk op Enter
+Radio
+Start
+Apps
+Kaart
+Media
+Instellingen
+Favorieten
+Land
+Populair

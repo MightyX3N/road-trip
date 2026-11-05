@@ -1,0 +1,244 @@
+su,ma,ti,ke,to,pe,la
+tammi,helmi,maalis,huhti,touko,kesä,heinä,elo,syys,loka,marras,joulu
+Pidä edessä on päällä
+Päivitykset toimivat vain Androidilla
+Etsitään päivityksiä…
+Road Trip {v} on ajan tasalla
+Päivityksiä ei voitu tarkistaa ({error})
+Selkeää
+Enimmäkseen selkeää
+Puolipilvistä
+Pilvistä
+Sumua
+Tihkua
+Sadetta
+Lunta
+Kuuroja
+Lumikuuroja
+Ukkosta
+Sää
+Haku epäonnistui; tarkista yhteys
+Sen nimisiä paikkoja ei löytynyt
+Ladataan Road Trip {v}
+Jatka Road Tripin käyttöä; Android kysyy asennuksesta, kun lataus on valmis
+Salli Road Tripin asentaa päivityksensä
+Ota käyttöön "Salli tästä lähteestä", palaa sitten ja napauta Asenna
+Asenna
+Road Trip {v} on ladattu
+Android pyytää vahvistusta; asetuksesi ja suosikkisi säilyvät
+Päivitys ei valmistunut
+Tarkista yhteys ja yritä uudelleen ({error})
+Yritä uudelleen
+Napauta Päivitä ladataksesi ja asentaaksesi sen
+Road Trip {v} on saatavilla
+Päivitä
+Road Trip ei ole vielä aloitussovelluksesi
+Valitse se, niin Koti-painike avaa sen
+Valitse aloitussovellukseksi
+Päivitys poisti Pidä edessä -toiminnon käytöstä
+Android tekee näin sivuladatuille sovelluksille; yksi kytkin palauttaa sen
+Ota käyttöön
+Pidä Road Trip edessä
+Estää laitetta vaihtamasta takaisin omaan käynnistimeensä
+© OpenFreeMap © OpenStreetMap
+Navigoi: {app}
+navigointisovelluksesi
+Avaa {app}
+Minne mennään?
+Salli sijainti nähdäksesi, missä olet
+Salli
+Odotetaan sijaintiasi…
+Valitse kaupunkisi nähdäksesi sään
+Ladataan…
+Ei vielä tietoja
+Näe seuraava tapahtumasi
+Ei mitään kahteen päivään
+Tänään
+Huomenna
+Tapahtuma
+Koko päivän
+Nyt
+{n} min päästä
+{n} t päästä
+Nyt soi
+Katso, mikä soi
+musiikki- ja videosovelluksissasi
+Mikään ei soi
+Käynnistä musiikki jossain sovelluksessa tai radio
+Toista {station}
+Avaa radio
+Valitse 3–5 suosikkisovellusta, niin ne ovat tässä
+Road Trip tarvitsee ilmoitusten käyttöoikeuden näyttääkseen ja ohjatakseen musiikkia,
+podcasteja ja videoita sovelluksistasi. Se lukee vain, mikä soi.
+Mikään ei soi nyt
+Käynnistä musiikki jossain sovelluksessa, niin se näkyy tässä.
+Soi sovelluksesta {app}
+Viimeisin päivitys poisti käytöstä
+Pois: laite voi vaihtaa takaisin omaan käynnistimeensä
+Pidä edessä
+Päällä: Road Trip palaa, jos laite vaihtaa käynnistintä
+Tauolla
+Pidä edessä päivitysten jälkeen
+Kytkeytyy takaisin päälle jokaisen päivityksen jälkeen
+Kytke päälle käsin tai salli kerran adb:llä (katso verkkosivu)
+Nyt soi ja navigointi
+Sallittu: lukee, mikä soi, ja seuraavan käännöksesi
+Tarvitsee ilmoitusten käyttöoikeuden
+Avaa
+Kalenteri
+Sallittu: seuraava tapahtumasi näkyy Kodissa
+Näytä seuraava tapahtumasi Kodissa
+Aloitussovellus
+Road Trip aukeaa, kun painat Koti
+Road Trip ei ole vielä aloitussovellus
+Vaihda
+Laitteen oma käynnistin
+Avaa se 2 minuutiksi ilman Road Tripin väliintuloa
+Suosikkisovellukset
+{n}/{max} valittu
+Muokkaa
+Korostusväri
+Kieli
+Tekoälyn kääntämä, joten jotkin sanat voivat olla väärin
+Valitse kaupunkisi
+Valitse
+Päivitykset
+Versio {v}
+Tarkista nyt
+Tarkista päivitykset vain Wi-Fi-yhteydellä
+Automaattinen tarkistus 6 tunnin välein
+Vianmääritys
+Mitä Pidä edessä näki ja teki
+Näytä
+Tietoja Road Tripistä
+Verkkosivu
+Road Trip tässä laitteessa
+Omat
+Takaisin asetuksiin
+Road Tripin käännökset on tehty tekoälyllä, joten kaikki sanat eivät ehkä ole täydellisiä.
+Automaattinen
+ei vielä mitään
+Ei vielä mitään
+Näytön vaihdot (uusin ensin)
+Navigointi-ilmoitukset
+Sään sijainti
+Kirjoita kaupunki tai paikkakunta
+Hae
+Tervetuloa Road Tripiin
+Valitse suosikkisovelluksesi
+Valitse 3–5. Ne ovat aloitusnäytön alareunassa yhden napautuksen päässä.
+Ohita nyt
+Peruuta
+Jatka
+Valmis
+Poista suosikeista
+Suosikit ovat täynnä (5)
+Lisää suosikkeihin
+Sovelluksen tiedot
+Avaa laitteen käynnistin 2 minuutiksi
+Muuta käynnistintä ei löytynyt
+Ota Pidä edessä käyttöön
+Pidä edessä on päällä · kytke pois
+Pidä edessä on pois · kytke päälle
+Tarkista päivitykset
+Oletusaloitussovellus
+Road Trip
+1 · Esteettömyys → napauta Road Trip kerran
+2 · Sovelluksen tiedot → valikko → Salli rajoitetut asetukset
+3 · Esteettömyys → kytke se päälle
+Sovellusta {app} ei voitu avata
+Voit valita enintään {max}
+Sää: {place}
+navigointisovellus
+Ota käyttöön Road Trip: nyt soi
+Etsi Road Trip: pidä edessä ja kytke se päälle
+Pidä edessä on pois
+Valitse vähintään {min}
+Lisätty suosikkeihin
+Poistettu suosikeista
+Olet perillä
+Aja tietä {street}
+Aloita reitti
+Liikenneympyrästä {n}. liittymä tielle {street}
+Liikenneympyrästä {n}. liittymä
+{n} min
+{h} t {m} min
+Reittiä ei löytynyt
+Uusi reitti
+Olet perillä
+Sitten: {next}
+Paikka
+Mitään ei löytynyt
+Perillä {time}
+© OpenFreeMap © OpenMapTiles · tiedot © OpenStreetMapin tekijät · reitit FOSSGIS OSRM
+Saapuminen
+Lopeta
+Poissa reitiltä
+Viimeisimmät
+Haetaan…
+Road Trip tarvitsee sijainnin löytääkseen reittejä sinulta
+Tai aloita reitti kartan keskeltä:
+Kartan keskeltä
+Salli sijainti
+Etsitään reittejä…
+perillä {time}
+Nopein
+Aloita
+Liity liikenteeseen
+Liity tielle {street}
+Aja rampille
+Aja rampille tielle {street}
+Poistu liittymästä
+Poistu liittymästä tielle {street}
+Pidä vasemmalla
+Pidä vasemmalla tielle {street}
+Pidä oikealla
+Pidä oikealla tielle {street}
+Tee U-käännös
+Tee U-käännös tielle {street}
+Jatka tietä {street}
+Käänny vasemmalle
+Käänny vasemmalle tielle {street}
+Käänny oikealle
+Käänny oikealle tielle {street}
+Käänny loivasti vasemmalle
+Käänny loivasti vasemmalle tielle {street}
+Käänny loivasti oikealle
+Käänny loivasti oikealle tielle {street}
+Käänny jyrkästi vasemmalle
+Käänny jyrkästi vasemmalle tielle {street}
+Käänny jyrkästi oikealle
+Käänny jyrkästi oikealle tielle {street}
+Radio Browseriin ei saatu yhteyttä; tarkista yhteys
+Asemia ei löytynyt
+Täällä ei ole mitään
+Poistettu radiosuosikeista
+Lisätty radiosuosikkeihin
+{n} kbps
+Yhdistetään…
+Tätä asemaa ei voi toistaa
+Suora
+Nettiradio
+Valitse asema oikealta. Merkitse tähdellä ne, joista pidät, niin ne tallentuvat suosikeiksi; ohjauspyörän seuraava ja edellinen selaavat niitä.
+Toista, kun auto käynnistyy
+Viimeisin asema käynnistettäessä
+Edellinen
+{n}/{total}
+Seuraava
+{n} asemaa
+Aseman nimi
+Kuunnelluimmat: {country}
+Vaihda maata
+Ei vielä suosikkeja. Etsi asemia kohdista Maa, Suositut tai Hae ja napauta tähteä.
+Ladataan asemia…
+Yritä uudelleen
+Kirjoita aseman nimi ja paina Enter
+Radio
+Koti
+Sovellukset
+Kartta
+Media
+Asetukset
+Suosikit
+Maa
+Suositut

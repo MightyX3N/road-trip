@@ -1,0 +1,242 @@
+Keep in front is on
+Updates only work on Android
+Checking for updates…
+Road Trip {v} is up to date
+Couldn't check for updates ({error})
+Clear
+Mostly clear
+Partly cloudy
+Cloudy
+Fog
+Drizzle
+Rain
+Snow
+Showers
+Snow showers
+Thunderstorm
+Weather
+Couldn't search; check the connection
+No places called that
+Downloading Road Trip {v}
+Keep using Road Trip; Android will ask to install when it's done
+Allow Road Trip to install its updates
+Switch on "Allow from this source", then come back and tap Install
+Install
+Road Trip {v} is downloaded
+Android asks you to confirm; your settings and favorites stay
+The update didn't finish
+Check the connection and try again ({error})
+Retry
+Tap Update to download and install it
+Road Trip {v} is available
+Update
+Road Trip isn't your home app yet
+Set it so the Home button opens it
+Set as home app
+The update switched off Keep in front
+Android does this to sideloaded apps; one switch turns it back on
+Turn on
+Keep Road Trip in front
+Stops the box switching back to its own launcher
+© OpenFreeMap © OpenStreetMap
+Navigating with {app}
+your nav app
+Open {app}
+Where to?
+Allow location to see where you are
+Allow
+Waiting for your location…
+Set your city to see the weather
+Loading…
+No data yet
+See your next event
+Nothing in the next two days
+Today
+Tomorrow
+Event
+All day
+Now
+In {n} min
+In {n} h
+Now playing
+See what's playing
+in your music and video apps
+Nothing playing
+Start music in any app, or the radio
+Play {station}
+Open radio
+Pick 3 to 5 favorite apps to keep them here
+Road Trip needs notification access to show and control music,
+podcasts and video from your apps. It only reads what's playing.
+Nothing is playing
+Start music in any app and it shows up here.
+Playing from {app}
+Switched off by the last update
+Off: the box can switch back to its own launcher
+Keep in front
+On: Road Trip returns if the box switches launcher
+Paused
+Keep in front after updates
+Switches itself back on after each update
+Turn back on by hand, or allow it once with adb (see the website)
+Now playing and navigation
+Allowed: reads what's playing and your next turn
+Needs notification access
+Open
+Calendar
+Allowed: your next event shows on Home
+Show your next event on Home
+Home app
+Road Trip opens when you press Home
+Road Trip isn't the home app yet
+Change
+The box's own launcher
+Open it for 2 minutes without Road Trip stepping in
+Favorite apps
+{n} of {max} picked
+Edit
+Accent colour
+Language
+Translated by AI, so some words may be off
+Pick your city
+Set
+Updates
+Version {v}
+Check now
+Check for updates on Wi-Fi only
+Automatic checks, every 6 hours
+Diagnostics
+What Keep in front saw and did
+Show
+About Road Trip
+Website
+Road Trip on this box
+Yours
+Back to Settings
+Road Trip's translations are made by AI, so some words may not be perfect.
+Automatic
+none yet
+Nothing yet
+Screen changes (newest first)
+Navigation notifications
+Weather location
+Type a city or town
+Search
+Welcome to Road Trip
+Pick your favorite apps
+Choose 3 to 5. They sit along the bottom of your home screen, one tap away.
+Skip for now
+Cancel
+Continue
+Done
+Remove from favorites
+Favorites are full (5)
+Add to favorites
+App info
+Open the box's launcher for 2 minutes
+No other launcher found
+Turn on Keep in front
+Keep in front is on · turn off
+Keep in front is off · turn on
+Check for updates
+Default home app
+Road Trip
+1 · Accessibility → tap Road Trip once
+2 · App info → menu → Allow restricted settings
+3 · Accessibility → switch it on
+Couldn't open {app}
+You can pick up to {max}
+Weather for {place}
+the nav app
+Switch on Road Trip: now playing
+Find Road Trip: keep in front and turn it on
+Keep in front is off
+Pick at least {min}
+Added to favorites
+Removed from favorites
+Arrive at your destination
+Head along {street}
+Start the route
+At the roundabout, take exit {n} onto {street}
+At the roundabout, take exit {n}
+{n} min
+{h} h {m} min
+Couldn't find a route
+New route
+You've arrived
+Then {next}
+Place
+Nothing found
+{time} arrival
+© OpenFreeMap © OpenMapTiles · data © OpenStreetMap contributors · routes FOSSGIS OSRM
+Arrival
+End
+Off the route
+Recent
+Searching…
+Road Trip needs location access to find routes from you
+Or start the route from the middle of the map:
+From the map's centre
+Allow location
+Finding routes…
+arrive {time}
+Fastest
+Start
+Merge
+Merge onto {street}
+Take the ramp
+Take the ramp onto {street}
+Take the exit
+Take the exit onto {street}
+Keep left
+Keep left onto {street}
+Keep right
+Keep right onto {street}
+Make a U-turn
+Make a U-turn onto {street}
+Continue onto {street}
+Turn left
+Turn left onto {street}
+Turn right
+Turn right onto {street}
+Turn slightly left
+Turn slightly left onto {street}
+Turn slightly right
+Turn slightly right onto {street}
+Turn sharp left
+Turn sharp left onto {street}
+Turn sharp right
+Turn sharp right onto {street}
+Couldn't reach Radio Browser; check the connection
+No stations found
+Nothing here
+Removed from radio favorites
+Added to radio favorites
+{n} kbps
+Connecting…
+Can't play this station
+Live
+Internet radio
+Pick a station on the right. Star the ones you like to keep them as favorites; steering-wheel next and previous step through them.
+Play when the car starts
+The last station, on start-up
+Previous
+{n} of {total}
+Next
+{n} stations
+Station name
+Most listened in {country}
+Change country
+No favorites yet. Find stations under Country, Popular or Search and tap the star.
+Loading stations…
+Try again
+Type a station's name and press Enter
+Radio
+Home
+Apps
+Map
+Media
+Settings
+Favorites
+Country
+Popular

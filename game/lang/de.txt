@@ -1,0 +1,244 @@
+So,Mo,Di,Mi,Do,Fr,Sa
+Jan,Feb,Mär,Apr,Mai,Jun,Jul,Aug,Sep,Okt,Nov,Dez
+Im Vordergrund halten ist an
+Updates funktionieren nur auf Android
+Suche nach Updates…
+Road Trip {v} ist aktuell
+Konnte nicht nach Updates suchen ({error})
+Klar
+Überwiegend klar
+Teilweise bewölkt
+Bewölkt
+Nebel
+Nieselregen
+Regen
+Schnee
+Schauer
+Schneeschauer
+Gewitter
+Wetter
+Suche fehlgeschlagen; Verbindung prüfen
+Keine Orte mit diesem Namen
+Road Trip {v} wird geladen
+Nutze Road Trip einfach weiter; Android fragt nach der Installation, wenn alles geladen ist
+Erlaube Road Trip, Updates zu installieren
+Schalte "Von dieser Quelle zulassen" ein, komm zurück und tippe auf Installieren
+Installieren
+Road Trip {v} ist geladen
+Android bittet um Bestätigung; deine Einstellungen und Favoriten bleiben
+Das Update wurde nicht fertig
+Prüfe die Verbindung und versuch es noch mal ({error})
+Erneut versuchen
+Tippe auf Aktualisieren, um es zu laden und zu installieren
+Road Trip {v} ist verfügbar
+Aktualisieren
+Road Trip ist noch nicht deine Start-App
+Lege es fest, damit die Home-Taste es öffnet
+Als Start-App festlegen
+Das Update hat Im Vordergrund halten ausgeschaltet
+Android macht das bei nicht aus dem Store installierten Apps; ein Schalter aktiviert es wieder
+Einschalten
+Road Trip im Vordergrund halten
+Verhindert, dass die Box zu ihrem eigenen Launcher zurückwechselt
+© OpenFreeMap © OpenStreetMap
+Navigation mit {app}
+deiner Navi-App
+{app} öffnen
+Wohin?
+Standort erlauben, um zu sehen, wo du bist
+Erlauben
+Warte auf deinen Standort…
+Wähle deine Stadt, um das Wetter zu sehen
+Lädt…
+Noch keine Daten
+Deinen nächsten Termin sehen
+Nichts in den nächsten zwei Tagen
+Heute
+Morgen
+Termin
+Ganztägig
+Jetzt
+In {n} Min.
+In {n} Std.
+Läuft gerade
+Sehen, was läuft
+in deinen Musik- und Video-Apps
+Nichts läuft
+Starte Musik in einer App oder das Radio
+{station} abspielen
+Radio öffnen
+Wähle 3 bis 5 Lieblings-Apps, damit sie hier liegen
+Road Trip braucht Zugriff auf Benachrichtigungen, um Musik,
+Podcasts und Videos deiner Apps anzuzeigen und zu steuern. Es liest nur, was läuft.
+Gerade läuft nichts
+Starte Musik in einer App, dann erscheint sie hier.
+Läuft über {app}
+Vom letzten Update ausgeschaltet
+Aus: Die Box kann zu ihrem eigenen Launcher zurückwechseln
+Im Vordergrund halten
+An: Road Trip kommt zurück, wenn die Box den Launcher wechselt
+Pausiert
+Nach Updates im Vordergrund halten
+Schaltet sich nach jedem Update wieder ein
+Von Hand wieder einschalten oder einmal per adb erlauben (siehe Website)
+Läuft gerade und Navigation
+Erlaubt: liest, was läuft, und deine nächste Abbiegung
+Braucht Zugriff auf Benachrichtigungen
+Öffnen
+Kalender
+Erlaubt: dein nächster Termin erscheint auf Start
+Deinen nächsten Termin auf Start zeigen
+Start-App
+Road Trip öffnet sich, wenn du Home drückst
+Road Trip ist noch nicht die Start-App
+Ändern
+Der eigene Launcher der Box
+Für 2 Minuten öffnen, ohne dass Road Trip eingreift
+Lieblings-Apps
+{n} von {max} gewählt
+Bearbeiten
+Akzentfarbe
+Sprache
+Von KI übersetzt, manche Wörter können falsch sein
+Wähle deine Stadt
+Festlegen
+Updates
+Version {v}
+Jetzt prüfen
+Nur im WLAN nach Updates suchen
+Automatische Prüfung alle 6 Stunden
+Diagnose
+Was Im Vordergrund halten gesehen und getan hat
+Zeigen
+Über Road Trip
+Website
+Road Trip auf dieser Box
+Deins
+Zurück zu Einstellungen
+Die Übersetzungen von Road Trip stammen von einer KI, daher sind manche Wörter vielleicht nicht perfekt.
+Automatisch
+noch keine
+Noch nichts
+Bildschirmwechsel (neueste zuerst)
+Navigationsbenachrichtigungen
+Ort für das Wetter
+Stadt oder Ort eingeben
+Suchen
+Willkommen bei Road Trip
+Wähle deine Lieblings-Apps
+Wähle 3 bis 5. Sie liegen unten auf deinem Startbildschirm, einen Tipp entfernt.
+Später
+Abbrechen
+Weiter
+Fertig
+Aus Favoriten entfernen
+Favoriten sind voll (5)
+Zu Favoriten hinzufügen
+App-Info
+Launcher der Box für 2 Minuten öffnen
+Kein anderer Launcher gefunden
+Im Vordergrund halten einschalten
+Im Vordergrund halten ist an · ausschalten
+Im Vordergrund halten ist aus · einschalten
+Nach Updates suchen
+Standard-Start-App
+Road Trip
+1 · Bedienungshilfen → einmal auf Road Trip tippen
+2 · App-Info → Menü → Eingeschränkte Einstellungen zulassen
+3 · Bedienungshilfen → einschalten
+{app} konnte nicht geöffnet werden
+Du kannst bis zu {max} wählen
+Wetter für {place}
+die Navi-App
+Schalte Road Trip: läuft gerade ein
+Suche Road Trip: im Vordergrund halten und schalte es ein
+Im Vordergrund halten ist aus
+Wähle mindestens {min}
+Zu Favoriten hinzugefügt
+Aus Favoriten entfernt
+Du hast dein Ziel erreicht
+Folge {street}
+Route starten
+Im Kreisverkehr die {n}. Ausfahrt auf {street} nehmen
+Im Kreisverkehr die {n}. Ausfahrt nehmen
+{n} Min.
+{h} Std. {m} Min.
+Keine Route gefunden
+Neue Route
+Du bist angekommen
+Dann: {next}
+Ort
+Nichts gefunden
+Ankunft {time}
+© OpenFreeMap © OpenMapTiles · Daten © OpenStreetMap-Mitwirkende · Routen FOSSGIS OSRM
+Ankunft
+Beenden
+Abseits der Route
+Zuletzt
+Suche…
+Road Trip braucht Zugriff auf den Standort, um Routen von dir aus zu finden
+Oder starte die Route von der Kartenmitte:
+Von der Kartenmitte
+Standort erlauben
+Suche Routen…
+Ankunft {time}
+Am schnellsten
+Starten
+Einfädeln
+Auf {street} einfädeln
+Auffahrt nehmen
+Auffahrt auf {street} nehmen
+Ausfahrt nehmen
+Ausfahrt auf {street} nehmen
+Links halten
+Links halten auf {street}
+Rechts halten
+Rechts halten auf {street}
+Wenden
+Wenden auf {street}
+Weiter auf {street}
+Links abbiegen
+Links abbiegen auf {street}
+Rechts abbiegen
+Rechts abbiegen auf {street}
+Leicht links abbiegen
+Leicht links abbiegen auf {street}
+Leicht rechts abbiegen
+Leicht rechts abbiegen auf {street}
+Scharf links abbiegen
+Scharf links abbiegen auf {street}
+Scharf rechts abbiegen
+Scharf rechts abbiegen auf {street}
+Radio Browser nicht erreichbar; Verbindung prüfen
+Keine Sender gefunden
+Hier ist nichts
+Aus Radio-Favoriten entfernt
+Zu Radio-Favoriten hinzugefügt
+{n} kbit/s
+Verbinde…
+Dieser Sender lässt sich nicht abspielen
+Live
+Internetradio
+Wähle rechts einen Sender. Markiere deine liebsten mit einem Stern, um sie als Favoriten zu behalten; Weiter und Zurück am Lenkrad schalten zwischen ihnen.
+Beim Autostart abspielen
+Der letzte Sender, beim Start
+Zurück
+{n} von {total}
+Weiter
+{n} Sender
+Name des Senders
+Am meisten gehört in {country}
+Land ändern
+Noch keine Favoriten. Finde Sender unter Land, Beliebt oder Suchen und tippe auf den Stern.
+Lade Sender…
+Erneut versuchen
+Gib den Namen eines Senders ein und drücke Enter
+Radio
+Start
+Apps
+Karte
+Medien
+Einstellungen
+Favoriten
+Land
+Beliebt

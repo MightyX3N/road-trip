@@ -1,0 +1,244 @@
+dum,lun,mar,mie,joi,vin,sâm
+ian,feb,mar,apr,mai,iun,iul,aug,sept,oct,nov,dec
+Păstrare în față este activată
+Actualizările funcționează doar pe Android
+Se caută actualizări…
+Road Trip {v} este la zi
+Nu s-au putut căuta actualizări ({error})
+Senin
+Mai mult senin
+Parțial noros
+Noros
+Ceață
+Burniță
+Ploaie
+Ninsoare
+Averse
+Averse de ninsoare
+Furtună
+Vreme
+Căutarea nu a reușit; verifică conexiunea
+Niciun loc cu acest nume
+Se descarcă Road Trip {v}
+Folosește în continuare Road Trip; Android va cere instalarea când e gata
+Permite Road Trip să își instaleze actualizările
+Activează "Permite din această sursă", revino și atinge Instalează
+Instalează
+Road Trip {v} a fost descărcat
+Android îți cere confirmarea; setările și favoritele rămân
+Actualizarea nu s-a terminat
+Verifică conexiunea și încearcă din nou ({error})
+Reîncearcă
+Atinge Actualizează pentru a o descărca și instala
+Road Trip {v} este disponibil
+Actualizează
+Road Trip nu este încă aplicația ta de pornire
+Alege-o ca butonul Acasă să o deschidă
+Setează ca aplicație de pornire
+Actualizarea a dezactivat Păstrare în față
+Android face asta cu aplicațiile din afara magazinului; un comutator o reactivează
+Activează
+Păstrează Road Trip în față
+Împiedică unitatea să revină la propriul lansator
+© OpenFreeMap © OpenStreetMap
+Navigare cu {app}
+aplicația ta de navigare
+Deschide {app}
+Unde mergi?
+Permite locația ca să vezi unde ești
+Permite
+Se așteaptă locația ta…
+Alege-ți orașul ca să vezi vremea
+Se încarcă…
+Încă nu sunt date
+Vezi următorul eveniment
+Nimic în următoarele două zile
+Azi
+Mâine
+Eveniment
+Toată ziua
+Acum
+În {n} min
+În {n} h
+Se redă acum
+Vezi ce se redă
+în aplicațiile tale de muzică și video
+Nu se redă nimic
+Pornește muzică în orice aplicație sau radioul
+Redă {station}
+Deschide radioul
+Alege 3–5 aplicații preferate ca să le ai aici
+Road Trip are nevoie de acces la notificări ca să afișeze și să controleze muzica,
+podcasturile și videoclipurile din aplicațiile tale. Citește doar ce se redă.
+Nu se redă nimic acum
+Pornește muzică în orice aplicație și apare aici.
+Se redă din {app}
+Dezactivat de ultima actualizare
+Oprit: unitatea poate reveni la propriul lansator
+Păstrare în față
+Pornit: Road Trip revine dacă unitatea schimbă lansatorul
+Pe pauză
+Păstrare în față după actualizări
+Se reactivează singur după fiecare actualizare
+Reactivează manual sau permite o dată cu adb (vezi site-ul)
+Se redă acum și navigare
+Permis: citește ce se redă și următorul viraj
+Necesită acces la notificări
+Deschide
+Calendar
+Permis: următorul eveniment apare pe Acasă
+Arată următorul eveniment pe Acasă
+Aplicație de pornire
+Road Trip se deschide când apeși Acasă
+Road Trip nu este încă aplicația de pornire
+Schimbă
+Lansatorul propriu al unității
+Deschide-l 2 minute fără ca Road Trip să intervină
+Aplicații preferate
+{n} din {max} alese
+Editează
+Culoare de accent
+Limbă
+Tradus de IA, unele cuvinte pot fi greșite
+Alege-ți orașul
+Setează
+Actualizări
+Versiunea {v}
+Verifică acum
+Caută actualizări doar pe Wi-Fi
+Verificare automată la fiecare 6 ore
+Diagnosticare
+Ce a văzut și a făcut Păstrare în față
+Arată
+Despre Road Trip
+Site
+Road Trip pe această unitate
+Ale tale
+Înapoi la Setări
+Traducerile Road Trip sunt făcute de IA, așa că unele cuvinte s-ar putea să nu fie perfecte.
+Automat
+niciuna încă
+Nimic încă
+Schimbări de ecran (cele mai noi întâi)
+Notificări de navigare
+Loc pentru vreme
+Scrie un oraș sau o localitate
+Caută
+Bine ai venit în Road Trip
+Alege-ți aplicațiile preferate
+Alege 3–5. Stau în partea de jos a ecranului de pornire, la o atingere distanță.
+Sari peste acum
+Anulează
+Continuă
+Gata
+Elimină din preferate
+Preferatele sunt pline (5)
+Adaugă la preferate
+Info aplicație
+Deschide lansatorul unității 2 minute
+Nu s-a găsit alt lansator
+Activează Păstrare în față
+Păstrare în față e activă · dezactivează
+Păstrare în față e oprită · activează
+Caută actualizări
+Aplicație de pornire implicită
+Road Trip
+1 · Accesibilitate → atinge o dată Road Trip
+2 · Info aplicație → meniu → Permite setări restricționate
+3 · Accesibilitate → activează-l
+Nu s-a putut deschide {app}
+Poți alege cel mult {max}
+Vremea pentru {place}
+aplicația de navigare
+Activează Road Trip: se redă acum
+Găsește Road Trip: păstrare în față și activează-l
+Păstrare în față este oprită
+Alege cel puțin {min}
+Adăugat la preferate
+Eliminat din preferate
+Ai ajuns la destinație
+Mergi pe {street}
+Pornește traseul
+La sensul giratoriu, ia ieșirea {n} spre {street}
+La sensul giratoriu, ia ieșirea {n}
+{n} min
+{h} h {m} min
+Nu s-a găsit niciun traseu
+Traseu nou
+Ai ajuns
+Apoi: {next}
+Loc
+Nu s-a găsit nimic
+Sosire {time}
+© OpenFreeMap © OpenMapTiles · date © contribuitorii OpenStreetMap · trasee FOSSGIS OSRM
+Sosire
+Încheie
+În afara traseului
+Recente
+Se caută…
+Road Trip are nevoie de locație ca să găsească trasee de unde ești
+Sau pornește traseul din centrul hărții:
+Din centrul hărții
+Permite locația
+Se caută trasee…
+sosire {time}
+Cel mai rapid
+Pornește
+Intră în trafic
+Intră pe {street}
+Ia rampa
+Ia rampa spre {street}
+Ia ieșirea
+Ia ieșirea spre {street}
+Ține stânga
+Ține stânga spre {street}
+Ține dreapta
+Ține dreapta spre {street}
+Întoarce
+Întoarce pe {street}
+Continuă pe {street}
+Virează la stânga
+Virează la stânga pe {street}
+Virează la dreapta
+Virează la dreapta pe {street}
+Virează ușor la stânga
+Virează ușor la stânga pe {street}
+Virează ușor la dreapta
+Virează ușor la dreapta pe {street}
+Virează brusc la stânga
+Virează brusc la stânga pe {street}
+Virează brusc la dreapta
+Virează brusc la dreapta pe {street}
+Radio Browser nu răspunde; verifică conexiunea
+Nu s-au găsit posturi
+Nimic aici
+Eliminat din posturile preferate
+Adăugat la posturile preferate
+{n} kbps
+Se conectează…
+Acest post nu poate fi redat
+Live
+Radio pe internet
+Alege un post în dreapta. Marchează cu stea pe cele care îți plac ca să le păstrezi ca preferate; următorul și anteriorul de pe volan trec printre ele.
+Redă când pornește mașina
+Ultimul post, la pornire
+Anterior
+{n} din {total}
+Următor
+{n} posturi
+Numele postului
+Cele mai ascultate în {country}
+Schimbă țara
+Încă nu ai preferate. Găsește posturi la Țară, Populare sau Caută și atinge steaua.
+Se încarcă posturile…
+Reîncearcă
+Scrie numele unui post și apasă Enter
+Radio
+Acasă
+Aplicații
+Hartă
+Media
+Setări
+Preferate
+Țară
+Populare

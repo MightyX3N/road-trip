@@ -1,0 +1,244 @@
+søn,man,tir,ons,tor,fre,lør
+jan,feb,mar,apr,mai,jun,jul,aug,sep,okt,nov,des
+Hold foran er på
+Oppdateringer virker bare på Android
+Ser etter oppdateringer…
+Road Trip {v} er oppdatert
+Kunne ikke se etter oppdateringer ({error})
+Klarvær
+Stort sett klart
+Delvis skyet
+Skyet
+Tåke
+Yr
+Regn
+Snø
+Byger
+Snøbyger
+Torden
+Vær
+Kunne ikke søke; sjekk tilkoblingen
+Ingen steder med det navnet
+Laster ned Road Trip {v}
+Bare bruk Road Trip; Android spør om installering når den er ferdig
+La Road Trip installere sine oppdateringer
+Slå på "Tillat fra denne kilden", kom så tilbake og trykk på Installer
+Installer
+Road Trip {v} er lastet ned
+Android ber deg bekrefte; innstillingene og favorittene dine blir værende
+Oppdateringen ble ikke ferdig
+Sjekk tilkoblingen og prøv igjen ({error})
+Prøv igjen
+Trykk på Oppdater for å laste ned og installere den
+Road Trip {v} er tilgjengelig
+Oppdater
+Road Trip er ikke startappen din ennå
+Velg den, så åpner Hjem-knappen den
+Velg som startapp
+Oppdateringen slo av Hold foran
+Android gjør dette med sidelastede apper; én bryter slår det på igjen
+Slå på
+Hold Road Trip foran
+Hindrer boksen i å bytte tilbake til sin egen startskjerm
+© OpenFreeMap © OpenStreetMap
+Navigerer med {app}
+navigasjonsappen din
+Åpne {app}
+Hvor skal du?
+Tillat posisjon for å se hvor du er
+Tillat
+Venter på posisjonen din…
+Velg byen din for å se været
+Laster…
+Ingen data ennå
+Se neste avtale
+Ingenting de neste to dagene
+I dag
+I morgen
+Avtale
+Hele dagen
+Nå
+Om {n} min
+Om {n} t
+Spilles nå
+Se hva som spilles
+i musikk- og videoappene dine
+Ingenting spilles
+Start musikk i en app eller radioen
+Spill {station}
+Åpne radio
+Velg 3 til 5 favorittapper, så ligger de her
+Road Trip trenger varseltilgang for å vise og styre musikk,
+podkaster og video fra appene dine. Den leser bare hva som spilles.
+Ingenting spilles nå
+Start musikk i en app, så dukker den opp her.
+Spilles fra {app}
+Slått av av forrige oppdatering
+Av: boksen kan bytte tilbake til sin egen startskjerm
+Hold foran
+På: Road Trip kommer tilbake hvis boksen bytter startskjerm
+Satt på pause
+Hold foran etter oppdateringer
+Slår seg på igjen etter hver oppdatering
+Slå på igjen for hånd, eller tillat det én gang med adb (se nettsiden)
+Spilles nå og navigasjon
+Tillatt: leser hva som spilles og neste sving
+Trenger varseltilgang
+Åpne
+Kalender
+Tillatt: neste avtale vises på Hjem
+Vis neste avtale på Hjem
+Startapp
+Road Trip åpnes når du trykker på Hjem
+Road Trip er ikke startapp ennå
+Endre
+Boksens egen startskjerm
+Åpne den i 2 minutter uten at Road Trip blander seg inn
+Favorittapper
+{n} av {max} valgt
+Rediger
+Aksentfarge
+Språk
+Oversatt av KI, så noen ord kan være feil
+Velg byen din
+Velg
+Oppdateringer
+Versjon {v}
+Sjekk nå
+Se etter oppdateringer bare på Wi-Fi
+Automatisk sjekk hver 6. time
+Diagnostikk
+Hva Hold foran så og gjorde
+Vis
+Om Road Trip
+Nettside
+Road Trip på denne boksen
+Ditt
+Tilbake til Innstillinger
+Oversettelsene i Road Trip er laget av KI, så noen ord er kanskje ikke helt riktige.
+Automatisk
+ingen ennå
+Ingenting ennå
+Skjermbytter (nyeste først)
+Navigasjonsvarsler
+Sted for været
+Skriv en by eller et sted
+Søk
+Velkommen til Road Trip
+Velg favorittappene dine
+Velg 3 til 5. De ligger nederst på startskjermen, ett trykk unna.
+Hopp over
+Avbryt
+Fortsett
+Ferdig
+Fjern fra favoritter
+Favorittene er fulle (5)
+Legg til i favoritter
+Appinfo
+Åpne boksens startskjerm i 2 minutter
+Fant ingen annen startskjerm
+Slå på Hold foran
+Hold foran er på · slå av
+Hold foran er av · slå på
+Se etter oppdateringer
+Standard startapp
+Road Trip
+1 · Tilgjengelighet → trykk på Road Trip én gang
+2 · Appinfo → meny → Tillat begrensede innstillinger
+3 · Tilgjengelighet → slå den på
+Kunne ikke åpne {app}
+Du kan velge opptil {max}
+Været for {place}
+navigasjonsappen
+Slå på Road Trip: spilles nå
+Finn Road Trip: hold foran, og slå den på
+Hold foran er av
+Velg minst {min}
+Lagt til i favoritter
+Fjernet fra favoritter
+Du er fremme ved målet
+Kjør langs {street}
+Start ruten
+Ta avkjørsel {n} i rundkjøringen inn på {street}
+Ta avkjørsel {n} i rundkjøringen
+{n} min
+{h} t {m} min
+Fant ingen rute
+Ny rute
+Du er fremme
+Deretter: {next}
+Sted
+Ingenting funnet
+Fremme {time}
+© OpenFreeMap © OpenMapTiles · data © OpenStreetMap-bidragsytere · ruter FOSSGIS OSRM
+Ankomst
+Avslutt
+Utenfor ruten
+Nylige
+Søker…
+Road Trip trenger posisjonstilgang for å finne ruter fra deg
+Eller start ruten fra midten av kartet:
+Fra kartets midte
+Tillat posisjon
+Finner ruter…
+fremme {time}
+Raskest
+Start
+Flett inn
+Flett inn på {street}
+Ta rampen
+Ta rampen inn på {street}
+Ta avkjørselen
+Ta avkjørselen mot {street}
+Hold til venstre
+Hold til venstre mot {street}
+Hold til høyre
+Hold til høyre mot {street}
+Ta en U-sving
+Ta en U-sving inn på {street}
+Fortsett på {street}
+Sving til venstre
+Sving til venstre inn på {street}
+Sving til høyre
+Sving til høyre inn på {street}
+Sving svakt til venstre
+Sving svakt til venstre inn på {street}
+Sving svakt til høyre
+Sving svakt til høyre inn på {street}
+Sving skarpt til venstre
+Sving skarpt til venstre inn på {street}
+Sving skarpt til høyre
+Sving skarpt til høyre inn på {street}
+Kunne ikke nå Radio Browser; sjekk tilkoblingen
+Fant ingen stasjoner
+Ingenting her
+Fjernet fra radiofavoritter
+Lagt til i radiofavoritter
+{n} kbps
+Kobler til…
+Kan ikke spille denne stasjonen
+Direkte
+Nettradio
+Velg en stasjon til høyre. Gi stjerne til dem du liker for å lagre dem som favoritter; rattets neste og forrige bytter mellom dem.
+Spill når bilen starter
+Siste stasjon, ved oppstart
+Forrige
+{n} av {total}
+Neste
+{n} stasjoner
+Stasjonsnavn
+Mest lyttet i {country}
+Bytt land
+Ingen favoritter ennå. Finn stasjoner under Land, Populære eller Søk, og trykk på stjernen.
+Laster stasjoner…
+Prøv igjen
+Skriv navnet på en stasjon og trykk Enter
+Radio
+Hjem
+Apper
+Kart
+Medier
+Innstillinger
+Favoritter
+Land
+Populære

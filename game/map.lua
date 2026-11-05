@@ -5,6 +5,7 @@
 -- decoded one per frame; searches and routes are polled.
 
 local lg = love.graphics
+local T = require("lang").T
 
 local M = {}
 local android, config, ui, json, app -- set by M.init
@@ -474,21 +475,34 @@ M.decodePolyline = decodePolyline
 local function instruction(st)
   local name = (st.name and st.name ~= "") and st.name or nil
   local m = st.modifier or ""
-  local onto = name and (" onto " .. name) or ""
   local t = st.type
-  if t == "arrive" then return "Arrive at your destination" end
-  if t == "depart" then return name and ("Head along " .. name) or "Start the route" end
-  if t == "roundabout" or t == "rotary" or t == "roundabout turn" then
-    return "At the roundabout, take exit " .. (st.exit or 1) .. onto
+  -- "X" or "X onto <street>", each as its own sentence so languages can order the words
+  local function act(plain, withName)
+    if name then return T(withName, { street = name }) end
+    return T(plain)
   end
-  if t == "merge" then return "Merge" .. onto end
-  if t == "on ramp" then return "Take the ramp" .. onto end
-  if t == "off ramp" then return "Take the exit" .. onto end
-  if t == "fork" then return "Keep " .. (m:find("left") and "left" or "right") .. onto end
-  if m == "uturn" then return "Make a U-turn" .. onto end
-  if m == "straight" or t == "continue" or t == "new name" then return "Continue" .. onto end
-  if m ~= "" then return "Turn " .. m .. onto end
-  return "Continue" .. onto
+  if t == "arrive" then return T("Arrive at your destination") end
+  if t == "depart" then return name and T("Head along {street}", { street = name }) or T("Start the route") end
+  if t == "roundabout" or t == "rotary" or t == "roundabout turn" then
+    if name then return T("At the roundabout, take exit {n} onto {street}", { n = st.exit or 1, street = name }) end
+    return T("At the roundabout, take exit {n}", { n = st.exit or 1 })
+  end
+  if t == "merge" then return act("Merge", "Merge onto {street}") end
+  if t == "on ramp" then return act("Take the ramp", "Take the ramp onto {street}") end
+  if t == "off ramp" then return act("Take the exit", "Take the exit onto {street}") end
+  if t == "fork" then
+    if m:find("left") then return act("Keep left", "Keep left onto {street}") end
+    return act("Keep right", "Keep right onto {street}")
+  end
+  if m == "uturn" then return act("Make a U-turn", "Make a U-turn onto {street}") end
+  if m == "straight" or t == "continue" or t == "new name" then return act("Continue", "Continue onto {street}") end
+  if m == "left" then return act("Turn left", "Turn left onto {street}") end
+  if m == "right" then return act("Turn right", "Turn right onto {street}") end
+  if m == "slight left" then return act("Turn slightly left", "Turn slightly left onto {street}") end
+  if m == "slight right" then return act("Turn slightly right", "Turn slightly right onto {street}") end
+  if m == "sharp left" then return act("Turn sharp left", "Turn sharp left onto {street}") end
+  if m == "sharp right" then return act("Turn sharp right", "Turn sharp right onto {street}") end
+  return act("Continue", "Continue onto {street}")
 end
 
 local function arrowIcon(st)
@@ -513,8 +527,8 @@ end
 
 local function fmtDur(s)
   local mins = math.floor(s / 60 + 0.5)
-  if mins < 60 then return mins .. " min" end
-  return string.format("%d h %02d min", math.floor(mins / 60), mins % 60)
+  if mins < 60 then return T("{n} min", { n = mins }) end
+  return T("{h} h {m} min", { h = math.floor(mins / 60), m = string.format("%02d", mins % 60) })
 end
 M.fmtDist, M.fmtDur = fmtDist, fmtDur
 
@@ -594,7 +608,7 @@ local function requestRoutes(lat, lon, from)
     M.routesBusy = false
     local d = r.ok and json.decode(r.body or "")
     if not d or d.code ~= "Ok" or not d.routes or #d.routes == 0 then
-      app.toast(d and d.message or "Couldn't find a route")
+      app.toast(d and d.message or T("Couldn't find a route"))
       return
     end
     local list = {}
@@ -602,12 +616,12 @@ local function requestRoutes(lat, lon, from)
       local p = parseRoute(rr)
       if p then list[#list + 1] = p end
     end
-    if #list == 0 then app.toast("Couldn't find a route") return end
+    if #list == 0 then app.toast(T("Couldn't find a route")) return end
     if not M.dest then return end -- cancelled meanwhile
     if M.mode == "nav" and M.nav then
       -- a re-route: swap in the new line, keep going
       M.nav.route, M.nav.idx, M.nav.off = list[1], 1, 0
-      app.toast("New route")
+      app.toast(T("New route"))
     else
       M.routes, M.sel, M.mode = list, 1, "overview"
       M.wantFit = true
@@ -697,12 +711,16 @@ function M.guidance()
     dest = M.dest and M.dest.name or "",
   }
   if g.arrived or not next then
-    g.title, g.text, g.icon = "You've arrived", g.dest, "pin"
+    g.title, g.text, g.icon = T("You've arrived"), g.dest, "pin"
   else
     g.title = fmtDist(next.at - n.along)
     g.text = instruction(next)
     g.icon = arrowIcon(next)
-    if after and after.type ~= "arrive" then g.then_ = "Then " .. instruction(after):gsub("^%u", string.lower) end
+    if after and after.type ~= "arrive" then 
+      local nx = instruction(after)
+      if require("lang").code == "en" then nx = nx:gsub("^%u", string.lower) end
+      g.then_ = T("Then {next}", { next = nx })
+    end
   end
   return g
 end
@@ -728,13 +746,13 @@ local function runSearch()
     if M.search ~= s then return end
     s.busy = false
     local d = r.ok and json.decode(r.body or "")
-    if not d then s.err = "Couldn't search; check the connection" return end
+    if not d then s.err = T("Couldn't search; check the connection") return end
     local list = {}
     for _, f in ipairs(d.features or {}) do
       local p, g = f.properties or {}, f.geometry or {}
       local co = g.coordinates or {}
       if co[1] and co[2] then
-        local name = p.name or p.street or "Place"
+        local name = p.name or p.street or T("Place")
         local subParts = {}
         if p.street and p.name ~= p.street then
           subParts[#subParts + 1] = p.street .. (p.housenumber and (" " .. p.housenumber) or "")
@@ -745,7 +763,7 @@ local function runSearch()
       end
     end
     s.results = list
-    if #list == 0 then s.err = "Nothing found" end
+    if #list == 0 then s.err = T("Nothing found") end
     if s.text ~= asked then s.dueAt = love.timer.getTime() + 0.3 end -- typed more meanwhile
     app.dirty()
   end)
@@ -1071,7 +1089,7 @@ function M.drawWidget(x, y, w, h, radius)
     drawTurnCard(g, x + 16, y + 16, cw)
     local by = y + h - 16 - 64
     ui.rect(ui.c.bg, x + 16, by, w - 32, 64, 20)
-    local sub = g.arrival .. " arrival · " .. fmtDur(g.remTime) .. " · " .. fmtDist(g.remaining)
+    local sub = T("{time} arrival", { time = g.arrival }) .. " · " .. fmtDur(g.remTime) .. " · " .. fmtDist(g.remaining)
     ui.text(ui.fit(sub, "bold", 20, w - 72), "bold", 20, ui.c.text, x + 36, by + (64 - ui.fontHeight("bold", 20)) / 2)
     return true
   end
@@ -1086,7 +1104,7 @@ local function mapButton(id, icon, x, y)
 end
 
 local function attribution(x, y, w)
-  ui.text(ui.fit("© OpenFreeMap © OpenMapTiles · data © OpenStreetMap contributors · routes FOSSGIS OSRM", "semibold", 12, w),
+  ui.text(ui.fit(T("© OpenFreeMap © OpenMapTiles · data © OpenStreetMap contributors · routes FOSSGIS OSRM"), "semibold", 12, w),
     "semibold", 12, hex("5A5C61"), x, y)
 end
 
@@ -1109,14 +1127,14 @@ function M.drawUI(x0, y0, w, h)
     local bw = math.min(460, w - 140)
     ui.rect(ui.c.bg, x0 + 20, y0 + 20, bw, 68, 22)
     ui.icon("search", x0 + 42, y0 + 42, 24, ui.c.muted, 2.2)
-    ui.text("Where to?", "bold", 20, ui.c.text2, x0 + 80, y0 + 20 + (68 - ui.fontHeight("bold", 20)) / 2)
+    ui.text(T("Where to?"), "bold", 20, ui.c.text2, x0 + 80, y0 + 20 + (68 - ui.fontHeight("bold", 20)) / 2)
     ui.hit({ kind = "map:search" }, x0 + 20, y0 + 20, bw, 68)
     if not M.permission then
       ui.rect(ui.c.card, x0 + 20, y0 + 104, bw, 72, 20)
-      ui.text("Allow location to see where you are", "bold", 16, ui.c.text, x0 + 40, y0 + 128)
-      ui.pill({ kind = "map:allow" }, "Allow", x0 + 20 + bw - 110, y0 + 116, 48, "accent")
+      ui.text(T("Allow location to see where you are"), "bold", 16, ui.c.text, x0 + 40, y0 + 128)
+      ui.pill({ kind = "map:allow" }, T("Allow"), x0 + 20 + bw - 110, y0 + 116, 48, "accent")
     elseif not M.fix then
-      ui.text("Waiting for your location…", "semibold", 15, ui.c.muted, x0 + 26, y0 + 102)
+      ui.text(T("Waiting for your location…"), "semibold", 15, ui.c.muted, x0 + 26, y0 + 102)
     end
   end
 
@@ -1133,19 +1151,19 @@ function M.drawUI(x0, y0, w, h)
       local by = y0 + h - 20 - 92
       ui.rect(ui.c.bg, x0 + 20, by, w - 40, 92, 26)
       ui.text(g.arrival, "bold", 30, ui.c.text, x0 + 46, by + 14)
-      ui.text("Arrival", "semibold", 14, ui.c.muted, x0 + 46, by + 56)
+      ui.text(T("Arrival"), "semibold", 14, ui.c.muted, x0 + 46, by + 56)
       ui.rect(hex("2A2C31"), x0 + 170, by + 22, 1, 48)
       ui.text(fmtDur(g.remTime), "bold", 24, ui.c.text, x0 + 196, by + 18)
       ui.text(fmtDist(g.remaining), "semibold", 14, ui.c.muted, x0 + 196, by + 56)
-      local endW = ui.textWidth("End", "bold", 18) + 72
+      local endW = ui.textWidth(T("End"), "bold", 18) + 72
       local ex = x0 + w - 20 - 14 - endW
       ui.text(ui.fit(g.dest, "bold", 18, ex - 24 - (x0 + 340)), "bold", 18, ui.c.text, x0 + 340, by + 22)
       attribution(x0 + 340, by + 56, ex - 24 - (x0 + 340))
       ui.rect(hex("2A1C1A"), ex, by + 14, endW, 64, 32)
-      ui.text("End", "bold", 18, hex("F09A8A"), ex, by + 14 + (64 - ui.fontHeight("bold", 18)) / 2, "center", endW)
+      ui.text(T("End"), "bold", 18, hex("F09A8A"), ex, by + 14 + (64 - ui.fontHeight("bold", 18)) / 2, "center", endW)
       ui.hit({ kind = "map:end" }, ex, by + 14, endW, 64)
       if M.nav.off > 50 then
-        ui.text("Off the route", "bold", 15, hex("F09A8A"), x0 + 26, y0 + 172)
+        ui.text(T("Off the route"), "bold", 15, hex("F09A8A"), x0 + 26, y0 + 172)
       end
     end
   elseif mode == "browse" then
@@ -1166,7 +1184,7 @@ function M.drawUI(x0, y0, w, h)
     ui.hit({ kind = "map:field" }, px + 22, py + 22, fw, 64)
     ui.icon("search", px + 40, py + 42, 24, ui.c.muted, 2.2)
     local blink = math.floor(love.timer.getTime() * 2) % 2 == 0
-    local shown = s.text ~= "" and s.text or "Where to?"
+    local shown = s.text ~= "" and s.text or T("Where to?")
     ui.text(ui.fit(shown, "semibold", 20, fw - 80) .. ((s.text ~= "" and blink) and "|" or ""), "semibold", 20,
       s.text ~= "" and ui.c.text or ui.c.dim, px + 76, py + 22 + (64 - ui.fontHeight("semibold", 20)) / 2)
     mapButton({ kind = "map:closeSearch" }, "close", px + pw - 22 - 64, py + 22)
@@ -1176,9 +1194,9 @@ function M.drawUI(x0, y0, w, h)
     if s.results then
       items = s.results
     elseif s.text == "" then
-      items, heading = config.get("mapRecents") or {}, "Recent"
+      items, heading = config.get("mapRecents") or {}, T("Recent")
     end
-    if s.busy then ui.text("Searching…", "semibold", 15, ui.c.muted, px + 24, ry) ry = ry + 30 end
+    if s.busy then ui.text(T("Searching…"), "semibold", 15, ui.c.muted, px + 24, ry) ry = ry + 30 end
     if s.err then ui.text(s.err, "semibold", 15, hex("F09A8A"), px + 24, ry) ry = ry + 30 end
     if heading and #items > 0 then ui.text(heading, "bold", 14, ui.c.muted, px + 24, ry) ry = ry + 30 end
     for i, it in ipairs(items or {}) do
@@ -1209,13 +1227,13 @@ function M.drawUI(x0, y0, w, h)
     mapButton({ kind = "map:cancel" }, "close", px + pw - 26 - 64, py + 22)
     local ry = py + 110
     if M.waitingFix then
-      ui.text(M.permission and "Waiting for your location…" or "Road Trip needs location access to find routes from you",
+      ui.text(M.permission and T("Waiting for your location…") or T("Road Trip needs location access to find routes from you"),
         "semibold", 17, ui.c.muted, px + 26, ry)
-      ui.text("Or start the route from the middle of the map:", "semibold", 15, ui.c.muted, px + 26, ry + 40)
-      ui.pill({ kind = "map:fromCentre" }, "From the map's centre", px + 26, ry + 76, 56, "accent")
-      if not M.permission then ui.pill({ kind = "map:allow" }, "Allow location", px + 26, ry + 146, 56, "off2") end
+      ui.text(T("Or start the route from the middle of the map:"), "semibold", 15, ui.c.muted, px + 26, ry + 40)
+      ui.pill({ kind = "map:fromCentre" }, T("From the map's centre"), px + 26, ry + 76, 56, "accent")
+      if not M.permission then ui.pill({ kind = "map:allow" }, T("Allow location"), px + 26, ry + 146, 56, "off2") end
     elseif M.routesBusy or not M.routes then
-      ui.text("Finding routes…", "semibold", 17, ui.c.muted, px + 26, ry)
+      ui.text(T("Finding routes…"), "semibold", 17, ui.c.muted, px + 26, ry)
     else
       local fastest = math.huge
       for _, rt in ipairs(M.routes) do fastest = math.min(fastest, rt.duration) end
@@ -1229,9 +1247,9 @@ function M.drawUI(x0, y0, w, h)
           lg.rectangle("line", px + 20, ry, pw - 40, 92, 22, 22, 16)
         end
         ui.text(fmtDur(rt.duration), "bold", 26, ui.c.text, px + 42, ry + 14)
-        ui.text(fmtDist(rt.distance) .. " · arrive " .. os.date("%H:%M", os.time() + math.floor(rt.duration)),
+        ui.text(fmtDist(rt.distance) .. " · " .. T("arrive {time}", { time = os.date("%H:%M", os.time() + math.floor(rt.duration)) }),
           "semibold", 15, ui.c.muted, px + 42, ry + 56)
-        local tag = rt.duration <= fastest + 1 and "Fastest" or ("+" .. fmtDur(rt.duration - fastest))
+        local tag = rt.duration <= fastest + 1 and T("Fastest") or ("+" .. fmtDur(rt.duration - fastest))
         ui.text(tag, "bold", 15, on and ui.c.accent or ui.c.muted, px + 20, ry + 36, "right", pw - 40 - 22)
         ui.hit({ kind = "map:sel", i = i }, px + 20, ry, pw - 40, 92)
         ry = ry + 104
@@ -1239,7 +1257,7 @@ function M.drawUI(x0, y0, w, h)
       local sy = py + ph - 26 - 72 - 26
       ui.rect(ui.c.accent, px + 26, sy, pw - 52, 72, 36)
       ui.icon("navArrow", px + pw / 2 - 64, sy + 22, 28, ui.c.onAccent, 2.4)
-      ui.text("Start", "bold", 22, ui.c.onAccent, px + pw / 2 - 28, sy + (72 - ui.fontHeight("bold", 22)) / 2)
+      ui.text(T("Start"), "bold", 22, ui.c.onAccent, px + pw / 2 - 28, sy + (72 - ui.fontHeight("bold", 22)) / 2)
       ui.hit({ kind = "map:start" }, px + 26, sy, pw - 52, 72)
     end
     attribution(px + 26, py + ph - 30, pw - 52)

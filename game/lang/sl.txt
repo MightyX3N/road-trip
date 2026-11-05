@@ -1,0 +1,244 @@
+ned,pon,tor,sre,čet,pet,sob
+jan,feb,mar,apr,maj,jun,jul,avg,sep,okt,nov,dec
+Drži v ospredju je vklopljeno
+Posodobitve delujejo samo v Androidu
+Iščem posodobitve…
+Road Trip {v} je posodobljen
+Posodobitev ni bilo mogoče preveriti ({error})
+Jasno
+Pretežno jasno
+Delno oblačno
+Oblačno
+Megla
+Rosenje
+Dež
+Sneg
+Plohe
+Snežne plohe
+Nevihta
+Vreme
+Iskanje ni uspelo; preveri povezavo
+Ni krajev s tem imenom
+Prenašam Road Trip {v}
+Kar uporabljaj Road Trip; Android bo vprašal za namestitev, ko bo končano
+Dovoli Road Tripu nameščanje posodobitev
+Vklopi "Dovoli iz tega vira", se vrni in tapni Namesti
+Namesti
+Road Trip {v} je prenesen
+Android prosi za potrditev; nastavitve in priljubljene ostanejo
+Posodobitev se ni končala
+Preveri povezavo in poskusi znova ({error})
+Poskusi znova
+Tapni Posodobi, da jo preneseš in namestiš
+Road Trip {v} je na voljo
+Posodobi
+Road Trip še ni tvoja domača aplikacija
+Nastavi ga, da ga odpre gumb Domov
+Nastavi kot domačo
+Posodobitev je izklopila Drži v ospredju
+Android to naredi z aplikacijami zunaj trgovine; eno stikalo ga vrne
+Vklopi
+Drži Road Trip v ospredju
+Prepreči, da bi se naprava vrnila na svoj zaganjalnik
+© OpenFreeMap © OpenStreetMap
+Navigacija z {app}
+tvoja navigacijska aplikacija
+Odpri {app}
+Kam greš?
+Dovoli lokacijo, da vidiš, kje si
+Dovoli
+Čakam na tvojo lokacijo…
+Izberi svoje mesto za vreme
+Nalaganje…
+Še ni podatkov
+Oglej si naslednji dogodek
+Nič v naslednjih dveh dneh
+Danes
+Jutri
+Dogodek
+Ves dan
+Zdaj
+Čez {n} min
+Čez {n} h
+Zdaj se predvaja
+Oglej si, kaj se predvaja
+v tvojih glasbenih in video aplikacijah
+Nič se ne predvaja
+Zaženi glasbo v kateri koli aplikaciji ali radio
+Predvajaj {station}
+Odpri radio
+Izberi 3 do 5 priljubljenih aplikacij, da bodo tukaj
+Road Trip potrebuje dostop do obvestil, da prikazuje in upravlja glasbo,
+podcaste in video iz tvojih aplikacij. Bere samo, kaj se predvaja.
+Zdaj se nič ne predvaja
+Zaženi glasbo v kateri koli aplikaciji in prikazala se bo tukaj.
+Predvaja se iz {app}
+Izklopljeno z zadnjo posodobitvijo
+Izklopljeno: naprava se lahko vrne na svoj zaganjalnik
+Drži v ospredju
+Vklopljeno: Road Trip se vrne, če naprava zamenja zaganjalnik
+Začasno ustavljeno
+Drži v ospredju po posodobitvah
+Se po vsaki posodobitvi sam znova vklopi
+Vklopi ročno ali enkrat dovoli prek adb (glej spletno stran)
+Zdaj se predvaja in navigacija
+Dovoljeno: bere, kaj se predvaja, in tvoj naslednji zavoj
+Potrebuje dostop do obvestil
+Odpri
+Koledar
+Dovoljeno: naslednji dogodek je na Domov
+Pokaži naslednji dogodek na Domov
+Domača aplikacija
+Road Trip se odpre, ko pritisneš Domov
+Road Trip še ni domača aplikacija
+Spremeni
+Lastni zaganjalnik naprave
+Odpri ga za 2 minuti, ne da bi Road Trip posegel
+Priljubljene aplikacije
+Izbranih {n} od {max}
+Uredi
+Barva poudarka
+Jezik
+Prevedla umetna inteligenca, nekatere besede so lahko napačne
+Izberi svoje mesto
+Nastavi
+Posodobitve
+Različica {v}
+Preveri zdaj
+Išči posodobitve samo prek Wi-Fi
+Samodejno preverjanje vsakih 6 ur
+Diagnostika
+Kaj je Drži v ospredju videl in naredil
+Pokaži
+O Road Tripu
+Spletna stran
+Road Trip na tej napravi
+Tvoje
+Nazaj v Nastavitve
+Prevode Road Tripa je naredila umetna inteligenca, zato nekatere besede morda niso popolne.
+Samodejno
+še nobena
+Še nič
+Menjave zaslona (najnovejše najprej)
+Navigacijska obvestila
+Kraj za vreme
+Vpiši mesto ali kraj
+Išči
+Dobrodošli v Road Tripu
+Izberi priljubljene aplikacije
+Izberi 3 do 5. Na dnu domačega zaslona bodo, en dotik stran.
+Zdaj preskoči
+Prekliči
+Nadaljuj
+Končano
+Odstrani iz priljubljenih
+Priljubljene so polne (5)
+Dodaj med priljubljene
+Podatki o aplikaciji
+Odpri zaganjalnik naprave za 2 minuti
+Ni drugega zaganjalnika
+Vklopi Drži v ospredju
+Drži v ospredju je vklopljeno · izklopi
+Drži v ospredju je izklopljeno · vklopi
+Išči posodobitve
+Privzeta domača aplikacija
+Road Trip
+1 · Dostopnost → enkrat tapni Road Trip
+2 · Podatki o aplikaciji → meni → Dovoli omejene nastavitve
+3 · Dostopnost → vklopi ga
+Ni mogoče odpreti {app}
+Izbereš lahko največ {max}
+Vreme za {place}
+navigacijska aplikacija
+Vklopi Road Trip: zdaj se predvaja
+Poišči Road Trip: drži v ospredju in ga vklopi
+Drži v ospredju je izklopljeno
+Izberi vsaj {min}
+Dodano med priljubljene
+Odstranjeno iz priljubljenih
+Prispel si na cilj
+Pelji po {street}
+Začni pot
+V krožišču zapelji na {n}. izvoz proti {street}
+V krožišču zapelji na {n}. izvoz
+{n} min
+{h} h {m} min
+Poti ni bilo mogoče najti
+Nova pot
+Prispel si
+Nato: {next}
+Kraj
+Nič najdeno
+Prihod {time}
+© OpenFreeMap © OpenMapTiles · podatki © sodelavci OpenStreetMap · poti FOSSGIS OSRM
+Prihod
+Končaj
+Zunaj poti
+Nedavno
+Iščem…
+Road Trip potrebuje lokacijo, da najde poti od tebe
+Ali začni pot iz sredine zemljevida:
+Iz sredine zemljevida
+Dovoli lokacijo
+Iščem poti…
+prihod {time}
+Najhitrejša
+Začni
+Vključi se
+Vključi se na {street}
+Zapelji na priključek
+Zapelji na priključek proti {street}
+Zapelji z izvoza
+Zapelji z izvoza proti {street}
+Drži se levo
+Drži se levo proti {street}
+Drži se desno
+Drži se desno proti {street}
+Obrni polkrožno
+Obrni polkrožno na {street}
+Nadaljuj po {street}
+Zavij levo
+Zavij levo na {street}
+Zavij desno
+Zavij desno na {street}
+Zavij rahlo levo
+Zavij rahlo levo na {street}
+Zavij rahlo desno
+Zavij rahlo desno na {street}
+Zavij ostro levo
+Zavij ostro levo na {street}
+Zavij ostro desno
+Zavij ostro desno na {street}
+Radio Browser ni dosegljiv; preveri povezavo
+Ni najdenih postaj
+Tu ni ničesar
+Odstranjeno iz priljubljenih postaj
+Dodano med priljubljene postaje
+{n} kbps
+Povezujem…
+Te postaje ni mogoče predvajati
+V živo
+Internetni radio
+Izberi postajo na desni. Označi z zvezdico tiste, ki so ti všeč, da jih shraniš med priljubljene; naslednja in prejšnja na volanu preklapljata med njimi.
+Predvajaj ob zagonu avta
+Zadnja postaja, ob zagonu
+Prejšnja
+{n} od {total}
+Naslednja
+{n} postaj
+Ime postaje
+Najbolj poslušane: {country}
+Zamenjaj državo
+Še ni priljubljenih. Poišči postaje pod Država, Popularno ali Išči in tapni zvezdico.
+Nalagam postaje…
+Poskusi znova
+Vpiši ime postaje in pritisni Enter
+Radio
+Domov
+Aplikacije
+Zemljevid
+Mediji
+Nastavitve
+Priljubljene
+Država
+Popularno

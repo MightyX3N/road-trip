@@ -1,0 +1,244 @@
+ne,po,út,st,čt,pá,so
+led,úno,bře,dub,kvě,čvn,čvc,srp,zář,říj,lis,pro
+Držet v popředí je zapnuto
+Aktualizace fungují jen na Androidu
+Hledám aktualizace…
+Road Trip {v} je aktuální
+Aktualizace se nepodařilo zkontrolovat ({error})
+Jasno
+Převážně jasno
+Polojasno
+Oblačno
+Mlha
+Mrholení
+Déšť
+Sníh
+Přeháňky
+Sněhové přeháňky
+Bouřka
+Počasí
+Hledání se nezdařilo; zkontrolujte připojení
+Žádná místa s tímto názvem
+Stahuji Road Trip {v}
+Klidně používejte Road Trip dál; Android se zeptá na instalaci, až bude hotovo
+Povolte Road Tripu instalovat aktualizace
+Zapněte "Povolit z tohoto zdroje", vraťte se a klepněte na Instalovat
+Instalovat
+Road Trip {v} je stažený
+Android požádá o potvrzení; nastavení a oblíbené zůstanou
+Aktualizace nedoběhla
+Zkontrolujte připojení a zkuste to znovu ({error})
+Zkusit znovu
+Klepnutím na Aktualizovat ji stáhnete a nainstalujete
+Road Trip {v} je k dispozici
+Aktualizovat
+Road Trip zatím není vaše domovská aplikace
+Nastavte ji, aby ji otevíralo tlačítko Domů
+Nastavit jako domovskou
+Aktualizace vypnula Držet v popředí
+Android to dělá u aplikací mimo obchod; jeden přepínač to vrátí
+Zapnout
+Držet Road Trip v popředí
+Brání zařízení přepnout zpět na vlastní spouštěč
+© OpenFreeMap © OpenStreetMap
+Navigace v aplikaci {app}
+vaše navigační aplikace
+Otevřít {app}
+Kam to bude?
+Povolte polohu, abyste viděli, kde jste
+Povolit
+Čekám na vaši polohu…
+Vyberte své město a uvidíte počasí
+Načítání…
+Zatím žádná data
+Uvidíte svou další událost
+Nic v příštích dvou dnech
+Dnes
+Zítra
+Událost
+Celý den
+Teď
+Za {n} min
+Za {n} h
+Právě hraje
+Uvidíte, co hraje
+ve vašich hudebních a video aplikacích
+Nic nehraje
+Pusťte hudbu v libovolné aplikaci nebo rádio
+Přehrát {station}
+Otevřít rádio
+Vyberte 3 až 5 oblíbených aplikací a budou tady
+Road Trip potřebuje přístup k oznámením, aby mohl zobrazovat a ovládat hudbu,
+podcasty a videa z vašich aplikací. Čte jen to, co hraje.
+Právě nic nehraje
+Pusťte hudbu v libovolné aplikaci a zobrazí se tady.
+Hraje z aplikace {app}
+Vypnuto poslední aktualizací
+Vypnuto: zařízení se může vrátit na vlastní spouštěč
+Držet v popředí
+Zapnuto: Road Trip se vrátí, když zařízení změní spouštěč
+Pozastaveno
+Držet v popředí po aktualizacích
+Po každé aktualizaci se znovu zapne
+Zapněte znovu ručně, nebo to jednou povolte přes adb (viz web)
+Právě hraje a navigace
+Povoleno: čte, co hraje, a vaši další odbočku
+Vyžaduje přístup k oznámením
+Otevřít
+Kalendář
+Povoleno: další událost se zobrazí na Domů
+Zobrazit další událost na Domů
+Domovská aplikace
+Road Trip se otevře, když stisknete Domů
+Road Trip zatím není domovská aplikace
+Změnit
+Vlastní spouštěč zařízení
+Otevřít na 2 minuty, aniž by Road Trip zasahoval
+Oblíbené aplikace
+Vybráno {n} z {max}
+Upravit
+Barva zvýraznění
+Jazyk
+Přeloženo umělou inteligencí, některá slova nemusí sedět
+Vyberte své město
+Nastavit
+Aktualizace
+Verze {v}
+Zkontrolovat
+Hledat aktualizace jen přes Wi-Fi
+Automatická kontrola každých 6 hodin
+Diagnostika
+Co Držet v popředí vidělo a udělalo
+Zobrazit
+O aplikaci Road Trip
+Web
+Road Trip v tomto zařízení
+Vaše
+Zpět do Nastavení
+Překlady Road Tripu vytvořila umělá inteligence, takže některá slova nemusí být dokonalá.
+Automaticky
+zatím žádná
+Zatím nic
+Změny obrazovky (nejnovější první)
+Navigační oznámení
+Místo pro počasí
+Napište město nebo obec
+Hledat
+Vítejte v Road Tripu
+Vyberte oblíbené aplikace
+Vyberte 3 až 5. Budou dole na domovské obrazovce, jedno klepnutí daleko.
+Teď přeskočit
+Zrušit
+Pokračovat
+Hotovo
+Odebrat z oblíbených
+Oblíbené jsou plné (5)
+Přidat do oblíbených
+Informace o aplikaci
+Otevřít spouštěč zařízení na 2 minuty
+Jiný spouštěč nenalezen
+Zapnout Držet v popředí
+Držet v popředí je zapnuto · vypnout
+Držet v popředí je vypnuto · zapnout
+Hledat aktualizace
+Výchozí domovská aplikace
+Road Trip
+1 · Přístupnost → jednou klepněte na Road Trip
+2 · Informace o aplikaci → nabídka → Povolit omezená nastavení
+3 · Přístupnost → zapněte ji
+Aplikaci {app} nelze otevřít
+Můžete vybrat nejvýše {max}
+Počasí: {place}
+navigační aplikace
+Zapněte Road Trip: právě hraje
+Najděte Road Trip: držet v popředí a zapněte ji
+Držet v popředí je vypnuto
+Vyberte alespoň {min}
+Přidáno do oblíbených
+Odebráno z oblíbených
+Jste v cíli
+Jeďte po {street}
+Zahájit trasu
+Na kruhovém objezdu vyjeďte {n}. výjezdem na {street}
+Na kruhovém objezdu vyjeďte {n}. výjezdem
+{n} min
+{h} h {m} min
+Trasu se nepodařilo najít
+Nová trasa
+Jste na místě
+Potom: {next}
+Místo
+Nic nenalezeno
+Příjezd {time}
+© OpenFreeMap © OpenMapTiles · data © přispěvatelé OpenStreetMap · trasy FOSSGIS OSRM
+Příjezd
+Ukončit
+Mimo trasu
+Nedávné
+Hledám…
+Road Trip potřebuje polohu, aby našel trasy od vás
+Nebo začněte trasu ze středu mapy:
+Ze středu mapy
+Povolit polohu
+Hledám trasy…
+příjezd {time}
+Nejrychlejší
+Start
+Připojte se
+Připojte se na {street}
+Najeďte na nájezd
+Najeďte na nájezd na {street}
+Sjeďte
+Sjeďte na {street}
+Držte se vlevo
+Držte se vlevo na {street}
+Držte se vpravo
+Držte se vpravo na {street}
+Otočte se
+Otočte se na {street}
+Pokračujte po {street}
+Odbočte vlevo
+Odbočte vlevo na {street}
+Odbočte vpravo
+Odbočte vpravo na {street}
+Odbočte mírně vlevo
+Odbočte mírně vlevo na {street}
+Odbočte mírně vpravo
+Odbočte mírně vpravo na {street}
+Odbočte ostře vlevo
+Odbočte ostře vlevo na {street}
+Odbočte ostře vpravo
+Odbočte ostře vpravo na {street}
+Radio Browser je nedostupný; zkontrolujte připojení
+Žádné stanice nenalezeny
+Nic tu není
+Odebráno z oblíbených stanic
+Přidáno do oblíbených stanic
+{n} kb/s
+Připojuji…
+Tuto stanici nelze přehrát
+Živě
+Internetové rádio
+Vyberte stanici vpravo. Označte hvězdičkou ty, které máte rádi, a uloží se mezi oblíbené; další a předchozí na volantu mezi nimi přepínají.
+Hrát po nastartování auta
+Poslední stanice, při spuštění
+Předchozí
+{n} z {total}
+Další
+{n} stanic
+Název stanice
+Nejposlouchanější: {country}
+Změnit zemi
+Zatím žádné oblíbené. Najděte stanice v sekcích Země, Populární nebo Hledat a klepněte na hvězdičku.
+Načítám stanice…
+Zkusit znovu
+Napište název stanice a stiskněte Enter
+Rádio
+Domů
+Aplikace
+Mapa
+Média
+Nastavení
+Oblíbené
+Země
+Populární

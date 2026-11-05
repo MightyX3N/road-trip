@@ -1,0 +1,244 @@
+Sv,P,O,T,C,Pk,S
+janv,febr,marts,apr,maijs,jūn,jūl,aug,sept,okt,nov,dec
+Turēt priekšā ir ieslēgts
+Atjauninājumi darbojas tikai Android
+Meklē atjauninājumus…
+Road Trip {v} ir atjaunināts
+Neizdevās pārbaudīt atjauninājumus ({error})
+Skaidrs
+Pārsvarā skaidrs
+Daļēji mākoņains
+Mākoņains
+Migla
+Smidzinošs lietus
+Lietus
+Sniegs
+Lietusgāzes
+Sniega brāzmas
+Pērkona negaiss
+Laikapstākļi
+Meklēšana neizdevās; pārbaudi savienojumu
+Nav vietu ar šādu nosaukumu
+Lejupielādē Road Trip {v}
+Turpini lietot Road Trip; Android jautās par instalēšanu, kad būs gatavs
+Atļauj Road Trip instalēt savus atjauninājumus
+Ieslēdz "Atļaut no šī avota", atgriezies un pieskaries Instalēt
+Instalēt
+Road Trip {v} ir lejupielādēts
+Android lūgs apstiprināt; tavi iestatījumi un izlase paliks
+Atjauninājums netika pabeigts
+Pārbaudi savienojumu un mēģini vēlreiz ({error})
+Mēģināt vēlreiz
+Pieskaries Atjaunināt, lai to lejupielādētu un instalētu
+Pieejams Road Trip {v}
+Atjaunināt
+Road Trip vēl nav tava sākuma lietotne
+Iestati to, lai Sākuma poga to atvērtu
+Iestatīt kā sākuma lietotni
+Atjauninājums izslēdza Turēt priekšā
+Android tā dara ar lietotnēm ārpus veikala; viens slēdzis to atjauno
+Ieslēgt
+Turēt Road Trip priekšā
+Neļauj ierīcei pārslēgties atpakaļ uz savu palaidēju
+© OpenFreeMap © OpenStreetMap
+Navigācija ar {app}
+tava navigācijas lietotne
+Atvērt {app}
+Uz kurieni?
+Atļauj atrašanās vietu, lai redzētu, kur esi
+Atļaut
+Gaida tavu atrašanās vietu…
+Izvēlies savu pilsētu, lai redzētu laikapstākļus
+Ielādē…
+Vēl nav datu
+Skaties nākamo notikumu
+Nākamās divas dienas nekā nav
+Šodien
+Rīt
+Notikums
+Visu dienu
+Tagad
+Pēc {n} min
+Pēc {n} h
+Tagad skan
+Skaties, kas skan
+tavās mūzikas un video lietotnēs
+Nekas neskan
+Ieslēdz mūziku kādā lietotnē vai radio
+Atskaņot {station}
+Atvērt radio
+Izvēlies 3–5 iecienītas lietotnes, lai tās būtu šeit
+Road Trip vajag piekļuvi paziņojumiem, lai rādītu un vadītu mūziku,
+aplādes un video no tavām lietotnēm. Tas lasa tikai to, kas skan.
+Pašlaik nekas neskan
+Ieslēdz mūziku kādā lietotnē, un tā parādīsies šeit.
+Skan no {app}
+Izslēdza pēdējais atjauninājums
+Izslēgts: ierīce var pārslēgties atpakaļ uz savu palaidēju
+Turēt priekšā
+Ieslēgts: Road Trip atgriežas, ja ierīce maina palaidēju
+Pauzēts
+Turēt priekšā pēc atjauninājumiem
+Pēc katra atjauninājuma ieslēdzas no jauna
+Ieslēdz atkal ar roku vai atļauj vienreiz ar adb (skat. vietni)
+Tagad skan un navigācija
+Atļauts: lasa, kas skan, un tavu nākamo pagriezienu
+Vajag piekļuvi paziņojumiem
+Atvērt
+Kalendārs
+Atļauts: nākamais notikums redzams Sākumā
+Rādīt nākamo notikumu Sākumā
+Sākuma lietotne
+Road Trip atveras, kad nospied Sākums
+Road Trip vēl nav sākuma lietotne
+Mainīt
+Ierīces paša palaidējs
+Atvērt to uz 2 minūtēm bez Road Trip iejaukšanās
+Iecienītās lietotnes
+Izvēlētas {n} no {max}
+Rediģēt
+Akcenta krāsa
+Valoda
+Tulkojis MI, daži vārdi var būt nepareizi
+Izvēlies savu pilsētu
+Iestatīt
+Atjauninājumi
+Versija {v}
+Pārbaudīt tagad
+Meklēt atjauninājumus tikai Wi-Fi tīklā
+Automātiska pārbaude ik pēc 6 stundām
+Diagnostika
+Ko Turēt priekšā redzēja un darīja
+Rādīt
+Par Road Trip
+Vietne
+Road Trip šajā ierīcē
+Tavs
+Atpakaļ uz Iestatījumiem
+Road Trip tulkojumus ir veidojis mākslīgais intelekts, tāpēc daži vārdi var nebūt perfekti.
+Automātiski
+vēl nav
+Vēl nekā
+Ekrāna maiņas (jaunākās vispirms)
+Navigācijas paziņojumi
+Vieta laikapstākļiem
+Ieraksti pilsētu vai ciemu
+Meklēt
+Laipni lūgti Road Trip
+Izvēlies iecienītās lietotnes
+Izvēlies 3–5. Tās būs sākuma ekrāna apakšā, viena pieskāriena attālumā.
+Pagaidām izlaist
+Atcelt
+Turpināt
+Gatavs
+Noņemt no izlases
+Izlase ir pilna (5)
+Pievienot izlasei
+Lietotnes informācija
+Atvērt ierīces palaidēju uz 2 minūtēm
+Cits palaidējs nav atrasts
+Ieslēgt Turēt priekšā
+Turēt priekšā ieslēgts · izslēgt
+Turēt priekšā izslēgts · ieslēgt
+Meklēt atjauninājumus
+Noklusējuma sākuma lietotne
+Road Trip
+1 · Pieejamība → vienreiz pieskaries Road Trip
+2 · Lietotnes informācija → izvēlne → Atļaut ierobežotos iestatījumus
+3 · Pieejamība → ieslēdz to
+Neizdevās atvērt {app}
+Vari izvēlēties līdz {max}
+Laikapstākļi: {place}
+navigācijas lietotne
+Ieslēdz Road Trip: tagad skan
+Atrodi Road Trip: turēt priekšā un ieslēdz to
+Turēt priekšā ir izslēgts
+Izvēlies vismaz {min}
+Pievienots izlasei
+Noņemts no izlases
+Tu esi galamērķī
+Brauc pa {street}
+Sākt maršrutu
+Aplī izbrauc pa {n}. izbrauktuvi uz {street}
+Aplī izbrauc pa {n}. izbrauktuvi
+{n} min
+{h} h {m} min
+Maršruts netika atrasts
+Jauns maršruts
+Tu esi klāt
+Pēc tam: {next}
+Vieta
+Nekas netika atrasts
+Ierašanās {time}
+© OpenFreeMap © OpenMapTiles · dati © OpenStreetMap līdzautori · maršruti FOSSGIS OSRM
+Ierašanās
+Beigt
+Ārpus maršruta
+Nesenie
+Meklē…
+Road Trip vajag atrašanās vietu, lai atrastu maršrutus no tevis
+Vai sāc maršrutu no kartes centra:
+No kartes centra
+Atļaut atrašanās vietu
+Meklē maršrutus…
+ierašanās {time}
+Ātrākais
+Sākt
+Iekļaujies satiksmē
+Iekļaujies uz {street}
+Brauc uz uzbrauktuves
+Brauc uz uzbrauktuves uz {street}
+Izbrauc
+Izbrauc uz {street}
+Turies pa kreisi
+Turies pa kreisi uz {street}
+Turies pa labi
+Turies pa labi uz {street}
+Apgriezies
+Apgriezies uz {street}
+Turpini pa {street}
+Nogriezies pa kreisi
+Nogriezies pa kreisi uz {street}
+Nogriezies pa labi
+Nogriezies pa labi uz {street}
+Nogriezies nedaudz pa kreisi
+Nogriezies nedaudz pa kreisi uz {street}
+Nogriezies nedaudz pa labi
+Nogriezies nedaudz pa labi uz {street}
+Nogriezies krasi pa kreisi
+Nogriezies krasi pa kreisi uz {street}
+Nogriezies krasi pa labi
+Nogriezies krasi pa labi uz {street}
+Neizdevās sasniegt Radio Browser; pārbaudi savienojumu
+Stacijas netika atrastas
+Šeit nekā nav
+Noņemts no radio izlases
+Pievienots radio izlasei
+{n} kbit/s
+Savienojas…
+Šo staciju nevar atskaņot
+Tiešraide
+Interneta radio
+Izvēlies staciju pa labi. Atzīmē ar zvaigzni tās, kas patīk, lai paturētu izlasē; stūres nākamais un iepriekšējais pārslēdz starp tām.
+Atskaņot, kad auto iedarbina
+Pēdējā stacija, palaižot
+Iepriekšējā
+{n} no {total}
+Nākamā
+{n} stacijas
+Stacijas nosaukums
+Visvairāk klausītās: {country}
+Mainīt valsti
+Izlases vēl nav. Atrodi stacijas sadaļās Valsts, Populārās vai Meklēt un pieskaries zvaigznei.
+Ielādē stacijas…
+Mēģināt vēlreiz
+Ieraksti stacijas nosaukumu un nospied Enter
+Radio
+Sākums
+Lietotnes
+Karte
+Mediji
+Iestatījumi
+Izlase
+Valsts
+Populārās

@@ -1,0 +1,244 @@
+ned,pon,uto,sri,čet,pet,sub
+sij,velj,ožu,tra,svi,lip,srp,kol,ruj,lis,stu,pro
+Drži naprijed je uključeno
+Ažuriranja rade samo na Androidu
+Traženje ažuriranja…
+Road Trip {v} je ažuriran
+Nije moguće provjeriti ažuriranja ({error})
+Vedro
+Pretežno vedro
+Djelomično oblačno
+Oblačno
+Magla
+Rosulja
+Kiša
+Snijeg
+Pljuskovi
+Snježni pljuskovi
+Grmljavina
+Vrijeme
+Pretraga nije uspjela; provjeri vezu
+Nema mjesta s tim imenom
+Preuzimanje Road Tripa {v}
+Slobodno koristi Road Trip; Android će pitati za instalaciju kad završi
+Dopusti Road Tripu da instalira ažuriranja
+Uključi "Dopusti iz ovog izvora", vrati se i dodirni Instaliraj
+Instaliraj
+Road Trip {v} je preuzet
+Android traži potvrdu; postavke i favoriti ostaju
+Ažuriranje nije završilo
+Provjeri vezu i pokušaj ponovno ({error})
+Ponovi
+Dodirni Ažuriraj da ga preuzmeš i instaliraš
+Road Trip {v} je dostupan
+Ažuriraj
+Road Trip još nije tvoja početna aplikacija
+Postavi ga da ga tipka Početna otvara
+Postavi kao početnu
+Ažuriranje je isključilo Drži naprijed
+Android to radi s aplikacijama izvan trgovine; jedan prekidač ga vraća
+Uključi
+Drži Road Trip naprijed
+Sprječava da se uređaj vrati na vlastiti pokretač
+© OpenFreeMap © OpenStreetMap
+Navigacija s {app}
+tvoja navigacijska aplikacija
+Otvori {app}
+Kamo ideš?
+Dopusti lokaciju da vidiš gdje si
+Dopusti
+Čekam tvoju lokaciju…
+Odaberi grad da vidiš vrijeme
+Učitavanje…
+Još nema podataka
+Pogledaj sljedeći događaj
+Ništa u sljedeća dva dana
+Danas
+Sutra
+Događaj
+Cijeli dan
+Sada
+Za {n} min
+Za {n} h
+Sada svira
+Pogledaj što svira
+u tvojim glazbenim i video aplikacijama
+Ništa ne svira
+Pokreni glazbu u bilo kojoj aplikaciji ili radio
+Pusti {station}
+Otvori radio
+Odaberi 3 do 5 omiljenih aplikacija da budu ovdje
+Road Trip treba pristup obavijestima da prikazuje i upravlja glazbom,
+podcastima i videom iz tvojih aplikacija. Čita samo ono što svira.
+Sada ništa ne svira
+Pokreni glazbu u bilo kojoj aplikaciji i pojavit će se ovdje.
+Svira iz {app}
+Isključeno zadnjim ažuriranjem
+Isključeno: uređaj se može vratiti na vlastiti pokretač
+Drži naprijed
+Uključeno: Road Trip se vraća ako uređaj promijeni pokretač
+Pauzirano
+Drži naprijed nakon ažuriranja
+Sam se ponovno uključi nakon svakog ažuriranja
+Uključi ponovno ručno ili jednom dopusti preko adb-a (vidi web)
+Sada svira i navigacija
+Dopušteno: čita što svira i tvoje sljedeće skretanje
+Treba pristup obavijestima
+Otvori
+Kalendar
+Dopušteno: sljedeći događaj vidi se na Početnoj
+Prikaži sljedeći događaj na Početnoj
+Početna aplikacija
+Road Trip se otvara kad pritisneš Početna
+Road Trip još nije početna aplikacija
+Promijeni
+Vlastiti pokretač uređaja
+Otvori ga na 2 minute bez upletanja Road Tripa
+Omiljene aplikacije
+Odabrano {n} od {max}
+Uredi
+Boja naglaska
+Jezik
+Preveo AI, neke riječi mogu biti krive
+Odaberi svoj grad
+Postavi
+Ažuriranja
+Verzija {v}
+Provjeri sada
+Traži ažuriranja samo na Wi-Fiju
+Automatska provjera svakih 6 sati
+Dijagnostika
+Što je Drži naprijed vidio i napravio
+Prikaži
+O Road Tripu
+Web-stranica
+Road Trip na ovom uređaju
+Tvoje
+Natrag u Postavke
+Prijevode Road Tripa napravio je AI, pa neke riječi možda nisu savršene.
+Automatski
+još nijedna
+Još ništa
+Promjene zaslona (najnovije prve)
+Navigacijske obavijesti
+Mjesto za vrijeme
+Upiši grad ili mjesto
+Traži
+Dobro došli u Road Trip
+Odaberi omiljene aplikacije
+Odaberi 3 do 5. Nalaze se na dnu početnog zaslona, na dodir.
+Preskoči zasad
+Odustani
+Nastavi
+Gotovo
+Ukloni iz favorita
+Favoriti su puni (5)
+Dodaj u favorite
+Podaci o aplikaciji
+Otvori pokretač uređaja na 2 minute
+Nije pronađen drugi pokretač
+Uključi Drži naprijed
+Drži naprijed je uključeno · isključi
+Drži naprijed je isključeno · uključi
+Traži ažuriranja
+Zadana početna aplikacija
+Road Trip
+1 · Pristupačnost → jednom dodirni Road Trip
+2 · Podaci o aplikaciji → izbornik → Dopusti ograničene postavke
+3 · Pristupačnost → uključi ga
+Nije moguće otvoriti {app}
+Možeš odabrati najviše {max}
+Vrijeme za {place}
+navigacijska aplikacija
+Uključi Road Trip: sada svira
+Pronađi Road Trip: drži naprijed i uključi ga
+Drži naprijed je isključeno
+Odaberi barem {min}
+Dodano u favorite
+Uklonjeno iz favorita
+Stigao si na odredište
+Vozi ulicom {street}
+Pokreni rutu
+Na kružnom toku izađi na {n}. izlaz prema {street}
+Na kružnom toku izađi na {n}. izlaz
+{n} min
+{h} h {m} min
+Ruta nije pronađena
+Nova ruta
+Stigao si
+Zatim: {next}
+Mjesto
+Ništa nije pronađeno
+Dolazak {time}
+© OpenFreeMap © OpenMapTiles · podaci © suradnici OpenStreetMapa · rute FOSSGIS OSRM
+Dolazak
+Završi
+Izvan rute
+Nedavno
+Traženje…
+Road Trip treba lokaciju da pronađe rute od tebe
+Ili započni rutu iz sredine karte:
+Iz sredine karte
+Dopusti lokaciju
+Traženje ruta…
+dolazak {time}
+Najbrža
+Kreni
+Uključi se
+Uključi se na {street}
+Uđi na rampu
+Uđi na rampu prema {street}
+Izađi
+Izađi prema {street}
+Drži se lijevo
+Drži se lijevo prema {street}
+Drži se desno
+Drži se desno prema {street}
+Polukružno okreni
+Polukružno okreni na {street}
+Nastavi ulicom {street}
+Skreni lijevo
+Skreni lijevo na {street}
+Skreni desno
+Skreni desno na {street}
+Skreni blago lijevo
+Skreni blago lijevo na {street}
+Skreni blago desno
+Skreni blago desno na {street}
+Skreni oštro lijevo
+Skreni oštro lijevo na {street}
+Skreni oštro desno
+Skreni oštro desno na {street}
+Radio Browser nije dostupan; provjeri vezu
+Nema pronađenih postaja
+Ovdje nema ničega
+Uklonjeno iz omiljenih postaja
+Dodano u omiljene postaje
+{n} kbps
+Povezivanje…
+Ova se postaja ne može reproducirati
+Uživo
+Internetski radio
+Odaberi postaju desno. Označi zvjezdicom one koje voliš da ih spremiš kao omiljene; sljedeća i prethodna na volanu prebacuju među njima.
+Sviraj kad se auto upali
+Zadnja postaja, pri pokretanju
+Prethodna
+{n} od {total}
+Sljedeća
+{n} postaja
+Naziv postaje
+Najslušanije: {country}
+Promijeni državu
+Još nema omiljenih. Pronađi postaje pod Država, Popularno ili Traži i dodirni zvjezdicu.
+Učitavanje postaja…
+Pokušaj ponovno
+Upiši naziv postaje i pritisni Enter
+Radio
+Početna
+Aplikacije
+Karta
+Mediji
+Postavke
+Omiljene
+Država
+Popularno

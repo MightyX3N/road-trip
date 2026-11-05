@@ -19,7 +19,9 @@ or can start from the middle of the map. **Radio** plays internet radio from
 (change it with Change country), popular ones worldwide, or search by name. Star stations to
 keep them as favorites; next and previous (on screen, in the notification or on the steering
 wheel) step through them. The last station plays again when the car starts (switch that off
-on the Radio screen). **Settings** has everything else: Keep in front, permissions, favorites, accent colour and updates. The voice button opens the device's
+on the Radio screen). **Settings** has everything else: Keep in front, permissions, favorites, accent colour,
+language and updates. Road Trip comes in 33 languages and follows the device's language
+unless you pick one; the translations are made by AI, so some words may be off. The voice button opens the device's
 assistant.
 
 ## Get the APK (no Android tools needed)
@@ -154,3 +156,12 @@ routes by the [FOSSGIS OSRM server](https://routing.openstreetmap.de). Radio sta
 [Radio Browser](https://www.radio-browser.info), a free community directory; Road Trip
 reports each play to it, as it asks. None of them need an account or key. Road Trip asks the routing server for at most one route at a time, and
 waits at least 15 seconds between new routes while you drive.
+
+## Translations
+
+The English text is the key: `game/lang/keys.txt` has one English line per string, and
+`game/lang/<code>.txt` has the same lines translated, in the same order, after a line of
+short day names and a line of short month names. Missing lines show in English.
+`python3 tools/check_lang.py` checks that every string in the code is in `keys.txt` and
+that each language has every line with the same `{placeholders}`; `--write` appends new
+strings to `keys.txt`.

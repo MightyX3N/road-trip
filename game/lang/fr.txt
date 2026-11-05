@@ -1,0 +1,244 @@
+dim,lun,mar,mer,jeu,ven,sam
+janv,févr,mars,avr,mai,juin,juil,août,sept,oct,nov,déc
+Rester au premier plan est activé
+Les mises à jour ne marchent que sur Android
+Recherche de mises à jour…
+Road Trip {v} est à jour
+Impossible de chercher les mises à jour ({error})
+Dégagé
+Plutôt dégagé
+Partiellement nuageux
+Nuageux
+Brouillard
+Bruine
+Pluie
+Neige
+Averses
+Averses de neige
+Orage
+Météo
+Recherche impossible ; vérifiez la connexion
+Aucun lieu de ce nom
+Téléchargement de Road Trip {v}
+Continuez à utiliser Road Trip ; Android proposera l'installation une fois terminé
+Autoriser Road Trip à installer ses mises à jour
+Activez "Autoriser cette source", puis revenez et touchez Installer
+Installer
+Road Trip {v} est téléchargé
+Android vous demande de confirmer ; vos réglages et favoris sont conservés
+La mise à jour n'a pas abouti
+Vérifiez la connexion et réessayez ({error})
+Réessayer
+Touchez Mettre à jour pour la télécharger et l'installer
+Road Trip {v} est disponible
+Mettre à jour
+Road Trip n'est pas encore votre écran d'accueil
+Choisissez-le pour que le bouton Accueil l'ouvre
+Définir comme accueil
+La mise à jour a désactivé Rester au premier plan
+Android le fait pour les apps hors boutique ; un seul bouton le réactive
+Activer
+Garder Road Trip au premier plan
+Empêche le boîtier de revenir à son propre lanceur
+© OpenFreeMap © OpenStreetMap
+Navigation avec {app}
+votre app de navigation
+Ouvrir {app}
+Où allez-vous ?
+Autorisez la position pour voir où vous êtes
+Autoriser
+En attente de votre position…
+Choisissez votre ville pour voir la météo
+Chargement…
+Pas encore de données
+Voir votre prochain événement
+Rien dans les deux prochains jours
+Aujourd'hui
+Demain
+Événement
+Toute la journée
+Maintenant
+Dans {n} min
+Dans {n} h
+En cours de lecture
+Voir ce qui joue
+dans vos apps de musique et de vidéo
+Rien en lecture
+Lancez de la musique dans une app, ou la radio
+Écouter {station}
+Ouvrir la radio
+Choisissez 3 à 5 apps favorites pour les garder ici
+Road Trip a besoin de l'accès aux notifications pour afficher et contrôler la musique,
+les podcasts et les vidéos de vos apps. Il lit seulement ce qui joue.
+Rien n'est en lecture
+Lancez de la musique dans une app et elle s'affichera ici.
+Lecture depuis {app}
+Désactivé par la dernière mise à jour
+Désactivé : le boîtier peut revenir à son propre lanceur
+Rester au premier plan
+Activé : Road Trip revient si le boîtier change de lanceur
+En pause
+Rester au premier plan après les mises à jour
+Se réactive tout seul après chaque mise à jour
+Réactivez-le à la main, ou autorisez-le une fois avec adb (voir le site)
+Lecture en cours et navigation
+Autorisé : lit ce qui joue et votre prochain virage
+Nécessite l'accès aux notifications
+Ouvrir
+Agenda
+Autorisé : votre prochain événement s'affiche sur l'Accueil
+Afficher votre prochain événement sur l'Accueil
+App d'accueil
+Road Trip s'ouvre quand vous appuyez sur Accueil
+Road Trip n'est pas encore l'app d'accueil
+Changer
+Le lanceur du boîtier
+L'ouvrir 2 minutes sans que Road Trip intervienne
+Apps favorites
+{n} sur {max} choisies
+Modifier
+Couleur d'accent
+Langue
+Traduit par IA, certains mots peuvent être faux
+Choisissez votre ville
+Définir
+Mises à jour
+Version {v}
+Vérifier
+Chercher les mises à jour en Wi-Fi seulement
+Vérification automatique toutes les 6 heures
+Diagnostic
+Ce que Rester au premier plan a vu et fait
+Afficher
+À propos de Road Trip
+Site web
+Road Trip sur ce boîtier
+À vous
+Retour aux Réglages
+Les traductions de Road Trip sont faites par IA, certains mots ne sont donc peut-être pas parfaits.
+Automatique
+aucune pour l'instant
+Rien pour l'instant
+Changements d'écran (plus récents d'abord)
+Notifications de navigation
+Lieu pour la météo
+Tapez une ville
+Rechercher
+Bienvenue dans Road Trip
+Choisissez vos apps favorites
+Choisissez-en 3 à 5. Elles sont en bas de votre écran d'accueil, à portée de doigt.
+Plus tard
+Annuler
+Continuer
+Terminé
+Retirer des favoris
+Favoris complets (5)
+Ajouter aux favoris
+Infos sur l'app
+Ouvrir le lanceur du boîtier 2 minutes
+Aucun autre lanceur trouvé
+Activer Rester au premier plan
+Rester au premier plan est activé · désactiver
+Rester au premier plan est désactivé · activer
+Chercher des mises à jour
+App d'accueil par défaut
+Road Trip
+1 · Accessibilité → touchez Road Trip une fois
+2 · Infos sur l'app → menu → Autoriser les paramètres restreints
+3 · Accessibilité → activez-le
+Impossible d'ouvrir {app}
+Vous pouvez en choisir jusqu'à {max}
+Météo pour {place}
+l'app de navigation
+Activez Road Trip : lecture en cours
+Trouvez Road Trip : premier plan et activez-le
+Rester au premier plan est désactivé
+Choisissez-en au moins {min}
+Ajouté aux favoris
+Retiré des favoris
+Vous êtes arrivé à destination
+Suivez {street}
+Démarrer l'itinéraire
+Au rond-point, prenez la sortie {n} vers {street}
+Au rond-point, prenez la sortie {n}
+{n} min
+{h} h {m} min
+Aucun itinéraire trouvé
+Nouvel itinéraire
+Vous êtes arrivé
+Ensuite : {next}
+Lieu
+Rien trouvé
+Arrivée {time}
+© OpenFreeMap © OpenMapTiles · données © contributeurs OpenStreetMap · itinéraires FOSSGIS OSRM
+Arrivée
+Arrêter
+Hors de l'itinéraire
+Récents
+Recherche…
+Road Trip a besoin de votre position pour trouver des itinéraires depuis chez vous
+Ou démarrez l'itinéraire depuis le centre de la carte :
+Depuis le centre de la carte
+Autoriser la position
+Recherche d'itinéraires…
+arrivée {time}
+Le plus rapide
+Démarrer
+Insérez-vous
+Insérez-vous sur {street}
+Prenez la bretelle
+Prenez la bretelle vers {street}
+Prenez la sortie
+Prenez la sortie vers {street}
+Restez à gauche
+Restez à gauche vers {street}
+Restez à droite
+Restez à droite vers {street}
+Faites demi-tour
+Faites demi-tour sur {street}
+Continuez sur {street}
+Tournez à gauche
+Tournez à gauche sur {street}
+Tournez à droite
+Tournez à droite sur {street}
+Tournez légèrement à gauche
+Tournez légèrement à gauche sur {street}
+Tournez légèrement à droite
+Tournez légèrement à droite sur {street}
+Tournez franchement à gauche
+Tournez franchement à gauche sur {street}
+Tournez franchement à droite
+Tournez franchement à droite sur {street}
+Impossible de joindre Radio Browser ; vérifiez la connexion
+Aucune station trouvée
+Rien ici
+Retiré des favoris radio
+Ajouté aux favoris radio
+{n} kbit/s
+Connexion…
+Impossible de lire cette station
+En direct
+Radio Internet
+Choisissez une station à droite. Mettez une étoile à celles que vous aimez pour les garder en favoris ; suivant et précédent au volant passent de l'une à l'autre.
+Lire au démarrage de la voiture
+La dernière station, au démarrage
+Précédent
+{n} sur {total}
+Suivant
+{n} stations
+Nom de la station
+Les plus écoutées en {country}
+Changer de pays
+Pas encore de favoris. Trouvez des stations dans Pays, Populaires ou Rechercher et touchez l'étoile.
+Chargement des stations…
+Réessayer
+Tapez le nom d'une station et appuyez sur Entrée
+Radio
+Accueil
+Apps
+Carte
+Médias
+Réglages
+Favoris
+Pays
+Populaires

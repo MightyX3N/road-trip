@@ -379,6 +379,8 @@ local function stubCall(method, args)
     return stubRadio or { state = "idle" }
   elseif method == "country" then
     return "DK"
+  elseif method == "language" then
+    return (os.getenv("RT_LANG") or "en")
   elseif method == "uptime" then
     return 60000
   elseif method == "updateStatus" then
@@ -426,6 +428,7 @@ function M.radioStatus() return M.call("radioStatus") end
 function M.radioList(list) return M.call("radioList", { list = list }) end
 function M.country() return M.call("country") end
 function M.uptime() return M.call("uptime") end
+function M.language() return M.call("language") end
 
 function M.calendar() return M.call("calendar") end
 function M.calendarAllow() return M.call("calendarAllow") end

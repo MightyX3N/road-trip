@@ -1,0 +1,244 @@
+Ahd,Isn,Sel,Rab,Kha,Jum,Sab
+Jan,Feb,Mac,Apr,Mei,Jun,Jul,Ogo,Sep,Okt,Nov,Dis
+Kekal di hadapan dihidupkan
+Kemas kini hanya berfungsi pada Android
+Mencari kemas kini…
+Road Trip {v} adalah yang terkini
+Tidak dapat mencari kemas kini ({error})
+Cerah
+Kebanyakannya cerah
+Separa mendung
+Mendung
+Kabus
+Gerimis
+Hujan
+Salji
+Hujan lebat
+Hujan salji
+Ribut petir
+Cuaca
+Tidak dapat mencari; semak sambungan
+Tiada tempat dengan nama itu
+Memuat turun Road Trip {v}
+Teruskan menggunakan Road Trip; Android akan bertanya untuk memasang apabila siap
+Benarkan Road Trip memasang kemas kininya
+Hidupkan "Benarkan daripada sumber ini", kemudian kembali dan ketik Pasang
+Pasang
+Road Trip {v} sudah dimuat turun
+Android meminta pengesahan; tetapan dan kegemaran anda kekal
+Kemas kini tidak selesai
+Semak sambungan dan cuba lagi ({error})
+Cuba lagi
+Ketik Kemas kini untuk memuat turun dan memasangnya
+Road Trip {v} tersedia
+Kemas kini
+Road Trip belum lagi apl skrin utama anda
+Tetapkannya supaya butang Utama membukanya
+Tetapkan sebagai skrin utama
+Kemas kini mematikan Kekal di hadapan
+Android berbuat begini pada apl luar kedai; satu suis menghidupkannya semula
+Hidupkan
+Kekalkan Road Trip di hadapan
+Menghalang peranti kembali ke pelancarnya sendiri
+© OpenFreeMap © OpenStreetMap
+Navigasi dengan {app}
+apl navigasi anda
+Buka {app}
+Ke mana?
+Benarkan lokasi untuk melihat di mana anda berada
+Benarkan
+Menunggu lokasi anda…
+Pilih bandar anda untuk melihat cuaca
+Memuatkan…
+Belum ada data
+Lihat acara seterusnya
+Tiada apa-apa dua hari akan datang
+Hari ini
+Esok
+Acara
+Sepanjang hari
+Sekarang
+Dalam {n} min
+Dalam {n} jam
+Sedang dimainkan
+Lihat apa yang dimainkan
+dalam apl muzik dan video anda
+Tiada apa dimainkan
+Mainkan muzik dalam mana-mana apl, atau radio
+Main {station}
+Buka radio
+Pilih 3 hingga 5 apl kegemaran supaya ada di sini
+Road Trip memerlukan akses pemberitahuan untuk menunjukkan dan mengawal muzik,
+podcast dan video daripada apl anda. Ia hanya membaca apa yang dimainkan.
+Tiada apa dimainkan sekarang
+Mainkan muzik dalam mana-mana apl dan ia akan muncul di sini.
+Dimainkan daripada {app}
+Dimatikan oleh kemas kini terakhir
+Mati: peranti boleh kembali ke pelancarnya sendiri
+Kekal di hadapan
+Hidup: Road Trip kembali jika peranti menukar pelancar
+Dijeda
+Kekal di hadapan selepas kemas kini
+Hidup semula sendiri selepas setiap kemas kini
+Hidupkan semula secara manual, atau benarkan sekali dengan adb (lihat laman web)
+Sedang dimainkan dan navigasi
+Dibenarkan: membaca apa yang dimainkan dan belokan seterusnya
+Memerlukan akses pemberitahuan
+Buka
+Kalendar
+Dibenarkan: acara seterusnya dipaparkan di Utama
+Tunjukkan acara seterusnya di Utama
+Apl skrin utama
+Road Trip dibuka apabila anda menekan Utama
+Road Trip belum lagi apl skrin utama
+Tukar
+Pelancar sendiri peranti
+Buka selama 2 minit tanpa Road Trip campur tangan
+Apl kegemaran
+{n} daripada {max} dipilih
+Edit
+Warna aksen
+Bahasa
+Diterjemah oleh AI, sesetengah perkataan mungkin salah
+Pilih bandar anda
+Tetapkan
+Kemas kini
+Versi {v}
+Semak sekarang
+Cari kemas kini hanya melalui Wi-Fi
+Semakan automatik setiap 6 jam
+Diagnostik
+Apa yang dilihat dan dilakukan Kekal di hadapan
+Tunjukkan
+Tentang Road Trip
+Laman web
+Road Trip pada peranti ini
+Milik anda
+Kembali ke Tetapan
+Terjemahan Road Trip dibuat oleh AI, jadi sesetengah perkataan mungkin tidak sempurna.
+Automatik
+belum ada
+Belum ada apa-apa
+Pertukaran skrin (terbaru dahulu)
+Pemberitahuan navigasi
+Lokasi cuaca
+Taip bandar atau pekan
+Cari
+Selamat datang ke Road Trip
+Pilih apl kegemaran anda
+Pilih 3 hingga 5. Ia berada di bahagian bawah skrin utama, satu ketikan sahaja.
+Langkau buat masa ini
+Batal
+Teruskan
+Selesai
+Buang daripada kegemaran
+Kegemaran sudah penuh (5)
+Tambah ke kegemaran
+Maklumat apl
+Buka pelancar peranti selama 2 minit
+Tiada pelancar lain ditemui
+Hidupkan Kekal di hadapan
+Kekal di hadapan hidup · matikan
+Kekal di hadapan mati · hidupkan
+Cari kemas kini
+Apl skrin utama lalai
+Road Trip
+1 · Kebolehcapaian → ketik Road Trip sekali
+2 · Maklumat apl → menu → Benarkan tetapan terhad
+3 · Kebolehcapaian → hidupkannya
+Tidak dapat membuka {app}
+Anda boleh memilih sehingga {max}
+Cuaca untuk {place}
+apl navigasi
+Hidupkan Road Trip: sedang dimainkan
+Cari Road Trip: kekal di hadapan dan hidupkannya
+Kekal di hadapan dimatikan
+Pilih sekurang-kurangnya {min}
+Ditambah ke kegemaran
+Dibuang daripada kegemaran
+Anda telah tiba di destinasi
+Ikut {street}
+Mulakan laluan
+Di bulatan, ambil susur keluar ke-{n} ke {street}
+Di bulatan, ambil susur keluar ke-{n}
+{n} min
+{h} jam {m} min
+Laluan tidak ditemui
+Laluan baharu
+Anda sudah tiba
+Kemudian: {next}
+Tempat
+Tiada yang ditemui
+Tiba {time}
+© OpenFreeMap © OpenMapTiles · data © penyumbang OpenStreetMap · laluan FOSSGIS OSRM
+Ketibaan
+Tamat
+Di luar laluan
+Terkini
+Mencari…
+Road Trip memerlukan lokasi untuk mencari laluan dari tempat anda
+Atau mulakan laluan dari tengah peta:
+Dari tengah peta
+Benarkan lokasi
+Mencari laluan…
+tiba {time}
+Terpantas
+Mula
+Masuk ke jalan
+Masuk ke {street}
+Ambil susur masuk
+Ambil susur masuk ke {street}
+Ambil susur keluar
+Ambil susur keluar ke {street}
+Ikut kiri
+Ikut kiri ke {street}
+Ikut kanan
+Ikut kanan ke {street}
+Pusing U
+Pusing U ke {street}
+Teruskan di {street}
+Belok kiri
+Belok kiri ke {street}
+Belok kanan
+Belok kanan ke {street}
+Belok sedikit ke kiri
+Belok sedikit ke kiri ke {street}
+Belok sedikit ke kanan
+Belok sedikit ke kanan ke {street}
+Belok tajam ke kiri
+Belok tajam ke kiri ke {street}
+Belok tajam ke kanan
+Belok tajam ke kanan ke {street}
+Tidak dapat mencapai Radio Browser; semak sambungan
+Tiada stesen ditemui
+Tiada apa-apa di sini
+Dibuang daripada radio kegemaran
+Ditambah ke radio kegemaran
+{n} kbps
+Menyambung…
+Tidak dapat memainkan stesen ini
+Langsung
+Radio internet
+Pilih stesen di sebelah kanan. Beri bintang pada yang anda suka untuk menyimpannya sebagai kegemaran; butang seterusnya dan sebelumnya pada stereng bertukar antaranya.
+Main apabila kereta dihidupkan
+Stesen terakhir, semasa permulaan
+Sebelumnya
+{n} daripada {total}
+Seterusnya
+{n} stesen
+Nama stesen
+Paling banyak didengar di {country}
+Tukar negara
+Belum ada kegemaran. Cari stesen di Negara, Popular atau Cari, kemudian ketik bintang.
+Memuatkan stesen…
+Cuba lagi
+Taip nama stesen dan tekan Enter
+Radio
+Utama
+Apl
+Peta
+Media
+Tetapan
+Kegemaran
+Negara
+Popular

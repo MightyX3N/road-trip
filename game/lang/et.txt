@@ -1,0 +1,244 @@
+P,E,T,K,N,R,L
+jaan,veebr,märts,apr,mai,juuni,juuli,aug,sept,okt,nov,dets
+Hoia ees on sees
+Uuendused töötavad ainult Androidis
+Otsin uuendusi…
+Road Trip {v} on ajakohane
+Uuendusi ei õnnestunud kontrollida ({error})
+Selge
+Enamasti selge
+Vahelduv pilvisus
+Pilves
+Udu
+Uduvihm
+Vihm
+Lumi
+Hoovihm
+Lumehood
+Äike
+Ilm
+Otsing ebaõnnestus; kontrolli ühendust
+Selle nimega kohti pole
+Laadin alla Road Trip {v}
+Kasuta Road Tripi edasi; Android küsib paigaldamist, kui see valmis on
+Luba Road Tripil oma uuendusi paigaldada
+Lülita sisse "Luba sellest allikast", tule tagasi ja puuduta Paigalda
+Paigalda
+Road Trip {v} on alla laaditud
+Android palub kinnitust; seaded ja lemmikud jäävad alles
+Uuendus ei saanud valmis
+Kontrolli ühendust ja proovi uuesti ({error})
+Proovi uuesti
+Puuduta Uuenda, et see alla laadida ja paigaldada
+Road Trip {v} on saadaval
+Uuenda
+Road Trip pole veel sinu avakuva rakendus
+Määra see, et Kodu-nupp avaks selle
+Määra avakuva rakenduseks
+Uuendus lülitas Hoia ees välja
+Android teeb nii poeväliste rakendustega; üks lüliti lülitab selle tagasi
+Lülita sisse
+Hoia Road Trip ees
+Takistab seadmel oma käivitajale tagasi minemast
+© OpenFreeMap © OpenStreetMap
+Navigeerimine rakendusega {app}
+sinu navigeerimisrakendus
+Ava {app}
+Kuhu läheme?
+Luba asukoht, et näha, kus sa oled
+Luba
+Ootan sinu asukohta…
+Vali oma linn, et ilma näha
+Laadin…
+Andmeid veel pole
+Vaata järgmist sündmust
+Järgmisel kahel päeval pole midagi
+Täna
+Homme
+Sündmus
+Terve päev
+Nüüd
+{n} min pärast
+{n} t pärast
+Praegu mängib
+Vaata, mis mängib
+sinu muusika- ja videorakendustes
+Midagi ei mängi
+Käivita muusika mõnes rakenduses või raadio
+Mängi {station}
+Ava raadio
+Vali 3–5 lemmikrakendust, et need oleksid siin
+Road Trip vajab ligipääsu teavitustele, et muusikat näidata ja juhtida,
+samuti rakenduste taskuhäälinguid ja videoid. See loeb ainult, mis mängib.
+Praegu midagi ei mängi
+Käivita muusika mõnes rakenduses ja see ilmub siia.
+Mängib rakendusest {app}
+Viimane uuendus lülitas välja
+Väljas: seade võib minna tagasi oma käivitajale
+Hoia ees
+Sees: Road Trip tuleb tagasi, kui seade käivitajat vahetab
+Peatatud
+Hoia ees pärast uuendusi
+Lülitub pärast iga uuendust ise uuesti sisse
+Lülita käsitsi tagasi või luba üks kord adb kaudu (vaata veebilehte)
+Praegu mängib ja navigeerimine
+Lubatud: loeb, mis mängib, ja sinu järgmist pööret
+Vajab ligipääsu teavitustele
+Ava
+Kalender
+Lubatud: järgmine sündmus on Kodus näha
+Näita järgmist sündmust Kodus
+Avakuva rakendus
+Road Trip avaneb, kui vajutad Kodu
+Road Trip pole veel avakuva rakendus
+Muuda
+Seadme oma käivitaja
+Ava see 2 minutiks ilma Road Tripi sekkumiseta
+Lemmikrakendused
+{n}/{max} valitud
+Muuda
+Rõhuvärv
+Keel
+Tõlkinud tehisaru, mõni sõna võib olla vale
+Vali oma linn
+Määra
+Uuendused
+Versioon {v}
+Kontrolli kohe
+Otsi uuendusi ainult Wi-Fi kaudu
+Automaatne kontroll iga 6 tunni järel
+Diagnostika
+Mida Hoia ees nägi ja tegi
+Näita
+Road Tripist
+Veebileht
+Road Trip selles seadmes
+Sinu
+Tagasi seadetesse
+Road Tripi tõlked on teinud tehisaru, seega pole mõni sõna ehk täiuslik.
+Automaatne
+veel pole
+Veel midagi
+Ekraanivahetused (uusimad ees)
+Navigeerimise teavitused
+Ilma asukoht
+Kirjuta linn või asula
+Otsi
+Tere tulemast Road Tripi
+Vali oma lemmikrakendused
+Vali 3–5. Need on avakuva allservas, ühe puudutuse kaugusel.
+Jäta praegu vahele
+Tühista
+Jätka
+Valmis
+Eemalda lemmikutest
+Lemmikud on täis (5)
+Lisa lemmikutesse
+Rakenduse teave
+Ava seadme käivitaja 2 minutiks
+Teist käivitajat ei leitud
+Lülita Hoia ees sisse
+Hoia ees on sees · lülita välja
+Hoia ees on väljas · lülita sisse
+Otsi uuendusi
+Vaikimisi avakuva rakendus
+Road Trip
+1 · Juurdepääsetavus → puuduta korra Road Trip
+2 · Rakenduse teave → menüü → Luba piiratud seaded
+3 · Juurdepääsetavus → lülita see sisse
+Rakendust {app} ei saanud avada
+Saad valida kuni {max}
+Ilm: {place}
+navigeerimisrakendus
+Lülita sisse Road Trip: praegu mängib
+Leia Road Trip: hoia ees ja lülita see sisse
+Hoia ees on väljas
+Vali vähemalt {min}
+Lisatud lemmikutesse
+Eemaldatud lemmikutest
+Oled sihtkohas
+Sõida mööda teed {street}
+Alusta teekonda
+Ringristmikul vali {n}. väljasõit teele {street}
+Ringristmikul vali {n}. väljasõit
+{n} min
+{h} t {m} min
+Teekonda ei leitud
+Uus teekond
+Oled kohal
+Siis: {next}
+Koht
+Midagi ei leitud
+Kohal {time}
+© OpenFreeMap © OpenMapTiles · andmed © OpenStreetMapi kaastöötajad · teekonnad FOSSGIS OSRM
+Saabumine
+Lõpeta
+Teekonnalt väljas
+Hiljutised
+Otsin…
+Road Trip vajab asukohta, et sinult teekondi leida
+Või alusta teekonda kaardi keskelt:
+Kaardi keskelt
+Luba asukoht
+Otsin teekondi…
+kohal {time}
+Kiireim
+Alusta
+Liitu liiklusega
+Liitu teega {street}
+Sõida kaldteele
+Sõida kaldteele suunal {street}
+Sõida välja
+Sõida välja suunal {street}
+Hoia vasakule
+Hoia vasakule suunal {street}
+Hoia paremale
+Hoia paremale suunal {street}
+Tee U-pööre
+Tee U-pööre teele {street}
+Jätka teel {street}
+Pööra vasakule
+Pööra vasakule teele {street}
+Pööra paremale
+Pööra paremale teele {street}
+Pööra kergelt vasakule
+Pööra kergelt vasakule teele {street}
+Pööra kergelt paremale
+Pööra kergelt paremale teele {street}
+Pööra järsult vasakule
+Pööra järsult vasakule teele {street}
+Pööra järsult paremale
+Pööra järsult paremale teele {street}
+Radio Browserini ei jõutud; kontrolli ühendust
+Jaamu ei leitud
+Siin pole midagi
+Eemaldatud raadio lemmikutest
+Lisatud raadio lemmikutesse
+{n} kbit/s
+Ühendan…
+Seda jaama ei saa mängida
+Otse
+Internetiraadio
+Vali paremalt jaam. Märgi meeldivad tärniga, et need lemmikuks jätta; rooli järgmine ja eelmine liiguvad nende vahel.
+Mängi auto käivitamisel
+Viimane jaam, käivitamisel
+Eelmine
+{n}/{total}
+Järgmine
+{n} jaama
+Jaama nimi
+Enim kuulatud: {country}
+Vaheta riiki
+Lemmikuid veel pole. Leia jaamu jaotistest Riik, Populaarne või Otsi ja puuduta tärni.
+Laadin jaamu…
+Proovi uuesti
+Kirjuta jaama nimi ja vajuta Enter
+Raadio
+Kodu
+Rakendused
+Kaart
+Meedia
+Seaded
+Lemmikud
+Riik
+Populaarne

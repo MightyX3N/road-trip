@@ -1,0 +1,244 @@
+dg,dl,dt,dc,dj,dv,ds
+gen,febr,març,abr,maig,juny,jul,ag,set,oct,nov,des
+Mantenir al davant està activat
+Les actualitzacions només funcionen a Android
+Cercant actualitzacions…
+Road Trip {v} està actualitzat
+No s'han pogut cercar actualitzacions ({error})
+Serè
+Majoritàriament serè
+Parcialment ennuvolat
+Ennuvolat
+Boira
+Plugim
+Pluja
+Neu
+Ruixats
+Ruixats de neu
+Tempesta
+Temps
+No s'ha pogut cercar; comprova la connexió
+No hi ha llocs amb aquest nom
+Baixant Road Trip {v}
+Continua fent servir Road Trip; Android et demanarà d'instal·lar quan acabi
+Permet que Road Trip instal·li les seves actualitzacions
+Activa "Permet des d'aquesta font", torna i toca Instal·la
+Instal·la
+Road Trip {v} s'ha baixat
+Android et demana que confirmis; els teus ajustos i preferits es mantenen
+L'actualització no s'ha acabat
+Comprova la connexió i torna-ho a provar ({error})
+Torna-ho a provar
+Toca Actualitza per baixar-la i instal·lar-la
+Road Trip {v} està disponible
+Actualitza
+Road Trip encara no és la teva app d'inici
+Tria-la perquè el botó d'inici l'obri
+Defineix com a app d'inici
+L'actualització ha desactivat Mantenir al davant
+Android ho fa amb les apps de fora de la botiga; un interruptor ho torna a activar
+Activa
+Mantén Road Trip al davant
+Evita que la caixa torni al seu propi llançador
+© OpenFreeMap © OpenStreetMap
+Navegant amb {app}
+la teva app de navegació
+Obre {app}
+On vas?
+Permet la ubicació per veure on ets
+Permet
+Esperant la teva ubicació…
+Tria la teva ciutat per veure el temps
+Carregant…
+Encara no hi ha dades
+Mira el teu proper esdeveniment
+Res els propers dos dies
+Avui
+Demà
+Esdeveniment
+Tot el dia
+Ara
+D'aquí a {n} min
+D'aquí a {n} h
+Sonant ara
+Mira què sona
+a les teves apps de música i vídeo
+No sona res
+Posa música en qualsevol app, o la ràdio
+Reprodueix {station}
+Obre la ràdio
+Tria de 3 a 5 apps preferides per tenir-les aquí
+Road Trip necessita accés a les notificacions per mostrar i controlar la música,
+els pòdcasts i els vídeos de les teves apps. Només llegeix el que sona.
+Ara no sona res
+Posa música en qualsevol app i apareixerà aquí.
+Sonant des de {app}
+Desactivat per l'última actualització
+Desactivat: la caixa pot tornar al seu propi llançador
+Mantenir al davant
+Activat: Road Trip torna si la caixa canvia de llançador
+En pausa
+Mantenir al davant després d'actualitzar
+Es torna a activar després de cada actualització
+Torna-ho a activar a mà, o permet-ho un cop amb adb (vegeu el web)
+Sonant ara i navegació
+Permès: llegeix el que sona i el teu proper gir
+Necessita accés a les notificacions
+Obre
+Calendari
+Permès: el teu proper esdeveniment surt a l'Inici
+Mostra el teu proper esdeveniment a l'Inici
+App d'inici
+Road Trip s'obre quan prems Inici
+Road Trip encara no és l'app d'inici
+Canvia
+El llançador propi de la caixa
+Obre'l 2 minuts sense que Road Trip hi intervingui
+Apps preferides
+{n} de {max} triades
+Edita
+Color d'accent
+Idioma
+Traduït amb IA, algunes paraules poden no ser correctes
+Tria la teva ciutat
+Defineix
+Actualitzacions
+Versió {v}
+Comprova ara
+Cerca actualitzacions només amb Wi-Fi
+Comprovació automàtica cada 6 hores
+Diagnòstic
+Què ha vist i fet Mantenir al davant
+Mostra
+Quant a Road Trip
+Lloc web
+Road Trip en aquesta caixa
+El teu
+Torna als Ajustos
+Les traduccions de Road Trip estan fetes amb IA, per això algunes paraules poden no ser perfectes.
+Automàtic
+cap encara
+Res encara
+Canvis de pantalla (més recents primer)
+Notificacions de navegació
+Lloc per al temps
+Escriu una ciutat o poble
+Cerca
+Benvingut a Road Trip
+Tria les teves apps preferides
+Tria'n de 3 a 5. Seran a la part de baix de la pantalla d'inici, a un toc.
+Omet de moment
+Cancel·la
+Continua
+Fet
+Treu de preferits
+Preferits plens (5)
+Afegeix a preferits
+Informació de l'app
+Obre el llançador de la caixa 2 minuts
+No s'ha trobat cap altre llançador
+Activa Mantenir al davant
+Mantenir al davant està activat · desactiva
+Mantenir al davant està desactivat · activa
+Cerca actualitzacions
+App d'inici per defecte
+Road Trip
+1 · Accessibilitat → toca Road Trip un cop
+2 · Informació de l'app → menú → Permet els ajustos restringits
+3 · Accessibilitat → activa-ho
+No s'ha pogut obrir {app}
+Pots triar-ne fins a {max}
+Temps a {place}
+l'app de navegació
+Activa Road Trip: sonant ara
+Busca Road Trip: mantenir al davant i activa-ho
+Mantenir al davant està desactivat
+Tria'n almenys {min}
+Afegit a preferits
+Tret de preferits
+Has arribat a la destinació
+Segueix per {street}
+Inicia la ruta
+A la rotonda, agafa la sortida {n} cap a {street}
+A la rotonda, agafa la sortida {n}
+{n} min
+{h} h {m} min
+No s'ha trobat cap ruta
+Ruta nova
+Has arribat
+Després: {next}
+Lloc
+No s'ha trobat res
+Arribada {time}
+© OpenFreeMap © OpenMapTiles · dades © col·laboradors d'OpenStreetMap · rutes FOSSGIS OSRM
+Arribada
+Acaba
+Fora de la ruta
+Recents
+Cercant…
+Road Trip necessita la teva ubicació per trobar rutes des d'on ets
+O comença la ruta des del centre del mapa:
+Des del centre del mapa
+Permet la ubicació
+Cercant rutes…
+arribada {time}
+La més ràpida
+Inicia
+Incorpora't
+Incorpora't a {street}
+Agafa la rampa
+Agafa la rampa cap a {street}
+Agafa la sortida
+Agafa la sortida cap a {street}
+Mantén-te a l'esquerra
+Mantén-te a l'esquerra cap a {street}
+Mantén-te a la dreta
+Mantén-te a la dreta cap a {street}
+Fes mitja volta
+Fes mitja volta cap a {street}
+Continua per {street}
+Gira a l'esquerra
+Gira a l'esquerra cap a {street}
+Gira a la dreta
+Gira a la dreta cap a {street}
+Gira lleugerament a l'esquerra
+Gira lleugerament a l'esquerra cap a {street}
+Gira lleugerament a la dreta
+Gira lleugerament a la dreta cap a {street}
+Gira bruscament a l'esquerra
+Gira bruscament a l'esquerra cap a {street}
+Gira bruscament a la dreta
+Gira bruscament a la dreta cap a {street}
+No s'ha pogut connectar amb Radio Browser; comprova la connexió
+No s'han trobat emissores
+Aquí no hi ha res
+Treta de les preferides de ràdio
+Afegida a les preferides de ràdio
+{n} kbps
+Connectant…
+No es pot reproduir aquesta emissora
+En directe
+Ràdio per internet
+Tria una emissora a la dreta. Marca amb una estrella les que t'agradin per desar-les com a preferides; següent i anterior al volant passen d'una a l'altra.
+Reprodueix quan arrenqui el cotxe
+L'última emissora, en arrencar
+Anterior
+{n} de {total}
+Següent
+{n} emissores
+Nom de l'emissora
+El més escoltat a {country}
+Canvia el país
+Encara no hi ha preferides. Busca emissores a País, Populars o Cerca i toca l'estrella.
+Carregant emissores…
+Torna-ho a provar
+Escriu el nom d'una emissora i prem Intro
+Ràdio
+Inici
+Apps
+Mapa
+Multimèdia
+Ajustos
+Preferides
+País
+Populars

@@ -193,7 +193,14 @@ public class RadioService extends Service {
         }
         int n = a.length();
         int next = at < 0 ? 0 : ((at + dir) % n + n) % n;
-        station = a.optJSONObject(next);
+        JSONObject old = station;
+        JSONObject st = a.optJSONObject(next);
+        if (st == null) return;
+        // keep the words in the app's language
+        for (String k : new String[] { "lConnecting", "lPaused", "lError" }) {
+            try { if (old != null && old.has(k) && !st.has(k)) st.put(k, old.optString(k)); } catch (Exception ignored) {}
+        }
+        station = st;
         retries = 0;
         start();
     }
@@ -341,16 +348,22 @@ public class RadioService extends Service {
         try { return BitmapFactory.decodeFile(path); } catch (Throwable t) { return null; }
     }
 
+    // the words Road Trip's Lua side sent along, in the app's language
+    private static String label(JSONObject st, String key, String fallback) {
+        String v = st == null ? null : st.optString(key, null);
+        return v == null || v.isEmpty() ? fallback : v;
+    }
+
     private void update() {
         JSONObject st = station;
         String name = st == null ? "Radio" : st.optString("name", "Radio");
         String sub = st == null ? "" : st.optString("sub", "");
         String line;
         switch (state) {
-            case "connecting": line = "Connecting…"; break;
-            case "error": line = error == null ? "Can't play this station" : error; break;
-            case "paused": line = "Paused"; break;
-            default: line = sub.isEmpty() ? "Road Trip radio" : sub;
+            case "connecting": line = label(st, "lConnecting", "Connecting…"); break;
+            case "error": line = error == null ? label(st, "lError", "Can't play this station") : error; break;
+            case "paused": line = label(st, "lPaused", "Paused"); break;
+            default: line = sub.isEmpty() ? "Road Trip" : sub;
         }
         Bitmap art = art();
         if (session != null) {
@@ -411,7 +424,7 @@ public class RadioService extends Service {
 
     private void goForeground() {
         JSONObject st = station;
-        Notification n = build(st == null ? "Radio" : st.optString("name", "Radio"), "Connecting…", null);
+        Notification n = build(st == null ? "Radio" : st.optString("name", "Radio"), label(st, "lConnecting", "Connecting…"), null);
         try {
             if (Build.VERSION.SDK_INT >= 29) startForeground(NOTE_ID, n, ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK);
             else startForeground(NOTE_ID, n);

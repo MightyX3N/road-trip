@@ -1,0 +1,244 @@
+V,H,K,Sze,Cs,P,Szo
+jan,febr,márc,ápr,máj,jún,júl,aug,szept,okt,nov,dec
+Előtérben tartás bekapcsolva
+A frissítések csak Androidon működnek
+Frissítések keresése…
+A Road Trip {v} naprakész
+Nem sikerült frissítést keresni ({error})
+Derült
+Többnyire derült
+Részben felhős
+Felhős
+Köd
+Szitálás
+Eső
+Hó
+Záporok
+Hózáporok
+Zivatar
+Időjárás
+A keresés nem sikerült; ellenőrizd a kapcsolatot
+Nincs ilyen nevű hely
+Road Trip {v} letöltése
+Használd nyugodtan a Road Tripet; az Android rákérdez a telepítésre, ha kész
+Engedd, hogy a Road Trip telepítse a frissítéseit
+Kapcsold be az "Engedélyezés ebből a forrásból" lehetőséget, majd gyere vissza, és koppints a Telepítésre
+Telepítés
+A Road Trip {v} letöltve
+Az Android megerősítést kér; a beállításaid és kedvenceid megmaradnak
+A frissítés nem fejeződött be
+Ellenőrizd a kapcsolatot, és próbáld újra ({error})
+Újra
+Koppints a Frissítésre a letöltéshez és telepítéshez
+A Road Trip {v} elérhető
+Frissítés
+A Road Trip még nem a kezdőalkalmazásod
+Állítsd be, hogy a Kezdőlap gomb ezt nyissa meg
+Beállítás kezdőalkalmazásként
+A frissítés kikapcsolta az Előtérben tartást
+Az Android ezt teszi az áruházon kívüli alkalmazásokkal; egy kapcsoló visszakapcsolja
+Bekapcsolás
+Road Trip előtérben tartása
+Megakadályozza, hogy a doboz visszaváltson a saját indítójára
+© OpenFreeMap © OpenStreetMap
+Navigáció: {app}
+a navigációs alkalmazásod
+{app} megnyitása
+Hová mész?
+Engedélyezd a helyadatokat, hogy lásd, hol vagy
+Engedélyezés
+Várakozás a helyzetedre…
+Válaszd ki a városod az időjáráshoz
+Betöltés…
+Még nincs adat
+Lásd a következő eseményed
+Semmi a következő két napban
+Ma
+Holnap
+Esemény
+Egész nap
+Most
+{n} perc múlva
+{n} óra múlva
+Most szól
+Nézd meg, mi szól
+a zene- és videóalkalmazásaidban
+Semmi sem szól
+Indíts zenét bármelyik alkalmazásban, vagy a rádiót
+{station} lejátszása
+Rádió megnyitása
+Válassz 3–5 kedvenc alkalmazást, hogy itt legyenek
+A Road Tripnek értesítési hozzáférés kell a zene,
+a podcastok és videók megjelenítéséhez és vezérléséhez. Csak azt olvassa, ami szól.
+Most semmi sem szól
+Indíts zenét bármelyik alkalmazásban, és itt megjelenik.
+Lejátszás innen: {app}
+Az utolsó frissítés kikapcsolta
+Ki: a doboz visszaválthat a saját indítójára
+Előtérben tartás
+Be: a Road Trip visszatér, ha a doboz indítót vált
+Szünetel
+Előtérben tartás frissítések után
+Minden frissítés után magától visszakapcsol
+Kapcsold vissza kézzel, vagy engedélyezd egyszer adb-vel (lásd a weboldalt)
+Most szól és navigáció
+Engedélyezve: olvassa, mi szól, és a következő kanyarod
+Értesítési hozzáférés szükséges
+Megnyitás
+Naptár
+Engedélyezve: a következő eseményed a Kezdőlapon látszik
+A következő esemény megjelenítése a Kezdőlapon
+Kezdőalkalmazás
+A Road Trip nyílik meg, ha megnyomod a Kezdőlapot
+A Road Trip még nem a kezdőalkalmazás
+Módosítás
+A doboz saját indítója
+Megnyitás 2 percre a Road Trip közbelépése nélkül
+Kedvenc alkalmazások
+{n}/{max} kiválasztva
+Szerkesztés
+Kiemelőszín
+Nyelv
+MI fordította, néhány szó hibás lehet
+Válaszd ki a városod
+Beállítás
+Frissítések
+Verzió: {v}
+Ellenőrzés most
+Frissítések keresése csak Wi-Fin
+Automatikus ellenőrzés 6 óránként
+Diagnosztika
+Mit látott és tett az Előtérben tartás
+Mutasd
+A Road Tripről
+Weboldal
+Road Trip ezen a dobozon
+A tiéd
+Vissza a Beállításokhoz
+A Road Trip fordításait mesterséges intelligencia készítette, ezért néhány szó nem biztos, hogy tökéletes.
+Automatikus
+még nincs
+Még semmi
+Képernyőváltások (legújabb elöl)
+Navigációs értesítések
+Hely az időjáráshoz
+Írj be egy várost vagy települést
+Keresés
+Üdv a Road Tripben
+Válaszd ki a kedvenc alkalmazásaid
+Válassz 3–5-öt. A kezdőképernyő alján lesznek, egy koppintásnyira.
+Most kihagyom
+Mégse
+Tovább
+Kész
+Eltávolítás a kedvencekből
+A kedvencek megteltek (5)
+Hozzáadás a kedvencekhez
+Alkalmazásinfó
+A doboz indítójának megnyitása 2 percre
+Nem található másik indító
+Előtérben tartás bekapcsolása
+Előtérben tartás be · kikapcsolás
+Előtérben tartás ki · bekapcsolás
+Frissítések keresése
+Alapértelmezett kezdőalkalmazás
+Road Trip
+1 · Kisegítő lehetőségek → koppints egyszer a Road Tripre
+2 · Alkalmazásinfó → menü → Korlátozott beállítások engedélyezése
+3 · Kisegítő lehetőségek → kapcsold be
+Nem sikerült megnyitni: {app}
+Legfeljebb {max} választható
+Időjárás: {place}
+a navigációs alkalmazás
+Kapcsold be: Road Trip: most szól
+Keresd meg: Road Trip: előtérben tartás, és kapcsold be
+Előtérben tartás kikapcsolva
+Válassz legalább {min}-t
+Hozzáadva a kedvencekhez
+Eltávolítva a kedvencekből
+Megérkeztél az úti célhoz
+Haladj a(z) {street} mentén
+Útvonal indítása
+A körforgalomban hajts ki a(z) {n}. kijáraton a(z) {street} felé
+A körforgalomban hajts ki a(z) {n}. kijáraton
+{n} perc
+{h} óra {m} perc
+Nem található útvonal
+Új útvonal
+Megérkeztél
+Aztán: {next}
+Hely
+Nincs találat
+Érkezés {time}
+© OpenFreeMap © OpenMapTiles · adatok © OpenStreetMap közreműködők · útvonalak FOSSGIS OSRM
+Érkezés
+Befejezés
+Letértél az útvonalról
+Legutóbbiak
+Keresés…
+A Road Tripnek helyadat kell, hogy útvonalat találjon tőled
+Vagy indítsd az útvonalat a térkép közepéről:
+A térkép közepéről
+Helyadatok engedélyezése
+Útvonalak keresése…
+érkezés {time}
+Leggyorsabb
+Indítás
+Sorolj be
+Sorolj be ide: {street}
+Hajts fel
+Hajts fel ide: {street}
+Hajts le
+Hajts le ide: {street}
+Tarts balra
+Tarts balra: {street}
+Tarts jobbra
+Tarts jobbra: {street}
+Fordulj vissza
+Fordulj vissza: {street}
+Haladj tovább: {street}
+Fordulj balra
+Fordulj balra: {street}
+Fordulj jobbra
+Fordulj jobbra: {street}
+Fordulj enyhén balra
+Fordulj enyhén balra: {street}
+Fordulj enyhén jobbra
+Fordulj enyhén jobbra: {street}
+Fordulj élesen balra
+Fordulj élesen balra: {street}
+Fordulj élesen jobbra
+Fordulj élesen jobbra: {street}
+A Radio Browser nem érhető el; ellenőrizd a kapcsolatot
+Nem található állomás
+Itt nincs semmi
+Eltávolítva a kedvenc állomások közül
+Hozzáadva a kedvenc állomásokhoz
+{n} kbps
+Kapcsolódás…
+Ez az állomás nem játszható le
+Élő
+Internetes rádió
+Válassz állomást jobbra. Jelöld csillaggal, amit szeretsz, hogy kedvenc legyen; a kormány következő és előző gombja lépked köztük.
+Lejátszás az autó indulásakor
+Az utolsó állomás, indításkor
+Előző
+{n}/{total}
+Következő
+{n} állomás
+Állomás neve
+Legtöbbet hallgatott: {country}
+Ország módosítása
+Még nincs kedvenc. Keress állomást az Ország, Népszerű vagy Keresés alatt, és koppints a csillagra.
+Állomások betöltése…
+Újra
+Írd be egy állomás nevét, és nyomj Entert
+Rádió
+Kezdőlap
+Alkalmazások
+Térkép
+Média
+Beállítások
+Kedvencek
+Ország
+Népszerű

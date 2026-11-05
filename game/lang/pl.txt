@@ -1,0 +1,244 @@
+nd,pn,wt,śr,cz,pt,sb
+sty,lut,mar,kwi,maj,cze,lip,sie,wrz,paź,lis,gru
+Utrzymuj na wierzchu jest włączone
+Aktualizacje działają tylko na Androidzie
+Szukam aktualizacji…
+Road Trip {v} jest aktualny
+Nie udało się sprawdzić aktualizacji ({error})
+Bezchmurnie
+Przeważnie bezchmurnie
+Częściowe zachmurzenie
+Pochmurno
+Mgła
+Mżawka
+Deszcz
+Śnieg
+Przelotne opady
+Przelotny śnieg
+Burza
+Pogoda
+Nie udało się wyszukać; sprawdź połączenie
+Brak miejsc o tej nazwie
+Pobieranie Road Trip {v}
+Korzystaj dalej z Road Trip; Android zapyta o instalację, gdy skończy
+Pozwól Road Trip instalować aktualizacje
+Włącz "Zezwalaj z tego źródła", wróć i dotknij Zainstaluj
+Zainstaluj
+Road Trip {v} został pobrany
+Android poprosi o potwierdzenie; ustawienia i ulubione zostaną
+Aktualizacja się nie skończyła
+Sprawdź połączenie i spróbuj ponownie ({error})
+Ponów
+Dotknij Aktualizuj, aby pobrać i zainstalować
+Road Trip {v} jest dostępny
+Aktualizuj
+Road Trip nie jest jeszcze Twoim ekranem głównym
+Ustaw go, aby przycisk Home go otwierał
+Ustaw jako ekran główny
+Aktualizacja wyłączyła Utrzymuj na wierzchu
+Android tak robi z aplikacjami spoza sklepu; jeden przełącznik to przywraca
+Włącz
+Utrzymuj Road Trip na wierzchu
+Nie pozwala urządzeniu wracać do własnego launchera
+© OpenFreeMap © OpenStreetMap
+Nawigacja: {app}
+Twoja aplikacja nawigacji
+Otwórz {app}
+Dokąd jedziesz?
+Zezwól na lokalizację, aby widzieć, gdzie jesteś
+Zezwól
+Czekam na Twoją lokalizację…
+Wybierz miasto, aby zobaczyć pogodę
+Ładowanie…
+Brak danych
+Zobacz najbliższe wydarzenie
+Nic w ciągu dwóch dni
+Dziś
+Jutro
+Wydarzenie
+Cały dzień
+Teraz
+Za {n} min
+Za {n} godz.
+Teraz gra
+Zobacz, co gra
+w Twoich aplikacjach z muzyką i wideo
+Nic nie gra
+Włącz muzykę w dowolnej aplikacji albo radio
+Odtwórz {station}
+Otwórz radio
+Wybierz od 3 do 5 ulubionych aplikacji, aby mieć je tutaj
+Road Trip potrzebuje dostępu do powiadomień, by pokazywać i sterować muzyką,
+podcastami i wideo z Twoich aplikacji. Odczytuje tylko to, co gra.
+Teraz nic nie gra
+Włącz muzykę w dowolnej aplikacji, a pojawi się tutaj.
+Gra z {app}
+Wyłączone przez ostatnią aktualizację
+Wyłączone: urządzenie może wrócić do własnego launchera
+Utrzymuj na wierzchu
+Włączone: Road Trip wraca, gdy urządzenie zmieni launcher
+Wstrzymane
+Utrzymuj na wierzchu po aktualizacjach
+Włącza się samo po każdej aktualizacji
+Włącz ręcznie albo zezwól raz przez adb (zobacz stronę)
+Teraz gra i nawigacja
+Dozwolone: odczytuje, co gra, i Twój następny skręt
+Wymaga dostępu do powiadomień
+Otwórz
+Kalendarz
+Dozwolone: najbliższe wydarzenie widać na ekranie głównym
+Pokaż najbliższe wydarzenie na ekranie głównym
+Ekran główny
+Road Trip otwiera się po naciśnięciu Home
+Road Trip nie jest jeszcze ekranem głównym
+Zmień
+Własny launcher urządzenia
+Otwórz go na 2 minuty bez wtrącania się Road Trip
+Ulubione aplikacje
+Wybrano {n} z {max}
+Edytuj
+Kolor akcentu
+Język
+Przetłumaczone przez AI, niektóre słowa mogą być błędne
+Wybierz miasto
+Ustaw
+Aktualizacje
+Wersja {v}
+Sprawdź teraz
+Szukaj aktualizacji tylko przez Wi-Fi
+Automatyczne sprawdzanie co 6 godzin
+Diagnostyka
+Co Utrzymuj na wierzchu zobaczyło i zrobiło
+Pokaż
+O Road Trip
+Strona
+Road Trip na tym urządzeniu
+Twoje
+Wróć do Ustawień
+Tłumaczenia Road Trip wykonało AI, więc niektóre słowa mogą nie być idealne.
+Automatycznie
+jeszcze brak
+Jeszcze nic
+Zmiany ekranu (najnowsze najpierw)
+Powiadomienia nawigacji
+Miejsce pogody
+Wpisz miasto lub miejscowość
+Szukaj
+Witaj w Road Trip
+Wybierz ulubione aplikacje
+Wybierz od 3 do 5. Będą na dole ekranu głównego, jedno dotknięcie dalej.
+Na razie pomiń
+Anuluj
+Dalej
+Gotowe
+Usuń z ulubionych
+Ulubione są pełne (5)
+Dodaj do ulubionych
+Informacje o aplikacji
+Otwórz launcher urządzenia na 2 minuty
+Nie znaleziono innego launchera
+Włącz Utrzymuj na wierzchu
+Utrzymuj na wierzchu włączone · wyłącz
+Utrzymuj na wierzchu wyłączone · włącz
+Sprawdź aktualizacje
+Domyślny ekran główny
+Road Trip
+1 · Ułatwienia dostępu → dotknij raz Road Trip
+2 · Informacje o aplikacji → menu → Zezwól na ustawienia z ograniczeniami
+3 · Ułatwienia dostępu → włącz
+Nie udało się otworzyć {app}
+Możesz wybrać najwyżej {max}
+Pogoda: {place}
+aplikacja nawigacji
+Włącz Road Trip: teraz gra
+Znajdź Road Trip: utrzymuj na wierzchu i włącz
+Utrzymuj na wierzchu jest wyłączone
+Wybierz co najmniej {min}
+Dodano do ulubionych
+Usunięto z ulubionych
+Jesteś na miejscu
+Jedź ulicą {street}
+Rozpocznij trasę
+Na rondzie zjedź {n}. zjazdem w {street}
+Na rondzie zjedź {n}. zjazdem
+{n} min
+{h} godz. {m} min
+Nie znaleziono trasy
+Nowa trasa
+Dotarłeś
+Potem: {next}
+Miejsce
+Nic nie znaleziono
+Przyjazd {time}
+© OpenFreeMap © OpenMapTiles · dane © współtwórcy OpenStreetMap · trasy FOSSGIS OSRM
+Przyjazd
+Zakończ
+Poza trasą
+Ostatnie
+Szukam…
+Road Trip potrzebuje lokalizacji, by znaleźć trasy od Ciebie
+Albo zacznij trasę od środka mapy:
+Od środka mapy
+Zezwól na lokalizację
+Szukam tras…
+przyjazd {time}
+Najszybsza
+Start
+Włącz się do ruchu
+Włącz się do ruchu na {street}
+Wjedź na łącznicę
+Wjedź na łącznicę w {street}
+Zjedź
+Zjedź w {street}
+Trzymaj się lewej
+Trzymaj się lewej w {street}
+Trzymaj się prawej
+Trzymaj się prawej w {street}
+Zawróć
+Zawróć w {street}
+Jedź dalej ulicą {street}
+Skręć w lewo
+Skręć w lewo w {street}
+Skręć w prawo
+Skręć w prawo w {street}
+Skręć lekko w lewo
+Skręć lekko w lewo w {street}
+Skręć lekko w prawo
+Skręć lekko w prawo w {street}
+Skręć ostro w lewo
+Skręć ostro w lewo w {street}
+Skręć ostro w prawo
+Skręć ostro w prawo w {street}
+Brak połączenia z Radio Browser; sprawdź połączenie
+Nie znaleziono stacji
+Tu nic nie ma
+Usunięto z ulubionych stacji
+Dodano do ulubionych stacji
+{n} kb/s
+Łączenie…
+Nie można odtworzyć tej stacji
+Na żywo
+Radio internetowe
+Wybierz stację po prawej. Oznacz gwiazdką te, które lubisz, by zapisać je jako ulubione; następny i poprzedni na kierownicy przełączają między nimi.
+Graj po uruchomieniu auta
+Ostatnia stacja, przy starcie
+Poprzednia
+{n} z {total}
+Następna
+{n} stacji
+Nazwa stacji
+Najczęściej słuchane: {country}
+Zmień kraj
+Brak ulubionych. Znajdź stacje w zakładkach Kraj, Popularne lub Szukaj i dotknij gwiazdki.
+Ładowanie stacji…
+Spróbuj ponownie
+Wpisz nazwę stacji i naciśnij Enter
+Radio
+Start
+Aplikacje
+Mapa
+Multimedia
+Ustawienia
+Ulubione
+Kraj
+Popularne

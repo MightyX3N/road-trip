@@ -1,0 +1,244 @@
+sun,mán,þri,mið,fim,fös,lau
+jan,feb,mar,apr,maí,jún,júl,ágú,sep,okt,nóv,des
+Halda fremst er á
+Uppfærslur virka aðeins á Android
+Leitar að uppfærslum…
+Road Trip {v} er uppfært
+Gat ekki leitað að uppfærslum ({error})
+Heiðskírt
+Að mestu heiðskírt
+Hálfskýjað
+Skýjað
+Þoka
+Súld
+Rigning
+Snjór
+Skúrir
+Snjóél
+Þrumuveður
+Veður
+Gat ekki leitað; athugaðu tenginguna
+Engir staðir með þessu nafni
+Sækir Road Trip {v}
+Haltu áfram að nota Road Trip; Android spyr um uppsetningu þegar því lýkur
+Leyfðu Road Trip að setja upp uppfærslur
+Kveiktu á "Leyfa frá þessum uppruna", komdu svo aftur og ýttu á Setja upp
+Setja upp
+Road Trip {v} hefur verið sótt
+Android biður þig að staðfesta; stillingar og eftirlæti haldast
+Uppfærslunni lauk ekki
+Athugaðu tenginguna og reyndu aftur ({error})
+Reyna aftur
+Ýttu á Uppfæra til að sækja og setja hana upp
+Road Trip {v} er í boði
+Uppfæra
+Road Trip er ekki heimaforritið þitt enn
+Veldu það svo heimahnappurinn opni það
+Velja sem heimaforrit
+Uppfærslan slökkti á Halda fremst
+Android gerir þetta við forrit utan verslunar; einn rofi kveikir aftur
+Kveikja
+Halda Road Trip fremst
+Kemur í veg fyrir að boxið skipti aftur í eigin ræsi
+© OpenFreeMap © OpenStreetMap
+Leiðsögn með {app}
+leiðsöguforritið þitt
+Opna {app}
+Hvert ertu að fara?
+Leyfðu staðsetningu til að sjá hvar þú ert
+Leyfa
+Bíður eftir staðsetningu…
+Veldu borgina þína til að sjá veðrið
+Hleður…
+Engin gögn enn
+Sjá næsta viðburð
+Ekkert næstu tvo daga
+Í dag
+Á morgun
+Viðburður
+Allan daginn
+Núna
+Eftir {n} mín
+Eftir {n} klst
+Í spilun
+Sjá hvað er í spilun
+í tónlistar- og myndbandaforritunum þínum
+Ekkert í spilun
+Spilaðu tónlist í forriti eða útvarpið
+Spila {station}
+Opna útvarp
+Veldu 3 til 5 eftirlætisforrit til að hafa þau hér
+Road Trip þarf aðgang að tilkynningum til að sýna og stjórna tónlist,
+hlaðvörpum og myndböndum úr forritunum þínum. Það les aðeins hvað er í spilun.
+Ekkert er í spilun
+Spilaðu tónlist í forriti og hún birtist hér.
+Spilast úr {app}
+Slökkt af síðustu uppfærslu
+Af: boxið getur skipt aftur í eigin ræsi
+Halda fremst
+Á: Road Trip kemur aftur ef boxið skiptir um ræsi
+Í bið
+Halda fremst eftir uppfærslur
+Kveikir á sér aftur eftir hverja uppfærslu
+Kveiktu aftur handvirkt, eða leyfðu það einu sinni með adb (sjá vefsíðuna)
+Í spilun og leiðsögn
+Leyft: les hvað er í spilun og næstu beygju
+Þarf aðgang að tilkynningum
+Opna
+Dagatal
+Leyft: næsti viðburður birtist á Heim
+Sýna næsta viðburð á Heim
+Heimaforrit
+Road Trip opnast þegar þú ýtir á Heim
+Road Trip er ekki heimaforritið enn
+Breyta
+Eigin ræsir boxins
+Opnaðu hann í 2 mínútur án þess að Road Trip grípi inn í
+Eftirlætisforrit
+{n} af {max} valin
+Breyta
+Áherslulitur
+Tungumál
+Þýtt af gervigreind, svo sum orð gætu verið röng
+Veldu borgina þína
+Velja
+Uppfærslur
+Útgáfa {v}
+Athuga núna
+Leita aðeins að uppfærslum á Wi-Fi
+Sjálfvirk athugun á 6 klst. fresti
+Greining
+Hvað Halda fremst sá og gerði
+Sýna
+Um Road Trip
+Vefsíða
+Road Trip á þessu boxi
+Þitt
+Aftur í Stillingar
+Þýðingar Road Trip eru gerðar af gervigreind, svo sum orð eru kannski ekki fullkomin.
+Sjálfvirkt
+ekkert enn
+Ekkert enn
+Skjáskipti (nýjast fyrst)
+Leiðsögutilkynningar
+Staður fyrir veður
+Sláðu inn borg eða bæ
+Leita
+Velkomin í Road Trip
+Veldu eftirlætisforritin þín
+Veldu 3 til 5. Þau eru neðst á heimaskjánum, einni snertingu frá.
+Sleppa í bili
+Hætta við
+Áfram
+Lokið
+Fjarlægja úr eftirlæti
+Eftirlæti eru full (5)
+Bæta við eftirlæti
+Upplýsingar um forrit
+Opna ræsi boxins í 2 mínútur
+Enginn annar ræsir fannst
+Kveikja á Halda fremst
+Halda fremst er á · slökkva
+Halda fremst er af · kveikja
+Leita að uppfærslum
+Sjálfgefið heimaforrit
+Road Trip
+1 · Aðgengi → ýttu einu sinni á Road Trip
+2 · Upplýsingar um forrit → valmynd → Leyfa takmarkaðar stillingar
+3 · Aðgengi → kveiktu á því
+Gat ekki opnað {app}
+Þú getur valið allt að {max}
+Veður fyrir {place}
+leiðsöguforritið
+Kveiktu á Road Trip: í spilun
+Finndu Road Trip: halda fremst og kveiktu á því
+Halda fremst er af
+Veldu að minnsta kosti {min}
+Bætt við eftirlæti
+Fjarlægt úr eftirlæti
+Þú ert komin á áfangastað
+Aktu eftir {street}
+Hefja leiðina
+Taktu afrein {n} í hringtorginu inn á {street}
+Taktu afrein {n} í hringtorginu
+{n} mín
+{h} klst {m} mín
+Fann enga leið
+Ný leið
+Þú ert komin
+Svo: {next}
+Staður
+Ekkert fannst
+Koma {time}
+© OpenFreeMap © OpenMapTiles · gögn © OpenStreetMap-höfundar · leiðir FOSSGIS OSRM
+Koma
+Ljúka
+Utan leiðar
+Nýlegt
+Leitar…
+Road Trip þarf staðsetningu til að finna leiðir frá þér
+Eða byrjaðu leiðina frá miðju kortsins:
+Frá miðju kortsins
+Leyfa staðsetningu
+Finnur leiðir…
+koma {time}
+Fljótlegast
+Hefja
+Sameinast
+Sameinast inn á {street}
+Taktu aðreinina
+Taktu aðreinina inn á {street}
+Taktu afreinina
+Taktu afreinina inn á {street}
+Haltu til vinstri
+Haltu til vinstri inn á {street}
+Haltu til hægri
+Haltu til hægri inn á {street}
+Taktu U-beygju
+Taktu U-beygju inn á {street}
+Haltu áfram eftir {street}
+Beygðu til vinstri
+Beygðu til vinstri inn á {street}
+Beygðu til hægri
+Beygðu til hægri inn á {street}
+Beygðu aðeins til vinstri
+Beygðu aðeins til vinstri inn á {street}
+Beygðu aðeins til hægri
+Beygðu aðeins til hægri inn á {street}
+Beygðu skarpt til vinstri
+Beygðu skarpt til vinstri inn á {street}
+Beygðu skarpt til hægri
+Beygðu skarpt til hægri inn á {street}
+Náði ekki í Radio Browser; athugaðu tenginguna
+Engar stöðvar fundust
+Ekkert hér
+Fjarlægt úr eftirlætisstöðvum
+Bætt við eftirlætisstöðvar
+{n} kbps
+Tengist…
+Get ekki spilað þessa stöð
+Í beinni
+Netútvarp
+Veldu stöð til hægri. Settu stjörnu á þær sem þér líkar til að geyma þær sem eftirlæti; næsta og fyrri á stýrinu fletta á milli þeirra.
+Spila þegar bíllinn ræsist
+Síðasta stöðin, við ræsingu
+Fyrri
+{n} af {total}
+Næsta
+{n} stöðvar
+Heiti stöðvar
+Mest hlustað á í {country}
+Skipta um land
+Engin eftirlæti enn. Finndu stöðvar undir Land, Vinsælt eða Leita og ýttu á stjörnuna.
+Hleður stöðvum…
+Reyna aftur
+Sláðu inn heiti stöðvar og ýttu á Enter
+Útvarp
+Heim
+Forrit
+Kort
+Miðlar
+Stillingar
+Eftirlæti
+Land
+Vinsælt

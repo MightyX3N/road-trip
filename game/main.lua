@@ -5,6 +5,8 @@ local config = require("config")
 local ui = require("ui")
 local map = require("map")
 local radio = require("radio")
+local lang = require("lang")
+local T = lang.T
 
 local lg = love.graphics
 
@@ -69,7 +71,7 @@ local function refreshGuard()
   -- came back from Accessibility with the guard now on: close the how-to
   if state.menu and state.menu.restricted and g.serviceOn then
     state.menu = nil
-    toast("Keep in front is on")
+    toast(T("Keep in front is on"))
   end
   if changed then state.dirty = true end
 end
@@ -79,7 +81,7 @@ local UPDATE_EVERY = 6 * 3600 -- seconds between automatic checks
 -- automatic checks are Wi-Fi only and at most every 6 hours; `manual` ignores both
 local function checkForUpdate(manual)
   if not android.isAndroid then
-    if manual then toast("Updates only work on Android") end
+    if manual then toast(T("Updates only work on Android")) end
     return
   end
   local last = config.get("lastUpdateCheck") or 0
@@ -88,7 +90,7 @@ local function checkForUpdate(manual)
   state.manualCheck = manual
   local wifiOnly = not manual and config.get("updateWifiOnly") ~= false
   if android.updateCheck(wifiOnly) then state.update.state = "checking" end
-  if manual then toast("Checking for updates…") end
+  if manual then toast(T("Checking for updates…")) end
 end
 
 local function pollUpdate()
@@ -99,8 +101,8 @@ local function pollUpdate()
   state.update = u
   if state.manualCheck and before == "checking" and u.state ~= "checking" then
     state.manualCheck = false
-    if u.state == "none" then toast("Road Trip " .. (u.currentName or "") .. " is up to date")
-    elseif u.state == "error" then toast("Couldn't check for updates (" .. (u.error or "") .. ")") end
+    if u.state == "none" then toast(T("Road Trip {v} is up to date", { v = u.currentName or "" }))
+    elseif u.state == "error" then toast(T("Couldn't check for updates ({error})", { error = u.error or "" })) end
   end
   if changed then state.dirty = true end
 end
@@ -229,17 +231,17 @@ end
 -- WMO weather codes, as Open-Meteo reports them
 local function weatherLook(code, isDay)
   code = code or 3
-  if code <= 1 then return code == 0 and "Clear" or "Mostly clear", isDay == 0 and "moon" or "sun" end
-  if code == 2 then return "Partly cloudy", "cloud" end
-  if code == 3 then return "Cloudy", "cloud" end
-  if code == 45 or code == 48 then return "Fog", "fog" end
-  if code >= 51 and code <= 57 then return "Drizzle", "rain" end
-  if code >= 61 and code <= 67 then return "Rain", "rain" end
-  if code >= 71 and code <= 77 then return "Snow", "snow" end
-  if code >= 80 and code <= 82 then return "Showers", "rain" end
-  if code == 85 or code == 86 then return "Snow showers", "snow" end
-  if code >= 95 then return "Thunderstorm", "storm" end
-  return "Weather", "cloud"
+  if code <= 1 then return code == 0 and T("Clear") or T("Mostly clear"), isDay == 0 and "moon" or "sun" end
+  if code == 2 then return T("Partly cloudy"), "cloud" end
+  if code == 3 then return T("Cloudy"), "cloud" end
+  if code == 45 or code == 48 then return T("Fog"), "fog" end
+  if code >= 51 and code <= 57 then return T("Drizzle"), "rain" end
+  if code >= 61 and code <= 67 then return T("Rain"), "rain" end
+  if code >= 71 and code <= 77 then return T("Snow"), "snow" end
+  if code >= 80 and code <= 82 then return T("Showers"), "rain" end
+  if code == 85 or code == 86 then return T("Snow showers"), "snow" end
+  if code >= 95 then return T("Thunderstorm"), "storm" end
+  return T("Weather"), "cloud"
 end
 
 local function refreshWeather(force)
@@ -283,17 +285,17 @@ local function searchCity()
   local c = state.city
   if not c or c.busy or c.text:gsub("%s", "") == "" then return end
   c.busy, c.err, c.results = true, nil, nil
-  request("https://geocoding-api.open-meteo.com/v1/search?count=5&language=en&format=json&name=" .. urlEncode(c.text),
+  request("https://geocoding-api.open-meteo.com/v1/search?count=5&language=" .. lang.code .. "&format=json&name=" .. urlEncode(c.text),
     function(r)
       if not state.city then return end
       state.city.busy = false
       local d = r.ok and json.decode(r.body or "")
       if not d then
-        state.city.err = "Couldn't search; check the connection"
+        state.city.err = T("Couldn't search; check the connection")
         return
       end
       state.city.results = d.results or {}
-      if #state.city.results == 0 then state.city.err = "No places called that" end
+      if #state.city.results == 0 then state.city.err = T("No places called that") end
       love.keyboard.setTextInput(false) -- make room for the results
     end)
 end
@@ -391,7 +393,7 @@ local function drawTopBar()
   local x0 = RAIL
   ui.rect(ui.c.line, x0, TOP - 1, W - x0, 1)
   local time = os.date("%H:%M")
-  local date = os.date("%a ") .. tonumber(os.date("%d")) .. os.date(" %b")
+  local date = lang.day() .. " " .. tonumber(os.date("%d")) .. " " .. lang.month()
   local th = ui.fontHeight("bold", 30)
   ui.text(time, "bold", 30, ui.c.text, x0 + 32, (TOP - th) / 2)
   local tw = ui.textWidth(time, "bold", 30)
@@ -418,11 +420,11 @@ local function drawRail()
   ui.rect(ui.c.line, RAIL - 1, 0, 1, H)
   for i, item in ipairs(RAIL_ITEMS) do
     local x, y = 12, 20 + (i - 1) * 98
-    local on = state.screen == item.screen or (item.screen == "settings" and state.screen == "diag")
+    local on = state.screen == item.screen or (item.screen == "settings" and (state.screen == "diag" or state.screen == "lang"))
     local color = on and ui.c.accent or ui.c.muted
     if on then ui.rect(ui.c.accentBg, x, y, 88, 88, 20) end
     ui.icon(item.icon, x + 29, y + 16, 30, color)
-    ui.text(item.label, "semibold", 13, color, x, y + 56, "center", 88)
+    ui.text(ui.fit(T(item.label), "semibold", 13, 84), "semibold", 13, color, x, y + 56, "center", 88)
     ui.hit({ kind = "rail", screen = item.screen }, x, y, 88, 88)
   end
   local vy = H - 20 - 72
@@ -500,23 +502,23 @@ local function updateBanner(activeOnly)
   local u = state.update
   local s = u.state
   if s == "downloading" then
-    return { title = "Downloading Road Trip " .. (u.latestName or "") .. " · " .. (u.progress or 0) .. "%",
-      sub = "Keep using Road Trip; Android will ask to install when it's done" }
+    return { title = T("Downloading Road Trip {v}", { v = u.latestName or "" }) .. " · " .. (u.progress or 0) .. "%",
+      sub = T("Keep using Road Trip; Android will ask to install when it's done") }
   elseif s == "permission" then
-    return { title = "Allow Road Trip to install its updates",
-      sub = "Switch on \"Allow from this source\", then come back and tap Install",
-      button = "Install", id = { kind = "updateInstall" } }
+    return { title = T("Allow Road Trip to install its updates"),
+      sub = T("Switch on \"Allow from this source\", then come back and tap Install"),
+      button = T("Install"), id = { kind = "updateInstall" } }
   elseif s == "ready" then
-    return { title = "Road Trip " .. (u.latestName or "") .. " is downloaded",
-      sub = "Android asks you to confirm; your settings and favorites stay",
-      button = "Install", id = { kind = "updateInstall" } }
+    return { title = T("Road Trip {v} is downloaded", { v = u.latestName or "" }),
+      sub = T("Android asks you to confirm; your settings and favorites stay"),
+      button = T("Install"), id = { kind = "updateInstall" } }
   elseif s == "error" and (u.latest or 0) > (u.current or 0) then
-    return { title = "The update didn't finish", sub = "Check the connection and try again (" .. (u.error or "") .. ")",
-      button = "Retry", id = { kind = "updateGo" } }
+    return { title = T("The update didn't finish"), sub = T("Check the connection and try again ({error})", { error = u.error or "" }),
+      button = T("Retry"), id = { kind = "updateGo" } }
   elseif s == "available" and not activeOnly and config.get("dismissedUpdate") ~= u.latest then
-    local notes = (u.notes and u.notes ~= "") and u.notes or "Tap Update to download and install it"
-    return { title = "Road Trip " .. (u.latestName or "") .. " is available", sub = notes,
-      button = "Update", id = { kind = "updateGo" }, dismiss = "dismissedUpdate", dismissValue = u.latest }
+    local notes = (u.notes and u.notes ~= "") and u.notes or T("Tap Update to download and install it")
+    return { title = T("Road Trip {v} is available", { v = u.latestName or "" }), sub = notes,
+      button = T("Update"), id = { kind = "updateGo" }, dismiss = "dismissedUpdate", dismissValue = u.latest }
   end
 end
 
@@ -524,19 +526,19 @@ end
 local function currentBanner()
   if not android.isAndroid then return nil end
   if not state.isHome and not config.get("homeHintDismissed") then
-    return { title = "Road Trip isn't your home app yet", sub = "Set it so the Home button opens it",
-      button = "Set as home app", id = { kind = "setHome" }, dismiss = "homeHintDismissed" }
+    return { title = T("Road Trip isn't your home app yet"), sub = T("Set it so the Home button opens it"),
+      button = T("Set as home app"), id = { kind = "setHome" }, dismiss = "homeHintDismissed" }
   end
   local active = updateBanner(true)
   if active then return active end
   -- an update switched it off: say so even if the first-time hint was dismissed
   if not state.guard.serviceOn and state.guard.offByUpdate then
-    return { title = "The update switched off Keep in front", sub = "Android does this to sideloaded apps; one switch turns it back on",
-      button = "Turn on", id = { kind = "a11y" } }
+    return { title = T("The update switched off Keep in front"), sub = T("Android does this to sideloaded apps; one switch turns it back on"),
+      button = T("Turn on"), id = { kind = "a11y" } }
   end
   if not state.guard.serviceOn and not config.get("guardHintDismissed") then
-    return { title = "Keep Road Trip in front", sub = "Stops the box switching back to its own launcher",
-      button = "Turn on", id = { kind = "a11y" }, dismiss = "guardHintDismissed" }
+    return { title = T("Keep Road Trip in front"), sub = T("Stops the box switching back to its own launcher"),
+      button = T("Turn on"), id = { kind = "a11y" }, dismiss = "guardHintDismissed" }
   end
   return updateBanner(false)
 end
@@ -595,7 +597,7 @@ local function navWidget(x, y, w, h)
   local guided = map.drawWidget(x, y, w, h, 26)
   ui.hit({ kind = "openMap" }, x, y, w, h)
   local nav = state.nav
-  local attrib = "© OpenFreeMap © OpenStreetMap"
+  local attrib = T("© OpenFreeMap © OpenStreetMap")
   local function attribution()
     local aw = ui.textWidth(attrib, "semibold", 11) + 20
     ui.rect(ui.c.bg, x + w - 16 - aw, y + h - 16 - 24, aw, 24, 12)
@@ -621,7 +623,7 @@ local function navWidget(x, y, w, h)
     end
     local tx = cx + 18 + sq + 18
     local tw = cx + cw - 18 - tx
-    local title = (nav.title and nav.title ~= "") and nav.title or ("Navigating with " .. (nav.app or "your nav app"))
+    local title = (nav.title and nav.title ~= "") and nav.title or T("Navigating with {app}", { app = nav.app or T("your nav app") })
     ui.text(ui.fit(title, "bold", 40, tw), "bold", 40, ui.c.text, tx, cy + 18)
     ui.text(ui.fit(nav.text or "", "semibold", 19, tw), "semibold", 19, ui.hex("C9C6BE"), tx, cy + 70)
     ui.text(ui.fit(nav.app or "", "semibold", 14, tw), "semibold", 14, ui.hex("77756F"), tx, cy + 100)
@@ -640,24 +642,25 @@ local function navWidget(x, y, w, h)
   -- not navigating: a search bar, and your nav app one tap away
   local apps = installedNavApps()
   local navApp = apps[1]
-  local pillW = navApp and (ui.textWidth("Open " .. navApp.label, "bold", 16) + 44) or 0
+  local openLabel = navApp and T("Open {app}", { app = navApp.label })
+  local pillW = navApp and (ui.textWidth(openLabel, "bold", 16) + 44) or 0
   local bw = math.min(440, w - 32 - (navApp and pillW + 12 or 0))
   ui.rect(ui.c.bg, x + 16, y + 16, bw, 64, 22)
   ui.icon("search", x + 36, y + 36, 24, ui.c.muted, 2.2)
-  ui.text("Where to?", "bold", 20, ui.c.text2, x + 72, y + 16 + (64 - ui.fontHeight("bold", 20)) / 2)
+  ui.text(T("Where to?"), "bold", 20, ui.c.text2, x + 72, y + 16 + (64 - ui.fontHeight("bold", 20)) / 2)
   ui.hit({ kind = "openMapSearch" }, x + 16, y + 16, bw, 64)
   if navApp then
     ui.rect(ui.c.bg, x + w - 16 - pillW, y + 16, pillW, 64, 32)
-    ui.text("Open " .. navApp.label, "bold", 16, ui.c.text2, x + w - 16 - pillW, y + 16 + (64 - ui.fontHeight("bold", 16)) / 2, "center", pillW)
+    ui.text(openLabel, "bold", 16, ui.c.text2, x + w - 16 - pillW, y + 16 + (64 - ui.fontHeight("bold", 16)) / 2, "center", pillW)
     ui.hit({ kind = "openNav", pkg = navApp.pkg }, x + w - 16 - pillW, y + 16, pillW, 64)
   end
   if not map.permission then
     local cw = math.min(440, w - 32)
     ui.rect(ui.c.bg, x + 16, y + 92, cw, 72, 20)
-    ui.text(ui.fit("Allow location to see where you are", "bold", 16, cw - 150), "bold", 16, ui.c.text, x + 36, y + 92 + 26)
-    pill({ kind = "map:allow" }, "Allow", x + 16 + cw - 104, y + 104, 48, "accent")
+    ui.text(ui.fit(T("Allow location to see where you are"), "bold", 16, cw - 150), "bold", 16, ui.c.text, x + 36, y + 92 + 26)
+    pill({ kind = "map:allow" }, T("Allow"), x + 16 + cw - 104, y + 104, 48, "accent")
   elseif not map.fix then
-    local t = "Waiting for your location…"
+    local t = T("Waiting for your location…")
     local tw = ui.textWidth(t, "semibold", 15) + 32
     ui.rect(ui.c.bg, x + 16, y + 92, tw, 40, 20)
     ui.text(t, "semibold", 15, ui.c.muted, x + 16, y + 92 + (40 - ui.fontHeight("semibold", 15)) / 2, "center", tw)
@@ -672,14 +675,14 @@ local function weatherWidget(x, y, w, h)
   local pad = 20
   if not place then
     ui.icon("sun", x + pad, y + pad, 34, ui.c.accent, 1.6)
-    ui.textWrap("Set your city to see the weather", "bold", 16, ui.c.text, x + pad, y + 70, w - pad * 2, 3)
+    ui.textWrap(T("Set your city to see the weather"), "bold", 16, ui.c.text, x + pad, y + 70, w - pad * 2, 3)
     return
   end
   local wx = state.weather
   if not wx then
     ui.icon("cloud", x + pad, y + pad, 34, ui.c.dim, 1.6)
     ui.text(ui.fit(place.name, "semibold", 13, w - pad * 2), "semibold", 13, ui.c.muted, x + pad, y + 64)
-    ui.text(state.weatherBusy and "Loading…" or "No data yet", "semibold", 15, ui.c.muted, x + pad, y + h - pad - 22)
+    ui.text(state.weatherBusy and T("Loading…") or T("No data yet"), "semibold", 15, ui.c.muted, x + pad, y + h - pad - 22)
     return
   end
   local label, icon = weatherLook(wx.code, wx.isDay)
@@ -702,34 +705,34 @@ local function calendarWidget(x, y, w, h)
   if not cal.permission then
     ui.hit({ kind = "calAllow" }, x, y, w, h)
     ui.icon("calendar", x + pad, y + pad, 30, ui.c.accent, 1.6)
-    ui.textWrap("See your next event", "bold", 16, ui.c.text, x + pad, y + 66, w - pad * 2, 2)
-    pill({ kind = "calAllow" }, "Allow", x + pad, y + h - pad - 44, 44, "accent")
+    ui.textWrap(T("See your next event"), "bold", 16, ui.c.text, x + pad, y + 66, w - pad * 2, 2)
+    pill({ kind = "calAllow" }, T("Allow"), x + pad, y + h - pad - 44, 44, "accent")
     return
   end
   local e = cal.events and cal.events[1]
   if not e then
     ui.hit({ kind = "calOpen" }, x, y, w, h)
     ui.icon("calendar", x + pad, y + pad, 30, ui.c.dim, 1.6)
-    ui.textWrap("Nothing in the next two days", "semibold", 15, ui.c.muted, x + pad, y + 66, w - pad * 2, 3)
+    ui.textWrap(T("Nothing in the next two days"), "semibold", 15, ui.c.muted, x + pad, y + 66, w - pad * 2, 3)
     return
   end
   ui.hit({ kind = "calOpen", at = e.begin }, x, y, w, h)
   local now, begin = os.time(), math.floor((e.begin or 0) / 1000)
   local when
   if e.allDay then
-    when = sameDay(begin, now) and "Today" or "Tomorrow"
+    when = sameDay(begin, now) and T("Today") or T("Tomorrow")
   else
-    when = (sameDay(begin, now) and "" or (sameDay(begin, now + 86400) and "Tomorrow " or os.date("%a ", begin)))
+    when = (sameDay(begin, now) and "" or (sameDay(begin, now + 86400) and (T("Tomorrow") .. " ") or (lang.day(begin) .. " ")))
       .. os.date("%H:%M", begin)
   end
   ui.text(ui.fit(when, "bold", 14, w - pad * 2), "bold", 14, ui.c.accent, x + pad, y + pad)
-  ui.textWrap(e.title ~= "" and e.title or "Event", "bold", 17, ui.c.text, x + pad, y + pad + 30, w - pad * 2, 3)
+  ui.textWrap(e.title ~= "" and e.title or T("Event"), "bold", 17, ui.c.text, x + pad, y + pad + 30, w - pad * 2, 3)
   local mins = math.floor((begin - now) / 60)
   local rel
-  if e.allDay then rel = "All day"
-  elseif mins <= 0 then rel = "Now"
-  elseif mins < 60 then rel = "In " .. mins .. " min"
-  elseif mins < 24 * 60 then rel = "In " .. math.floor(mins / 60 + 0.5) .. " h"
+  if e.allDay then rel = T("All day")
+  elseif mins <= 0 then rel = T("Now")
+  elseif mins < 60 then rel = T("In {n} min", { n = mins })
+  elseif mins < 24 * 60 then rel = T("In {n} h", { n = math.floor(mins / 60 + 0.5) })
   else rel = "" end
   if rel ~= "" then ui.text(rel, "semibold", 14, ui.c.muted, x + pad, y + h - pad - 20) end
 end
@@ -744,22 +747,22 @@ local function nowPlayingWidget(x, y, w, h)
   local media = state.media
   local m = media.current
   ui.hit({ kind = "openMedia" }, x, y, w, h)
-  ui.text(m and ui.fit(m.app or "Now playing", "bold", 14, w - 44) or "Now playing", "bold", 14, ui.c.muted, x + 22, y + 20)
+  ui.text(m and ui.fit(m.app or T("Now playing"), "bold", 14, w - 44) or T("Now playing"), "bold", 14, ui.c.muted, x + 22, y + 20)
   local pad = 22
   if not media.access then
-    ui.text("See what's playing", "bold", 22, ui.c.text, x + pad, y + 56)
-    ui.text(ui.fit("in your music and video apps", "semibold", 15, w - pad * 2), "semibold", 15, ui.c.muted, x + pad, y + 88)
-    pill({ kind = "mediaAccess" }, "Allow", x + pad, y + h - 22 - 52, 52, "accent")
+    ui.text(T("See what's playing"), "bold", 22, ui.c.text, x + pad, y + 56)
+    ui.text(ui.fit(T("in your music and video apps"), "semibold", 15, w - pad * 2), "semibold", 15, ui.c.muted, x + pad, y + 88)
+    pill({ kind = "mediaAccess" }, T("Allow"), x + pad, y + h - 22 - 52, 52, "accent")
     return
   end
   if not m then
-    ui.text("Nothing playing", "bold", 22, ui.c.text, x + pad, y + 56)
-    ui.text(ui.fit("Start music in any app, or the radio", "semibold", 15, w - pad * 2), "semibold", 15, ui.c.muted, x + pad, y + 88)
+    ui.text(T("Nothing playing"), "bold", 22, ui.c.text, x + pad, y + 56)
+    ui.text(ui.fit(T("Start music in any app, or the radio"), "semibold", 15, w - pad * 2), "semibold", 15, ui.c.muted, x + pad, y + 88)
     local last = config.get("radioLast")
     if last then
-      pill({ kind = "radio:cmd", what = "toggle" }, ui.fit("Play " .. last.name, "bold", 16, w - pad * 2 - 44), x + pad, y + h - 22 - 52, 52, "accent")
+      pill({ kind = "radio:cmd", what = "toggle" }, ui.fit(T("Play {station}", { station = last.name }), "bold", 16, w - pad * 2 - 44), x + pad, y + h - 22 - 52, 52, "accent")
     else
-      pill({ kind = "radio:open" }, "Open radio", x + pad, y + h - 22 - 52, 52, "off2")
+      pill({ kind = "radio:open" }, T("Open radio"), x + pad, y + h - 22 - 52, 52, "off2")
     end
     return
   end
@@ -784,7 +787,7 @@ local function drawFavorites(x, y, w, h)
 
   if #favs == 0 then
     if state.firstLoad then return end -- apps not loaded yet
-    ui.text("Pick 3 to 5 favorite apps to keep them here", "semibold", 17, ui.c.muted, x + 28, y + (h - ui.fontHeight("semibold", 17)) / 2)
+    ui.text(T("Pick 3 to 5 favorite apps to keep them here"), "semibold", 17, ui.c.muted, x + 28, y + (h - ui.fontHeight("semibold", 17)) / 2)
     ui.hit({ kind = "editFavs" }, x, y, w - 90, h)
     return
   end
@@ -866,17 +869,17 @@ local function drawMedia()
     local x, y = cx0 + (cw - w) / 2, midY - h / 2
     ui.rect(ui.c.card, x, y, w, h, 28)
     ui.icon("media", x + 32, y + 34, 40, ui.c.accent, 1.6)
-    ui.text("See what's playing", "bold", 28, ui.c.text, x + 32, y + 92)
-    ui.text("Road Trip needs notification access to show and control music,", "semibold", 16, ui.hex("B8B5AD"), x + 32, y + 138)
-    ui.text("podcasts and video from your apps. It only reads what's playing.", "semibold", 16, ui.hex("B8B5AD"), x + 32, y + 162)
-    pill({ kind = "mediaAccess" }, "Allow", x + 32, y + h - 32 - 56, 56, "accent")
+    ui.text(T("See what's playing"), "bold", 28, ui.c.text, x + 32, y + 92)
+    ui.text(T("Road Trip needs notification access to show and control music,"), "semibold", 16, ui.hex("B8B5AD"), x + 32, y + 138)
+    ui.text(T("podcasts and video from your apps. It only reads what's playing."), "semibold", 16, ui.hex("B8B5AD"), x + 32, y + 162)
+    pill({ kind = "mediaAccess" }, T("Allow"), x + 32, y + h - 32 - 56, 56, "accent")
     return
   end
 
   if not m then
     local th = ui.fontHeight("bold", 28)
-    ui.text("Nothing is playing", "bold", 28, ui.c.text, cx0, midY - th, "center", cw)
-    ui.text("Start music in any app and it shows up here.", "semibold", 17, ui.c.muted, cx0, midY + 12, "center", cw)
+    ui.text(T("Nothing is playing"), "bold", 28, ui.c.text, cx0, midY - th, "center", cw)
+    ui.text(T("Start music in any app and it shows up here."), "semibold", 17, ui.c.muted, cx0, midY + 12, "center", cw)
     return
   end
 
@@ -900,7 +903,7 @@ local function drawMedia()
   local x1 = ax + size + 56
   local w1 = W - 56 - x1
   local yy = ay + math.max(0, (size - 340) / 2)
-  ui.text(ui.fit("Playing from " .. (m.app or ""), "bold", 15, w1), "bold", 15, ui.c.accent, x1, yy)
+  ui.text(ui.fit(T("Playing from {app}", { app = m.app or "" }), "bold", 15, w1), "bold", 15, ui.c.accent, x1, yy)
   ui.text(ui.fit(m.title ~= "" and m.title or (m.app or ""), "bold", 40, w1), "bold", 40, ui.c.text, x1, yy + 26)
   ui.text(ui.fit(m.artist or "", "semibold", 22, w1), "semibold", 22, ui.hex("B8B5AD"), x1, yy + 84)
 
@@ -946,7 +949,7 @@ end
 
 -- rows: { title, sub, button = {label, id, style?}, toggle = {on, id}, swatches = true }
 local function settingsCard(title, rows, x, y, w)
-  local rowH = #rows > 6 and 72 or 80
+  local rowH = math.min(80, math.floor((H - 24 - y - 72) / #rows))
   local h = 64 + #rows * rowH + 8
   ui.rect(ui.c.card, x, y, w, h, 26)
   ui.text(title, "bold", 14, ui.c.muted, x + 24, y + 24)
@@ -985,51 +988,85 @@ local function drawSettings()
   local g = state.guard
   local guardSub, guardRow
   if not g.serviceOn then
-    guardSub = g.offByUpdate and "Switched off by the last update" or "Off: the box can switch back to its own launcher"
-    guardRow = { title = "Keep in front", sub = guardSub, button = { "Turn on", { kind = "a11y" }, "accent" } }
+    guardSub = g.offByUpdate and T("Switched off by the last update") or T("Off: the box can switch back to its own launcher")
+    guardRow = { title = T("Keep in front"), sub = guardSub, button = { T("Turn on"), { kind = "a11y" }, "accent" } }
   else
-    guardRow = { title = "Keep in front", sub = g.enabled and "On: Road Trip returns if the box switches launcher" or "Paused",
+    guardRow = { title = T("Keep in front"), sub = g.enabled and T("On: Road Trip returns if the box switches launcher") or T("Paused"),
       toggle = { g.enabled ~= false, { kind = g.enabled and "guardOff" or "guardOn" } } }
   end
   local left = {
     guardRow,
-    { title = "Keep in front after updates",
-      sub = g.canRestore and "Switches itself back on after each update"
-        or "Turn back on by hand, or allow it once with adb (see the website)" },
-    { title = "Now playing and navigation",
-      sub = state.media.access and "Allowed: reads what's playing and your next turn" or "Needs notification access",
-      button = state.media.access and { "Open", { kind = "mediaAccess" } } or { "Allow", { kind = "mediaAccess" }, "accent" } },
-    { title = "Calendar", sub = state.cal.permission and "Allowed: your next event shows on Home" or "Show your next event on Home",
-      button = not state.cal.permission and { "Allow", { kind = "calAllow" }, "accent" } or nil },
-    { title = "Home app", sub = state.isHome and "Road Trip opens when you press Home" or "Road Trip isn't the home app yet",
-      button = { "Change", { kind = "setHome" } } },
-    { title = "The box's own launcher", sub = "Open it for 2 minutes without Road Trip stepping in",
-      button = #(g.stock or {}) > 0 and { "Open", { kind = "stock" } } or nil },
+    { title = T("Keep in front after updates"),
+      sub = g.canRestore and T("Switches itself back on after each update")
+        or T("Turn back on by hand, or allow it once with adb (see the website)") },
+    { title = T("Now playing and navigation"),
+      sub = state.media.access and T("Allowed: reads what's playing and your next turn") or T("Needs notification access"),
+      button = state.media.access and { T("Open"), { kind = "mediaAccess" } } or { T("Allow"), { kind = "mediaAccess" }, "accent" } },
+    { title = T("Calendar"), sub = state.cal.permission and T("Allowed: your next event shows on Home") or T("Show your next event on Home"),
+      button = not state.cal.permission and { T("Allow"), { kind = "calAllow" }, "accent" } or nil },
+    { title = T("Home app"), sub = state.isHome and T("Road Trip opens when you press Home") or T("Road Trip isn't the home app yet"),
+      button = { T("Change"), { kind = "setHome" } } },
+    { title = T("The box's own launcher"), sub = T("Open it for 2 minutes without Road Trip stepping in"),
+      button = #(g.stock or {}) > 0 and { T("Open"), { kind = "stock" } } or nil },
   }
   local u = state.update
   local right = {
-    { title = "Favorite apps", sub = #favoriteApps() .. " of " .. FAV_MAX .. " picked", button = { "Edit", { kind = "editFavs" } } },
-    { title = "Accent colour", swatches = true },
-    { title = "Weather", sub = config.get("weatherPlace") and config.get("weatherPlace").name or "Pick your city",
-      button = { config.get("weatherPlace") and "Change" or "Set", { kind = "cityOpen" } } },
-    { title = "Updates", sub = "Version " .. ((u.currentName and u.currentName ~= "") and u.currentName or "?"),
-      button = { "Check now", { kind = "updateCheckNow" } } },
-    { title = "Check for updates on Wi-Fi only", sub = "Automatic checks, every 6 hours",
+    { title = T("Favorite apps"), sub = T("{n} of {max} picked", { n = #favoriteApps(), max = FAV_MAX }), button = { T("Edit"), { kind = "editFavs" } } },
+    { title = T("Accent colour"), swatches = true },
+    { title = T("Language"),
+      sub = lang.name(lang.code) .. (lang.code ~= "en" and (" · " .. T("Translated by AI, so some words may be off")) or ""),
+      button = { T("Change"), { kind = "langOpen" } } },
+    { title = T("Weather"), sub = config.get("weatherPlace") and config.get("weatherPlace").name or T("Pick your city"),
+      button = { config.get("weatherPlace") and T("Change") or T("Set"), { kind = "cityOpen" } } },
+    { title = T("Updates"), sub = T("Version {v}", { v = (u.currentName and u.currentName ~= "") and u.currentName or "?" }),
+      button = { T("Check now"), { kind = "updateCheckNow" } } },
+    { title = T("Check for updates on Wi-Fi only"), sub = T("Automatic checks, every 6 hours"),
       toggle = { config.get("updateWifiOnly") ~= false, { kind = "wifiOnly" } } },
-    { title = "Diagnostics", sub = "What Keep in front saw and did", button = { "Show", { kind = "diag" } } },
-    { title = "About Road Trip", sub = "mightyx3n.github.io/road-trip", button = { "Website", { kind = "site" } } },
+    { title = T("Diagnostics"), sub = T("What Keep in front saw and did"), button = { T("Show"), { kind = "diag" } } },
+    { title = T("About Road Trip"), sub = "mightyx3n.github.io/road-trip", button = { T("Website"), { kind = "site" } } },
   }
   local x, y = RAIL + 24, TOP + 24
   local colW = (W - RAIL - 48 - 20) / 2
-  settingsCard("Road Trip on this box", left, x, y, colW)
-  settingsCard("Yours", right, x + colW + 20, y, colW)
+  settingsCard(T("Road Trip on this box"), left, x, y, colW)
+  settingsCard(T("Yours"), right, x + colW + 20, y, colW)
+end
+
+local function drawLanguages()
+  local x, y = RAIL + 32, TOP + 24
+  pill({ kind = "langBack" }, T("Back to Settings"), x - 8, y, 48, "off2")
+  ui.text(T("Language"), "bold", 22, ui.c.text, x + 236, y + 10)
+  y = y + 68
+  ui.textWrap(T("Road Trip's translations are made by AI, so some words may not be perfect."), "semibold", 15, ui.c.muted,
+    x, y, W - x - 32, 2)
+  y = y + 44
+  local choice = config.get("language") or "auto"
+  local items = { { code = "auto", name = T("Automatic") .. " · " .. lang.name(lang.resolve("auto", state.deviceLang)) } }
+  for _, l in ipairs(lang.list) do items[#items + 1] = l end
+  local cols = 5
+  local gap = 12
+  local cw = (W - x - 32 - gap * (cols - 1)) / cols
+  local rh = 52
+  for i, it in ipairs(items) do
+    local col, row = (i - 1) % cols, math.floor((i - 1) / cols)
+    local bx, by = x + col * (cw + gap), y + row * (rh + 10)
+    local on = it.code == choice
+    ui.rect(on and ui.c.accentBg or ui.c.card, bx, by, cw, rh, rh / 2)
+    if on then
+      lg.setColor(ui.c.accent)
+      lg.setLineWidth(2)
+      lg.rectangle("line", bx, by, cw, rh, rh / 2, rh / 2, 24)
+    end
+    ui.text(ui.fit(it.name, "bold", 16, cw - 28), "bold", 16, on and ui.c.accent or ui.c.text2, bx,
+      by + (rh - ui.fontHeight("bold", 16)) / 2, "center", cw)
+    ui.hit({ kind = "langPick", code = it.code }, bx, by, cw, rh)
+  end
 end
 
 local function drawDiagnostics()
   local d = state.diag or {}
   local x, y = RAIL + 32, TOP + 24
-  pill({ kind = "diagBack" }, "Back to Settings", x - 8, y, 48, "off2")
-  ui.text("Diagnostics", "bold", 22, ui.c.text, x + 220, y + 10)
+  pill({ kind = "diagBack" }, T("Back to Settings"), x - 8, y, 48, "off2")
+  ui.text(T("Diagnostics"), "bold", 22, ui.c.text, x + 220, y + 10)
   y = y + 68
   ui.text(ui.fit("Default home app: " .. (d.defaultHome or "?"), "semibold", 14, W - x - 32), "semibold", 14, ui.c.text2, x, y)
   local watched = table.concat(d.watched or {}, ", ")
@@ -1040,7 +1077,7 @@ local function drawDiagnostics()
   table.sort(prov)
   local f = map.fix
   local fixText = f and string.format("%.5f, %.5f ±%dm via %s, %ds old", f.lat, f.lon, math.floor(f.accuracy or -1),
-    tostring(f.provider), math.floor((f.ageMs or 0) / 1000)) or "none yet"
+    tostring(f.provider), math.floor((f.ageMs or 0) / 1000)) or T("none yet")
   ui.text(ui.fit("Location: " .. (map.permission and "allowed" or "not allowed") .. " · providers: "
     .. (#prov > 0 and table.concat(prov, ", ") or "none") .. " · fix: " .. fixText, "semibold", 14, W - x - 32),
     "semibold", 14, ui.c.text2, x, y + 48)
@@ -1053,15 +1090,15 @@ local function drawDiagnostics()
   local function list(title, lines, lx)
     ui.text(title, "bold", 14, ui.c.muted, lx, y)
     local ly = y + 28
-    if not lines or #lines == 0 then ui.text("Nothing yet", "semibold", 13, ui.c.dim, lx, ly) end
+    if not lines or #lines == 0 then ui.text(T("Nothing yet"), "semibold", 13, ui.c.dim, lx, ly) end
     for _, line in ipairs(lines or {}) do
       if ly > H - 28 then break end
       ui.text(ui.fit(line, "semibold", 13, colW), "semibold", 13, ui.c.text2, lx, ly)
       ly = ly + 21
     end
   end
-  list("Screen changes (newest first)", d.guard, x)
-  list("Navigation notifications", d.nav, x + colW + 24)
+  list(T("Screen changes (newest first)"), d.guard, x)
+  list(T("Navigation notifications"), d.nav, x + colW + 24)
 end
 
 local function drawCityDialog()
@@ -1076,18 +1113,18 @@ local function drawCityDialog()
   local x, y = (W - w) / 2, 32 -- near the top: the keyboard covers the bottom half
   ui.rect(ui.c.card, x, y, w, h, 28)
   ui.hit({ kind = "cityBlock" }, x, y, w, h)
-  ui.text("Weather location", "bold", 22, ui.c.text, x + 28, y + 24)
+  ui.text(T("Weather location"), "bold", 22, ui.c.text, x + 28, y + 24)
   ui.icon("close", x + w - 52, y + 24, 24, ui.c.muted, 2.2)
   ui.hit({ kind = "cityCancel" }, x + w - 64, y + 12, 56, 56)
 
   local fx, fy, fw = x + 28, y + 76, w - 56 - 140
   ui.rect(ui.c.bg, fx, fy, fw, 60, 18)
   ui.hit({ kind = "cityField" }, fx, fy, fw, 60)
-  local shown = c.text ~= "" and c.text or "Type a city or town"
+  local shown = c.text ~= "" and c.text or T("Type a city or town")
   local blink = math.floor(love.timer.getTime() * 2) % 2 == 0
   ui.text(ui.fit(shown, "semibold", 19, fw - 40) .. ((c.text ~= "" and blink) and "|" or ""), "semibold", 19,
     c.text ~= "" and ui.c.text or ui.c.dim, fx + 20, fy + (60 - ui.fontHeight("semibold", 19)) / 2)
-  pill({ kind = "citySearch" }, c.busy and "…" or "Search", fx + fw + 16, fy + 4, 52, "accent")
+  pill({ kind = "citySearch" }, c.busy and "…" or T("Search"), fx + fw + 16, fy + 4, 52, "accent")
 
   local ry = fy + 76
   if c.err then
@@ -1118,9 +1155,9 @@ end
 local function drawPicker()
   local px = 56
   local setup = state.favsMode == "setup"
-  ui.text(setup and "Welcome to Road Trip" or "Favorite apps", "bold", 15, ui.c.accent, px, 32)
-  ui.text("Pick your favorite apps", "bold", 34, ui.c.text, px, 54)
-  ui.text("Choose 3 to 5. They sit along the bottom of your home screen, one tap away.", "semibold", 16, ui.c.muted, px, 106)
+  ui.text(setup and T("Welcome to Road Trip") or T("Favorite apps"), "bold", 15, ui.c.accent, px, 32)
+  ui.text(T("Pick your favorite apps"), "bold", 34, ui.c.text, px, 54)
+  ui.text(T("Choose 3 to 5. They sit along the bottom of your home screen, one tap away."), "semibold", 16, ui.c.muted, px, 106)
 
   local area = { x = px - 24, w = W - px * 2 + 48, top = 150, bottom = H - 120, maxCols = 6, cellMin = 180 }
   drawPagedGrid("favs", area, 54, function(app, cx, cy, r)
@@ -1140,14 +1177,14 @@ local function drawPicker()
   end)
 
   local by = H - 32 - 64
-  pill({ kind = "pickerBack" }, setup and "Skip for now" or "Cancel", px - 28, by, 64, nil)
+  pill({ kind = "pickerBack" }, setup and T("Skip for now") or T("Cancel"), px - 28, by, 64, nil)
   local count = #state.pick
   local ready = count >= FAV_MIN
-  local label = setup and "Continue" or "Done"
+  local label = setup and T("Continue") or T("Done")
   local bw = ui.textWidth(label, "bold", 18) + 72
   local bx = W - px - bw
   pill(ready and { kind = "pickerDone" } or { kind = "pickerNotReady" }, label, bx, by, 64, ready and "primary" or "off")
-  local info = count .. " of " .. FAV_MAX .. " picked"
+  local info = T("{n} of {max} picked", { n = count, max = FAV_MAX })
   local iw = ui.textWidth(info, "semibold", 16)
   ui.text(info, "semibold", 16, ui.c.muted, bx - 20 - iw, by + (64 - ui.fontHeight("semibold", 16)) / 2)
 end
@@ -1163,8 +1200,8 @@ local function appMenu(app)
     title = app.label, app = app,
     rows = {
       { id = { kind = fav and "unfav" or "fav+", app = app }, icon = fav and "close" or "plus",
-        label = fav and "Remove from favorites" or (full and "Favorites are full (5)" or "Add to favorites"), off = full },
-      { id = { kind = "appInfo", app = app }, icon = "edit", label = "App info" },
+        label = fav and T("Remove from favorites") or (full and T("Favorites are full (5)") or T("Add to favorites")), off = full },
+      { id = { kind = "appInfo", app = app }, icon = "edit", label = T("App info") },
     },
   }
 end
@@ -1173,32 +1210,32 @@ local function launcherMenu()
   local g = state.guard
   local rows = {}
   if #(g.stock or {}) > 0 then
-    rows[#rows + 1] = { id = { kind = "stock" }, icon = "home", label = "Open the box's launcher for 2 minutes" }
+    rows[#rows + 1] = { id = { kind = "stock" }, icon = "home", label = T("Open the box's launcher for 2 minutes") }
   else
-    rows[#rows + 1] = { icon = "home", label = "No other launcher found", off = true }
+    rows[#rows + 1] = { icon = "home", label = T("No other launcher found"), off = true }
   end
   if not g.serviceOn then
-    rows[#rows + 1] = { id = { kind = "a11y" }, icon = "check", label = "Turn on Keep in front" }
+    rows[#rows + 1] = { id = { kind = "a11y" }, icon = "check", label = T("Turn on Keep in front") }
   elseif g.enabled then
-    rows[#rows + 1] = { id = { kind = "guardOff" }, icon = "close", label = "Keep in front is on · turn off" }
+    rows[#rows + 1] = { id = { kind = "guardOff" }, icon = "close", label = T("Keep in front is on · turn off") }
   else
-    rows[#rows + 1] = { id = { kind = "guardOn" }, icon = "check", label = "Keep in front is off · turn on" }
+    rows[#rows + 1] = { id = { kind = "guardOn" }, icon = "check", label = T("Keep in front is off · turn on") }
   end
-  rows[#rows + 1] = { id = { kind = "updateCheckNow" }, icon = "check", label = "Check for updates" }
-  rows[#rows + 1] = { id = { kind = "setHome" }, icon = "edit", label = "Default home app" }
+  rows[#rows + 1] = { id = { kind = "updateCheckNow" }, icon = "check", label = T("Check for updates") }
+  rows[#rows + 1] = { id = { kind = "setHome" }, icon = "edit", label = T("Default home app") }
   local v = state.update.currentName
-  return { title = (v and v ~= "") and ("Road Trip " .. v) or "Road Trip", rows = rows }
+  return { title = (v and v ~= "") and ("Road Trip " .. v) or T("Road Trip"), rows = rows }
 end
 
 -- Android 13+ hides accessibility for sideloaded apps behind "Allow restricted settings".
 -- Rows don't close the menu, so it's still there when you come back between steps.
 local function restrictedMenu()
   return {
-    title = "Turn on Keep in front", restricted = true, w = 640,
+    title = T("Turn on Keep in front"), restricted = true, w = 640,
     rows = {
-      { id = { kind = "a11yOpen" }, icon = "check", label = "1 · Accessibility → tap Road Trip once" },
-      { id = { kind = "selfInfo" }, icon = "edit", label = "2 · App info → menu → Allow restricted settings" },
-      { id = { kind = "a11yOpen" }, icon = "check", label = "3 · Accessibility → switch it on" },
+      { id = { kind = "a11yOpen" }, icon = "check", label = T("1 · Accessibility → tap Road Trip once") },
+      { id = { kind = "selfInfo" }, icon = "edit", label = T("2 · App info → menu → Allow restricted settings") },
+      { id = { kind = "a11yOpen" }, icon = "check", label = T("3 · Accessibility → switch it on") },
     },
   }
 end
@@ -1265,6 +1302,7 @@ function love.draw()
     elseif state.screen == "apps" then drawApps()
     elseif state.screen == "settings" then drawSettings()
     elseif state.screen == "diag" then drawDiagnostics()
+    elseif state.screen == "lang" then drawLanguages()
     elseif state.screen == "map" then
       map.drawMap(RAIL, 0, W - RAIL, H)
       map.drawUI(RAIL, 0, W - RAIL, H)
@@ -1287,7 +1325,7 @@ end
 
 local function launch(app)
   local ok, err = android.launch(app)
-  if not ok then state.error = err or ("Couldn't open " .. app.label) end
+  if not ok then state.error = err or T("Couldn't open {app}", { app = app.label }) end
 end
 
 local function togglePick(app)
@@ -1295,7 +1333,7 @@ local function togglePick(app)
   if i then
     table.remove(state.pick, i)
   elseif #state.pick >= FAV_MAX then
-    toast("You can pick up to " .. FAV_MAX)
+    toast(T("You can pick up to {max}", { max = FAV_MAX }))
   else
     state.pick[#state.pick + 1] = keyOf(app)
   end
@@ -1315,7 +1353,7 @@ local function activate(id, vx)
       state.weather = nil
       closeCity()
       refreshWeather(true)
-      toast("Weather for " .. r.name)
+      toast(T("Weather for {place}", { place = r.name }))
     end
   elseif k == "calAllow" then
     android.calendarAllow()
@@ -1324,13 +1362,18 @@ local function activate(id, vx)
   elseif k == "diag" then
     state.screen = "diag"
     state.diag = android.diagnostics()
-  elseif k == "diagBack" then state.screen = "settings"
+  elseif k == "diagBack" or k == "langBack" then state.screen = "settings"
+  elseif k == "langOpen" then state.screen = "lang"
+  elseif k == "langPick" then
+    config.set("language", id.code)
+    lang.set(lang.resolve(id.code, state.deviceLang))
+    if lang.code ~= "en" then toast(T("Translated by AI, so some words may be off")) end
   elseif k == "media" then mediaCommand(id.action)
   elseif k == "seek" then
     local frac = math.max(0, math.min(1, ((vx or id.x) - id.x) / id.w))
     mediaCommand("seek", math.floor(frac * id.dur))
   elseif k == "openMedia" then state.screen = "media"
-  elseif k == "openNav" then launch({ pkg = id.pkg, label = "the nav app" })
+  elseif k == "openNav" then launch({ pkg = id.pkg, label = T("the nav app") })
   elseif k == "accent" then
     config.set("accent", id.hex)
     ui.setAccent(id.hex)
@@ -1338,7 +1381,7 @@ local function activate(id, vx)
   elseif k == "site" then love.system.openURL("https://mightyx3n.github.io/road-trip/")
   elseif k == "mediaAccess" then
     android.openMediaAccess()
-    toast("Switch on Road Trip: now playing")
+    toast(T("Switch on Road Trip: now playing"))
   elseif k == "tile" and id.grid == "favs" then togglePick(id.app)
   elseif k == "tile" or k == "fav" then launch(id.app)
   elseif k:sub(1, 4) == "map:" then map.activate(id)
@@ -1373,7 +1416,7 @@ local function activate(id, vx)
     else
       state.menu = nil
       android.openAccessibilitySettings()
-      toast("Find Road Trip: keep in front and turn it on")
+      toast(T("Find Road Trip: keep in front and turn it on"))
     end
   elseif k == "a11yOpen" then
     android.openAccessibilitySettings()
@@ -1386,12 +1429,12 @@ local function activate(id, vx)
     android.setGuardEnabled(k == "guardOn")
     state.guard.enabled = k == "guardOn"
     state.menu = nil
-    toast(k == "guardOn" and "Keep in front is on" or "Keep in front is off")
+    toast(k == "guardOn" and T("Keep in front is on") or T("Keep in front is off"))
   elseif k == "editFavs" then openPicker("edit")
   elseif k == "pickerBack" then
     if state.favsMode == "setup" and config.get("favorites") == nil then saveFavorites({}) end
     state.screen = "home"
-  elseif k == "pickerNotReady" then toast("Pick at least " .. FAV_MIN)
+  elseif k == "pickerNotReady" then toast(T("Pick at least {min}", { min = FAV_MIN }))
   elseif k == "pickerDone" then
     saveFavorites(state.pick)
     state.screen = "home"
@@ -1402,7 +1445,7 @@ local function activate(id, vx)
     keys[#keys + 1] = keyOf(id.app)
     saveFavorites(keys)
     state.menu = nil
-    toast("Added to favorites")
+    toast(T("Added to favorites"))
   elseif k == "unfav" then
     local keys = {}
     for _, a in ipairs(favoriteApps()) do
@@ -1410,7 +1453,7 @@ local function activate(id, vx)
     end
     saveFavorites(keys)
     state.menu = nil
-    toast("Removed from favorites")
+    toast(T("Removed from favorites"))
   elseif k == "appInfo" then
     state.menu = nil
     android.openAppInfo(id.app)
@@ -1544,7 +1587,7 @@ function love.keypressed(key)
   end
   if key ~= "escape" then return end
   -- Android's back button arrives as "escape"
-  if state.screen == "diag" then
+  if state.screen == "diag" or state.screen == "lang" then
     state.screen = "settings"
   elseif state.screen == "map" and not state.menu and map.back() then
     -- closed the map's search or route overview
@@ -1575,6 +1618,9 @@ end
 
 function love.load()
   config.load()
+  local dl = android.language()
+  state.deviceLang = type(dl) == "string" and dl or "en"
+  lang.set(lang.resolve(config.get("language"), state.deviceLang))
   ui.setAccent(config.get("accent"))
   lg.setBackgroundColor(ui.c.bg)
   layout(lg.getDimensions())

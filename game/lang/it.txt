@@ -1,0 +1,244 @@
+dom,lun,mar,mer,gio,ven,sab
+gen,feb,mar,apr,mag,giu,lug,ago,set,ott,nov,dic
+Tieni in primo piano è attivo
+Gli aggiornamenti funzionano solo su Android
+Ricerca aggiornamenti…
+Road Trip {v} è aggiornato
+Impossibile cercare aggiornamenti ({error})
+Sereno
+Prevalentemente sereno
+Parzialmente nuvoloso
+Nuvoloso
+Nebbia
+Pioviggine
+Pioggia
+Neve
+Rovesci
+Rovesci di neve
+Temporale
+Meteo
+Ricerca non riuscita; controlla la connessione
+Nessun luogo con questo nome
+Download di Road Trip {v}
+Continua a usare Road Trip; Android chiederà di installare quando ha finito
+Consenti a Road Trip di installare i suoi aggiornamenti
+Attiva "Consenti da questa fonte", poi torna qui e tocca Installa
+Installa
+Road Trip {v} è stato scaricato
+Android ti chiede di confermare; impostazioni e preferiti restano
+L'aggiornamento non è finito
+Controlla la connessione e riprova ({error})
+Riprova
+Tocca Aggiorna per scaricarlo e installarlo
+Road Trip {v} è disponibile
+Aggiorna
+Road Trip non è ancora la tua app Home
+Impostala così il tasto Home la apre
+Imposta come app Home
+L'aggiornamento ha disattivato Tieni in primo piano
+Android lo fa con le app installate fuori dallo store; un interruttore lo riattiva
+Attiva
+Tieni Road Trip in primo piano
+Impedisce al box di tornare al suo launcher
+© OpenFreeMap © OpenStreetMap
+Navigazione con {app}
+la tua app di navigazione
+Apri {app}
+Dove vai?
+Consenti la posizione per vedere dove sei
+Consenti
+In attesa della tua posizione…
+Scegli la tua città per vedere il meteo
+Caricamento…
+Ancora nessun dato
+Vedi il tuo prossimo evento
+Niente nei prossimi due giorni
+Oggi
+Domani
+Evento
+Tutto il giorno
+Ora
+Tra {n} min
+Tra {n} h
+In riproduzione
+Vedi cosa sta suonando
+nelle tue app di musica e video
+Niente in riproduzione
+Avvia la musica in un'app, o la radio
+Ascolta {station}
+Apri la radio
+Scegli da 3 a 5 app preferite per averle qui
+Road Trip ha bisogno dell'accesso alle notifiche per mostrare e controllare musica,
+podcast e video delle tue app. Legge solo cosa sta suonando.
+Niente in riproduzione
+Avvia la musica in un'app e comparirà qui.
+In riproduzione da {app}
+Disattivato dall'ultimo aggiornamento
+Spento: il box può tornare al suo launcher
+Tieni in primo piano
+Acceso: Road Trip torna se il box cambia launcher
+In pausa
+Tieni in primo piano dopo gli aggiornamenti
+Si riattiva da solo dopo ogni aggiornamento
+Riattivalo a mano, o consentilo una volta con adb (vedi il sito)
+In riproduzione e navigazione
+Consentito: legge cosa suona e la prossima svolta
+Serve l'accesso alle notifiche
+Apri
+Calendario
+Consentito: il prossimo evento appare in Home
+Mostra il prossimo evento in Home
+App Home
+Road Trip si apre quando premi Home
+Road Trip non è ancora l'app Home
+Cambia
+Il launcher del box
+Aprilo per 2 minuti senza che Road Trip intervenga
+App preferite
+{n} di {max} scelte
+Modifica
+Colore di accento
+Lingua
+Tradotto dall'IA, alcune parole potrebbero essere sbagliate
+Scegli la tua città
+Imposta
+Aggiornamenti
+Versione {v}
+Controlla ora
+Cerca aggiornamenti solo in Wi-Fi
+Controllo automatico ogni 6 ore
+Diagnostica
+Cosa ha visto e fatto Tieni in primo piano
+Mostra
+Informazioni su Road Trip
+Sito web
+Road Trip su questo box
+Tuo
+Torna alle Impostazioni
+Le traduzioni di Road Trip sono fatte dall'IA, quindi alcune parole potrebbero non essere perfette.
+Automatica
+ancora nessuna
+Ancora niente
+Cambi di schermata (più recenti prima)
+Notifiche di navigazione
+Luogo per il meteo
+Scrivi una città o un paese
+Cerca
+Benvenuto in Road Trip
+Scegli le tue app preferite
+Scegline da 3 a 5. Stanno in fondo alla schermata Home, a un tocco.
+Salta per ora
+Annulla
+Continua
+Fatto
+Rimuovi dai preferiti
+Preferiti pieni (5)
+Aggiungi ai preferiti
+Info app
+Apri il launcher del box per 2 minuti
+Nessun altro launcher trovato
+Attiva Tieni in primo piano
+Tieni in primo piano è attivo · disattiva
+Tieni in primo piano è spento · attiva
+Cerca aggiornamenti
+App Home predefinita
+Road Trip
+1 · Accessibilità → tocca Road Trip una volta
+2 · Info app → menu → Consenti impostazioni con restrizioni
+3 · Accessibilità → attivalo
+Impossibile aprire {app}
+Puoi sceglierne fino a {max}
+Meteo per {place}
+l'app di navigazione
+Attiva Road Trip: in riproduzione
+Trova Road Trip: tieni in primo piano e attivalo
+Tieni in primo piano è spento
+Scegline almeno {min}
+Aggiunto ai preferiti
+Rimosso dai preferiti
+Sei arrivato a destinazione
+Prosegui su {street}
+Avvia il percorso
+Alla rotonda, prendi la {n}ª uscita verso {street}
+Alla rotonda, prendi la {n}ª uscita
+{n} min
+{h} h {m} min
+Nessun percorso trovato
+Nuovo percorso
+Sei arrivato
+Poi: {next}
+Luogo
+Nessun risultato
+Arrivo {time}
+© OpenFreeMap © OpenMapTiles · dati © contributori di OpenStreetMap · percorsi FOSSGIS OSRM
+Arrivo
+Termina
+Fuori percorso
+Recenti
+Ricerca…
+Road Trip ha bisogno della tua posizione per trovare percorsi da dove sei
+Oppure inizia il percorso dal centro della mappa:
+Dal centro della mappa
+Consenti la posizione
+Ricerca percorsi…
+arrivo {time}
+Il più veloce
+Avvia
+Immettiti
+Immettiti su {street}
+Prendi la rampa
+Prendi la rampa verso {street}
+Prendi l'uscita
+Prendi l'uscita verso {street}
+Tieni la sinistra
+Tieni la sinistra verso {street}
+Tieni la destra
+Tieni la destra verso {street}
+Fai inversione
+Fai inversione su {street}
+Prosegui su {street}
+Svolta a sinistra
+Svolta a sinistra su {street}
+Svolta a destra
+Svolta a destra su {street}
+Svolta leggermente a sinistra
+Svolta leggermente a sinistra su {street}
+Svolta leggermente a destra
+Svolta leggermente a destra su {street}
+Svolta decisamente a sinistra
+Svolta decisamente a sinistra su {street}
+Svolta decisamente a destra
+Svolta decisamente a destra su {street}
+Impossibile raggiungere Radio Browser; controlla la connessione
+Nessuna stazione trovata
+Qui non c'è niente
+Rimossa dalle radio preferite
+Aggiunta alle radio preferite
+{n} kbps
+Connessione…
+Impossibile riprodurre questa stazione
+In diretta
+Radio via internet
+Scegli una stazione a destra. Metti una stella a quelle che ti piacciono per tenerle tra le preferite; avanti e indietro sul volante passano dall'una all'altra.
+Riproduci all'avvio dell'auto
+L'ultima stazione, all'avvio
+Precedente
+{n} di {total}
+Successiva
+{n} stazioni
+Nome della stazione
+Le più ascoltate in {country}
+Cambia paese
+Ancora nessuna preferita. Trova stazioni in Paese, Popolari o Cerca e tocca la stella.
+Caricamento stazioni…
+Riprova
+Scrivi il nome di una stazione e premi Invio
+Radio
+Home
+App
+Mappa
+Media
+Impostazioni
+Preferite
+Paese
+Popolari

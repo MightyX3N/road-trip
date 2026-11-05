@@ -1,0 +1,244 @@
+dom,seg,ter,qua,qui,sex,sáb
+jan,fev,mar,abr,mai,jun,jul,ago,set,out,nov,dez
+Manter à frente está ativado
+As atualizações só funcionam no Android
+Procurando atualizações…
+Road Trip {v} está atualizado
+Não foi possível procurar atualizações ({error})
+Limpo
+Quase limpo
+Parcialmente nublado
+Nublado
+Neblina
+Garoa
+Chuva
+Neve
+Pancadas de chuva
+Pancadas de neve
+Trovoada
+Clima
+Não foi possível pesquisar; verifique a conexão
+Nenhum lugar com esse nome
+Baixando Road Trip {v}
+Continue usando o Road Trip; o Android vai pedir para instalar quando terminar
+Permita que o Road Trip instale suas atualizações
+Ative "Permitir desta fonte", volte e toque em Instalar
+Instalar
+Road Trip {v} foi baixado
+O Android pede para confirmar; suas configurações e favoritos ficam
+A atualização não terminou
+Verifique a conexão e tente de novo ({error})
+Tentar de novo
+Toque em Atualizar para baixar e instalar
+Road Trip {v} está disponível
+Atualizar
+O Road Trip ainda não é seu app de início
+Defina-o para que o botão Início o abra
+Definir como app de início
+A atualização desativou Manter à frente
+O Android faz isso com apps de fora da loja; um botão reativa
+Ativar
+Manter o Road Trip à frente
+Impede que a central volte ao próprio iniciador
+© OpenFreeMap © OpenStreetMap
+Navegando com {app}
+seu app de navegação
+Abrir {app}
+Para onde?
+Permita a localização para ver onde você está
+Permitir
+Aguardando sua localização…
+Escolha sua cidade para ver o clima
+Carregando…
+Ainda sem dados
+Veja seu próximo evento
+Nada nos próximos dois dias
+Hoje
+Amanhã
+Evento
+Dia inteiro
+Agora
+Em {n} min
+Em {n} h
+Tocando agora
+Veja o que está tocando
+nos seus apps de música e vídeo
+Nada tocando
+Toque música em qualquer app, ou o rádio
+Tocar {station}
+Abrir rádio
+Escolha de 3 a 5 apps favoritos para tê-los aqui
+O Road Trip precisa de acesso às notificações para mostrar e controlar música,
+podcasts e vídeos dos seus apps. Ele só lê o que está tocando.
+Nada está tocando
+Toque música em qualquer app e ela aparece aqui.
+Tocando de {app}
+Desativado pela última atualização
+Desativado: a central pode voltar ao próprio iniciador
+Manter à frente
+Ativado: o Road Trip volta se a central trocar de iniciador
+Pausado
+Manter à frente após atualizações
+Volta a se ativar após cada atualização
+Reative à mão, ou permita uma vez com adb (veja o site)
+Tocando agora e navegação
+Permitido: lê o que está tocando e sua próxima curva
+Precisa de acesso às notificações
+Abrir
+Agenda
+Permitido: seu próximo evento aparece no Início
+Mostrar seu próximo evento no Início
+App de início
+O Road Trip abre quando você aperta Início
+O Road Trip ainda não é o app de início
+Mudar
+O iniciador próprio da central
+Abra por 2 minutos sem o Road Trip interferir
+Apps favoritos
+{n} de {max} escolhidos
+Editar
+Cor de destaque
+Idioma
+Traduzido por IA, algumas palavras podem estar erradas
+Escolha sua cidade
+Definir
+Atualizações
+Versão {v}
+Verificar agora
+Procurar atualizações só no Wi-Fi
+Verificação automática a cada 6 horas
+Diagnóstico
+O que o Manter à frente viu e fez
+Mostrar
+Sobre o Road Trip
+Site
+Road Trip nesta central
+Seu
+Voltar às Configurações
+As traduções do Road Trip são feitas por IA, então algumas palavras podem não estar perfeitas.
+Automático
+nenhuma ainda
+Nada ainda
+Trocas de tela (mais recentes primeiro)
+Notificações de navegação
+Local do clima
+Digite uma cidade
+Pesquisar
+Bem-vindo ao Road Trip
+Escolha seus apps favoritos
+Escolha de 3 a 5. Eles ficam na parte de baixo da tela de início, a um toque.
+Pular por agora
+Cancelar
+Continuar
+Pronto
+Remover dos favoritos
+Favoritos cheios (5)
+Adicionar aos favoritos
+Informações do app
+Abrir o iniciador da central por 2 minutos
+Nenhum outro iniciador encontrado
+Ativar Manter à frente
+Manter à frente está ativado · desativar
+Manter à frente está desativado · ativar
+Procurar atualizações
+App de início padrão
+Road Trip
+1 · Acessibilidade → toque em Road Trip uma vez
+2 · Informações do app → menu → Permitir configurações restritas
+3 · Acessibilidade → ative
+Não foi possível abrir {app}
+Você pode escolher até {max}
+Clima em {place}
+o app de navegação
+Ative Road Trip: tocando agora
+Encontre Road Trip: manter à frente e ative
+Manter à frente está desativado
+Escolha pelo menos {min}
+Adicionado aos favoritos
+Removido dos favoritos
+Você chegou ao destino
+Siga pela {street}
+Iniciar a rota
+Na rotatória, pegue a saída {n} para {street}
+Na rotatória, pegue a saída {n}
+{n} min
+{h} h {m} min
+Nenhuma rota encontrada
+Nova rota
+Você chegou
+Depois: {next}
+Lugar
+Nada encontrado
+Chegada {time}
+© OpenFreeMap © OpenMapTiles · dados © colaboradores do OpenStreetMap · rotas FOSSGIS OSRM
+Chegada
+Encerrar
+Fora da rota
+Recentes
+Pesquisando…
+O Road Trip precisa da sua localização para achar rotas a partir de você
+Ou comece a rota pelo centro do mapa:
+Do centro do mapa
+Permitir localização
+Buscando rotas…
+chegada {time}
+Mais rápida
+Iniciar
+Entre na via
+Entre na {street}
+Pegue a rampa
+Pegue a rampa para {street}
+Pegue a saída
+Pegue a saída para {street}
+Mantenha-se à esquerda
+Mantenha-se à esquerda para {street}
+Mantenha-se à direita
+Mantenha-se à direita para {street}
+Faça o retorno
+Faça o retorno para {street}
+Continue pela {street}
+Vire à esquerda
+Vire à esquerda na {street}
+Vire à direita
+Vire à direita na {street}
+Vire levemente à esquerda
+Vire levemente à esquerda na {street}
+Vire levemente à direita
+Vire levemente à direita na {street}
+Vire acentuadamente à esquerda
+Vire acentuadamente à esquerda na {street}
+Vire acentuadamente à direita
+Vire acentuadamente à direita na {street}
+Não foi possível acessar o Radio Browser; verifique a conexão
+Nenhuma estação encontrada
+Nada aqui
+Removida das favoritas de rádio
+Adicionada às favoritas de rádio
+{n} kbps
+Conectando…
+Não é possível tocar esta estação
+Ao vivo
+Rádio pela internet
+Escolha uma estação à direita. Marque com estrela as que você gosta para guardá-las como favoritas; próxima e anterior no volante passam entre elas.
+Tocar quando o carro ligar
+A última estação, ao ligar
+Anterior
+{n} de {total}
+Próxima
+{n} estações
+Nome da estação
+Mais ouvidas em {country}
+Mudar país
+Ainda sem favoritas. Encontre estações em País, Populares ou Pesquisar e toque na estrela.
+Carregando estações…
+Tentar de novo
+Digite o nome de uma estação e aperte Enter
+Rádio
+Início
+Apps
+Mapa
+Mídia
+Configurações
+Favoritas
+País
+Populares

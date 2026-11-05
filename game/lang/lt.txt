@@ -1,0 +1,244 @@
+Sk,Pr,An,Tr,Kt,Pn,Št
+saus,vas,kov,bal,geg,birž,liep,rugp,rugs,spal,lapkr,gruod
+Laikyti priekyje įjungta
+Naujiniai veikia tik Android
+Ieškoma naujinių…
+Road Trip {v} yra naujausias
+Nepavyko patikrinti naujinių ({error})
+Giedra
+Daugiausia giedra
+Debesuota su pragiedruliais
+Debesuota
+Rūkas
+Dulksna
+Lietus
+Sniegas
+Liūtys
+Snygis
+Perkūnija
+Orai
+Paieška nepavyko; patikrinkite ryšį
+Tokiu pavadinimu vietų nėra
+Atsisiunčiama Road Trip {v}
+Toliau naudokitės Road Trip; Android paklaus dėl diegimo, kai baigsis
+Leiskite Road Trip diegti savo naujinius
+Įjunkite "Leisti iš šio šaltinio", grįžkite ir palieskite Įdiegti
+Įdiegti
+Road Trip {v} atsisiųstas
+Android paprašys patvirtinti; nustatymai ir mėgstami liks
+Naujinys nebaigtas
+Patikrinkite ryšį ir bandykite dar kartą ({error})
+Bandyti dar
+Palieskite Atnaujinti, kad atsisiųstumėte ir įdiegtumėte
+Galimas Road Trip {v}
+Atnaujinti
+Road Trip dar nėra jūsų pradžios programa
+Nustatykite, kad ją atidarytų mygtukas Pradžia
+Nustatyti kaip pradžios programą
+Naujinys išjungė Laikyti priekyje
+Android taip daro su programomis ne iš parduotuvės; vienas jungiklis tai grąžina
+Įjungti
+Laikyti Road Trip priekyje
+Neleidžia įrenginiui grįžti į savo paleidyklę
+© OpenFreeMap © OpenStreetMap
+Navigacija su {app}
+jūsų navigacijos programa
+Atidaryti {app}
+Kur važiuojame?
+Leiskite vietovę, kad matytumėte, kur esate
+Leisti
+Laukiama jūsų vietovės…
+Pasirinkite miestą, kad matytumėte orus
+Įkeliama…
+Duomenų dar nėra
+Matykite kitą įvykį
+Per artimiausias dvi dienas nieko
+Šiandien
+Rytoj
+Įvykis
+Visą dieną
+Dabar
+Po {n} min
+Po {n} val
+Dabar groja
+Žiūrėkite, kas groja
+jūsų muzikos ir vaizdo programose
+Niekas negroja
+Paleiskite muziką bet kurioje programoje arba radiją
+Groti {station}
+Atidaryti radiją
+Pasirinkite 3–5 mėgstamas programas, kad jos būtų čia
+Road Trip reikia prieigos prie pranešimų, kad rodytų ir valdytų muziką,
+tinklalaides ir vaizdo įrašus iš jūsų programų. Jis tik skaito, kas groja.
+Dabar niekas negroja
+Paleiskite muziką bet kurioje programoje ir ji atsiras čia.
+Groja iš {app}
+Išjungta paskutinio naujinio
+Išjungta: įrenginys gali grįžti į savo paleidyklę
+Laikyti priekyje
+Įjungta: Road Trip grįžta, jei įrenginys pakeičia paleidyklę
+Pristabdyta
+Laikyti priekyje po naujinių
+Po kiekvieno naujinio vėl įsijungia
+Įjunkite vėl rankiniu būdu arba vieną kartą leiskite per adb (žr. svetainę)
+Dabar groja ir navigacija
+Leidžiama: skaito, kas groja, ir jūsų kitą posūkį
+Reikia prieigos prie pranešimų
+Atidaryti
+Kalendorius
+Leidžiama: kitas įvykis rodomas Pradžioje
+Rodyti kitą įvykį Pradžioje
+Pradžios programa
+Road Trip atsidaro, kai paspaudžiate Pradžia
+Road Trip dar nėra pradžios programa
+Keisti
+Įrenginio paleidyklė
+Atidaryti 2 minutėms, kad Road Trip nesikištų
+Mėgstamos programos
+Pasirinkta {n} iš {max}
+Redaguoti
+Akcento spalva
+Kalba
+Išvertė DI, kai kurie žodžiai gali būti netikslūs
+Pasirinkite miestą
+Nustatyti
+Naujiniai
+Versija {v}
+Tikrinti dabar
+Ieškoti naujinių tik per Wi-Fi
+Automatinis tikrinimas kas 6 valandas
+Diagnostika
+Ką Laikyti priekyje matė ir darė
+Rodyti
+Apie Road Trip
+Svetainė
+Road Trip šiame įrenginyje
+Jūsų
+Atgal į Nustatymus
+Road Trip vertimus atliko dirbtinis intelektas, todėl kai kurie žodžiai gali būti netobuli.
+Automatiškai
+dar nėra
+Dar nieko
+Ekrano pokyčiai (naujausi pirmi)
+Navigacijos pranešimai
+Orų vieta
+Įveskite miestą ar gyvenvietę
+Ieškoti
+Sveiki atvykę į Road Trip
+Pasirinkite mėgstamas programas
+Pasirinkite 3–5. Jos bus pradžios ekrano apačioje, vieno palietimo atstumu.
+Kol kas praleisti
+Atšaukti
+Tęsti
+Atlikta
+Pašalinti iš mėgstamų
+Mėgstami pilni (5)
+Pridėti prie mėgstamų
+Programos informacija
+Atidaryti įrenginio paleidyklę 2 minutėms
+Kitos paleidyklės nerasta
+Įjungti Laikyti priekyje
+Laikyti priekyje įjungta · išjungti
+Laikyti priekyje išjungta · įjungti
+Ieškoti naujinių
+Numatytoji pradžios programa
+Road Trip
+1 · Pritaikymas neįgaliesiems → vieną kartą palieskite Road Trip
+2 · Programos informacija → meniu → Leisti apribotus nustatymus
+3 · Pritaikymas neįgaliesiems → įjunkite
+Nepavyko atidaryti {app}
+Galite pasirinkti iki {max}
+Orai: {place}
+navigacijos programa
+Įjunkite Road Trip: dabar groja
+Raskite Road Trip: laikyti priekyje ir įjunkite
+Laikyti priekyje išjungta
+Pasirinkite bent {min}
+Pridėta prie mėgstamų
+Pašalinta iš mėgstamų
+Atvykote į tikslą
+Važiuokite {street}
+Pradėti maršrutą
+Žiede išvažiuokite {n}-uoju išvažiavimu į {street}
+Žiede išvažiuokite {n}-uoju išvažiavimu
+{n} min
+{h} val {m} min
+Maršruto nerasta
+Naujas maršrutas
+Atvykote
+Tada: {next}
+Vieta
+Nieko nerasta
+Atvykimas {time}
+© OpenFreeMap © OpenMapTiles · duomenys © OpenStreetMap bendraautoriai · maršrutai FOSSGIS OSRM
+Atvykimas
+Baigti
+Ne maršrute
+Naujausi
+Ieškoma…
+Road Trip reikia vietovės, kad rastų maršrutus nuo jūsų
+Arba pradėkite maršrutą nuo žemėlapio centro:
+Nuo žemėlapio centro
+Leisti vietovę
+Ieškoma maršrutų…
+atvykimas {time}
+Greičiausias
+Pradėti
+Įsiliekite
+Įsiliekite į {street}
+Užvažiuokite ant rampos
+Užvažiuokite ant rampos į {street}
+Išvažiuokite
+Išvažiuokite į {street}
+Laikykitės kairės
+Laikykitės kairės į {street}
+Laikykitės dešinės
+Laikykitės dešinės į {street}
+Apsisukite
+Apsisukite į {street}
+Tęskite {street}
+Sukite į kairę
+Sukite į kairę į {street}
+Sukite į dešinę
+Sukite į dešinę į {street}
+Sukite šiek tiek į kairę
+Sukite šiek tiek į kairę į {street}
+Sukite šiek tiek į dešinę
+Sukite šiek tiek į dešinę į {street}
+Staigiai sukite į kairę
+Staigiai sukite į kairę į {street}
+Staigiai sukite į dešinę
+Staigiai sukite į dešinę į {street}
+Nepavyko pasiekti Radio Browser; patikrinkite ryšį
+Stočių nerasta
+Čia nieko nėra
+Pašalinta iš mėgstamų stočių
+Pridėta prie mėgstamų stočių
+{n} kbps
+Jungiamasi…
+Šios stoties groti negalima
+Tiesiogiai
+Interneto radijas
+Pasirinkite stotį dešinėje. Pažymėkite žvaigždute mėgstamas, kad jas išsaugotumėte; vairo kitas ir ankstesnis perjungia tarp jų.
+Groti užvedus automobilį
+Paskutinė stotis, paleidžiant
+Ankstesnis
+{n} iš {total}
+Kitas
+{n} stotys
+Stoties pavadinimas
+Daugiausia klausomos: {country}
+Keisti šalį
+Mėgstamų dar nėra. Raskite stočių skiltyse Šalis, Populiarios ar Ieškoti ir palieskite žvaigždutę.
+Įkeliamos stotys…
+Bandyti dar
+Įveskite stoties pavadinimą ir paspauskite Enter
+Radijas
+Pradžia
+Programos
+Žemėlapis
+Medija
+Nustatymai
+Mėgstamos
+Šalis
+Populiarios

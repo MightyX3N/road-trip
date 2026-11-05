@@ -1,0 +1,244 @@
+Min,Sen,Sel,Rab,Kam,Jum,Sab
+Jan,Feb,Mar,Apr,Mei,Jun,Jul,Agu,Sep,Okt,Nov,Des
+Tetap di depan aktif
+Pembaruan hanya berfungsi di Android
+Mencari pembaruan…
+Road Trip {v} sudah terbaru
+Tidak bisa mencari pembaruan ({error})
+Cerah
+Sebagian besar cerah
+Berawan sebagian
+Berawan
+Kabut
+Gerimis
+Hujan
+Salju
+Hujan lokal
+Hujan salju
+Badai petir
+Cuaca
+Tidak bisa mencari; periksa koneksi
+Tidak ada tempat dengan nama itu
+Mengunduh Road Trip {v}
+Tetap gunakan Road Trip; Android akan meminta pemasangan saat selesai
+Izinkan Road Trip memasang pembaruannya
+Aktifkan "Izinkan dari sumber ini", lalu kembali dan ketuk Pasang
+Pasang
+Road Trip {v} sudah diunduh
+Android meminta konfirmasi; pengaturan dan favorit Anda tetap ada
+Pembaruan tidak selesai
+Periksa koneksi dan coba lagi ({error})
+Coba lagi
+Ketuk Perbarui untuk mengunduh dan memasangnya
+Road Trip {v} tersedia
+Perbarui
+Road Trip belum menjadi aplikasi layar utama Anda
+Atur agar tombol Beranda membukanya
+Jadikan layar utama
+Pembaruan mematikan Tetap di depan
+Android melakukan ini pada aplikasi di luar toko; satu sakelar menyalakannya lagi
+Aktifkan
+Tetap tampilkan Road Trip di depan
+Mencegah perangkat kembali ke peluncurnya sendiri
+© OpenFreeMap © OpenStreetMap
+Navigasi dengan {app}
+aplikasi navigasi Anda
+Buka {app}
+Mau ke mana?
+Izinkan lokasi untuk melihat posisi Anda
+Izinkan
+Menunggu lokasi Anda…
+Pilih kota Anda untuk melihat cuaca
+Memuat…
+Belum ada data
+Lihat acara berikutnya
+Tidak ada apa pun dua hari ke depan
+Hari ini
+Besok
+Acara
+Sepanjang hari
+Sekarang
+Dalam {n} mnt
+Dalam {n} jam
+Sedang diputar
+Lihat yang sedang diputar
+di aplikasi musik dan video Anda
+Tidak ada yang diputar
+Putar musik di aplikasi apa pun, atau radio
+Putar {station}
+Buka radio
+Pilih 3 sampai 5 aplikasi favorit agar ada di sini
+Road Trip perlu akses notifikasi untuk menampilkan dan mengontrol musik,
+podcast, dan video dari aplikasi Anda. Ia hanya membaca yang sedang diputar.
+Saat ini tidak ada yang diputar
+Putar musik di aplikasi apa pun dan akan muncul di sini.
+Diputar dari {app}
+Dimatikan oleh pembaruan terakhir
+Mati: perangkat bisa kembali ke peluncurnya sendiri
+Tetap di depan
+Aktif: Road Trip kembali jika perangkat berganti peluncur
+Dijeda
+Tetap di depan setelah pembaruan
+Menyala lagi sendiri setelah setiap pembaruan
+Nyalakan lagi secara manual, atau izinkan sekali lewat adb (lihat situs)
+Sedang diputar dan navigasi
+Diizinkan: membaca yang diputar dan belokan berikutnya
+Perlu akses notifikasi
+Buka
+Kalender
+Diizinkan: acara berikutnya tampil di Beranda
+Tampilkan acara berikutnya di Beranda
+Aplikasi layar utama
+Road Trip terbuka saat Anda menekan Beranda
+Road Trip belum menjadi aplikasi layar utama
+Ubah
+Peluncur bawaan perangkat
+Buka selama 2 menit tanpa campur tangan Road Trip
+Aplikasi favorit
+{n} dari {max} dipilih
+Edit
+Warna aksen
+Bahasa
+Diterjemahkan oleh AI, beberapa kata mungkin kurang tepat
+Pilih kota Anda
+Atur
+Pembaruan
+Versi {v}
+Periksa sekarang
+Cari pembaruan hanya lewat Wi-Fi
+Pemeriksaan otomatis setiap 6 jam
+Diagnostik
+Apa yang dilihat dan dilakukan Tetap di depan
+Tampilkan
+Tentang Road Trip
+Situs web
+Road Trip di perangkat ini
+Milik Anda
+Kembali ke Pengaturan
+Terjemahan Road Trip dibuat oleh AI, jadi beberapa kata mungkin kurang sempurna.
+Otomatis
+belum ada
+Belum ada apa-apa
+Pergantian layar (terbaru dulu)
+Notifikasi navigasi
+Lokasi cuaca
+Ketik nama kota
+Cari
+Selamat datang di Road Trip
+Pilih aplikasi favorit Anda
+Pilih 3 sampai 5. Semuanya ada di bawah layar utama, sekali ketuk.
+Lewati dulu
+Batal
+Lanjut
+Selesai
+Hapus dari favorit
+Favorit sudah penuh (5)
+Tambahkan ke favorit
+Info aplikasi
+Buka peluncur perangkat selama 2 menit
+Tidak ada peluncur lain
+Aktifkan Tetap di depan
+Tetap di depan aktif · matikan
+Tetap di depan mati · aktifkan
+Cari pembaruan
+Aplikasi layar utama default
+Road Trip
+1 · Aksesibilitas → ketuk Road Trip sekali
+2 · Info aplikasi → menu → Izinkan setelan terbatas
+3 · Aksesibilitas → aktifkan
+Tidak bisa membuka {app}
+Anda bisa memilih hingga {max}
+Cuaca untuk {place}
+aplikasi navigasi
+Aktifkan Road Trip: sedang diputar
+Cari Road Trip: tetap di depan lalu aktifkan
+Tetap di depan mati
+Pilih minimal {min}
+Ditambahkan ke favorit
+Dihapus dari favorit
+Anda telah tiba di tujuan
+Ikuti {street}
+Mulai rute
+Di bundaran, ambil jalan keluar ke-{n} menuju {street}
+Di bundaran, ambil jalan keluar ke-{n}
+{n} mnt
+{h} jam {m} mnt
+Rute tidak ditemukan
+Rute baru
+Anda sudah tiba
+Lalu: {next}
+Tempat
+Tidak ditemukan
+Tiba {time}
+© OpenFreeMap © OpenMapTiles · data © kontributor OpenStreetMap · rute FOSSGIS OSRM
+Tiba
+Akhiri
+Keluar dari rute
+Terbaru
+Mencari…
+Road Trip perlu lokasi untuk mencari rute dari posisi Anda
+Atau mulai rute dari tengah peta:
+Dari tengah peta
+Izinkan lokasi
+Mencari rute…
+tiba {time}
+Tercepat
+Mulai
+Bergabung
+Bergabung ke {street}
+Ambil jalur masuk
+Ambil jalur masuk ke {street}
+Ambil jalan keluar
+Ambil jalan keluar ke {street}
+Tetap di kiri
+Tetap di kiri ke {street}
+Tetap di kanan
+Tetap di kanan ke {street}
+Putar balik
+Putar balik ke {street}
+Lanjutkan di {street}
+Belok kiri
+Belok kiri ke {street}
+Belok kanan
+Belok kanan ke {street}
+Belok sedikit ke kiri
+Belok sedikit ke kiri ke {street}
+Belok sedikit ke kanan
+Belok sedikit ke kanan ke {street}
+Belok tajam ke kiri
+Belok tajam ke kiri ke {street}
+Belok tajam ke kanan
+Belok tajam ke kanan ke {street}
+Tidak bisa menjangkau Radio Browser; periksa koneksi
+Tidak ada stasiun ditemukan
+Tidak ada apa-apa di sini
+Dihapus dari favorit radio
+Ditambahkan ke favorit radio
+{n} kbps
+Menghubungkan…
+Stasiun ini tidak bisa diputar
+Langsung
+Radio internet
+Pilih stasiun di kanan. Beri bintang yang Anda suka untuk menyimpannya sebagai favorit; tombol berikutnya dan sebelumnya di setir berpindah di antaranya.
+Putar saat mobil dinyalakan
+Stasiun terakhir, saat mulai
+Sebelumnya
+{n} dari {total}
+Berikutnya
+{n} stasiun
+Nama stasiun
+Paling banyak didengar di {country}
+Ganti negara
+Belum ada favorit. Cari stasiun di Negara, Populer, atau Cari, lalu ketuk bintang.
+Memuat stasiun…
+Coba lagi
+Ketik nama stasiun lalu tekan Enter
+Radio
+Beranda
+Aplikasi
+Peta
+Media
+Pengaturan
+Favorit
+Negara
+Populer
