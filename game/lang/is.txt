@@ -258,3 +258,32 @@ Næsta beygja yfir öðrum forritum
 Kveiktu á Road Trip og komdu svo aftur
 Norður upp
 Akstursstefna upp
+Vinna
+Velja Heima
+Velja Vinnu
+Fyrsta uppsetning
+Heimildir, eftirlætisforrit, Heima og Vinna, útvarp
+Skref {n} af {total}
+Til baka
+Leyfðu Road Trip að taka við
+Opnast þegar þú ýtir á Heim
+Kemur aftur ef boxið skiptir í eigin ræsi
+Birta yfir öðrum forritum
+Næsta beygja yfir öðrum forritum
+Aðgangur að miðlum og leiðsögn
+Sýnir hvað er í spilun og næstu beygju
+Staðsetning
+Staða þín á kortinu og hraðinn þinn
+Næsti viðburður á Heim
+Vista Heima og Vinnu
+Vistaðu þau einu sinni fyrir leiðir með einni snertingu frá Heim og kortaleitinni.
+Ekki valið enn
+Veldu staðbundnar stöðvar
+Mest hlustað á í {country}. Settu stjörnu á eftirlætin þín.
+{n} valdar
+Heima vistað
+Vinna vistuð
+Leitaðu að heimilisfanginu þínu
+Leitaðu að vinnustaðnum þínum
+Leitaðu að heimilisfangi til að vista
+Heima

@@ -258,3 +258,32 @@ Necessita Mantenir al davant o permís per mostrar-se damunt d'altres apps
 Activa Road Trip i torna
 Nord a dalt
 Direcció de marxa a dalt
+Feina
+Defineix Casa
+Defineix Feina
+Configuració inicial
+Permisos, apps preferides, Casa i Feina, ràdio
+Pas {n} de {total}
+Enrere
+Deixa que Road Trip prengui el control
+S'obre quan prems Inici
+Torna si la caixa canvia al seu propi llançador
+Mostra sobre altres apps
+Proper gir damunt d'altres apps
+Accés a multimèdia i navegació
+Mostra el que sona i el teu proper gir
+Ubicació
+La teva posició al mapa i la velocitat
+El teu proper esdeveniment a l'Inici
+Desa Casa i Feina
+Desa-les un cop per a rutes d'un toc des de l'Inici i la cerca del mapa.
+Encara no definit
+Tria les teves emissores locals
+El més escoltat a {country}. Marca amb estrella les preferides.
+{n} triades
+Casa desada
+Feina desada
+Cerca l'adreça de casa
+Cerca l'adreça de la feina
+Cerca una adreça per desar
+Casa

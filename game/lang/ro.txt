@@ -258,3 +258,32 @@ Necesită Păstrare în față sau permisiunea de afișare peste alte aplicații
 Activează Road Trip, apoi revino
 Nordul sus
 Direcția de mers sus
+Serviciu
+Setează Acasă
+Setează Serviciu
+Configurare inițială
+Permisiuni, aplicații preferate, Acasă și Serviciu, radio
+Pasul {n} din {total}
+Înapoi
+Lasă Road Trip să preia
+Se deschide când apeși Acasă
+Revine dacă unitatea trece la propriul lansator
+Afișare peste alte aplicații
+Următorul viraj peste alte aplicații
+Acces la media și navigare
+Arată ce se redă și următorul viraj
+Locație
+Poziția ta pe hartă și viteza
+Următorul eveniment pe Acasă
+Salvează Acasă și Serviciu
+Salvează-le o dată pentru trasee dintr-o atingere de pe Acasă și din căutare.
+Încă nesetat
+Alege posturile locale
+Cele mai ascultate în {country}. Marchează cu stea preferatele.
+{n} alese
+Acasă salvat
+Serviciu salvat
+Caută adresa de acasă
+Caută adresa de la serviciu
+Caută o adresă de salvat
+Acasă

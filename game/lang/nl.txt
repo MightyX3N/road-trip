@@ -258,3 +258,32 @@ Heeft Op de voorgrond houden nodig, of toestemming om over andere apps te tonen
 Zet Road Trip aan en kom dan terug
 Noorden boven
 Rijrichting boven
+Werk
+Thuis instellen
+Werk instellen
+Eerste instelling
+Toestemmingen, favoriete apps, Thuis en Werk, radio
+Stap {n} van {total}
+Terug
+Laat Road Trip het overnemen
+Opent als je op Home drukt
+Komt terug als de box naar zijn eigen launcher springt
+Over andere apps tonen
+Volgende afslag boven andere apps
+Toegang tot media en navigatie
+Toont wat er speelt en je volgende afslag
+Locatie
+Je positie op de kaart en je snelheid
+Je volgende afspraak op Start
+Thuis en Werk bewaren
+Bewaar ze één keer voor routes met één tik vanaf Start en het zoeken op de kaart.
+Nog niet ingesteld
+Kies je lokale zenders
+Meest beluisterd in {country}. Geef je favorieten een ster.
+{n} gekozen
+Thuis bewaard
+Werk bewaard
+Zoek je thuisadres
+Zoek je werkadres
+Zoek een adres om te bewaren
+Thuis

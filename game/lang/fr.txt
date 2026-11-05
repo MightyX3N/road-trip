@@ -258,3 +258,32 @@ Nécessite Rester au premier plan, ou l'autorisation de s'afficher par-dessus le
 Activez Road Trip, puis revenez
 Nord en haut
 Direction en haut
+Travail
+Définir Domicile
+Définir Travail
+Première configuration
+Autorisations, apps favorites, Domicile et Travail, radio
+Étape {n} sur {total}
+Retour
+Laissez Road Trip prendre la main
+S'ouvre quand vous appuyez sur Accueil
+Revient si le boîtier repasse à son propre lanceur
+Afficher par-dessus les autres apps
+Prochain virage par-dessus les autres apps
+Accès aux médias et à la navigation
+Affiche ce qui joue et votre prochain virage
+Position
+Votre position sur la carte et votre vitesse
+Votre prochain événement sur l'Accueil
+Enregistrer Domicile et Travail
+Enregistrez-les une fois pour des itinéraires en un geste depuis l'Accueil et la recherche.
+Pas encore défini
+Choisissez vos stations locales
+Les plus écoutées en {country}. Mettez une étoile à vos favorites.
+{n} choisies
+Domicile enregistré
+Travail enregistré
+Cherchez votre adresse
+Cherchez l'adresse de votre travail
+Cherchez une adresse à enregistrer
+Domicile

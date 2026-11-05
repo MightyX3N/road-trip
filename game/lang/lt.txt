@@ -258,3 +258,32 @@ Reikia Laikyti priekyje arba leidimo rodyti virš kitų programų
 Įjunkite Road Trip ir grįžkite
 Šiaurė viršuje
 Važiavimo kryptis viršuje
+Darbas
+Nustatyti Namus
+Nustatyti Darbą
+Pirmoji sąranka
+Leidimai, mėgstamos programos, Namai ir Darbas, radijas
+{n} žingsnis iš {total}
+Atgal
+Leiskite Road Trip perimti
+Atsidaro paspaudus Pradžia
+Grįžta, jei įrenginys persijungia į savo paleidyklę
+Rodyti virš kitų programų
+Kitas posūkis virš kitų programų
+Prieiga prie medijos ir navigacijos
+Rodo, kas groja, ir kitą posūkį
+Vietovė
+Jūsų vieta žemėlapyje ir greitis
+Jūsų kitas įvykis Pradžioje
+Išsaugoti Namus ir Darbą
+Išsaugokite vieną kartą ir maršrutą pradėsite vienu palietimu iš Pradžios ir paieškos.
+Dar nenustatyta
+Pasirinkite vietines stotis
+Daugiausia klausomos: {country}. Pažymėkite mėgstamas žvaigždute.
+Pasirinkta {n}
+Namai išsaugoti
+Darbas išsaugotas
+Ieškokite namų adreso
+Ieškokite darbo adreso
+Ieškokite adreso išsaugoti
+Namai

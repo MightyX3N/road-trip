@@ -258,3 +258,32 @@ Serve Tieni in primo piano o il permesso di apparire sopra le altre app
 Attiva Road Trip, poi torna qui
 Nord in alto
 Direzione di marcia in alto
+Lavoro
+Imposta Casa
+Imposta Lavoro
+Configurazione iniziale
+Permessi, app preferite, Casa e Lavoro, radio
+Passo {n} di {total}
+Indietro
+Lascia fare a Road Trip
+Si apre quando premi Home
+Torna se il box passa al suo launcher
+Mostra sopra le altre app
+Prossima svolta sopra le altre app
+Accesso a media e navigazione
+Mostra cosa suona e la prossima svolta
+Posizione
+La tua posizione sulla mappa e la velocità
+Il prossimo evento in Home
+Salva Casa e Lavoro
+Salvali una volta per percorsi con un tocco da Home e dalla ricerca.
+Non ancora impostato
+Scegli le tue stazioni locali
+Le più ascoltate in {country}. Metti una stella alle preferite.
+{n} scelte
+Casa salvata
+Lavoro salvato
+Cerca l'indirizzo di casa
+Cerca l'indirizzo del lavoro
+Cerca un indirizzo da salvare
+Casa

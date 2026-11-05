@@ -689,6 +689,19 @@ local function navWidget(x, y, w, h)
     ui.rect(ui.c.bg, x + 16, y + 92, tw, 40, 20)
     ui.text(t, "semibold", 15, ui.c.muted, x + 16, y + 92 + (40 - ui.fontHeight("semibold", 15)) / 2, "center", tw)
   end
+  -- one tap to Home or Work (or to save them)
+  local bx = x + 16
+  for _, which in ipairs({ "home", "work" }) do
+    local saved = map.saved(which)
+    local label = saved and (which == "home" and T("@place:Home") or T("Work")) or (which == "home" and T("Set Home") or T("Set Work"))
+    local pw = ui.textWidth(label, "bold", 16) + 76
+    local py = y + h - 16 - 56
+    ui.rect(ui.c.bg, bx, py, pw, 56, 28)
+    ui.icon(which, bx + 18, py + 16, 24, saved and ui.c.accent or ui.c.muted, 1.8)
+    ui.text(label, "bold", 16, saved and ui.c.text2 or ui.c.muted, bx + 52, py + (56 - ui.fontHeight("bold", 16)) / 2)
+    ui.hit({ kind = "goSaved", which = which }, bx, py, pw, 56)
+    bx = bx + pw + 10
+  end
   attribution()
 end
 
@@ -1058,6 +1071,8 @@ local function drawSettings()
     { title = T("Check for updates on Wi-Fi only"), sub = T("Automatic checks, every 6 hours"),
       toggle = { config.get("updateWifiOnly") ~= false, { kind = "wifiOnly" } } },
     { title = T("Diagnostics"), sub = T("What Keep in front saw and did"), button = { T("Show"), { kind = "diag" } } },
+    { title = T("First-time setup"), sub = T("Permissions, favorite apps, Home and Work, radio"),
+      button = { T("Start"), { kind = "setupStart" } } },
     { title = T("About Road Trip"), sub = "mightyx3n.github.io/road-trip", button = { T("Website"), { kind = "site" } } },
   }
   local x, y = RAIL + 24, TOP + 24
@@ -1192,11 +1207,32 @@ local function pickIndex(app)
   end
 end
 
+local SETUP_STEPS = 4
+local setupGo -- defined with the other actions
+
+-- "Step n of 4", the step's title, and the progress dots
+local function drawSetupHeader(n, title)
+  local px = 56
+  ui.text(T("Step {n} of {total}", { n = n, total = SETUP_STEPS }), "bold", 15, ui.c.accent, px, 32)
+  ui.text(title, "bold", 34, ui.c.text, px, 54)
+  local dx = W - px
+  for i = SETUP_STEPS, 1, -1 do
+    local w = i == n and 40 or 8
+    dx = dx - w
+    ui.rect(i <= n and ui.c.accent or ui.c.dim, dx, 64, w, 8, 4)
+    dx = dx - 8
+  end
+end
+
 local function drawPicker()
   local px = 56
   local setup = state.favsMode == "setup"
-  ui.text(setup and T("Welcome to Road Trip") or T("Favorite apps"), "bold", 15, ui.c.accent, px, 32)
-  ui.text(T("Pick your favorite apps"), "bold", 34, ui.c.text, px, 54)
+  if state.setup then
+    drawSetupHeader(2, T("Pick your favorite apps"))
+  else
+    ui.text(setup and T("Welcome to Road Trip") or T("Favorite apps"), "bold", 15, ui.c.accent, px, 32)
+    ui.text(T("Pick your favorite apps"), "bold", 34, ui.c.text, px, 54)
+  end
   ui.text(T("Choose 3 to 5. They sit along the bottom of your home screen, one tap away."), "semibold", 16, ui.c.muted, px, 106)
 
   local area = { x = px - 24, w = W - px * 2 + 48, top = 150, bottom = H - 120, maxCols = 6, cellMin = 180 }
@@ -1217,16 +1253,149 @@ local function drawPicker()
   end)
 
   local by = H - 32 - 64
-  pill({ kind = "pickerBack" }, setup and T("Skip for now") or T("Cancel"), px - 28, by, 64, nil)
   local count = #state.pick
   local ready = count >= FAV_MIN
-  local label = setup and T("Continue") or T("Done")
-  local bw = ui.textWidth(label, "bold", 18) + 72
-  local bx = W - px - bw
-  pill(ready and { kind = "pickerDone" } or { kind = "pickerNotReady" }, label, bx, by, 64, ready and "primary" or "off")
+  local label, bx
+  if state.setup then
+    pill({ kind = "setupBack" }, T("Back"), px - 28, by, 64, nil)
+    label = (ready or count > 0) and T("Continue") or T("Skip for now")
+    bx = W - px - (ui.textWidth(label, "bold", 18) + 72)
+    pill((ready and { kind = "pickerDone" }) or (count > 0 and { kind = "pickerNotReady" }) or { kind = "setupNext" },
+      label, bx, by, 64, (ready or count == 0) and "primary" or "off")
+  else
+    pill({ kind = "pickerBack" }, setup and T("Skip for now") or T("Cancel"), px - 28, by, 64, nil)
+    label = setup and T("Continue") or T("Done")
+    bx = W - px - (ui.textWidth(label, "bold", 18) + 72)
+    pill(ready and { kind = "pickerDone" } or { kind = "pickerNotReady" }, label, bx, by, 64, ready and "primary" or "off")
+  end
   local info = T("{n} of {max} picked", { n = count, max = FAV_MAX })
   local iw = ui.textWidth(info, "semibold", 16)
   ui.text(info, "semibold", 16, ui.c.muted, bx - 20 - iw, by + (64 - ui.fontHeight("semibold", 16)) / 2)
+end
+
+-- the first-time setup: 1 permissions, 2 favorite apps (the picker), 3 Home and Work, 4 radio
+local function setupFooter(back, nextLabel, nextId, info)
+  local px, by = 56, H - 32 - 64
+  if back then pill({ kind = "setupBack" }, T("Back"), px - 28, by, 64, nil)
+  else pill({ kind = "setupEnd" }, T("Skip for now"), px - 28, by, 64, nil) end
+  local bw = ui.textWidth(nextLabel, "bold", 18) + 72
+  local bx = W - px - bw
+  pill(nextId, nextLabel, bx, by, 64, "primary")
+  if info then
+    local iw = ui.textWidth(info, "semibold", 16)
+    ui.text(info, "semibold", 16, ui.c.muted, bx - 20 - iw, by + (64 - ui.fontHeight("semibold", 16)) / 2)
+  end
+end
+
+local function drawSetupPerms()
+  drawSetupHeader(1, T("Let Road Trip take over"))
+  local g = state.guard
+  local rows = {
+    { T("Set as home app"), T("Opens when you press Home"), state.isHome, { kind = "setHome" }, "home" },
+    { T("Keep in front"), T("Comes back if the box switches to its own launcher"), g.serviceOn, { kind = "a11y" }, "check" },
+    { T("Display over other apps"), T("The turn banner over other apps"), g.serviceOn or state.overlay.canDraw, { kind = "ovAllow" }, "map" },
+    { T("Media and navigation access"), T("Shows what's playing and your next turn"), state.media.access, { kind = "mediaAccess" }, "media" },
+    { T("Location"), T("Your position on the map, and your speed"), state.setupLoc, { kind = "map:allow" }, "pin" },
+    { T("Calendar"), T("Your next event on Home"), state.cal.permission, { kind = "calAllow" }, "calendar" },
+  }
+  local x, w = 56, W - 112
+  local top, bottom, gap = 124, H - 120, 10
+  local rh = (bottom - top - gap * (#rows - 1)) / #rows
+  for i, r in ipairs(rows) do
+    local y = top + (i - 1) * (rh + gap)
+    ui.rect(ui.c.card, x, y, w, rh, 20)
+    local ib = math.min(52, rh - 16)
+    ui.rect(ui.hex("22252A"), x + 20, y + (rh - ib) / 2, ib, ib, 14)
+    ui.icon(r[5], x + 20 + (ib - 26) / 2, y + (rh - 26) / 2, 26, ui.c.accent, 1.8)
+    local tx = x + 20 + ib + 18
+    local bw = 160
+    ui.text(ui.fit(r[1], "bold", 19, w - (tx - x) - bw - 20), "bold", 19, ui.c.text, tx, y + rh / 2 - 24)
+    ui.text(ui.fit(r[2], "semibold", 15, w - (tx - x) - bw - 20), "semibold", 15, ui.c.muted, tx, y + rh / 2 + 2)
+    local bh = math.min(52, rh - 16)
+    if r[3] then
+      local label = T("Done")
+      local pw = ui.textWidth(label, "bold", 16) + 70
+      local bx = x + w - 16 - pw
+      ui.rect(ui.hex("1B2419"), bx, y + (rh - bh) / 2, pw, bh, bh / 2)
+      ui.icon("check", bx + 18, y + (rh - 20) / 2, 20, ui.hex("A9D58A"), 2.6)
+      ui.text(label, "bold", 16, ui.hex("A9D58A"), bx + 44, y + (rh - ui.fontHeight("bold", 16)) / 2)
+    else
+      local pw = ui.textWidth(T("Allow"), "bold", 16) + 48
+      pill(r[4], T("Allow"), x + w - 16 - pw, y + (rh - bh) / 2, bh, "accent")
+    end
+  end
+  setupFooter(false, T("Continue"), { kind = "setupNext" })
+end
+
+local function drawSetupPlaces()
+  drawSetupHeader(3, T("Save Home and Work"))
+  ui.text(T("Save them once for one-tap routes from Home and the map search."), "semibold", 16, ui.c.muted, 56, 106)
+  local gap = 24
+  local cw = (W - 112 - gap) / 2
+  local y, ch = 160, H - 120 - 160 - 20
+  for i, which in ipairs({ "home", "work" }) do
+    local x = 56 + (i - 1) * (cw + gap)
+    local p = map.saved(which)
+    ui.rect(p and ui.hex("1E1A13") or ui.c.card, x, y, cw, ch, 26)
+    if p then
+      lg.setColor(ui.c.accent)
+      lg.setLineWidth(2)
+      lg.rectangle("line", x, y, cw, ch, 26, 26, 24)
+    end
+    ui.rect(ui.hex("22252A"), x + 28, y + 28, 72, 72, 20)
+    ui.icon(which, x + 28 + 18, y + 28 + 18, 36, ui.c.accent, 1.8)
+    ui.text(which == "home" and T("@place:Home") or T("Work"), "bold", 30, ui.c.text, x + 28, y + 124)
+    ui.textWrap(p and p.name or T("Not set yet"), "semibold", 18, p and ui.c.text2 or ui.c.muted, x + 28, y + 172, cw - 56, 2)
+    if p and p.sub and p.sub ~= "" then
+      ui.text(ui.fit(p.sub, "semibold", 15, cw - 56), "semibold", 15, ui.c.muted, x + 28, y + 226)
+    end
+    pill({ kind = "setupPlace", which = which }, p and T("Change") or T("Set"), x + 28, y + ch - 28 - 56, 56, p and "off2" or "accent")
+    ui.hit({ kind = "setupPlace", which = which }, x, y, cw, ch - 100)
+  end
+  setupFooter(true, T("Continue"), { kind = "setupNext" })
+end
+
+local function drawSetupRadio()
+  drawSetupHeader(4, T("Pick your local stations"))
+  ui.text(T("Most listened in {country}. Star the ones you want as favorites.", { country = radio.countryName() }),
+    "semibold", 16, ui.c.muted, 56, 106)
+  local items, err, busy = radio.localStations()
+  local top, bottom = 150, H - 120
+  if busy or not items then
+    ui.text(err or T("Loading stations…"), "semibold", 17, err and ui.hex("F09A8A") or ui.c.muted, 56, top + 10)
+  else
+    local cols, rowsN, gap = 4, 2, 14
+    local cw = (W - 112 - gap * (cols - 1)) / cols
+    local rh = (bottom - top - gap * (rowsN - 1)) / rowsN
+    for i = 1, math.min(#items, cols * rowsN) do
+      local st = items[i]
+      local c, r = (i - 1) % cols, math.floor((i - 1) / cols)
+      local x, y = 56 + c * (cw + gap), top + r * (rh + gap)
+      local on = radio.isFavorite(st)
+      ui.rect(on and ui.hex("1E1A13") or ui.c.card, x, y, cw, rh, 22)
+      if on then
+        lg.setColor(ui.c.accent)
+        lg.setLineWidth(2)
+        lg.rectangle("line", x, y, cw, rh, 22, 22, 20)
+      end
+      radio.logo(st, x + 18, y + 18, 60, 16)
+      ui.circle(on and ui.hex("2A2117") or ui.hex("22252A"), x + cw - 18 - 22, y + 18 + 22, 22)
+      ui.icon(on and "starFill" or "star", x + cw - 18 - 22 - 12, y + 18 + 10, 24, on and ui.c.accent or ui.hex("77756F"), 1.8)
+      ui.text(ui.fit(st.name, "bold", 18, cw - 36), "bold", 18, ui.c.text2, x + 18, y + rh - 18 - 44)
+      local tag = ((st.tags or ""):match("^([^,]+)")) or st.country or ""
+      ui.text(ui.fit(tag, "semibold", 14, cw - 36), "semibold", 14, ui.c.muted, x + 18, y + rh - 18 - 18)
+      ui.hit({ kind = "setupStation", station = st }, x, y, cw, rh)
+    end
+  end
+  local n = #(config.get("radioFavs") or {})
+  setupFooter(true, T("Done"), { kind = "setupNext" }, T("{n} selected", { n = n }))
+end
+
+local function drawSetup()
+  local st = state.setup and state.setup.step or 1
+  if st == 1 then drawSetupPerms()
+  elseif st == 3 then drawSetupPlaces()
+  else drawSetupRadio() end
 end
 
 ----------------------------------------------------------------------------------------------
@@ -1337,6 +1506,8 @@ function love.draw()
   lg.scale(ui.S)
   if state.screen == "favs" then
     drawPicker()
+  elseif state.screen == "setup" then
+    drawSetup()
   else
     if state.screen == "home" then drawHome()
     elseif state.screen == "apps" then drawApps()
@@ -1377,6 +1548,25 @@ local function togglePick(app)
   else
     state.pick[#state.pick + 1] = keyOf(app)
   end
+end
+
+-- move through the first-time setup; past the last step it ends
+setupGo = function(n)
+  if n > SETUP_STEPS then
+    state.setup = nil
+    config.set("setupDone", true)
+    if config.get("favorites") == nil then saveFavorites({}) end
+    state.screen = "home"
+    return
+  end
+  state.setup = state.setup or {}
+  state.setup.step = n
+  if n == 2 then
+    openPicker("edit")
+  else
+    state.screen = "setup"
+  end
+  if n == 4 then radio.localStations() end
 end
 
 local function activate(id, vx)
@@ -1491,7 +1681,26 @@ local function activate(id, vx)
   elseif k == "pickerNotReady" then toast(T("Pick at least {min}", { min = FAV_MIN }))
   elseif k == "pickerDone" then
     saveFavorites(state.pick)
-    state.screen = "home"
+    if state.setup then setupGo(3) else state.screen = "home" end
+  elseif k == "setupNext" then setupGo((state.setup and state.setup.step or 1) + 1)
+  elseif k == "setupBack" then setupGo(math.max(1, (state.setup and state.setup.step or 1) - 1))
+  elseif k == "setupEnd" then setupGo(SETUP_STEPS + 1)
+  elseif k == "setupStart" then setupGo(1)
+  elseif k == "setupPlace" then
+    state.pickReturn = "setup"
+    state.screen = "map"
+    map.open()
+    map.openSearch(id.which)
+  elseif k == "setupStation" then radio.toggleFavorite(id.station)
+  elseif k == "goSaved" then
+    if map.goSaved(id.which) then
+      state.screen = "map"
+    else
+      state.pickReturn = "home"
+      state.screen = "map"
+      map.open()
+      map.openSearch(id.which)
+    end
   elseif k == "menuClose" then state.menu = nil
   elseif k == "fav+" then
     local keys = {}
@@ -1526,6 +1735,8 @@ local function goHome()
   if state.city then closeCity() end
   if map.wantsText() then map.back() end
   if radio.wantsText() then radio.back() end
+  if state.setup then setupGo(SETUP_STEPS + 1) end
+  state.pickReturn = nil
   state.screen = "home"
   state.dirty = true
 end
@@ -1641,7 +1852,11 @@ function love.keypressed(key)
   end
   if key ~= "escape" then return end
   -- Android's back button arrives as "escape"
-  if state.screen == "diag" or state.screen == "lang" then
+  if state.screen == "setup" then
+    if state.setup and state.setup.step > 1 then setupGo(state.setup.step - 1) end
+  elseif state.screen == "favs" and state.setup then
+    setupGo(1)
+  elseif state.screen == "diag" or state.screen == "lang" then
     state.screen = "settings"
   elseif state.screen == "map" and not state.menu and map.back() then
     -- closed the map's search or route overview
@@ -1715,7 +1930,9 @@ function love.update(dt)
       state.firstLoad = false
       local n = android.homePresses()
       state.homeSeen = type(n) == "number" and n or 0
-      if config.get("favorites") == nil then openPicker("setup") end
+      if config.get("setupDone") == nil then
+        if config.get("favorites") == nil then setupGo(1) else config.set("setupDone", true) end
+      end
       checkForUpdate(false)
       radio.autoplay()
       map.open() -- Home's map needs your position too
@@ -1723,6 +1940,26 @@ function love.update(dt)
   end
 
   local t = state.timers
+  -- back from saving Home or Work (or from closing that search)
+  if state.pickReturn and not map.wantsText() then
+    state.screen = state.pickReturn
+    state.pickReturn = nil
+    state.dirty = true
+  end
+  -- the setup's permission list follows what's been allowed
+  if state.screen == "setup" and state.setup and state.setup.step == 1 then
+    t.setup = (t.setup or 0) + dt
+    if t.setup > 1 then
+      t.setup = 0
+      refreshGuard()
+      state.isHome = android.isDefaultHome() ~= false
+      pollMedia()
+      refreshCalendar()
+      local l = android.location()
+      state.setupLoc = type(l) == "table" and l.permission == true
+      state.dirty = true
+    end
+  end
   -- in front or not: Android's own answer (focus events don't always arrive behind other apps)
   t.resumed = (t.resumed or 0) + dt
   if t.resumed > 0.25 then

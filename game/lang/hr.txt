@@ -258,3 +258,32 @@ Treba Drži naprijed ili dopuštenje za prikaz preko drugih aplikacija
 Uključi Road Trip i vrati se
 Sjever gore
 Smjer vožnje gore
+Posao
+Postavi Dom
+Postavi Posao
+Prvo postavljanje
+Dopuštenja, omiljene aplikacije, Dom i Posao, radio
+Korak {n} od {total}
+Natrag
+Neka Road Trip preuzme
+Otvara se kad pritisneš Početna
+Vraća se ako se uređaj prebaci na vlastiti pokretač
+Prikaz preko drugih aplikacija
+Sljedeće skretanje preko drugih aplikacija
+Pristup medijima i navigaciji
+Prikazuje što svira i sljedeće skretanje
+Lokacija
+Tvoj položaj na karti i brzina
+Tvoj sljedeći događaj na Početnoj
+Spremi Dom i Posao
+Spremi ih jednom za rute jednim dodirom s Početne i iz pretrage karte.
+Još nije postavljeno
+Odaberi lokalne postaje
+Najslušanije: {country}. Označi omiljene zvjezdicom.
+Odabrano {n}
+Dom spremljen
+Posao spremljen
+Potraži kućnu adresu
+Potraži adresu posla
+Potraži adresu za spremanje
+Dom

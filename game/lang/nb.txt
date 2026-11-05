@@ -258,3 +258,32 @@ Trenger Hold foran eller tillatelse til å vises over andre apper
 Slå på Road Trip, og kom så tilbake
 Nord opp
 Kjøreretningen er opp
+Jobb
+Velg Hjem
+Velg Jobb
+Første oppsett
+Tillatelser, favorittapper, Hjem og Jobb, radio
+Trinn {n} av {total}
+Tilbake
+La Road Trip ta over
+Åpnes når du trykker på Hjem
+Kommer tilbake hvis boksen bytter til sin egen startskjerm
+Vis over andre apper
+Neste sving over andre apper
+Tilgang til medier og navigasjon
+Viser hva som spilles og neste sving
+Posisjon
+Posisjonen din på kartet og farten din
+Neste avtale på Hjem
+Lagre Hjem og Jobb
+Lagre dem én gang for ruter med ett trykk fra Hjem og kartsøket.
+Ikke valgt ennå
+Velg dine lokale stasjoner
+Mest lyttet i {country}. Gi stjerne til dem du vil ha som favoritter.
+{n} valgt
+Hjem lagret
+Jobb lagret
+Søk etter hjemmeadressen din
+Søk etter jobbadressen din
+Søk etter en adresse å lagre
+Hjem

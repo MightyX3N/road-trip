@@ -258,3 +258,32 @@ Necesita Mantener al frente o permiso para mostrarse sobre otras apps
 Activa Road Trip y luego vuelve
 Norte arriba
 Dirección de marcha arriba
+Trabajo
+Fijar Casa
+Fijar Trabajo
+Configuración inicial
+Permisos, apps favoritas, Casa y Trabajo, radio
+Paso {n} de {total}
+Atrás
+Deja que Road Trip tome el control
+Se abre al pulsar Inicio
+Vuelve si la caja cambia a su propio lanzador
+Mostrar sobre otras apps
+Próximo giro sobre otras apps
+Acceso a multimedia y navegación
+Muestra lo que suena y tu próximo giro
+Ubicación
+Tu posición en el mapa y tu velocidad
+Tu próximo evento en Inicio
+Guardar Casa y Trabajo
+Guárdalos una vez para rutas de un toque desde Inicio y la búsqueda del mapa.
+Aún sin fijar
+Elige tus emisoras locales
+Lo más escuchado en {country}. Marca con estrella tus favoritas.
+{n} elegidas
+Casa guardada
+Trabajo guardado
+Busca la dirección de tu casa
+Busca la dirección de tu trabajo
+Busca una dirección para guardar
+Casa

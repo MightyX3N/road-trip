@@ -258,3 +258,32 @@ Perlu Tetap di depan, atau izin tampil di atas aplikasi lain
 Aktifkan Road Trip, lalu kembali
 Utara di atas
 Arah perjalanan di atas
+Kantor
+Atur Rumah
+Atur Kantor
+Penyiapan awal
+Izin, aplikasi favorit, Rumah dan Kantor, radio
+Langkah {n} dari {total}
+Kembali
+Biarkan Road Trip mengambil alih
+Terbuka saat Anda menekan Beranda
+Kembali jika perangkat beralih ke peluncurnya sendiri
+Tampil di atas aplikasi lain
+Belokan berikutnya di atas aplikasi lain
+Akses media dan navigasi
+Menampilkan yang diputar dan belokan berikutnya
+Lokasi
+Posisi Anda di peta dan kecepatan Anda
+Acara berikutnya di Beranda
+Simpan Rumah dan Kantor
+Simpan sekali agar rute bisa dimulai sekali ketuk dari Beranda dan pencarian peta.
+Belum diatur
+Pilih stasiun lokal Anda
+Paling banyak didengar di {country}. Beri bintang favorit Anda.
+{n} dipilih
+Rumah disimpan
+Kantor disimpan
+Cari alamat rumah Anda
+Cari alamat kantor Anda
+Cari alamat untuk disimpan
+Rumah

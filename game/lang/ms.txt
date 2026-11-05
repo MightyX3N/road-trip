@@ -258,3 +258,32 @@ Memerlukan Kekal di hadapan, atau kebenaran untuk dipaparkan di atas apl lain
 Hidupkan Road Trip, kemudian kembali
 Utara di atas
 Arah perjalanan di atas
+Kerja
+Tetapkan Rumah
+Tetapkan Kerja
+Persediaan pertama
+Kebenaran, apl kegemaran, Rumah dan Kerja, radio
+Langkah {n} daripada {total}
+Kembali
+Biar Road Trip ambil alih
+Dibuka apabila anda menekan Utama
+Kembali jika peranti bertukar ke pelancarnya sendiri
+Paparkan di atas apl lain
+Belokan seterusnya di atas apl lain
+Akses media dan navigasi
+Menunjukkan apa yang dimainkan dan belokan seterusnya
+Lokasi
+Kedudukan anda pada peta dan kelajuan anda
+Acara seterusnya di Utama
+Simpan Rumah dan Kerja
+Simpan sekali untuk laluan sekali ketik dari Utama dan carian peta.
+Belum ditetapkan
+Pilih stesen tempatan anda
+Paling banyak didengar di {country}. Beri bintang pada kegemaran anda.
+{n} dipilih
+Rumah disimpan
+Kerja disimpan
+Cari alamat rumah anda
+Cari alamat tempat kerja anda
+Cari alamat untuk disimpan
+Rumah

@@ -258,3 +258,32 @@ Kræver Hold foran eller tilladelse til at vise over andre apps
 Slå Road Trip til, og kom så tilbage
 Nord opad
 Kørselsretningen er opad
+Arbejde
+Vælg Hjem
+Vælg Arbejde
+Første opsætning
+Tilladelser, favoritapps, Hjem og Arbejde, radio
+Trin {n} af {total}
+Tilbage
+Lad Road Trip tage over
+Åbner, når du trykker på Hjem
+Vender tilbage, hvis boksen skifter til sin egen launcher
+Vis over andre apps
+Næste sving over andre apps
+Adgang til medier og navigation
+Viser, hvad der spiller, og dit næste sving
+Placering
+Din position på kortet og din fart
+Din næste aftale på Hjem
+Gem Hjem og Arbejde
+Gem dem én gang for ruter med ét tryk fra Hjem og kortsøgningen.
+Ikke valgt endnu
+Vælg dine lokale stationer
+Mest lyttede i {country}. Giv dem, du vil have som favoritter, en stjerne.
+{n} valgt
+Hjem gemt
+Arbejde gemt
+Søg efter din hjemadresse
+Søg efter din arbejdsadresse
+Søg efter en adresse at gemme
+Hjem

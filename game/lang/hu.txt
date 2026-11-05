@@ -258,3 +258,32 @@ Az Előtérben tartás vagy más alkalmazások feletti megjelenítés engedélye
 Kapcsold be a Road Tripet, majd gyere vissza
 Észak felül
 Haladási irány felül
+Munka
+Otthon beállítása
+Munka beállítása
+Első beállítás
+Engedélyek, kedvenc alkalmazások, Otthon és Munka, rádió
+{n}. lépés / {total}
+Vissza
+Hadd vegye át a Road Trip
+Megnyílik, ha megnyomod a Kezdőlapot
+Visszatér, ha a doboz a saját indítójára vált
+Megjelenítés más alkalmazások felett
+Következő kanyar más alkalmazások felett
+Hozzáférés a médiához és a navigációhoz
+Mutatja, mi szól, és a következő kanyart
+Helyadatok
+A helyzeted a térképen és a sebességed
+A következő eseményed a Kezdőlapon
+Otthon és Munka mentése
+Mentsd el egyszer, és egy koppintással indul az útvonal a Kezdőlapról és a keresésből.
+Még nincs beállítva
+Válaszd ki a helyi állomásokat
+Legtöbbet hallgatott: {country}. Jelöld csillaggal a kedvenceket.
+{n} kiválasztva
+Otthon mentve
+Munka mentve
+Keresd meg az otthoni címed
+Keresd meg a munkahelyi címed
+Keress egy menthető címet
+Otthon

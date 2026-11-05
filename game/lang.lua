@@ -107,9 +107,11 @@ local function fill(s, vars)
 end
 
 -- T("Road Trip {v} is available", { v = "0.1.20" })
+-- a key may start with "@context:" when the same English word needs different
+-- translations ("@place:Home" is a saved place, "Home" the screen); English drops it
 function M.T(s, vars)
   local r = M.t[s]
-  if type(r) ~= "string" or r == "" then r = s end
+  if type(r) ~= "string" or r == "" then r = s:gsub("^@%w+:", "") end
   return fill(r, vars)
 end
 

@@ -166,6 +166,19 @@ local function toggleFavorite(st)
   sendList()
 end
 
+M.toggleFavorite = function(st) toggleFavorite(st) end
+
+-- the most listened stations in your country, for the setup: list (or nil while loading), error
+function M.localStations()
+  load("country")
+  local l = M.lists.country
+  return l and l.items, l and l.err, l and l.busy
+end
+
+function M.countryName() return config.get("radioCountryName") or countryCode() end
+
+M.logo = function(...) return M._logo(...) end
+
 local function iconPath(st) return "radio/icons/" .. st.uuid end
 
 -- the station's logo, downloaded once; nil until there is one
@@ -374,7 +387,10 @@ end
 -- drawing
 ----------------------------------------------------------------------------------------------
 
-local function logo(st, x, y, size, r)
+local logo
+function M._logo(st, x, y, size, r) return logo(st, x, y, size, r) end
+
+function logo(st, x, y, size, r)
   ui.rect(ui.hex("22252A"), x, y, size, size, r)
   local img = iconFor(st)
   if img then

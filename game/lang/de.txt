@@ -258,3 +258,32 @@ Braucht Im Vordergrund halten oder die Erlaubnis, über anderen Apps zu erschein
 Schalte Road Trip ein und komm dann zurück
 Norden oben
 Fahrtrichtung oben
+Arbeit
+Zuhause festlegen
+Arbeit festlegen
+Ersteinrichtung
+Berechtigungen, Lieblings-Apps, Zuhause und Arbeit, Radio
+Schritt {n} von {total}
+Zurück
+Lass Road Trip übernehmen
+Öffnet sich, wenn du Home drückst
+Kommt zurück, wenn die Box zu ihrem eigenen Launcher wechselt
+Über anderen Apps anzeigen
+Nächste Abbiegung über anderen Apps
+Zugriff auf Medien und Navigation
+Zeigt, was läuft, und deine nächste Abbiegung
+Standort
+Deine Position auf der Karte und dein Tempo
+Dein nächster Termin auf Start
+Zuhause und Arbeit speichern
+Einmal speichern, dann starten Routen mit einem Tipp von Start und der Kartensuche.
+Noch nicht festgelegt
+Wähle deine lokalen Sender
+Am meisten gehört in {country}. Markiere deine Favoriten mit einem Stern.
+{n} gewählt
+Zuhause gespeichert
+Arbeit gespeichert
+Suche deine Wohnadresse
+Suche deine Arbeitsadresse
+Suche eine Adresse zum Speichern
+Zuhause

@@ -258,3 +258,32 @@ Cần Giữ phía trước, hoặc quyền hiển thị trên ứng dụng khác
 Bật Road Trip rồi quay lại
 Hướng bắc ở trên
 Hướng đi ở trên
+Cơ quan
+Đặt Nhà
+Đặt Cơ quan
+Thiết lập lần đầu
+Quyền, ứng dụng yêu thích, Nhà và Cơ quan, radio
+Bước {n}/{total}
+Quay lại
+Để Road Trip đảm nhận
+Mở khi bạn nhấn Trang chủ
+Quay lại nếu thiết bị chuyển về trình khởi chạy của nó
+Hiển thị trên ứng dụng khác
+Lượt rẽ tiếp theo trên ứng dụng khác
+Quyền truy cập phương tiện và dẫn đường
+Hiển thị nội dung đang phát và lượt rẽ tiếp theo
+Vị trí
+Vị trí của bạn trên bản đồ và tốc độ
+Sự kiện tiếp theo ở Trang chủ
+Lưu Nhà và Cơ quan
+Lưu một lần để bắt đầu lộ trình bằng một chạm từ Trang chủ và ô tìm kiếm.
+Chưa đặt
+Chọn đài địa phương
+Nghe nhiều nhất ở {country}. Gắn sao cho đài yêu thích.
+Đã chọn {n}
+Đã lưu Nhà
+Đã lưu Cơ quan
+Tìm địa chỉ nhà bạn
+Tìm địa chỉ cơ quan
+Tìm địa chỉ để lưu
+Nhà

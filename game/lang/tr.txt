@@ -258,3 +258,32 @@ Road Trip size yol gösterirken başka bir uygulama açıkken
 Road Trip'i açın, sonra geri gelin
 Kuzey yukarıda
 Gidiş yönü yukarıda
+İş
+Evi ayarla
+İşi ayarla
+İlk kurulum
+İzinler, favori uygulamalar, Ev ve İş, radyo
+Adım {n}/{total}
+Geri
+Road Trip devralsın
+Ana ekran düğmesine bastığınızda açılır
+Kutu kendi başlatıcısına dönerse geri gelir
+Diğer uygulamaların üstünde göster
+Diğer uygulamaların üstünde sonraki dönüş
+Medya ve navigasyon erişimi
+Neyin çaldığını ve sonraki dönüşü gösterir
+Konum
+Haritadaki konumunuz ve hızınız
+Ana ekranda sonraki etkinliğiniz
+Evi ve İşi kaydet
+Bir kez kaydedin; Ana ekrandan ve harita aramasından tek dokunuşla rota başlasın.
+Henüz ayarlanmadı
+Yerel istasyonlarınızı seçin
+{country} içinde en çok dinlenenler. Favorilerinizi yıldızlayın.
+{n} seçildi
+Ev kaydedildi
+İş kaydedildi
+Ev adresinizi arayın
+İş adresinizi arayın
+Kaydedilecek bir adres arayın
+Ev

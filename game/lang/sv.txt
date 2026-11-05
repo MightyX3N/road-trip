@@ -258,3 +258,32 @@ Kräver Håll framme eller tillstånd att visas över andra appar
 Slå på Road Trip och kom sedan tillbaka
 Norr uppåt
 Färdriktningen är uppåt
+Jobb
+Välj Hem
+Välj Jobb
+Första inställningen
+Behörigheter, favoritappar, Hem och Jobb, radio
+Steg {n} av {total}
+Tillbaka
+Låt Road Trip ta över
+Öppnas när du trycker på Hem
+Kommer tillbaka om boxen byter till sin egen startskärm
+Visa över andra appar
+Nästa sväng över andra appar
+Åtkomst till media och navigering
+Visar vad som spelas och din nästa sväng
+Plats
+Din position på kartan och din fart
+Din nästa händelse på Hem
+Spara Hem och Jobb
+Spara dem en gång för rutter med ett tryck från Hem och kartsökningen.
+Inte vald än
+Välj dina lokala stationer
+Mest lyssnade i {country}. Stjärnmärk de du vill ha som favoriter.
+{n} valda
+Hem sparat
+Jobb sparat
+Sök efter din hemadress
+Sök efter din jobbadress
+Sök efter en adress att spara
+Hem

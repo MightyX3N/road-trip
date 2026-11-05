@@ -258,3 +258,32 @@ Potrebuje Drži v ospredju ali dovoljenje za prikaz čez druge aplikacije
 Vklopi Road Trip in se vrni
 Sever zgoraj
 Smer vožnje zgoraj
+Služba
+Nastavi Dom
+Nastavi Službo
+Prva nastavitev
+Dovoljenja, priljubljene aplikacije, Dom in Služba, radio
+Korak {n} od {total}
+Nazaj
+Naj Road Trip prevzame
+Odpre se, ko pritisneš Domov
+Vrne se, če naprava preklopi na svoj zaganjalnik
+Prikaz čez druge aplikacije
+Naslednji zavoj čez druge aplikacije
+Dostop do medijev in navigacije
+Pokaže, kaj se predvaja, in naslednji zavoj
+Lokacija
+Tvoj položaj na zemljevidu in hitrost
+Tvoj naslednji dogodek na Domov
+Shrani Dom in Službo
+Shrani ju enkrat za poti z enim dotikom z Domov in iskanja.
+Še ni nastavljeno
+Izberi lokalne postaje
+Najbolj poslušane: {country}. Priljubljene označi z zvezdico.
+Izbranih {n}
+Dom shranjen
+Služba shranjena
+Poišči domači naslov
+Poišči naslov službe
+Poišči naslov za shranjevanje
+Dom

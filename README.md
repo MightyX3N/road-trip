@@ -11,7 +11,9 @@ favorite apps; change them any time with the pencil button on Home or by long-pr
 favorite. **Media** and the Now playing widget on Home show and control whatever's playing
 in any app, and the Navigation widget shows your next turn from Google Maps, Waze and
 other nav apps (both need notification access, which Road Trip asks for). Home also shows the weather for your city (pick it in Settings) and your next calendar
-event. **Map** shows where you are, searches places, offers route choices and guides you turn
+event. On first launch a short setup walks through permissions, favorite apps, Home and Work, and
+local radio stations (run it again from Settings). **Map** shows where you are, with street
+and place names, turned the way you're driving; searches places (with one-tap Home and Work), offers route choices and guides you turn
 by turn, finding a new route if you leave it; the next turn also shows on Home. It needs
 location access (Road Trip asks). Without a position yet, a route waits for the first fix
 or can start from the middle of the map. **Radio** plays internet radio from

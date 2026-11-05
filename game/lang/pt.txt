@@ -258,3 +258,32 @@ Precisa do Manter à frente ou de permissão para aparecer sobre outros apps
 Ative o Road Trip e volte
 Norte para cima
 Direção de viagem para cima
+Trabalho
+Definir Casa
+Definir Trabalho
+Configuração inicial
+Permissões, apps favoritos, Casa e Trabalho, rádio
+Etapa {n} de {total}
+Voltar
+Deixe o Road Trip assumir
+Abre quando você aperta Início
+Volta se a central trocar para o próprio iniciador
+Mostrar sobre outros apps
+Próxima curva sobre outros apps
+Acesso a mídia e navegação
+Mostra o que está tocando e sua próxima curva
+Localização
+Sua posição no mapa e sua velocidade
+Seu próximo evento no Início
+Salvar Casa e Trabalho
+Salve uma vez para rotas com um toque no Início e na busca do mapa.
+Ainda não definido
+Escolha suas estações locais
+Mais ouvidas em {country}. Marque com estrela as favoritas.
+{n} escolhidas
+Casa salva
+Trabalho salvo
+Procure o endereço de casa
+Procure o endereço do trabalho
+Procure um endereço para salvar
+Casa

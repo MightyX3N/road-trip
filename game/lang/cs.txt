@@ -258,3 +258,32 @@ Vyžaduje Držet v popředí nebo povolení zobrazovat se přes jiné aplikace
 Zapněte Road Trip a vraťte se
 Sever nahoře
 Směr jízdy nahoře
+Práce
+Nastavit Domov
+Nastavit Práci
+První nastavení
+Oprávnění, oblíbené aplikace, Domov a Práce, rádio
+Krok {n} z {total}
+Zpět
+Nechte Road Trip převzít řízení
+Otevře se, když stisknete Domů
+Vrátí se, když zařízení přepne na vlastní spouštěč
+Zobrazovat přes jiné aplikace
+Další odbočka přes jiné aplikace
+Přístup k médiím a navigaci
+Ukazuje, co hraje, a další odbočku
+Poloha
+Vaše poloha na mapě a rychlost
+Vaše další událost na Domů
+Uložit Domov a Práci
+Uložte je jednou a trasy spustíte jedním klepnutím z Domů i z hledání.
+Zatím nenastaveno
+Vyberte místní stanice
+Nejposlouchanější: {country}. Oblíbené označte hvězdičkou.
+Vybráno {n}
+Domov uložen
+Práce uložena
+Hledejte adresu domova
+Hledejte adresu práce
+Hledejte adresu k uložení
+Domov

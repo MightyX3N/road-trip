@@ -256,3 +256,32 @@ Needs Keep in front, or permission to show over other apps
 Switch on Road Trip, then come back
 North up
 The way you're heading is up
+Work
+Set Home
+Set Work
+First-time setup
+Permissions, favorite apps, Home and Work, radio
+Step {n} of {total}
+Back
+Let Road Trip take over
+Opens when you press Home
+Comes back if the box switches to its own launcher
+Display over other apps
+The turn banner over other apps
+Media and navigation access
+Shows what's playing and your next turn
+Location
+Your position on the map, and your speed
+Your next event on Home
+Save Home and Work
+Save them once for one-tap routes from Home and the map search.
+Not set yet
+Pick your local stations
+Most listened in {country}. Star the ones you want as favorites.
+{n} selected
+Home saved
+Work saved
+Search for your home address
+Search for your work address
+Search for an address to save
+@place:Home

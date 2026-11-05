@@ -258,3 +258,32 @@ Vajab Hoia ees funktsiooni või luba kuvada teiste rakenduste peal
 Lülita Road Trip sisse ja tule tagasi
 Põhi üleval
 Sõidusuund üleval
+Töö
+Määra Kodu
+Määra Töö
+Esmane seadistus
+Load, lemmikrakendused, Kodu ja Töö, raadio
+Samm {n}/{total}
+Tagasi
+Lase Road Tripil üle võtta
+Avaneb, kui vajutad Kodu
+Tuleb tagasi, kui seade läheb oma käivitajale
+Kuva teiste rakenduste peal
+Järgmine pööre teiste rakenduste peal
+Ligipääs meediale ja navigeerimisele
+Näitab, mis mängib, ja järgmist pööret
+Asukoht
+Sinu asukoht kaardil ja kiirus
+Sinu järgmine sündmus Kodus
+Salvesta Kodu ja Töö
+Salvesta need korra ja teekond algab ühe puudutusega Kodust ja kaardiotsingust.
+Veel määramata
+Vali kohalikud jaamad
+Enim kuulatud: {country}. Märgi lemmikud tärniga.
+{n} valitud
+Kodu salvestatud
+Töö salvestatud
+Otsi oma koduaadressi
+Otsi oma tööaadressi
+Otsi salvestatavat aadressi
+Kodu

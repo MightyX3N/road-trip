@@ -258,3 +258,32 @@ Vajag Turēt priekšā vai atļauju rādīt virs citām lietotnēm
 Ieslēdz Road Trip un atgriezies
 Ziemeļi augšā
 Braukšanas virziens augšā
+Darbs
+Iestatīt Mājas
+Iestatīt Darbu
+Pirmā iestatīšana
+Atļaujas, iecienītās lietotnes, Mājas un Darbs, radio
+Solis {n} no {total}
+Atpakaļ
+Ļauj Road Trip pārņemt
+Atveras, kad nospied Sākums
+Atgriežas, ja ierīce pārslēdzas uz savu palaidēju
+Rādīt virs citām lietotnēm
+Nākamais pagrieziens virs citām lietotnēm
+Piekļuve medijiem un navigācijai
+Rāda, kas skan, un nākamo pagriezienu
+Atrašanās vieta
+Tava vieta kartē un ātrums
+Tavs nākamais notikums Sākumā
+Saglabāt Mājas un Darbu
+Saglabā tās vienreiz, lai maršrutu sāktu ar vienu pieskārienu no Sākuma un meklēšanas.
+Vēl nav iestatīts
+Izvēlies vietējās stacijas
+Visvairāk klausītās: {country}. Atzīmē iecienītās ar zvaigzni.
+Izvēlētas {n}
+Mājas saglabātas
+Darbs saglabāts
+Meklē savu mājas adresi
+Meklē savu darba adresi
+Meklē adresi, ko saglabāt
+Mājas

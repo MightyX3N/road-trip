@@ -347,6 +347,12 @@ function icons.starFill()
 end
 function icons.stop() lg.rectangle("fill", 6, 6, 12, 12, 1.5, 1.5) end
 
+function icons.work() -- a briefcase
+  lg.rectangle("line", 4, 8, 16, 11, 2, 2)
+  lg.line(9, 8, 9, 5, 15, 5, 15, 8)
+  lg.line(4, 13, 20, 13)
+end
+
 function icons.plus()
   lg.line(12, 5, 12, 19)
   lg.line(5, 12, 19, 12)

@@ -258,3 +258,32 @@ Wymaga Utrzymuj na wierzchu lub zgody na wyświetlanie nad innymi aplikacjami
 Włącz Road Trip i wróć
 Północ u góry
 Kierunek jazdy u góry
+Praca
+Ustaw Dom
+Ustaw Pracę
+Pierwsza konfiguracja
+Uprawnienia, ulubione aplikacje, Dom i Praca, radio
+Krok {n} z {total}
+Wstecz
+Pozwól Road Trip przejąć stery
+Otwiera się po naciśnięciu Home
+Wraca, gdy urządzenie przełączy się na własny launcher
+Wyświetlanie nad innymi aplikacjami
+Następny skręt nad innymi aplikacjami
+Dostęp do multimediów i nawigacji
+Pokazuje, co gra, i następny skręt
+Lokalizacja
+Twoja pozycja na mapie i prędkość
+Najbliższe wydarzenie na ekranie głównym
+Zapisz Dom i Pracę
+Zapisz je raz, by trasy uruchamiać jednym dotknięciem z ekranu głównego i wyszukiwarki.
+Jeszcze nie ustawiono
+Wybierz lokalne stacje
+Najczęściej słuchane: {country}. Oznacz gwiazdką ulubione.
+Wybrano {n}
+Dom zapisany
+Praca zapisana
+Wyszukaj adres domu
+Wyszukaj adres pracy
+Wyszukaj adres do zapisania
+Dom

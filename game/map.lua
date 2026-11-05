@@ -257,7 +257,18 @@ M.decodeTile, M.geometryParts = decodeTile, geometryParts -- for tests
 -- tiles: download, decode, turn into meshes
 ----------------------------------------------------------------------------------------------
 
-local WANT = { water = true, landcover = true, park = true, transportation = true }
+local WANT = { water = true, landcover = true, park = true, transportation = true,
+  transportation_name = true, place = true }
+
+-- street and place names: which roads get labelled at which zoom, and how big places are
+local ROAD_RANK = { motorway = 1, trunk = 1, primary = 2, secondary = 3, tertiary = 4, minor = 5, service = 6 }
+local ROAD_MINZ = { 13, 13.5, 14, 14.5, 15.5, 17 }
+local PLACE = {
+  city = { size = 22, rank = 1, minz = 0 }, town = { size = 19, rank = 2, minz = 0 },
+  village = { size = 16, rank = 3, minz = 12 }, suburb = { size = 15, rank = 4, minz = 13 },
+  quarter = { size = 14, rank = 5, minz = 14 }, neighbourhood = { size = 14, rank = 5, minz = 15 },
+  hamlet = { size = 14, rank = 5, minz = 14 },
+}
 
 -- road classes, least important first so major roads draw on top; widths in px at z16
 local ROADS = {
@@ -337,6 +348,54 @@ local function shapesFrom(layers, extent)
       end
     end
   end
+  -- labels: the longest nearly straight run of each named road, and place points
+  sh.labels = {}
+  local code = require("lang").code
+  local function nameOf(t) return t["name:" .. code] or t.name or t["name:latin"] end
+  if layers.transportation_name then
+    for _, f in ipairs(layers.transportation_name.features) do
+      local nm = f.type == 2 and nameOf(f.tags)
+      local rank = ROAD_RANK[f.tags.class]
+      if nm and nm ~= "" and rank then
+        for _, l in ipairs(geometryParts(f.geom)) do
+          -- runs of segments that turn less than ~25 degrees
+          local best, bx1, by1, bx2, by2 = 0
+          local i = 1
+          while i < #l - 2 do
+            local sx, sy = l[i], l[i + 1]
+            local a0 = math.atan2 and math.atan2(l[i + 3] - sy, l[i + 2] - sx) or math.atan(l[i + 3] - sy, l[i + 2] - sx)
+            local j = i + 2
+            while j < #l - 2 do
+              local dx, dy = l[j + 2] - l[j], l[j + 3] - l[j + 1]
+              local a = math.atan2 and math.atan2(dy, dx) or math.atan(dy, dx)
+              local d = math.abs(((a - a0 + math.pi) % (2 * math.pi)) - math.pi)
+              if d > 0.45 then break end
+              j = j + 2
+            end
+            local ex, ey = l[j], l[j + 1]
+            local len = math.sqrt((ex - sx) ^ 2 + (ey - sy) ^ 2)
+            if len > best then best, bx1, by1, bx2, by2 = len, sx, sy, ex, ey end
+            i = j
+          end
+          if best > 0 then
+            sh.labels[#sh.labels + 1] = { kind = "road", name = nm, rank = rank,
+              x = (bx1 + bx2) / 2, y = (by1 + by2) / 2, dx = bx2 - bx1, dy = by2 - by1, len = best }
+          end
+        end
+      end
+    end
+  end
+  if layers.place then
+    for _, f in ipairs(layers.place.features) do
+      local nm = f.type == 1 and nameOf(f.tags)
+      local pc = PLACE[f.tags.class]
+      if nm and nm ~= "" and pc and f.geom[2] then
+        local g = f.geom -- MoveTo(1): cmd, zigzag x, zigzag y
+        local x, y = g[2] % 2 == 0 and g[2] / 2 or -(g[2] + 1) / 2, g[3] % 2 == 0 and g[3] / 2 or -(g[3] + 1) / 2
+        sh.labels[#sh.labels + 1] = { kind = "place", name = nm, rank = pc.rank, size = pc.size, minz = pc.minz, x = x, y = y }
+      end
+    end
+  end
   if layers.transportation then
     for _, f in ipairs(layers.transportation.features) do
       local g = f.type == 2 and roadGroup(f.tags.class)
@@ -347,6 +406,8 @@ local function shapesFrom(layers, extent)
   end
   return sh
 end
+
+M.shapesFrom = shapesFrom -- for tests
 
 local function buildMeshes(t, zb)
   local sh = t.shapes
@@ -775,9 +836,10 @@ local function runSearch()
   end)
 end
 
-function M.openSearch()
+-- pickFor: "home" | "work" to save a place instead of routing to it
+function M.openSearch(pickFor)
   M.mode = "search"
-  M.search = { text = "", busy = false }
+  M.search = { text = "", busy = false, pickFor = pickFor }
   love.keyboard.setTextInput(true)
 end
 
@@ -787,7 +849,19 @@ local function closeSearch()
   M.mode = M.routes and "overview" or "browse"
 end
 
+local SAVED = { home = "mapHome", work = "mapWork" }
+
 local function choose(place)
+  local pf = M.search and M.search.pickFor
+  if pf then
+    config.set(SAVED[pf], { name = place.name, sub = place.sub, lat = place.lat, lon = place.lon })
+    M.search = nil
+    love.keyboard.setTextInput(false)
+    M.mode = M.routes and "overview" or "browse"
+    app.toast(pf == "home" and T("Home saved") or T("Work saved"))
+    if M.onPicked then M.onPicked(pf) end
+    return
+  end
   M.dest = place
   M.search = nil
   love.keyboard.setTextInput(false)
@@ -797,6 +871,17 @@ local function choose(place)
 end
 
 function M.wantsText() return M.search ~= nil end
+
+function M.saved(which) return config.get(SAVED[which]) end
+
+-- a route to Home or Work (from Home's map card); false when it isn't set
+function M.goSaved(which)
+  local p = M.saved(which)
+  if not p then return false end
+  M.open()
+  choose({ name = which == "home" and T("@place:Home") or T("Work"), sub = p.name, lat = p.lat, lon = p.lon })
+  return true
+end
 
 function M.textinput(t)
   M.search.text = M.search.text .. t
@@ -1023,6 +1108,9 @@ function M.drawMap(x0, y0, w, h, opts)
     drawRouteLine(routePoints(M.nav.route, cx, cy, z), 16, COL.route, COL.casing)
   end
 
+  -- names: placed after everything else, upright, without overlapping
+  local labelList = list
+
   -- destination pin
   local dest = M.dest
   if dest and (M.mode == "overview" or M.mode == "nav") then
@@ -1059,6 +1147,7 @@ function M.drawMap(x0, y0, w, h, opts)
     lg.pop()
   end
   lg.pop()
+  M.drawLabels(labelList, ax, ay, -math.rad(v.rot), tsz, z)
   lg.setScissor()
 
   if M.wantFit and M.routes and not opts then
@@ -1071,6 +1160,88 @@ function M.drawMap(x0, y0, w, h, opts)
 end
 
 local drawTurnCard -- defined with the Map screen UI below
+
+local placed = {}
+local function overlaps(x1, y1, x2, y2)
+  for _, r in ipairs(placed) do
+    if x1 < r[3] and x2 > r[1] and y1 < r[4] and y2 > r[2] then return true end
+  end
+  return false
+end
+
+local function haloText(text, font, x, y, angle, ox, oy, col)
+  local k = 1 / ui.S
+  lg.setColor(COL.bg[1], COL.bg[2], COL.bg[3], 0.9)
+  for _, o in ipairs({ { -1.5, 0 }, { 1.5, 0 }, { 0, -1.5 }, { 0, 1.5 } }) do
+    local c, sn = math.cos(angle), math.sin(angle)
+    lg.print(text, font, x + o[1] * c - o[2] * sn, y + o[1] * sn + o[2] * c, angle, k, k, ox, oy)
+  end
+  lg.setColor(col)
+  lg.print(text, font, x, y, angle, k, k, ox, oy)
+end
+
+-- street and place names over the drawn map; `list` holds the visible tiles
+function M.drawLabels(list, ax, ay, rot, tsz, z)
+  placed = {}
+  local cands = {}
+  local cr, sr = math.cos(rot), math.sin(rot)
+  for _, it in ipairs(list) do
+    local k = tsz / it.t.extent
+    for _, lb in ipairs(it.t.shapes.labels or {}) do
+      local ok = lb.kind == "place" and z >= lb.minz or (lb.kind == "road" and z >= ROAD_MINZ[lb.rank])
+      if ok then
+        local wx, wy = it.sx + lb.x * k, it.sy + lb.y * k
+        cands[#cands + 1] = { lb = lb, x = ax + wx * cr - wy * sr, y = ay + wx * sr + wy * cr, k = k }
+      end
+    end
+  end
+  table.sort(cands, function(a, b)
+    if a.lb.kind ~= b.lb.kind then return a.lb.kind == "place" end
+    if a.lb.rank ~= b.lb.rank then return a.lb.rank < b.lb.rank end
+    return (a.lb.len or 0) > (b.lb.len or 0)
+  end)
+  local seen = {}
+  local shown = 0
+  for _, c in ipairs(cands) do
+    if shown >= 40 then break end
+    local lb = c.lb
+    if lb.kind == "place" then
+      local f = ui.font("bold", lb.size)
+      local w, h = f:getWidth(lb.name) / ui.S, f:getHeight() / ui.S
+      local x1, y1 = c.x - w / 2 - 4, c.y - h / 2 - 2
+      if not overlaps(x1, y1, x1 + w + 8, y1 + h + 4) then
+        placed[#placed + 1] = { x1, y1, x1 + w + 8, y1 + h + 4 }
+        haloText(lb.name, f, c.x, c.y, 0, f:getWidth(lb.name) / 2, f:getHeight() / 2, ui.c.text2)
+        shown = shown + 1
+      end
+    else
+      local size = lb.rank <= 2 and 15 or 14
+      local f = ui.font("semibold", size)
+      local w, h = f:getWidth(lb.name) / ui.S, f:getHeight() / ui.S
+      local runLen = lb.len * c.k
+      local key = lb.name
+      local near = false
+      for _, p in ipairs(seen[key] or {}) do
+        if (p[1] - c.x) ^ 2 + (p[2] - c.y) ^ 2 < 260 * 260 then near = true break end
+      end
+      if runLen >= w + 24 and not near then
+        local a = (math.atan2 or math.atan)(lb.dy, lb.dx) + rot
+        a = (a + math.pi) % (2 * math.pi) - math.pi
+        if a > math.pi / 2 then a = a - math.pi elseif a < -math.pi / 2 then a = a + math.pi end
+        local ca, sa = math.abs(math.cos(a)), math.abs(math.sin(a))
+        local bw, bh = w * ca + h * sa, w * sa + h * ca
+        local x1, y1 = c.x - bw / 2, c.y - bh / 2
+        if not overlaps(x1, y1, x1 + bw, y1 + bh) then
+          placed[#placed + 1] = { x1, y1, x1 + bw, y1 + bh }
+          seen[key] = seen[key] or {}
+          table.insert(seen[key], { c.x, c.y })
+          haloText(lb.name, f, c.x, c.y, a, f:getWidth(lb.name) / 2, f:getHeight() / 2, hex("B9B6AE"))
+          shown = shown + 1
+        end
+      end
+    end
+  end
+end
 
 -- rounded corners for a map drawn in a card: fill the corners outside the radius
 local function cornerMasks(x, y, w, h, r, col)
@@ -1225,35 +1396,64 @@ function M.drawUI(x0, y0, w, h)
     ui.hit({ kind = "map:field" }, px + 22, py + 22, fw, 64)
     ui.icon("search", px + 40, py + 42, 24, ui.c.muted, 2.2)
     local blink = math.floor(love.timer.getTime() * 2) % 2 == 0
-    local shown = s.text ~= "" and s.text or T("Where to?")
+    local placeholder = s.pickFor == "home" and T("Search for your home address")
+      or s.pickFor == "work" and T("Search for your work address") or T("Where to?")
+    local shown = s.text ~= "" and s.text or placeholder
     ui.text(ui.fit(shown, "semibold", 20, fw - 80) .. ((s.text ~= "" and blink) and "|" or ""), "semibold", 20,
       s.text ~= "" and ui.c.text or ui.c.dim, px + 76, py + 22 + (64 - ui.fontHeight("semibold", 20)) / 2)
     mapButton({ kind = "map:closeSearch" }, "close", px + pw - 22 - 64, py + 22)
 
     local ry = py + 104
-    local items, heading
+    -- rows: { place?, icon, name, sub, set? (which one to set), change? }
+    local rows = {}
     if s.results then
-      items = s.results
-    elseif s.text == "" then
-      items, heading = config.get("mapRecents") or {}, T("Recent")
+      for _, it in ipairs(s.results) do rows[#rows + 1] = { place = it, icon = "pin", name = it.name, sub = it.sub } end
+    elseif s.text == "" and not s.pickFor then
+      for _, which in ipairs({ "home", "work" }) do
+        local p = M.saved(which)
+        local nm = which == "home" and T("@place:Home") or T("Work")
+        if p then
+          rows[#rows + 1] = { place = { name = nm, sub = p.name, lat = p.lat, lon = p.lon }, icon = which, name = nm,
+            sub = p.name, change = which }
+        else
+          rows[#rows + 1] = { icon = which, name = which == "home" and T("Set Home") or T("Set Work"),
+            sub = T("Search for an address to save"), set = which }
+        end
+      end
+      local rec = config.get("mapRecents") or {}
+      if #rec > 0 then rows[#rows + 1] = { heading = T("Recent") } end
+      for _, it in ipairs(rec) do rows[#rows + 1] = { place = it, icon = "pin", name = it.name, sub = it.sub } end
     end
     if s.busy then ui.text(T("Searching…"), "semibold", 15, ui.c.muted, px + 24, ry) ry = ry + 30 end
     if s.err then ui.text(s.err, "semibold", 15, hex("F09A8A"), px + 24, ry) ry = ry + 30 end
-    if heading and #items > 0 then ui.text(heading, "bold", 14, ui.c.muted, px + 24, ry) ry = ry + 30 end
-    for i, it in ipairs(items or {}) do
-      if ry + 76 > py + ph - 12 then break end
-      ui.rect(i == 1 and s.results and hex("1E1A13") or ui.c.card, px + 16, ry, pw - 32, 76, 20)
-      ui.circle(hex("22252A"), px + 16 + 40, ry + 38, 22)
-      ui.icon("pin", px + 16 + 28, ry + 26, 24, ui.c.accent, 1.8)
-      local textW = pw - 32 - 90 - 90
-      ui.text(ui.fit(it.name or "", "bold", 18, textW), "bold", 18, ui.c.text2, px + 16 + 76, ry + 14)
-      ui.text(ui.fit(it.sub or "", "semibold", 14, textW), "semibold", 14, ui.c.muted, px + 16 + 76, ry + 44)
-      if M.fix and it.lat then
-        local dist = fmtDist(haversine(M.fix.lat, M.fix.lon, it.lat, it.lon))
-        ui.text(dist, "bold", 15, hex("B8B5AD"), px + 16, ry + 28, "right", pw - 32 - 18)
+    for i, r in ipairs(rows) do
+      if r.heading then
+        if ry + 30 > py + ph - 12 then break end
+        ui.text(r.heading, "bold", 14, ui.c.muted, px + 24, ry + 4)
+        ry = ry + 32
+      else
+        if ry + 76 > py + ph - 12 then break end
+        ui.rect(i == 1 and s.results and hex("1E1A13") or ui.c.card, px + 16, ry, pw - 32, 76, 20)
+        ui.circle(hex("22252A"), px + 16 + 40, ry + 38, 22)
+        ui.icon(r.icon, px + 16 + 28, ry + 26, 24, ui.c.accent, 1.8)
+        local right = r.change and 110 or 90
+        local textW = pw - 32 - 90 - right
+        ui.text(ui.fit(r.name or "", "bold", 18, textW), "bold", 18, ui.c.text2, px + 16 + 76, ry + 14)
+        ui.text(ui.fit(r.sub or "", "semibold", 14, textW), "semibold", 14, ui.c.muted, px + 16 + 76, ry + 44)
+        if r.set then
+          ui.hit({ kind = "map:setPlace", which = r.set }, px + 16, ry, pw - 32, 76)
+        else
+          ui.hit({ kind = "map:pick", place = r.place }, px + 16, ry, pw - 32, 76)
+        end
+        if r.change then
+          local cw = ui.textWidth(T("Change"), "bold", 15) + 32
+          ui.pill({ kind = "map:setPlace", which = r.change }, T("Change"), px + pw - 16 - 14 - cw, ry + 18, 40, "off2")
+        elseif M.fix and r.place and r.place.lat then
+          local dist = fmtDist(haversine(M.fix.lat, M.fix.lon, r.place.lat, r.place.lon))
+          ui.text(dist, "bold", 15, hex("B8B5AD"), px + 16, ry + 28, "right", pw - 32 - 18)
+        end
+        ry = ry + 84
       end
-      ui.hit({ kind = "map:pick", place = it }, px + 16, ry, pw - 32, 76)
-      ry = ry + 84
     end
   end
 
@@ -1311,6 +1511,10 @@ function M.activate(id)
     if not M.search then M.openSearch() else love.keyboard.setTextInput(true) end
   elseif k == "map:closeSearch" then closeSearch()
   elseif k == "map:pick" then choose(id.place)
+  elseif k == "map:setPlace" then
+    M.search = { text = "", busy = false, pickFor = id.which }
+    M.mode = "search"
+    love.keyboard.setTextInput(true)
   elseif k == "map:sel" then M.sel = id.i M.wantFit = true
   elseif k == "map:start" then startNav()
   elseif k == "map:cancel" then endNav()

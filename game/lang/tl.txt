@@ -258,3 +258,32 @@ Kailangan ang Panatilihin sa harap, o pahintulot na lumabas sa ibabaw ng ibang a
 I-on ang Road Trip, pagkatapos bumalik
 Hilaga sa itaas
 Direksyon ng biyahe sa itaas
+Trabaho
+Itakda ang Bahay
+Itakda ang Trabaho
+Unang setup
+Mga pahintulot, paboritong app, Bahay at Trabaho, radyo
+Hakbang {n} sa {total}
+Bumalik
+Hayaang si Road Trip ang bahala
+Bumubukas kapag pinindot mo ang Home
+Bumabalik kapag lumipat ang box sa sarili nitong launcher
+Ipakita sa ibabaw ng ibang app
+Susunod na liko sa ibabaw ng ibang app
+Access sa media at navigation
+Ipinapakita ang tumutugtog at ang susunod mong liko
+Lokasyon
+Ang posisyon mo sa mapa at ang bilis mo
+Ang susunod mong event sa Home
+I-save ang Bahay at Trabaho
+I-save nang isang beses para sa isang-tap na ruta mula sa Home at sa paghahanap.
+Hindi pa nakatakda
+Piliin ang mga lokal na istasyon
+Pinakapinakikinggan sa {country}. Lagyan ng bituin ang mga paborito mo.
+{n} ang napili
+Na-save ang Bahay
+Na-save ang Trabaho
+Hanapin ang address ng bahay mo
+Hanapin ang address ng trabaho mo
+Maghanap ng address na ise-save
+Bahay

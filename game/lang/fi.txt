@@ -258,3 +258,32 @@ Tarvitsee Pidä edessä -toiminnon tai luvan näkyä muiden sovellusten pääll�
 Ota Road Trip käyttöön ja palaa sitten
 Pohjoinen ylös
 Ajosuunta ylös
+Työ
+Valitse Koti
+Valitse Työ
+Ensiasetukset
+Luvat, suosikkisovellukset, Koti ja Työ, radio
+Vaihe {n}/{total}
+Takaisin
+Anna Road Tripin hoitaa
+Aukeaa, kun painat Koti
+Palaa, jos laite vaihtaa omaan käynnistimeensä
+Näytä muiden sovellusten päällä
+Seuraava käännös muiden sovellusten päällä
+Median ja navigoinnin käyttöoikeus
+Näyttää, mikä soi, ja seuraavan käännöksen
+Sijainti
+Sijaintisi kartalla ja nopeutesi
+Seuraava tapahtumasi Kodissa
+Tallenna Koti ja Työ
+Tallenna ne kerran, niin reitit aukeavat yhdellä napautuksella Kodista ja karttahausta.
+Ei vielä asetettu
+Valitse paikalliset asemasi
+Kuunnelluimmat: {country}. Merkitse tähdellä suosikkisi.
+{n} valittu
+Koti tallennettu
+Työ tallennettu
+Hae kotiosoitettasi
+Hae työosoitettasi
+Hae tallennettava osoite
+Koti
