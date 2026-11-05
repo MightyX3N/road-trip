@@ -355,3 +355,34 @@ Vymeniť strany
 Video sa nedá prehrať ({error})
 Ukončiť celú obrazovku
 Spomalenia a zamrznutia
+Offline mapy
+{n} oblastí v zariadení
+Stiahnite si svoju oblasť raz; mapa funguje bez dát
+Stiahnuť okolie
+Posuňte mapu tak, aby jej stred bol v strede oblasti
+Mapový server je nedostupný; skontrolujte pripojenie
+Trasa do {place}
+Sťahovanie sa nepodarilo spustiť
+Už sa sťahuje iná oblasť
+Offline mapa je pripravená
+Mapa stiahnutá, chýba {n} dlaždíc
+Zastavené na 50 MB; viac jedna oblasť mať nesmie
+Pozdĺž vašej trasy
+Vybrať na mape
+Všetky ulice, asi {km} km naprieč
+{n} mapových dlaždíc, najviac 50 MB
+Hlavné cesty, asi {km} km naprieč
+Väčšia oblasť s menej podrobnosťami · {n} dlaždíc
+Všetky ulice v páse pozdĺž trasy ({km} km)
+Najprv naplánujte trasu na mape
+OpenFreeMap povoľuje najviac 3 000 dlaždíc alebo 50 MB na jedno stiahnutie, takže veľký región potrebuje niekoľko oblastí. Vyhľadávanie a nové trasy stále potrebujú pripojenie.
+{n} voľných v zariadení.
+Stiahnuté oblasti
+Zatiaľ nič. Vľavo vyberte veľkosť a ťuknite na Stiahnuť.
+Sťahuje sa… {done} z {total}
+{km} km trasy
+{km} km naprieč
+Zastavené na 50 MB
+Nedokončené
+Dokončiť
+Offline oblasť odstránená

@@ -355,3 +355,34 @@ Scambia i lati
 Impossibile riprodurre il video ({error})
 Esci dallo schermo intero
 Rallentamenti e blocchi
+Mappe offline
+{n} aree su questo dispositivo
+Scarica la tua zona una volta; la mappa funziona senza dati
+Scarica qui intorno
+Sposta la mappa finché il centro è al centro della zona
+Server delle mappe non raggiungibile; controlla la connessione
+Percorso per {place}
+Impossibile avviare il download
+Si sta già scaricando un'altra area
+Mappa offline pronta
+Mappa scaricata, mancano {n} riquadri
+Fermato a 50 MB; un'area non può essere più grande
+Lungo il tuo percorso
+Scegli sulla mappa
+Tutte le strade, circa {km} km di larghezza
+{n} riquadri di mappa, al massimo 50 MB
+Strade principali, circa {km} km di larghezza
+Un'area più grande con meno dettagli · {n} riquadri
+Tutte le strade in una fascia lungo il percorso ({km} km)
+Pianifica prima un percorso sulla mappa
+OpenFreeMap consente al massimo 3.000 riquadri o 50 MB per download, quindi una regione grande richiede più aree. La ricerca e i nuovi percorsi richiedono ancora la connessione.
+{n} liberi su questo dispositivo.
+Aree scaricate
+Ancora niente. Scegli una dimensione a sinistra e tocca Scarica.
+Download… {done} di {total}
+{km} km di percorso
+{km} km di larghezza
+Fermato a 50 MB
+Non finito
+Completa
+Area offline eliminata

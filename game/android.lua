@@ -306,6 +306,7 @@ local stubFetches = {}
 local stubRadio
 local stubVoice
 local stubMusic, stubWebUrl, stubVideo
+local stubMapDl
 stubPanel = nil
 stubSaid = nil -- what the desktop stub "said", for tests
 
@@ -395,6 +396,26 @@ local function stubCall(method, args)
     return "DK"
   elseif method == "overlayStatus" then
     return { canDraw = false, guard = false, moving = false, why = "desktop", front = "", covering = false }
+  elseif method == "mapDownload" then
+    stubMapDl = { state = "running", id = args.id, done = 0, total = #args.tiles, failed = 0, bytes = 0 }
+    return true
+  elseif method == "mapDownloadStatus" then
+    if stubMapDl and stubMapDl.state == "running" then
+      stubMapDl.done = math.min(stubMapDl.total, stubMapDl.done + 500)
+      stubMapDl.bytes = stubMapDl.done * 12000
+      if stubMapDl.done >= stubMapDl.total then stubMapDl.state = "done" end
+    end
+    local c = {}
+    for k, v in pairs(stubMapDl or { state = "idle", done = 0, total = 0, failed = 0, bytes = 0 }) do c[k] = v end
+    return c
+  elseif method == "mapDownloadCancel" then
+    if stubMapDl then stubMapDl.state = "cancelled" end
+    return true
+  elseif method == "storage" then
+    return { free = 3.2e9, size = stubMapDl and stubMapDl.bytes or 0 }
+  elseif method == "deleteTree" then
+    stubDeleted = args.path
+    return true
   elseif method == "httpRequest" then
     stubFetches[#stubFetches + 1] = "jf:" .. args.method .. " " .. args.url .. " " .. (args.body or "")
     return #stubFetches
@@ -477,6 +498,11 @@ function M.fetch(url) return M.call("fetch", { url = url }) end
 function M.fetchResult(id) return M.call("fetchResult", { id = id }) end
 -- background download to an absolute path; poll with fetchResult(id)
 function M.download(url, path) return M.call("download", { url = url, path = path }) end
+function M.mapDownload(id, template, tiles, dir) return M.call("mapDownload", { id = id, template = template, tiles = tiles, dir = dir }) end
+function M.mapDownloadStatus() return M.call("mapDownloadStatus") end
+function M.mapDownloadCancel() return M.call("mapDownloadCancel") end
+function M.storage(path) return M.call("storage", { path = path }) end
+function M.deleteTree(path) return M.call("deleteTree", { path = path }) end
 -- position: locationStart() asks for permission and starts listening; location() -> { permission, fix? }
 function M.locationStart() return M.call("locationStart") end
 function M.location() return M.call("location") end

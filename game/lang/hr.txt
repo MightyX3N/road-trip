@@ -355,3 +355,34 @@ Zamijeni strane
 Videozapis se ne može reproducirati ({error})
 Izađi iz cijelog zaslona
 Usporavanja i zamrzavanja
+Izvanmrežne karte
+{n} područja na uređaju
+Preuzmite svoje područje jednom; karta radi bez podataka
+Preuzmi okolicu
+Pomaknite kartu tako da joj sredina bude usred područja
+Poslužitelj karata nije dostupan; provjerite vezu
+Ruta do {place}
+Preuzimanje se nije moglo pokrenuti
+Već se preuzima drugo područje
+Izvanmrežna karta je spremna
+Karta preuzeta, nedostaje {n} pločica
+Zaustavljeno na 50 MB; jedno područje ne smije biti veće
+Duž vaše rute
+Odaberi na karti
+Sve ulice, oko {km} km u širinu
+{n} pločica karte, najviše 50 MB
+Glavne ceste, oko {km} km u širinu
+Veće područje s manje detalja · {n} pločica
+Sve ulice u pojasu duž rute ({km} km)
+Najprije isplanirajte rutu na karti
+OpenFreeMap dopušta najviše 3.000 pločica ili 50 MB po preuzimanju, pa velika regija traži nekoliko područja. Pretraga i nove rute i dalje trebaju vezu.
+{n} slobodno na uređaju.
+Preuzeta područja
+Još ništa. Lijevo odaberite veličinu i dodirnite Preuzmi.
+Preuzimanje… {done} od {total}
+{km} km rute
+{km} km u širinu
+Zaustavljeno na 50 MB
+Nije dovršeno
+Dovrši
+Izvanmrežno područje izbrisano

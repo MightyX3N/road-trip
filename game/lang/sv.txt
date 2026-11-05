@@ -355,3 +355,34 @@ Byt sida
 Kunde inte spela videon ({error})
 Avsluta helskärm
 Långsamma ögonblick och frysningar
+Offlinekartor
+{n} områden på enheten
+Ladda ner ditt område en gång; kartan fungerar utan data
+Ladda ner här omkring
+Flytta kartan så mitten hamnar mitt i området
+Når inte kartservern; kontrollera anslutningen
+Rutt till {place}
+Kunde inte starta nedladdningen
+Ett annat område laddas redan ner
+Offlinekartan är klar
+Offlinekarta nedladdad, {n} rutor saknas
+Stoppade vid 50 MB; mer får ett område inte vara
+Längs din rutt
+Välj på kartan
+Alla gator, cirka {km} km tvärs över
+{n} kartrutor, högst 50 MB
+Huvudvägar, cirka {km} km tvärs över
+Ett större område med mindre detaljer · {n} rutor
+Alla gator i ett band längs rutten ({km} km)
+Planera en rutt på kartan först
+OpenFreeMap tillåter högst 3 000 rutor eller 50 MB per nedladdning, så en stor region kräver flera områden. Sökning och nya rutter kräver fortfarande anslutning.
+{n} ledigt på enheten.
+Nedladdade områden
+Inget än. Välj en storlek till vänster och tryck på Ladda ner.
+Laddar ner… {done} av {total}
+{km} km rutt
+{km} km tvärs över
+Stoppade vid 50 MB
+Inte klar
+Slutför
+Offlineområdet raderat

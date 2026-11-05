@@ -355,3 +355,34 @@ Sukeisti puses
 Nepavyko paleisti vaizdo įrašo ({error})
 Išeiti iš viso ekrano
 Sulėtėjimai ir užstrigimai
+Neprisijungus naudojami žemėlapiai
+Įrenginyje {n} sritys
+Atsisiųskite savo vietovę kartą; žemėlapis veiks be duomenų
+Atsisiųsti aplinką
+Pastumkite žemėlapį, kad jo vidurys būtų srities viduryje
+Žemėlapių serveris nepasiekiamas; patikrinkite ryšį
+Maršrutas į {place}
+Nepavyko pradėti atsisiuntimo
+Jau siunčiama kita sritis
+Žemėlapis paruoštas
+Žemėlapis atsisiųstas, trūksta {n} plytelių
+Sustabdyta ties 50 MB; viena sritis negali būti didesnė
+Palei jūsų maršrutą
+Pasirinkti žemėlapyje
+Visos gatvės, apie {km} km skersai
+{n} žemėlapio plytelių, ne daugiau kaip 50 MB
+Pagrindiniai keliai, apie {km} km skersai
+Didesnė sritis su mažiau detalių · {n} plytelių
+Visos gatvės juostoje palei maršrutą ({km} km)
+Pirmiausia suplanuokite maršrutą žemėlapyje
+OpenFreeMap leidžia ne daugiau kaip 3000 plytelių arba 50 MB vienam atsisiuntimui, todėl dideliam regionui reikia kelių sričių. Paieškai ir naujiems maršrutams vis tiek reikia ryšio.
+Įrenginyje laisva {n}.
+Atsisiųstos sritys
+Kol kas nieko. Kairėje pasirinkite dydį ir palieskite Atsisiųsti.
+Siunčiama… {done} iš {total}
+{km} km maršruto
+{km} km skersai
+Sustabdyta ties 50 MB
+Nebaigta
+Užbaigti
+Sritis ištrinta

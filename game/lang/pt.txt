@@ -355,3 +355,34 @@ Trocar de lado
 Não foi possível reproduzir este vídeo ({error})
 Sair do ecrã inteiro
 Momentos lentos e bloqueios
+Mapas offline
+{n} áreas neste dispositivo
+Transfira a sua área uma vez; o mapa funciona sem dados
+Transferir à volta daqui
+Mova o mapa até o centro ficar no meio da área
+Não é possível contactar o servidor de mapas; verifique a ligação
+Rota para {place}
+Não foi possível iniciar a transferência
+Já está a ser transferida outra área
+Mapa offline pronto
+Mapa transferido, faltam {n} mosaicos
+Parado nos 50 MB; uma área não pode ter mais
+Ao longo da sua rota
+Escolher no mapa
+Todas as ruas, cerca de {km} km de largura
+{n} mosaicos de mapa, no máximo 50 MB
+Estradas principais, cerca de {km} km de largura
+Uma área maior com menos detalhe · {n} mosaicos
+Todas as ruas numa faixa ao longo da rota ({km} km)
+Planeie primeiro uma rota no mapa
+O OpenFreeMap permite no máximo 3000 mosaicos ou 50 MB por transferência, por isso uma região grande precisa de várias áreas. A pesquisa e as novas rotas continuam a precisar de ligação.
+{n} livres neste dispositivo.
+Áreas transferidas
+Ainda nada. Escolha um tamanho à esquerda e toque em Transferir.
+A transferir… {done} de {total}
+{km} km de rota
+{km} km de largura
+Parado nos 50 MB
+Por terminar
+Terminar
+Área offline eliminada

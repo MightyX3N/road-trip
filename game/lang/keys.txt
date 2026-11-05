@@ -353,3 +353,34 @@ Swap sides
 Couldn't play this video ({error})
 Exit full screen
 Slow moments and freezes
+Offline maps
+{n} areas on this device
+Download your area once; the map works without data
+Download around here
+Move the map to the middle of the area
+Can't reach the map server; check the connection
+Route to {place}
+Couldn't start the download
+Another area is downloading
+Offline map ready
+Offline map downloaded, {n} tiles missing
+Stopped at 50 MB; that's as much as one area may be
+Along your route
+Choose on the map
+Every street, about {km} km across
+{n} map tiles, at most 50 MB
+Main roads, about {km} km across
+A bigger area with less detail · {n} tiles
+Every street, a band along the route ({km} km)
+Plan a route on the map first
+OpenFreeMap allows up to 3,000 tiles or 50 MB per download, so a big region takes a few areas. Search and new routes still need a connection.
+{n} free on this device.
+Downloaded areas
+Nothing yet. Pick a size on the left and tap Download.
+Downloading… {done} of {total}
+{km} km of route
+{km} km across
+Stopped at 50 MB
+Not finished
+Finish
+Offline area deleted

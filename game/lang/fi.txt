@@ -355,3 +355,34 @@ Vaihda puolta
 Videota ei voitu toistaa ({error})
 Poistu koko näytöstä
 Hitaat hetket ja jumitukset
+Offline-kartat
+{n} aluetta laitteella
+Lataa alueesi kerran; kartta toimii ilman dataa
+Lataa tästä ympäriltä
+Siirrä karttaa niin, että keskikohta on alueen keskellä
+Karttapalvelimeen ei saada yhteyttä; tarkista yhteys
+Reitti kohteeseen {place}
+Latausta ei voitu aloittaa
+Toista aluetta ladataan jo
+Offline-kartta on valmis
+Offline-kartta ladattu, {n} ruutua puuttuu
+Pysäytetty 50 megatavuun; enempää yksi alue ei saa olla
+Reittisi varrella
+Valitse kartalta
+Kaikki kadut, noin {km} km leveä
+{n} karttaruutua, enintään 50 Mt
+Pääteet, noin {km} km leveä
+Isompi alue vähemmillä yksityiskohdilla · {n} ruutua
+Kaikki kadut kaistaleelta reitin varrelta ({km} km)
+Suunnittele ensin reitti kartalla
+OpenFreeMap sallii enintään 3 000 ruutua tai 50 Mt latausta kohden, joten iso alue vaatii useamman latauksen. Haku ja uudet reitit tarvitsevat yhä yhteyden.
+{n} vapaana laitteella.
+Ladatut alueet
+Ei vielä mitään. Valitse koko vasemmalta ja napauta Lataa.
+Ladataan… {done}/{total}
+{km} km reittiä
+{km} km leveä
+Pysäytetty 50 megatavuun
+Kesken
+Viimeistele
+Offline-alue poistettu

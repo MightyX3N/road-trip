@@ -36,7 +36,11 @@ steering-wheel buttons. Video plays inside Road Trip, next to the map while a ro
 covered and the sound keeps going. Road Trip asks the server how to play each video and plays
 the file as it is when the device can, otherwise the server's H.264 conversion.
 **Browser** is a web browser (Android's own Chromium WebView) with the same rule: covered while
-you drive, and next to the map if you like. Settings → Diagnostics lists slow moments and freezes (with where Android was stuck), to
+you drive, and next to the map if you like. Settings → Offline maps downloads an area so the map works without data: every street
+around a place (about 60 km across), the main roads of a bigger region (about 250 km), or a
+band along the route you've planned. Each download keeps to OpenFreeMap's limit for offline
+use (3,000 tiles or 50 MB, 4 requests at a time), so a big region takes a few areas. Search and
+new routes still need a connection. Settings → Diagnostics lists slow moments and freezes (with where Android was stuck), to
 send in when something hangs. **Settings** has everything else: Keep in front, permissions, favorites, accent colour,
 language and updates. Road Trip comes in 33 languages and follows the device's language
 unless you pick one; the translations are made by AI, so some words may be off. The voice button opens the device's

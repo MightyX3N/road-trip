@@ -355,3 +355,34 @@ Cambiar de lado
 No se pudo reproducir este vídeo ({error})
 Salir de pantalla completa
 Momentos lentos y bloqueos
+Mapas sin conexión
+{n} zonas en este dispositivo
+Descarga tu zona una vez; el mapa funciona sin datos
+Descargar alrededor de aquí
+Mueve el mapa hasta que su centro quede en el centro de la zona
+No se puede contactar con el servidor de mapas; revisa la conexión
+Ruta a {place}
+No se pudo iniciar la descarga
+Ya se está descargando otra zona
+Mapa sin conexión listo
+Mapa descargado, faltan {n} teselas
+Detenido en 50 MB; una zona no puede ocupar más
+A lo largo de tu ruta
+Elegir en el mapa
+Todas las calles, unos {km} km de ancho
+{n} teselas de mapa, 50 MB como máximo
+Carreteras principales, unos {km} km de ancho
+Una zona más grande con menos detalle · {n} teselas
+Todas las calles en una franja a lo largo de la ruta ({km} km)
+Planifica primero una ruta en el mapa
+OpenFreeMap permite como máximo 3.000 teselas o 50 MB por descarga, así que una región grande necesita varias zonas. La búsqueda y las rutas nuevas siguen necesitando conexión.
+{n} libres en este dispositivo.
+Zonas descargadas
+Nada todavía. Elige un tamaño a la izquierda y toca Descargar.
+Descargando… {done} de {total}
+{km} km de ruta
+{km} km de ancho
+Detenido en 50 MB
+Sin terminar
+Terminar
+Zona sin conexión eliminada

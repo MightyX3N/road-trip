@@ -8,6 +8,7 @@ local radio = require("radio")
 local voice = require("voice")
 local jellyfin = require("jellyfin")
 local browser = require("browser")
+local offline = require("offline")
 local lang = require("lang")
 local T = lang.T
 
@@ -459,7 +460,7 @@ local function drawRail()
   ui.rect(ui.c.line, RAIL - 1, 0, 1, H)
   for i, item in ipairs(RAIL_ITEMS) do
     local x, y = 12, 16 + (i - 1) * 84
-    local on = state.screen == item.screen or (item.screen == "settings" and (state.screen == "diag" or state.screen == "lang" or state.screen == "voice"))
+    local on = state.screen == item.screen or (item.screen == "settings" and (state.screen == "diag" or state.screen == "lang" or state.screen == "voice" or state.screen == "offline"))
     local color = on and ui.c.accent or ui.c.muted
     if on then ui.rect(ui.c.accentBg, x, y, 88, 80, 20) end
     ui.icon(item.icon, x + 30, y + 12, 28, color)
@@ -1164,6 +1165,10 @@ local function drawSettings()
       button = { T("Check now"), { kind = "updateCheckNow" } } },
     { title = T("Check for updates on Wi-Fi only"), sub = T("Automatic checks, every 6 hours"),
       toggle = { config.get("updateWifiOnly") ~= false, { kind = "wifiOnly" } } },
+    { title = T("Offline maps"),
+      sub = #(config.get("offlineAreas") or {}) > 0 and T("{n} areas on this device", { n = #config.get("offlineAreas") })
+        or T("Download your area once; the map works without data"),
+      button = { T("Open"), { kind = "offOpen" } } },
     { title = T("Diagnostics"), sub = T("What Keep in front saw and did"), button = { T("Show"), { kind = "diag" } } },
     { title = T("First-time setup"), sub = T("Permissions, favorite apps, Home and Work, radio"),
       button = { T("Start"), { kind = "setupStart" } } },
@@ -1644,9 +1649,16 @@ function love.draw()
     elseif state.screen == "diag" then drawDiagnostics()
     elseif state.screen == "lang" then drawLanguages()
     elseif state.screen == "voice" then voice.draw(RAIL, TOP, W - RAIL, H - TOP)
+    elseif state.screen == "offline" then offline.draw(RAIL, TOP, W - RAIL, H - TOP)
     elseif state.screen == "map" then
       map.drawMap(RAIL, 0, W - RAIL, H)
       map.drawUI(RAIL, 0, W - RAIL, H)
+      if state.offlinePick and not map.wantsText() then
+        -- choosing where to download an offline area: move the map, then this
+        local label = T("Download around here")
+        local pw = ui.textWidth(label, "bold", 18) + 72
+        pill({ kind = "offUse" }, label, RAIL + (W - RAIL - pw) / 2, H - 120, 64, "accent")
+      end
     elseif state.screen == "radio" then
       radio.draw(RAIL, TOP, W - RAIL, H - TOP)
     elseif state.screen == "web" then
@@ -1731,6 +1743,27 @@ local function activate(id, vx)
   elseif k == "diagBack" or k == "langBack" then state.screen = "settings"
   elseif k == "langOpen" then state.screen = "lang"
   elseif k == "voiceOpen" then state.screen = "voice"
+  elseif k == "offOpen" then
+    state.screen = "offline"
+    offline.open()
+  elseif k == "off:back" then state.screen = "settings"
+  elseif k == "off:pick" then
+    state.offlinePick = true
+    state.screen = "map"
+    map.open()
+    toast(T("Move the map to the middle of the area"))
+  elseif k == "offUse" then
+    state.offlinePick = nil
+    state.screen = "offline"
+    offline.open()
+  elseif k:sub(1, 4) == "off:" then
+    local r, a = offline.activate(id)
+    if r == "show" then
+      map.view.lat, map.view.lon, map.view.follow = a.lat, a.lon, false
+      map.view.zoom = a.kind == "wide" and 9 or 11
+      state.screen = "map"
+      map.open()
+    end
   elseif k == "voice:back" then state.screen = "settings"
   elseif k == "voiceMute" then voice.toggleMute()
   elseif k:sub(1, 6) == "voice:" then voice.activate(id)
@@ -1795,6 +1828,7 @@ local function activate(id, vx)
     if state.typing then state.typing = nil ui.closeKeyboard() end
     if jellyfin.wantsText() then jellyfin.back() end
     if browser.wantsText() then browser.back() end
+    state.offlinePick = nil
     state.screen = id.screen
     if id.screen == "map" then map.open() end
     if id.screen == "radio" then radio.open() end
@@ -2058,8 +2092,11 @@ function love.keypressed(key)
     if state.setup and state.setup.step > 1 then setupGo(state.setup.step - 1) end
   elseif state.screen == "favs" and state.setup then
     setupGo(1)
-  elseif state.screen == "diag" or state.screen == "lang" or state.screen == "voice" then
+  elseif state.screen == "diag" or state.screen == "lang" or state.screen == "voice" or state.screen == "offline" then
     state.screen = "settings"
+  elseif state.screen == "map" and state.offlinePick and not state.menu and not map.wantsText() then
+    state.offlinePick = nil
+    state.screen = "offline"
   elseif state.screen == "map" and not state.menu and map.back() then
     -- closed the map's search or route overview
   elseif state.screen == "radio" and not state.menu and radio.back() then
@@ -2109,6 +2146,8 @@ function love.load()
   voice.init(deps)
   jellyfin.init(deps)
   browser.init(deps)
+  offline.init(deps)
+  offline.check()
   sendPanelLabels()
   -- show a frame first, load apps right after (see love.update)
   state.needRefresh, state.firstLoad, state.drew = true, true, false
@@ -2149,6 +2188,7 @@ function love.update(dt)
   timed("browser", browser.update, dt, state.screen == "web")
   timed("radio", radio.update, dt, state.screen == "radio" or state.screen == "home")
   timed("voice", voice.update, dt)
+  timed("offline maps", offline.update, dt)
   if state.needRefresh and state.drew then
     state.needRefresh = false
     timed("app list", refreshApps)

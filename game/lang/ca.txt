@@ -355,3 +355,34 @@ Canvia de costat
 No s'ha pogut reproduir el vídeo ({error})
 Surt de la pantalla completa
 Moments lents i bloquejos
+Mapes fora de línia
+{n} zones en aquest dispositiu
+Baixa la teva zona un cop; el mapa funciona sense dades
+Baixa al voltant d'aquí
+Mou el mapa fins que el centre quedi al mig de la zona
+No es pot contactar amb el servidor de mapes; revisa la connexió
+Ruta a {place}
+No s'ha pogut iniciar la baixada
+Ja s'està baixant una altra zona
+Mapa fora de línia a punt
+Mapa baixat, falten {n} tessel·les
+Aturat a 50 MB; una zona no pot ocupar més
+Al llarg de la ruta
+Tria al mapa
+Tots els carrers, uns {km} km d'amplada
+{n} tessel·les de mapa, 50 MB com a màxim
+Carreteres principals, uns {km} km d'amplada
+Una zona més gran amb menys detall · {n} tessel·les
+Tots els carrers en una franja al llarg de la ruta ({km} km)
+Planifica primer una ruta al mapa
+OpenFreeMap permet com a màxim 3.000 tessel·les o 50 MB per baixada, així que una regió gran necessita unes quantes zones. La cerca i les rutes noves encara necessiten connexió.
+{n} lliures en aquest dispositiu.
+Zones baixades
+Encara res. Tria una mida a l'esquerra i toca Baixa.
+Baixant… {done} de {total}
+{km} km de ruta
+{km} km d'amplada
+Aturat a 50 MB
+Sense acabar
+Acaba
+Zona fora de línia suprimida

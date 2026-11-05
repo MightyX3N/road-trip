@@ -355,3 +355,34 @@ Seiten tauschen
 Video kann nicht abgespielt werden ({error})
 Vollbild beenden
 Langsame Momente und Hänger
+Offline-Karten
+{n} Gebiete auf dem Gerät
+Lade dein Gebiet einmal herunter; die Karte geht dann ohne Daten
+Hier herum laden
+Schiebe die Karte, bis die Mitte in der Mitte des Gebiets liegt
+Kartenserver nicht erreichbar; Verbindung prüfen
+Route nach {place}
+Download konnte nicht starten
+Es lädt schon ein anderes Gebiet
+Offline-Karte fertig
+Offline-Karte geladen, {n} Kacheln fehlen
+Bei 50 MB gestoppt; mehr darf ein Gebiet nicht sein
+Entlang deiner Route
+Auf der Karte wählen
+Alle Straßen, etwa {km} km breit
+{n} Kartenkacheln, höchstens 50 MB
+Hauptstraßen, etwa {km} km breit
+Ein größeres Gebiet mit weniger Details · {n} Kacheln
+Alle Straßen in einem Band entlang der Route ({km} km)
+Plane zuerst eine Route auf der Karte
+OpenFreeMap erlaubt höchstens 3.000 Kacheln oder 50 MB pro Download, eine große Region braucht also mehrere Gebiete. Suche und neue Routen brauchen weiter eine Verbindung.
+{n} frei auf dem Gerät.
+Geladene Gebiete
+Noch nichts. Wähle links eine Größe und tippe auf Herunterladen.
+Lädt… {done} von {total}
+{km} km Route
+{km} km breit
+Bei 50 MB gestoppt
+Nicht fertig
+Fertig laden
+Offline-Gebiet gelöscht

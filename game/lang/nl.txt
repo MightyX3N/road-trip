@@ -355,3 +355,34 @@ Kanten wisselen
 Kan deze video niet afspelen ({error})
 Volledig scherm sluiten
 Trage momenten en vastlopers
+Offline kaarten
+{n} gebieden op dit apparaat
+Download je gebied één keer; de kaart werkt zonder data
+Hier in de buurt downloaden
+Verschuif de kaart tot het midden in het midden van het gebied ligt
+Kaartserver niet bereikbaar; controleer de verbinding
+Route naar {place}
+Kon de download niet starten
+Er wordt al een ander gebied gedownload
+Offline kaart klaar
+Offline kaart gedownload, {n} tegels ontbreken
+Gestopt bij 50 MB; groter mag één gebied niet zijn
+Langs je route
+Kies op de kaart
+Alle straten, ongeveer {km} km breed
+{n} kaarttegels, hooguit 50 MB
+Hoofdwegen, ongeveer {km} km breed
+Een groter gebied met minder detail · {n} tegels
+Alle straten in een strook langs de route ({km} km)
+Plan eerst een route op de kaart
+OpenFreeMap staat maximaal 3.000 tegels of 50 MB per download toe, dus een grote regio vraagt een paar gebieden. Zoeken en nieuwe routes hebben nog steeds een verbinding nodig.
+{n} vrij op dit apparaat.
+Gedownloade gebieden
+Nog niets. Kies links een grootte en tik op Downloaden.
+Downloaden… {done} van {total}
+{km} km route
+{km} km breed
+Gestopt bij 50 MB
+Niet klaar
+Afmaken
+Offline gebied verwijderd

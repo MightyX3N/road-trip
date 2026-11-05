@@ -355,3 +355,34 @@ Schimbă părțile
 Videoclipul nu poate fi redat ({error})
 Ieși din ecran complet
 Momente lente și blocări
+Hărți offline
+{n} zone pe acest dispozitiv
+Descarcă-ți zona o dată; harta merge fără date
+Descarcă aici în jur
+Mută harta până când centrul ei e în mijlocul zonei
+Serverul de hărți nu răspunde; verifică conexiunea
+Traseu spre {place}
+Descărcarea nu a putut porni
+Se descarcă deja o altă zonă
+Harta offline e gata
+Hartă descărcată, lipsesc {n} plăci
+Oprit la 50 MB; o zonă nu poate fi mai mare
+De-a lungul traseului
+Alege pe hartă
+Toate străzile, cam {km} km lățime
+{n} plăci de hartă, cel mult 50 MB
+Drumuri principale, cam {km} km lățime
+O zonă mai mare, cu mai puține detalii · {n} plăci
+Toate străzile pe o fâșie de-a lungul traseului ({km} km)
+Planifică mai întâi un traseu pe hartă
+OpenFreeMap permite cel mult 3.000 de plăci sau 50 MB pe descărcare, așa că o regiune mare are nevoie de câteva zone. Căutarea și traseele noi au în continuare nevoie de conexiune.
+{n} liberi pe dispozitiv.
+Zone descărcate
+Nimic încă. Alege o mărime în stânga și atinge Descarcă.
+Se descarcă… {done} din {total}
+{km} km de traseu
+{km} km lățime
+Oprit la 50 MB
+Neterminat
+Termină
+Zona offline a fost ștearsă

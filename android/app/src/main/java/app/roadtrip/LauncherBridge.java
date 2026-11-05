@@ -39,6 +39,24 @@ public final class LauncherBridge {
             JSONObject a = (argsJson == null || argsJson.isEmpty()) ? new JSONObject() : new JSONObject(argsJson);
             Object data;
             switch (method) {
+                case "mapDownload":
+                    data = MapDownload.start(a.getString("id"), a.getString("template"), a.getJSONArray("tiles"), a.getString("dir"));
+                    break;
+                case "mapDownloadStatus":
+                    data = MapDownload.status();
+                    break;
+                case "mapDownloadCancel":
+                    data = MapDownload.cancel();
+                    break;
+                case "storage": {
+                    JSONObject o = new JSONObject().put("free", MapDownload.free(ctx));
+                    if (a.has("path")) o.put("size", MapDownload.size(new java.io.File(a.getString("path"))));
+                    data = o;
+                    break;
+                }
+                case "deleteTree":
+                    data = MapDownload.deleteTree(ctx, a.getString("path"));
+                    break;
                 case "logSlow":
                     Watchdog.add(a.optString("text"));
                     data = true;

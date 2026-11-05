@@ -355,3 +355,34 @@ Zamenjaj strani
 Videa ni mogoče predvajati ({error})
 Zapri celozaslonski način
 Počasni trenutki in zamrznitve
+Zemljevidi brez povezave
+{n} območij v napravi
+Območje prenesite enkrat; zemljevid deluje brez podatkov
+Prenesi okolico
+Premaknite zemljevid, da bo njegova sredina sredi območja
+Strežnik zemljevidov ni dosegljiv; preverite povezavo
+Pot do {place}
+Prenosa ni bilo mogoče začeti
+Prenaša se že drugo območje
+Zemljevid brez povezave je pripravljen
+Zemljevid prenesen, manjka {n} ploščic
+Ustavljeno pri 50 MB; več eno območje ne sme biti
+Ob vaši poti
+Izberi na zemljevidu
+Vse ulice, približno {km} km čez
+{n} ploščic zemljevida, največ 50 MB
+Glavne ceste, približno {km} km čez
+Večje območje z manj podrobnostmi · {n} ploščic
+Vse ulice v pasu ob poti ({km} km)
+Najprej načrtujte pot na zemljevidu
+OpenFreeMap dovoli največ 3000 ploščic ali 50 MB na prenos, zato velika regija zahteva več območij. Iskanje in nove poti še vedno potrebujejo povezavo.
+{n} prostega v napravi.
+Prenesena območja
+Še nič. Levo izberite velikost in tapnite Prenesi.
+Prenašanje … {done} od {total}
+{km} km poti
+{km} km čez
+Ustavljeno pri 50 MB
+Ni dokončano
+Dokončaj
+Območje izbrisano

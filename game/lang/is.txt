@@ -355,3 +355,34 @@ Víxla hliðum
 Ekki tókst að spila myndbandið ({error})
 Hætta í öllum skjánum
 Hæg augnablik og frost
+Ótengd kort
+{n} svæði í tækinu
+Sæktu svæðið þitt einu sinni; kortið virkar án gagna
+Sækja hér í kring
+Færðu kortið svo miðjan sé í miðju svæðisins
+Næ ekki í kortaþjóninn; athugaðu tenginguna
+Leið til {place}
+Ekki tókst að hefja niðurhal
+Annað svæði er þegar að hlaðast niður
+Ótengda kortið er tilbúið
+Kort sótt, {n} reiti vantar
+Stöðvað við 50 MB; meira má eitt svæði ekki vera
+Meðfram leiðinni þinni
+Velja á kortinu
+Allar götur, um {km} km á breidd
+{n} kortareitir, mest 50 MB
+Aðalvegir, um {km} km á breidd
+Stærra svæði með minni smáatriðum · {n} reitir
+Allar götur í belti meðfram leiðinni ({km} km)
+Skipuleggðu fyrst leið á kortinu
+OpenFreeMap leyfir mest 3.000 reiti eða 50 MB í hverju niðurhali, svo stórt svæði þarf nokkur niðurhöl. Leit og nýjar leiðir þurfa áfram tengingu.
+{n} laust í tækinu.
+Sótt svæði
+Ekkert enn. Veldu stærð til vinstri og ýttu á Sækja.
+Sæki… {done} af {total}
+{km} km leið
+{km} km á breidd
+Stöðvað við 50 MB
+Ekki lokið
+Ljúka
+Svæði eytt

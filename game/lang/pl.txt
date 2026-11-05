@@ -355,3 +355,34 @@ Zamień strony
 Nie można odtworzyć filmu ({error})
 Zamknij pełny ekran
 Spowolnienia i zawieszenia
+Mapy offline
+{n} obszarów na urządzeniu
+Pobierz swój obszar raz; mapa działa bez danych
+Pobierz okolicę
+Przesuń mapę, aż jej środek znajdzie się w środku obszaru
+Brak połączenia z serwerem map; sprawdź połączenie
+Trasa do {place}
+Nie udało się rozpocząć pobierania
+Pobierany jest już inny obszar
+Mapa offline gotowa
+Mapa pobrana, brakuje {n} kafelków
+Zatrzymano na 50 MB; jeden obszar nie może być większy
+Wzdłuż trasy
+Wybierz na mapie
+Wszystkie ulice, ok. {km} km szerokości
+{n} kafelków mapy, najwyżej 50 MB
+Główne drogi, ok. {km} km szerokości
+Większy obszar z mniejszą liczbą szczegółów · {n} kafelków
+Wszystkie ulice w pasie wzdłuż trasy ({km} km)
+Najpierw zaplanuj trasę na mapie
+OpenFreeMap pozwala na najwyżej 3000 kafelków lub 50 MB na jedno pobieranie, więc duży region wymaga kilku obszarów. Wyszukiwanie i nowe trasy nadal wymagają połączenia.
+{n} wolnego miejsca na urządzeniu.
+Pobrane obszary
+Jeszcze nic. Wybierz rozmiar po lewej i dotknij Pobierz.
+Pobieranie… {done} z {total}
+{km} km trasy
+{km} km szerokości
+Zatrzymano na 50 MB
+Nieukończone
+Dokończ
+Obszar offline usunięty

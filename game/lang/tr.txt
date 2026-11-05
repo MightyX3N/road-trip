@@ -355,3 +355,34 @@ Tarafları değiştir
 Bu video oynatılamadı ({error})
 Tam ekrandan çık
 Yavaşlamalar ve donmalar
+Çevrimdışı haritalar
+Cihazda {n} bölge
+Bölgenizi bir kez indirin; harita veri olmadan çalışır
+Burayı indir
+Haritayı, ortası bölgenin ortasına gelecek şekilde kaydırın
+Harita sunucusuna ulaşılamıyor; bağlantıyı kontrol edin
+{place} rotası
+İndirme başlatılamadı
+Başka bir bölge zaten iniyor
+Çevrimdışı harita hazır
+Harita indirildi, {n} karo eksik
+50 MB'ta durdu; bir bölge daha büyük olamaz
+Rotanız boyunca
+Haritada seç
+Tüm sokaklar, yaklaşık {km} km genişlik
+{n} harita karosu, en fazla 50 MB
+Ana yollar, yaklaşık {km} km genişlik
+Daha büyük, daha az ayrıntılı bir bölge · {n} karo
+Rota boyunca bir şeritte tüm sokaklar ({km} km)
+Önce haritada bir rota planlayın
+OpenFreeMap indirme başına en fazla 3.000 karo veya 50 MB'a izin verir; bu yüzden büyük bir bölge birkaç parçada iner. Arama ve yeni rotalar için hâlâ bağlantı gerekir.
+Cihazda {n} boş.
+İndirilen bölgeler
+Henüz yok. Soldan bir boyut seçip İndir'e dokunun.
+İndiriliyor… {done}/{total}
+{km} km rota
+{km} km genişlik
+50 MB'ta durdu
+Tamamlanmadı
+Tamamla
+Çevrimdışı bölge silindi

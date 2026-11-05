@@ -355,3 +355,34 @@ Oldalcsere
 A videó nem játszható le ({error})
 Kilépés a teljes képernyőből
 Lassulások és lefagyások
+Offline térképek
+{n} terület az eszközön
+Töltsd le a környéked egyszer; a térkép adat nélkül is megy
+Itt körül letöltés
+Mozgasd a térképet, hogy a közepe a terület közepére essen
+A térképszerver nem érhető el; ellenőrizd a kapcsolatot
+Útvonal ide: {place}
+Nem sikerült elindítani a letöltést
+Már egy másik terület töltődik
+Az offline térkép kész
+Térkép letöltve, {n} csempe hiányzik
+50 MB-nál leállt; egy terület nem lehet nagyobb
+Az útvonalad mentén
+Választás a térképen
+Minden utca, kb. {km} km széles
+{n} térképcsempe, legfeljebb 50 MB
+Főutak, kb. {km} km széles
+Nagyobb terület kevesebb részlettel · {n} csempe
+Minden utca egy sávban az útvonal mentén ({km} km)
+Előbb tervezz útvonalat a térképen
+Az OpenFreeMap letöltésenként legfeljebb 3000 csempét vagy 50 MB-ot enged, így egy nagy régió több területből áll. A kereséshez és az új útvonalakhoz továbbra is kell kapcsolat.
+{n} szabad az eszközön.
+Letöltött területek
+Még semmi. Válassz méretet bal oldalt, és koppints a Letöltésre.
+Letöltés… {done} / {total}
+{km} km útvonal
+{km} km széles
+50 MB-nál leállt
+Nincs kész
+Befejezés
+Offline terület törölve

@@ -355,3 +355,34 @@ Inverser les côtés
 Impossible de lire cette vidéo ({error})
 Quitter le plein écran
 Lenteurs et blocages
+Cartes hors ligne
+{n} zones sur cet appareil
+Téléchargez votre zone une fois ; la carte marche sans données
+Télécharger autour d'ici
+Déplacez la carte pour mettre son centre au milieu de la zone
+Serveur de cartes injoignable ; vérifiez la connexion
+Itinéraire vers {place}
+Impossible de lancer le téléchargement
+Une autre zone est déjà en téléchargement
+Carte hors ligne prête
+Carte téléchargée, {n} tuiles manquantes
+Arrêté à 50 Mo ; une zone ne peut pas dépasser cela
+Le long de votre itinéraire
+Choisir sur la carte
+Toutes les rues, environ {km} km de large
+{n} tuiles de carte, 50 Mo au plus
+Routes principales, environ {km} km de large
+Une zone plus grande, moins détaillée · {n} tuiles
+Toutes les rues sur une bande le long de l'itinéraire ({km} km)
+Planifiez d'abord un itinéraire sur la carte
+OpenFreeMap autorise au plus 3 000 tuiles ou 50 Mo par téléchargement : une grande région demande donc plusieurs zones. La recherche et les nouveaux itinéraires ont toujours besoin d'une connexion.
+{n} libres sur cet appareil.
+Zones téléchargées
+Rien pour l'instant. Choisissez une taille à gauche et touchez Télécharger.
+Téléchargement… {done} sur {total}
+{km} km d'itinéraire
+{km} km de large
+Arrêté à 50 Mo
+Pas terminé
+Terminer
+Zone hors ligne supprimée

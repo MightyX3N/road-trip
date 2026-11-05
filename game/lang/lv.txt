@@ -355,3 +355,34 @@ Samainīt puses
 Video nevar atskaņot ({error})
 Iziet no pilnekrāna
 Palēninājumi un sastingumi
+Bezsaistes kartes
+Ierīcē {n} apgabali
+Lejupielādējiet savu apkaimi vienreiz; karte darbojas bez datiem
+Lejupielādēt šeit apkārt
+Pārvietojiet karti, lai tās centrs būtu apgabala vidū
+Karšu serveris nav sasniedzams; pārbaudiet savienojumu
+Maršruts uz {place}
+Neizdevās sākt lejupielādi
+Jau tiek lejupielādēts cits apgabals
+Bezsaistes karte gatava
+Karte lejupielādēta, trūkst {n} flīžu
+Apturēts pie 50 MB; lielāks viens apgabals nedrīkst būt
+Gar jūsu maršrutu
+Izvēlēties kartē
+Visas ielas, ap {km} km platumā
+{n} kartes flīzes, ne vairāk kā 50 MB
+Galvenie ceļi, ap {km} km platumā
+Lielāks apgabals ar mazāk detaļām · {n} flīzes
+Visas ielas joslā gar maršrutu ({km} km)
+Vispirms kartē ieplānojiet maršrutu
+OpenFreeMap atļauj ne vairāk kā 3000 flīžu vai 50 MB vienā lejupielādē, tāpēc lielam reģionam vajag vairākus apgabalus. Meklēšanai un jauniem maršrutiem joprojām vajag savienojumu.
+Ierīcē brīvs {n}.
+Lejupielādētie apgabali
+Vēl nekā. Kreisajā pusē izvēlieties izmēru un pieskarieties Lejupielādēt.
+Lejupielādē… {done} no {total}
+{km} km maršruta
+{km} km platumā
+Apturēts pie 50 MB
+Nav pabeigts
+Pabeigt
+Bezsaistes apgabals izdzēsts

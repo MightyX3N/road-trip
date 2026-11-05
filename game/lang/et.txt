@@ -355,3 +355,34 @@ Vaheta pooli
 Videot ei saa esitada ({error})
 Välju täisekraanist
 Aeglased hetked ja hangumised
+Võrguta kaardid
+Seadmes {n} ala
+Laadi oma piirkond korra alla; kaart töötab andmesideta
+Laadi siin ümber
+Liiguta kaarti nii, et keskpunkt oleks ala keskel
+Kaardiserveriga ei saa ühendust; kontrolli ühendust
+Teekond: {place}
+Allalaadimist ei saanud alustada
+Teist ala juba laaditakse
+Võrguta kaart on valmis
+Kaart alla laaditud, puudu {n} ruutu
+Peatus 50 MB juures; suurem üks ala olla ei tohi
+Sinu teekonna ääres
+Vali kaardil
+Kõik tänavad, umbes {km} km lai
+{n} kaardiruutu, kuni 50 MB
+Põhiteed, umbes {km} km lai
+Suurem ala vähemate detailidega · {n} ruutu
+Kõik tänavad ribana teekonna ääres ({km} km)
+Planeeri enne kaardil teekond
+OpenFreeMap lubab ühe allalaadimisega kuni 3000 ruutu või 50 MB, seega suur piirkond vajab mitut ala. Otsing ja uued teekonnad vajavad endiselt ühendust.
+Seadmes vaba {n}.
+Allalaaditud alad
+Veel pole midagi. Vali vasakult suurus ja puuduta Laadi alla.
+Laadimine… {done}/{total}
+{km} km teekonda
+{km} km lai
+Peatus 50 MB juures
+Pooleli
+Lõpeta
+Võrguta ala kustutatud

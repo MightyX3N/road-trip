@@ -355,3 +355,34 @@ Byt side
 Kunne ikke afspille videoen ({error})
 Afslut fuld skærm
 Langsomme øjeblikke og frys
+Offlinekort
+{n} områder på enheden
+Hent dit område én gang; kortet virker uden data
+Hent omkring her
+Flyt kortet, så midten er midt i området
+Kan ikke nå kortserveren; tjek forbindelsen
+Rute til {place}
+Kunne ikke starte overførslen
+Et andet område hentes allerede
+Offlinekortet er klar
+Offlinekort hentet, {n} felter mangler
+Stoppet ved 50 MB; mere må ét område ikke fylde
+Langs din rute
+Vælg på kortet
+Alle veje, ca. {km} km på tværs
+{n} kortfelter, højst 50 MB
+Hovedveje, ca. {km} km på tværs
+Et større område med færre detaljer · {n} felter
+Alle veje i et bælte langs ruten ({km} km)
+Planlæg først en rute på kortet
+OpenFreeMap tillader højst 3.000 felter eller 50 MB pr. overførsel, så en stor region kræver flere områder. Søgning og nye ruter kræver stadig forbindelse.
+{n} ledigt på enheden.
+Hentede områder
+Intet endnu. Vælg en størrelse til venstre, og tryk på Hent.
+Henter… {done} af {total}
+{km} km rute
+{km} km på tværs
+Stoppet ved 50 MB
+Ikke færdig
+Gør færdig
+Offlineområde slettet

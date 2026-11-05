@@ -355,3 +355,34 @@ Pagpalitin ang gilid
 Hindi ma-play ang video na ito ({error})
 Lumabas sa buong screen
 Mabagal na sandali at pag-freeze
+Offline na mapa
+{n} lugar sa device na ito
+I-download ang lugar mo nang isang beses; gagana ang mapa kahit walang data
+I-download ang paligid dito
+Igalaw ang mapa hanggang nasa gitna ng lugar ang gitna nito
+Hindi maabot ang map server; tingnan ang koneksyon
+Ruta papunta sa {place}
+Hindi masimulan ang pag-download
+May ibang lugar na dina-download
+Handa na ang offline na mapa
+Na-download ang mapa, kulang ng {n} tile
+Huminto sa 50 MB; hindi puwedeng mas malaki ang isang lugar
+Sa kahabaan ng ruta mo
+Pumili sa mapa
+Lahat ng kalye, mga {km} km ang lapad
+{n} map tile, hanggang 50 MB
+Mga pangunahing kalsada, mga {km} km ang lapad
+Mas malaking lugar na mas kaunti ang detalye · {n} tile
+Lahat ng kalye sa isang guhit sa kahabaan ng ruta ({km} km)
+Magplano muna ng ruta sa mapa
+Hanggang 3,000 tile o 50 MB lang bawat download ang pinapayagan ng OpenFreeMap, kaya ilang lugar ang kailangan para sa malaking rehiyon. Kailangan pa rin ng koneksyon sa paghahanap at bagong ruta.
+{n} ang bakante sa device na ito.
+Mga na-download na lugar
+Wala pa. Pumili ng laki sa kaliwa at i-tap ang I-download.
+Nagda-download… {done} sa {total}
+{km} km na ruta
+{km} km ang lapad
+Huminto sa 50 MB
+Hindi tapos
+Tapusin
+Nabura ang offline na lugar

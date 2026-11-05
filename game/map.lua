@@ -433,6 +433,17 @@ end
 local function tileKey(z, x, y) return z .. "/" .. x .. "/" .. y end
 local function tilePath(z, x, y) return "tiles/" .. (tileVer or "v") .. "/" .. z .. "/" .. x .. "/" .. y .. ".pbf" end
 
+-- a downloaded offline area that has this tile (offline.lua keeps them in tiles/off/<id>/)
+local function offlinePath(z, x, y)
+  local areas = config.get("offlineAreas")
+  if not areas then return nil end
+  local rest = "/" .. z .. "/" .. x .. "/" .. y .. ".pbf"
+  for _, a in ipairs(areas) do
+    local p = "tiles/off/" .. a.id .. rest
+    if love.filesystem.getInfo(p) then return p end
+  end
+end
+
 local function request(id, handler) if type(id) == "number" then pending[id] = handler end end
 
 local function evict()
@@ -459,7 +470,10 @@ local function getTile(z, x, y, zb)
   end
   t.used = frame
   if t.state == "new" or (t.state == "failed" and love.timer.getTime() > t.retryAt) then
-    if love.filesystem.getInfo(tilePath(z, x, y)) then
+    local cached = tilePath(z, x, y)
+    local off = not love.filesystem.getInfo(cached) and offlinePath(z, x, y)
+    if off or love.filesystem.getInfo(cached) then
+      t.path = off or cached
       t.state = "queued"
       queue[#queue + 1] = t
     elseif tileURL and dlCount < 6 then
@@ -467,6 +481,7 @@ local function getTile(z, x, y, zb)
       dlCount = dlCount + 1
       local url = tileURL:gsub("{z}", z):gsub("{x}", x):gsub("{y}", y)
       local path = tilePath(z, x, y)
+      t.path = path
       love.filesystem.createDirectory(path:match("^(.*)/"))
       request(android.download(url, love.filesystem.getSaveDirectory() .. "/" .. path), function(r)
         dlCount = dlCount - 1
@@ -485,17 +500,35 @@ local function getTile(z, x, y, zb)
   end
 end
 
+-- a tile only if it's on the device (cached or in an offline area); never downloads
+local notLocal = {} -- tile key -> when it was last found missing (checking the disk every frame is slow)
+local function localTile(z, x, y, zb)
+  local k = tileKey(z, x, y)
+  local t = tiles[k]
+  if t and t.state == "ready" then return getTile(z, x, y, zb) end
+  if t and t.state ~= "new" then return nil end
+  local now = love.timer.getTime()
+  if notLocal[k] and now - notLocal[k] < 10 then return nil end
+  if love.filesystem.getInfo(tilePath(z, x, y)) or offlinePath(z, x, y) then
+    notLocal[k] = nil
+    return getTile(z, x, y, zb)
+  end
+  notLocal[k] = now
+end
+
 local function decodeNext()
   local t = table.remove(queue, 1)
   if not t then return end
-  local data = love.filesystem.read(tilePath(t.z, t.x, t.y))
+  local data = love.filesystem.read(t.path or tilePath(t.z, t.x, t.y))
   if not data then t.state, t.retryAt = "failed", love.timer.getTime() + 20 return end
   if byte(data, 1) == 0x1f and byte(data, 2) == 0x8b then
     local ok, raw = pcall(love.data.decompress, "string", "gzip", data)
     if not ok then t.state, t.retryAt = "failed", love.timer.getTime() + 60 return end
     data = raw
   end
-  local ok, layers = pcall(decodeTile, data, WANT)
+  local ok, layers
+  if data == "" then ok, layers = true, {} -- nothing there (open sea, in an offline area)
+  else ok, layers = pcall(decodeTile, data, WANT) end
   if not ok then
     print("map: tile decode failed " .. tostring(layers))
     t.state, t.retryAt = "failed", love.timer.getTime() + 600
@@ -1005,6 +1038,19 @@ function M.init(deps)
   for _, g in ipairs(ROADS) do g.color = hex(g.col) end
   local last = config.get("mapLast")
   if last then M.view.lat, M.view.lon = last.lat, last.lon end
+  -- the last known tile address, so cached and offline tiles show without a connection
+  local mt = config.get("mapTiles")
+  if mt then tileURL, tileVer = mt.url, mt.ver end
+end
+
+function M.tileTemplate() return tileURL end
+function M.project(lat, lon, z) return project(lat, lon, z) end
+function M.unproject(x, y, z) return unproject(x, y, z) end
+M.TILE = TILE
+-- the route being shown or followed, if any
+function M.activeRoute()
+  if M.nav then return M.nav.route end
+  return M.routes and M.routes[M.sel]
 end
 
 -- called when the Map screen opens: start location, get the tile address
@@ -1015,8 +1061,14 @@ function M.open()
       local d = r.ok and json.decode(r.body or "")
       local t = d and d.tiles and d.tiles[1]
       if t then
-        tileURL = t
-        tileVer = t:match("/planet/([^/]+)/") or "v"
+        local ver = t:match("/planet/([^/]+)/") or "v"
+        -- a new OpenFreeMap version: last version's browsing cache is no use any more
+        local old = config.get("mapTiles")
+        if old and old.ver and old.ver ~= ver and old.ver ~= "off" then
+          android.deleteTree(love.filesystem.getSaveDirectory() .. "/tiles/" .. old.ver)
+        end
+        tileURL, tileVer = t, ver
+        config.set("mapTiles", { url = t, ver = ver })
         app.dirty()
       end
     end)
@@ -1161,7 +1213,7 @@ function M.drawMap(x0, y0, w, h, opts)
   local tsz = TILE * 2 ^ (z - zs)
   local ax = x0 + w / 2
   -- looking ahead: the car sits lower on the screen while it's guided or driving heading-up
-  local ahead = M.mode == "nav" or (v.follow ~= false and moving and not config.get("mapNorthUp"))
+  local ahead = not (opts and opts.centered) and (M.mode == "nav" or (v.follow ~= false and moving and not config.get("mapNorthUp")))
   local ay = y0 + h * (ahead and 0.66 or 0.5)
 
   lg.push()
@@ -1171,23 +1223,43 @@ function M.drawMap(x0, y0, w, h, opts)
   local n = 2 ^ zs
   local tx0, tx1 = math.floor((cx - r) / tsz), math.floor((cx + r) / tsz)
   local ty0, ty1 = math.max(0, math.floor((cy - r) / tsz)), math.min(n - 1, math.floor((cy + r) / tsz))
-  local list = {}
+  local list, fill, seen = {}, {}, {}
   for ty = ty0, ty1 do
     for tx = tx0, tx1 do
       local t = getTile(zs, tx % n, ty, zb)
-      if t and t.meshes then list[#list + 1] = { t = t, sx = tx * tsz - cx, sy = ty * tsz - cy } end
+      if t and t.meshes then
+        list[#list + 1] = { t = t, sx = tx * tsz - cx, sy = ty * tsz - cy, size = tsz }
+      else
+        -- not here (yet, or not offline): a coarser tile that is on the device stands in
+        for d = 1, 4 do
+          local pz = zs - d
+          if pz < 0 then break end
+          local px, py = math.floor(tx / 2 ^ d), math.floor(ty / 2 ^ d)
+          local key = pz .. "/" .. px .. "/" .. py
+          if seen[key] then break end
+          local pt = localTile(pz, px % (2 ^ pz), py, zb)
+          if pt and pt.meshes then
+            seen[key] = true
+            local size = tsz * 2 ^ d
+            fill[#fill + 1] = { t = pt, sx = px * size - cx, sy = py * size - cy, size = size }
+            break
+          end
+        end
+      end
     end
   end
+  -- the stand-ins first, so the real tiles draw over them
+  for _, it in ipairs(list) do fill[#fill + 1] = it end
   -- layer by layer across all tiles, so a road on one tile never hides under the next tile's water
-  for _, it in ipairs(list) do
-    local k = tsz / it.t.extent
+  for _, it in ipairs(fill) do
+    local k = it.size / it.t.extent
     lg.setColor(COL.water) drawMesh(it.t.meshes.water, it.sx, it.sy, k)
     lg.setColor(COL.bg) drawMesh(it.t.meshes.holes, it.sx, it.sy, k)
     lg.setColor(COL.green) drawMesh(it.t.meshes.green, it.sx, it.sy, k)
   end
   for gi, g in ipairs(ROADS) do
     lg.setColor(g.color)
-    for _, it in ipairs(list) do drawMesh(it.t.meshes.roads[gi], it.sx, it.sy, tsz / it.t.extent) end
+    for _, it in ipairs(fill) do drawMesh(it.t.meshes.roads[gi], it.sx, it.sy, it.size / it.t.extent) end
   end
 
   -- routes: alternatives grey, the chosen or active one in the accent colour
@@ -1363,6 +1435,8 @@ local homeView = { lat = 0, lon = 0, zoom = 15.5, rot = 0 }
 
 -- Home's map card: your position (or the active route), with the turn card on top while
 -- Road Trip guides you. Returns true when it drew guidance.
+function M.cornerMasks(x, y, w, h, r, col) cornerMasks(x, y, w, h, r, col) end
+
 function M.drawWidget(x, y, w, h, radius)
   local v
   if M.nav and M.view.follow then

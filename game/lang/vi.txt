@@ -355,3 +355,34 @@ Hiện bản đồ
 Không phát được video này ({error})
 Thoát toàn màn hình
 Lúc chậm và bị treo
+Bản đồ ngoại tuyến
+{n} khu vực trên thiết bị
+Tải khu vực của bạn một lần; bản đồ chạy không cần dữ liệu
+Tải quanh đây
+Kéo bản đồ để tâm của nó nằm giữa khu vực
+Không kết nối được máy chủ bản đồ; kiểm tra kết nối
+Lộ trình đến {place}
+Không bắt đầu tải được
+Đang tải một khu vực khác
+Bản đồ ngoại tuyến đã sẵn sàng
+Đã tải bản đồ, thiếu {n} ô
+Đã dừng ở 50 MB; một khu vực không được lớn hơn
+Dọc lộ trình của bạn
+Chọn trên bản đồ
+Mọi con đường, rộng khoảng {km} km
+{n} ô bản đồ, tối đa 50 MB
+Đường chính, rộng khoảng {km} km
+Khu vực lớn hơn, ít chi tiết hơn · {n} ô
+Mọi con đường trong một dải dọc lộ trình ({km} km)
+Hãy lập lộ trình trên bản đồ trước
+OpenFreeMap cho phép tối đa 3.000 ô hoặc 50 MB mỗi lần tải, nên vùng lớn cần vài khu vực. Tìm kiếm và lộ trình mới vẫn cần kết nối.
+Còn trống {n} trên thiết bị.
+Khu vực đã tải
+Chưa có gì. Chọn kích thước bên trái rồi chạm Tải xuống.
+Đang tải… {done}/{total}
+{km} km lộ trình
+rộng {km} km
+Đã dừng ở 50 MB
+Chưa xong
+Hoàn tất
+Đã xóa khu vực ngoại tuyến

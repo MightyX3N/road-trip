@@ -355,3 +355,34 @@ Tukar sisi
 Video ini tidak bisa diputar ({error})
 Keluar dari layar penuh
 Momen lambat dan macet
+Peta offline
+{n} area di perangkat ini
+Unduh area Anda sekali; peta jalan tanpa data
+Unduh sekitar sini
+Geser peta sampai bagian tengahnya ada di tengah area
+Server peta tidak bisa dijangkau; periksa koneksi
+Rute ke {place}
+Unduhan tidak bisa dimulai
+Area lain sedang diunduh
+Peta offline siap
+Peta terunduh, {n} petak kurang
+Berhenti di 50 MB; satu area tidak boleh lebih besar
+Di sepanjang rute Anda
+Pilih di peta
+Semua jalan, sekitar {km} km lebarnya
+{n} petak peta, paling banyak 50 MB
+Jalan utama, sekitar {km} km lebarnya
+Area lebih besar dengan detail lebih sedikit · {n} petak
+Semua jalan dalam jalur di sepanjang rute ({km} km)
+Rencanakan rute di peta dulu
+OpenFreeMap mengizinkan paling banyak 3.000 petak atau 50 MB per unduhan, jadi wilayah besar perlu beberapa area. Pencarian dan rute baru tetap perlu koneksi.
+{n} kosong di perangkat ini.
+Area yang diunduh
+Belum ada. Pilih ukuran di kiri lalu ketuk Unduh.
+Mengunduh… {done} dari {total}
+{km} km rute
+{km} km lebarnya
+Berhenti di 50 MB
+Belum selesai
+Selesaikan
+Area offline dihapus

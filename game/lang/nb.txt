@@ -355,3 +355,34 @@ Bytt side
 Kunne ikke spille av videoen ({error})
 Avslutt fullskjerm
 Trege øyeblikk og frys
+Frakoblede kart
+{n} områder på enheten
+Last ned området ditt én gang; kartet virker uten data
+Last ned her omkring
+Flytt kartet så midten ligger midt i området
+Får ikke kontakt med kartserveren; sjekk tilkoblingen
+Rute til {place}
+Kunne ikke starte nedlastingen
+Et annet område lastes allerede ned
+Det frakoblede kartet er klart
+Kart lastet ned, {n} ruter mangler
+Stoppet ved 50 MB; mer kan ett område ikke være
+Langs ruten din
+Velg på kartet
+Alle gater, omtrent {km} km på tvers
+{n} kartruter, høyst 50 MB
+Hovedveier, omtrent {km} km på tvers
+Et større område med mindre detaljer · {n} ruter
+Alle gater i et belte langs ruten ({km} km)
+Planlegg en rute på kartet først
+OpenFreeMap tillater høyst 3000 ruter eller 50 MB per nedlasting, så en stor region krever flere områder. Søk og nye ruter trenger fortsatt tilkobling.
+{n} ledig på enheten.
+Nedlastede områder
+Ingenting ennå. Velg en størrelse til venstre og trykk på Last ned.
+Laster ned… {done} av {total}
+{km} km rute
+{km} km på tvers
+Stoppet ved 50 MB
+Ikke ferdig
+Fullfør
+Området er slettet

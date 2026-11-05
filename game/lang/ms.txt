@@ -355,3 +355,34 @@ Tukar sisi
 Video ini tidak dapat dimainkan ({error})
 Keluar skrin penuh
 Detik perlahan dan tergantung
+Peta luar talian
+{n} kawasan pada peranti ini
+Muat turun kawasan anda sekali; peta berfungsi tanpa data
+Muat turun sekitar sini
+Alihkan peta sehingga tengahnya berada di tengah kawasan
+Pelayan peta tidak dapat dicapai; semak sambungan
+Laluan ke {place}
+Muat turun tidak dapat dimulakan
+Kawasan lain sedang dimuat turun
+Peta luar talian sedia
+Peta dimuat turun, {n} jubin hilang
+Berhenti pada 50 MB; satu kawasan tidak boleh lebih besar
+Sepanjang laluan anda
+Pilih pada peta
+Semua jalan, kira-kira {km} km lebar
+{n} jubin peta, paling banyak 50 MB
+Jalan utama, kira-kira {km} km lebar
+Kawasan lebih besar dengan kurang perincian · {n} jubin
+Semua jalan dalam jalur sepanjang laluan ({km} km)
+Rancang laluan pada peta dahulu
+OpenFreeMap membenarkan paling banyak 3,000 jubin atau 50 MB setiap muat turun, jadi wilayah besar memerlukan beberapa kawasan. Carian dan laluan baharu masih memerlukan sambungan.
+{n} kosong pada peranti ini.
+Kawasan dimuat turun
+Belum ada. Pilih saiz di kiri dan ketik Muat turun.
+Memuat turun… {done} daripada {total}
+{km} km laluan
+{km} km lebar
+Berhenti pada 50 MB
+Belum selesai
+Selesaikan
+Kawasan luar talian dipadam
