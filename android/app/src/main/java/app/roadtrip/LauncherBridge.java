@@ -56,6 +56,21 @@ public final class LauncherBridge {
                 case "voice":
                     data = voice(ctx);
                     break;
+                case "guardStatus":
+                    data = guardStatus(ctx);
+                    break;
+                case "setGuardEnabled":
+                    ctx.getSharedPreferences(GuardService.PREFS, Context.MODE_PRIVATE).edit()
+                        .putBoolean(GuardService.KEY_ENABLED, a.getBoolean("on"))
+                        .putLong(GuardService.KEY_PAUSE_UNTIL, 0).apply();
+                    data = true;
+                    break;
+                case "openStockLauncher":
+                    data = openStockLauncher(ctx, a.optLong("pauseMs", 120_000));
+                    break;
+                case "openAccessibilitySettings":
+                    data = openSettings(ctx, Settings.ACTION_ACCESSIBILITY_SETTINGS);
+                    break;
                 default:
                     return fail("unknown method: " + method);
             }
@@ -180,6 +195,63 @@ public final class LauncherBridge {
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         ctx.startActivity(i);
         return true;
+    }
+
+    // ---- guard ------------------------------------------------------------------------------
+
+    private static JSONObject guardStatus(Context ctx) throws Exception {
+        JSONObject o = new JSONObject();
+        String on = Settings.Secure.getString(ctx.getContentResolver(), Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES);
+        String me = new ComponentName(ctx, GuardService.class).flattenToString();
+        String meShort = new ComponentName(ctx, GuardService.class).flattenToShortString();
+        boolean serviceOn = false;
+        if (on != null) {
+            for (String s : on.split(":")) {
+                if (s.equalsIgnoreCase(me) || s.equalsIgnoreCase(meShort)) serviceOn = true;
+            }
+        }
+        android.content.SharedPreferences sp = ctx.getSharedPreferences(GuardService.PREFS, Context.MODE_PRIVATE);
+        o.put("serviceOn", serviceOn);
+        o.put("enabled", sp.getBoolean(GuardService.KEY_ENABLED, true));
+        o.put("pausedUntil", sp.getLong(GuardService.KEY_PAUSE_UNTIL, 0));
+        o.put("now", System.currentTimeMillis());
+        JSONArray stock = new JSONArray();
+        for (String p : GuardService.otherHomeApps(ctx)) stock.put(p);
+        o.put("stock", stock);
+        return o;
+    }
+
+    /** Opens the box's own launcher on purpose; the guard stands down for pauseMs. */
+    private static boolean openStockLauncher(Context ctx, long pauseMs) {
+        Intent home = new Intent(Intent.ACTION_MAIN);
+        home.addCategory(Intent.CATEGORY_HOME);
+        List<ResolveInfo> list = ctx.getPackageManager().queryIntentActivities(home, PackageManager.MATCH_ALL);
+        for (ResolveInfo ri : list) {
+            String p = ri.activityInfo.packageName;
+            if (p.equals(ctx.getPackageName()) || p.equals("com.android.settings")) continue;
+            GuardService.pause(ctx, pauseMs);
+            Intent i = new Intent(Intent.ACTION_MAIN);
+            i.addCategory(Intent.CATEGORY_HOME);
+            i.setComponent(new ComponentName(p, ri.activityInfo.name));
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            ctx.startActivity(i);
+            return true;
+        }
+        return false;
+    }
+
+    private static boolean openSettings(Context ctx, String action) {
+        try {
+            Intent i = new Intent(action);
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            ctx.startActivity(i);
+            return true;
+        } catch (Throwable t) {
+            Intent i = new Intent(Settings.ACTION_SETTINGS);
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            ctx.startActivity(i);
+            return true;
+        }
     }
 
     /** Hands off to whatever voice assistant the box has (Google Assistant, etc.). */

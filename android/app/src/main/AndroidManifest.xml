@@ -57,5 +57,19 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
+        <!-- Brings Road Trip back when the head unit switches to its own launcher -->
+        <service
+            android:name="app.roadtrip.GuardService"
+            android:exported="true"
+            android:label="@string/roadtrip_guard_label"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/roadtrip_guard" />
+        </service>
     </application>
 </manifest>

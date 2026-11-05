@@ -44,12 +44,32 @@ last 30 or so lines.
    Settings → Apps → Default apps → Home app → Road Trip.
 4. Set the virtual device to landscape (the rotate button in Genymotion's side bar).
 
+## Keep Road Trip in front (the guard)
+
+Some car boxes, the Ottocast included, switch back to their own launcher by themselves.
+Road Trip's guard notices and comes straight back. It's an Android accessibility
+service that only sees which app is in front, never what's on screen, and it ignores
+any app you open yourself.
+
+Turn it on once: tap **Turn on** in the banner on Home (or long-press the clock →
+*Turn on Keep in front*), then in Accessibility find **Road Trip: keep in front** and
+switch it on.
+
+On Android 13 and newer, if you installed the APK from a file manager or browser,
+Android may grey that switch out with "Restricted setting". To allow it: Settings →
+Apps → Road Trip → ⋮ (top right) → **Allow restricted settings**, then try again.
+(APKs installed by dragging onto Genymotion or with adb aren't affected.)
+
+Long-press the clock any time for:
+- **Open the box's launcher for 2 minutes**, to use the stock launcher on purpose
+- **Keep in front on / off**
+- **Default home app**
+
 ## Install on the Ottocast later
 
 Copy the same `road-trip.apk` to a USB stick or download it on the box, open it in the
 file manager, and allow installing from that source when asked. Then pick Road Trip as
-the home app the same way. The Ottocast may still fall back to its own launcher
-sometimes; that's what the guard in step 2 fixes.
+the home app the same way. Then turn on the guard, as above.
 
 ## What to check
 

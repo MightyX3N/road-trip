@@ -311,6 +311,8 @@ local function stubCall(method, args)
     return list
   elseif method == "isDefaultHome" then
     return true
+  elseif method == "guardStatus" then
+    return { serviceOn = false, enabled = true, stock = { "com.example.stocklauncher" } }
   end
   print("[android stub]", method, json.encode(args or {}))
   return true
@@ -331,5 +333,9 @@ function M.isDefaultHome() return M.call("isDefaultHome") end
 function M.openHomeSettings() return M.call("openHomeSettings") end
 function M.openAppInfo(app) return M.call("openAppInfo", { pkg = app.pkg }) end
 function M.voice() return M.call("voice") end
+function M.guardStatus() return M.call("guardStatus") end
+function M.setGuardEnabled(on) return M.call("setGuardEnabled", { on = on }) end
+function M.openStockLauncher() return M.call("openStockLauncher", { pauseMs = 120000 }) end
+function M.openAccessibilitySettings() return M.call("openAccessibilitySettings") end
 
 return M

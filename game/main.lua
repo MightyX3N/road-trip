@@ -22,9 +22,10 @@ local state = {
   pagers = { apps = { page = 1, x = 0 }, favs = { page = 1, x = 0 } },
   pagerArea = {},    -- pager id -> area it was last drawn in
   pick = {},         -- keys being picked in the favorites picker
-  menu = nil,        -- app whose long-press menu is open
-  toast = nil,       -- { text, until }
+  menu = nil,        -- open menu: { title, app?, rows = { { label, icon, id, off } } }
+  toast = nil,       -- { text, untilT }
   isHome = true,
+  guard = { serviceOn = true, enabled = true, stock = {} },
   error = nil,
   dirty = true,
 }
@@ -56,6 +57,8 @@ local function refreshApps()
   for _, app in ipairs(apps) do state.byKey[keyOf(app)] = app end
   state.error = nil
   state.isHome = android.isDefaultHome() ~= false
+  local g = android.guardStatus()
+  if type(g) == "table" then state.guard = g end
   state.dirty = true
 end
 
@@ -129,6 +132,8 @@ local function drawTopBar()
   ui.text(time, "bold", 30, ui.c.text, x0 + 32, (TOP - th) / 2)
   local tw = ui.textWidth(time, "bold", 30)
   ui.text(date, "semibold", 17, ui.c.muted, x0 + 32 + tw + 16, (TOP - th) / 2 + 11)
+  -- long-press the clock for the guard and launcher controls
+  ui.hit({ kind = "clock" }, x0 + 16, 0, tw + ui.textWidth(date, "semibold", 17) + 48, TOP)
   if state.error then
     local msg = ui.fit(state.error, "semibold", 15, W - x0 - 400)
     ui.text(msg, "semibold", 15, ui.hex("F09A8A"), x0, (TOP - 20) / 2, "right", W - x0 - 32)
@@ -234,20 +239,28 @@ end
 -- Home
 ----------------------------------------------------------------------------------------------
 
-local function showBanner()
-  return android.isAndroid and not state.isHome and not config.get("homeHintDismissed")
+-- one banner at a time: home app first, then the guard
+local function currentBanner()
+  if not android.isAndroid then return nil end
+  if not state.isHome and not config.get("homeHintDismissed") then
+    return { title = "Road Trip isn't your home app yet", sub = "Set it so the Home button opens it",
+      button = "Set as home app", id = { kind = "setHome" }, dismiss = "homeHintDismissed" }
+  end
+  if not state.guard.serviceOn and not config.get("guardHintDismissed") then
+    return { title = "Keep Road Trip in front", sub = "Stops the box switching back to its own launcher",
+      button = "Turn on", id = { kind = "a11y" }, dismiss = "guardHintDismissed" }
+  end
 end
 
-local function drawBanner(y)
+local function drawBanner(b, y)
   local x, w, h = RAIL + 24, W - RAIL - 48, 72
   ui.rect(ui.c.card, x, y, w, h, 20)
-  ui.text("Road Trip isn't your home app yet", "bold", 19, ui.c.text, x + 24, y + 14)
-  ui.text("Set it so the Home button opens it", "semibold", 15, ui.c.muted, x + 24, y + 40)
-  local bw = ui.textWidth("Set as home app", "bold", 16) + 44
-  local bx = x + w - 64 - bw - 12
-  pill({ kind = "setHome" }, "Set as home app", bx, y + 12, 48, "accent")
+  ui.text(b.title, "bold", 19, ui.c.text, x + 24, y + 14)
+  ui.text(b.sub, "semibold", 15, ui.c.muted, x + 24, y + 40)
+  local bw = ui.textWidth(b.button, "bold", 16) + 44
+  pill(b.id, b.button, x + w - 64 - bw - 12, y + 12, 48, "accent")
   ui.icon("close", x + w - 52, y + 24, 24, ui.c.muted, 2.2)
-  ui.hit({ kind = "dismissBanner" }, x + w - 64, y + 8, 56, 56)
+  ui.hit({ kind = "dismissBanner", key = b.dismiss }, x + w - 64, y + 8, 56, 56)
 end
 
 -- a widget slot that isn't built yet: says what it will be, without pretending
@@ -298,8 +311,9 @@ end
 
 local function drawHome()
   local y = TOP + 24
-  if showBanner() then
-    drawBanner(y)
+  local banner = currentBanner()
+  if banner then
+    drawBanner(banner, y)
     y = y + 92
   end
   local favH = 104
@@ -388,36 +402,66 @@ end
 -- long-press menu and toast
 ----------------------------------------------------------------------------------------------
 
+local function appMenu(app)
+  local fav = isFavorite(app)
+  local full = not fav and #favoriteApps() >= FAV_MAX
+  return {
+    title = app.label, app = app,
+    rows = {
+      { id = { kind = fav and "unfav" or "fav+", app = app }, icon = fav and "close" or "plus",
+        label = fav and "Remove from favorites" or (full and "Favorites are full (5)" or "Add to favorites"), off = full },
+      { id = { kind = "appInfo", app = app }, icon = "edit", label = "App info" },
+    },
+  }
+end
+
+local function launcherMenu()
+  local g = state.guard
+  local rows = {}
+  if #(g.stock or {}) > 0 then
+    rows[#rows + 1] = { id = { kind = "stock" }, icon = "home", label = "Open the box's launcher for 2 minutes" }
+  else
+    rows[#rows + 1] = { icon = "home", label = "No other launcher found", off = true }
+  end
+  if not g.serviceOn then
+    rows[#rows + 1] = { id = { kind = "a11y" }, icon = "check", label = "Turn on Keep in front" }
+  elseif g.enabled then
+    rows[#rows + 1] = { id = { kind = "guardOff" }, icon = "close", label = "Keep in front is on · turn off" }
+  else
+    rows[#rows + 1] = { id = { kind = "guardOn" }, icon = "check", label = "Keep in front is off · turn on" }
+  end
+  rows[#rows + 1] = { id = { kind = "setHome" }, icon = "edit", label = "Default home app" }
+  return { title = "Road Trip", rows = rows }
+end
+
 local function drawMenu()
-  local app = state.menu
-  if not app then return end
+  local m = state.menu
+  if not m then return end
   lg.setColor(0, 0, 0, 0.55)
   lg.rectangle("fill", 0, 0, W, H)
   ui.hit({ kind = "menuClose" }, 0, 0, W, H)
 
-  local w, h = 460, 288
+  local w = 500
+  local h = 108 + #m.rows * 76 + 8
   local x, y = (W - w) / 2, (H - h) / 2
   ui.rect(ui.c.card, x, y, w, h, 28)
   ui.hit({ kind = "menuBody" }, x, y, w, h)
-  ui.circle(ui.c.tile, x + 56, y + 56, 30)
-  ui.ring(ui.c.ring, x + 56, y + 56, 30, 2)
-  drawAppIcon(app, x + 56, y + 56, 30)
-  ui.text(ui.fit(app.label, "bold", 22, w - 130), "bold", 22, ui.c.text, x + 102, y + 42)
+  local tx = x + 28
+  if m.app then
+    ui.circle(ui.c.tile, x + 56, y + 56, 30)
+    ui.ring(ui.c.ring, x + 56, y + 56, 30, 2)
+    drawAppIcon(m.app, x + 56, y + 56, 30)
+    tx = x + 102
+  end
+  ui.text(ui.fit(m.title, "bold", 22, x + w - 28 - tx), "bold", 22, ui.c.text, tx, y + 42)
 
-  local fav = isFavorite(app)
-  local full = not fav and #favoriteApps() >= FAV_MAX
-  local rows = {
-    { id = { kind = fav and "unfav" or "fav+", app = app }, icon = fav and "close" or "plus",
-      label = fav and "Remove from favorites" or (full and "Favorites are full (5)" or "Add to favorites"), off = full },
-    { id = { kind = "appInfo", app = app }, icon = "edit", label = "App info" },
-  }
   local ry = y + 108
-  for _, row in ipairs(rows) do
+  for _, row in ipairs(m.rows) do
     local color = row.off and ui.c.dim or ui.c.text2
     ui.rect(ui.c.chipHi, x + 20, ry, w - 40, 64, 18)
     ui.icon(row.icon, x + 40, ry + 20, 24, row.off and ui.c.dim or ui.c.accent, 2)
     ui.text(row.label, "bold", 18, color, x + 82, ry + (64 - ui.fontHeight("bold", 18)) / 2)
-    if not row.off then ui.hit(row.id, x + 20, ry, w - 40, 64) end
+    if not row.off and row.id then ui.hit(row.id, x + 20, ry, w - 40, 64) end
     ry = ry + 76
   end
 end
@@ -485,8 +529,22 @@ local function activate(id)
   elseif k == "tile" or k == "fav" then launch(id.app)
   elseif k == "rail" then state.screen = id.screen
   elseif k == "voice" then android.voice()
-  elseif k == "setHome" then android.openHomeSettings()
-  elseif k == "dismissBanner" then config.set("homeHintDismissed", true)
+  elseif k == "setHome" then
+    state.menu = nil
+    android.openHomeSettings()
+  elseif k == "dismissBanner" then config.set(id.key, true)
+  elseif k == "a11y" then
+    state.menu = nil
+    android.openAccessibilitySettings()
+    toast("Find Road Trip: keep in front and turn it on")
+  elseif k == "stock" then
+    state.menu = nil
+    android.openStockLauncher()
+  elseif k == "guardOff" or k == "guardOn" then
+    android.setGuardEnabled(k == "guardOn")
+    state.guard.enabled = k == "guardOn"
+    state.menu = nil
+    toast(k == "guardOn" and "Keep in front is on" or "Keep in front is off")
   elseif k == "editFavs" then openPicker("edit")
   elseif k == "pickerBack" then
     if state.favsMode == "setup" and config.get("favorites") == nil then saveFavorites({}) end
@@ -628,7 +686,10 @@ function love.update(dt)
     local id = press.id
     if id.kind == "tile" and id.grid == "apps" then
       press.done = true
-      state.menu = id.app
+      state.menu = appMenu(id.app)
+    elseif id.kind == "clock" then
+      press.done = true
+      state.menu = launcherMenu()
     elseif id.kind == "fav" then
       press.done = true
       openPicker("edit")

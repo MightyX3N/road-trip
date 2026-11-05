@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="roadtrip_guard_label">Road Trip: keep in front</string>
+    <string name="roadtrip_guard_description">Some car boxes switch back to their own launcher by themselves. With this on, Road Trip notices when another launcher comes to the front and returns. It only sees which app is in front, never what is on the screen, and it never interrupts apps you open.</string>
+</resources>
