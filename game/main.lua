@@ -28,7 +28,9 @@ local state = {
   guard = { serviceOn = true, enabled = true, stock = {} },
   update = { state = "idle" }, -- from Updater.java: idle|checking|none|available|downloading|ready|permission|error|offline
   manualCheck = false,         -- the user asked; report "up to date" too
-  timers = { update = 0, guard = 0, autoCheck = 0 },
+  timers = { update = 0, guard = 0, autoCheck = 0, home = 0 },
+  homeSeen = nil,              -- last Home-press count from Java
+  burstUntil = 0,              -- draw every frame until then (Android settles the screen after resume)
   error = nil,
   dirty = true,
 }
@@ -696,6 +698,18 @@ local function activate(id)
   state.dirty = true
 end
 
+local function burst() state.burstUntil = love.timer.getTime() + 2 end
+
+-- Home button: like any launcher, go to the Home screen and close whatever is open
+local function goHome()
+  if state.screen == "favs" and state.favsMode == "setup" and config.get("favorites") == nil then
+    saveFavorites({})
+  end
+  state.menu = nil
+  state.screen = "home"
+  state.dirty = true
+end
+
 local function sameTarget(a, b)
   return a and b and a.kind == b.kind and a.app == b.app and a.screen == b.screen and a.grid == b.grid
 end
@@ -791,13 +805,21 @@ function love.load()
   layout(lg.getDimensions())
   -- show a frame first, load apps right after (see love.update)
   state.needRefresh, state.firstLoad, state.drew = true, true, false
+  burst()
 end
 
 function love.resize(w, h) layout(w, h) end
 
 function love.focus(f)
   -- back from an app: draw straight away, then catch installs, removals, home changes
-  if f then state.needRefresh, state.drew = true, false end
+  if f then
+    state.needRefresh, state.drew = true, false
+    burst()
+  end
+end
+
+function love.visible(v)
+  if v then burst() end
 end
 
 function love.update(dt)
@@ -806,13 +828,24 @@ function love.update(dt)
     refreshApps()
     if state.firstLoad then
       state.firstLoad = false
+      local n = android.homePresses()
+      state.homeSeen = type(n) == "number" and n or 0
       if config.get("favorites") == nil then openPicker("setup") end
       checkForUpdate(false)
     end
   end
 
   local t = state.timers
-  t.update, t.guard, t.autoCheck = t.update + dt, t.guard + dt, t.autoCheck + dt
+  t.update, t.guard, t.autoCheck, t.home = t.update + dt, t.guard + dt, t.autoCheck + dt, t.home + dt
+  if state.homeSeen and t.home > 0.25 then
+    t.home = 0
+    local n = android.homePresses()
+    if type(n) == "number" and n ~= state.homeSeen then
+      state.homeSeen = n
+      goHome()
+      burst()
+    end
+  end
   local us = state.update.state
   if (us == "checking" or us == "downloading") and t.update > 0.5 then
     t.update = 0
@@ -856,7 +889,7 @@ function love.update(dt)
 end
 
 local function animating()
-  if press or state.toast then return true end
+  if press or state.toast or love.timer.getTime() < state.burstUntil then return true end
   for _, pg in pairs(state.pagers) do
     if math.abs((pg.page - 1) - pg.x) > 0.001 then return true end
   end

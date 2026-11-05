@@ -70,6 +70,9 @@ public final class LauncherBridge {
                 case "openStockLauncher":
                     data = openStockLauncher(ctx, a.optLong("pauseMs", 120_000));
                     break;
+                case "homePresses":
+                    data = RoadTripActivity.homePresses;
+                    break;
                 case "updateStatus":
                     data = Updater.status(ctx);
                     break;
