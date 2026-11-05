@@ -17,10 +17,10 @@ jobs:
 
     steps:
       - name: Get Road Trip
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set up Java 17
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: "17"
@@ -41,13 +41,12 @@ jobs:
           mkdir -p ~/.android
           cp android/debug.keystore ~/.android/debug.keystore
 
-      - name: Install the NDK and SDK platform love-android asks for
+      # Gradle downloads the exact SDK platform and NDK love-android asks for by itself,
+      # as long as the licenses are accepted.
+      - name: Accept Android SDK licenses
         run: |
-          NDK=$(grep -oP "ndkVersion\s+'\K[^']+" love-android/app/build.gradle)
-          SDK=$(grep -oP "compileSdk\s+\K[0-9]+" love-android/app/build.gradle)
-          echo "NDK $NDK, platform $SDK"
           yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses > /dev/null || true
-          "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "ndk;$NDK" "platforms;android-$SDK" "cmake;3.22.1" > /dev/null
+          grep -E "ndkVersion|compileSdk" love-android/app/build.gradle
 
       - name: Build
         working-directory: love-android
@@ -61,7 +60,7 @@ jobs:
           cp love-android/app/build/outputs/apk/embedNoRecord/debug/*.apk out/road-trip.apk
 
       - name: Upload APK
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: road-trip-apk
           path: out/road-trip.apk
