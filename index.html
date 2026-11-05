@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Road Trip · a launcher for your car screen</title>
+<meta name="description" content="Road Trip is a free Android launcher for car boxes and head units: big touch targets, your favorite apps, and it stays in front even on boxes that keep switching back to their own launcher.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 108 108'%3E%3Crect width='108' height='108' rx='24' fill='%230E0F11'/%3E%3Ccircle cx='54' cy='54' r='27' fill='%2316181B' stroke='%23F2A23A' stroke-width='4.5'/%3E%3Cpath d='M52 34L56 34L65.58 78.39A27 27 0 0 1 42.42 78.39Z' fill='%23F2A23A'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0E0F11; --rail:#131518; --card:#17191D; --tile:#16181B; --chip:#1E2024; --line:#1F2125; --ring:#2A2C31;
+  --text:#F3F1EC; --text2:#E8E5DD; --muted:#9A9890; --dim:#5A5C61;
+  --accent:#F2A23A; --accent-hi:#FFC46B; --on-accent:#1A1306; --accent-bg:#262117;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Manrope,system-ui,sans-serif;line-height:1.6;font-size:17px}
+a{color:var(--accent)} a:hover{color:var(--accent-hi)}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+header.top{display:flex;align-items:center;justify-content:space-between;padding:22px 0}
+.brand{display:flex;align-items:center;gap:12px;font-weight:800;font-size:20px;color:var(--text);text-decoration:none}
+.brand svg{width:40px;height:40px}
+nav.links{display:flex;gap:22px;font-weight:600;font-size:15px}
+nav.links a{color:var(--muted);text-decoration:none} nav.links a:hover{color:var(--text)}
+
+.hero{padding:48px 0 32px;display:grid;grid-template-columns:minmax(0,1fr);gap:40px}
+.hero h1{font-size:clamp(38px,6vw,64px);line-height:1.05;letter-spacing:-1.5px;margin:0 0 18px;font-weight:800}
+.hero h1 span{color:var(--accent)}
+.hero p.lead{font-size:clamp(18px,2.2vw,21px);color:#C9C6BE;margin:0 0 28px;max-width:640px}
+.actions{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+.btn{display:inline-flex;align-items:center;gap:10px;min-height:56px;padding:0 28px;border-radius:999px;font-weight:700;font-size:17px;text-decoration:none}
+.btn.primary{background:var(--accent);color:var(--on-accent)} .btn.primary:hover{background:var(--accent-hi);color:var(--on-accent)}
+.btn.ghost{border:2px solid var(--ring);color:var(--text2)} .btn.ghost:hover{border-color:var(--muted);color:var(--text)}
+.btn svg{width:22px;height:22px}
+.note{font-size:14px;color:var(--muted);margin-top:14px}
+
+/* the car-screen mockup, drawn at 1280x720 and scaled to fit */
+.screen-frame{border-radius:28px;background:#050506;padding:14px;border:1px solid var(--line)}
+.screen-scale{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;border-radius:16px}
+.screen{position:absolute;left:0;top:0;width:1280px;height:720px;transform-origin:0 0;background:var(--bg);display:flex}
+.s-rail{width:112px;background:var(--rail);border-right:1px solid var(--line);padding:20px 12px;display:flex;flex-direction:column;align-items:center;gap:10px}
+.s-rail .it{width:88px;height:88px;border-radius:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:var(--muted);font-size:13px;font-weight:600}
+.s-rail .it.on{background:var(--accent-bg);color:var(--accent)}
+.s-rail .it svg{width:30px;height:30px}
+.s-rail .grow{flex:1}
+.s-rail .mic{width:72px;height:72px;border-radius:50%;border:2px solid var(--accent);display:flex;align-items:center;justify-content:center;color:var(--accent)}
+.s-main{flex:1;display:flex;flex-direction:column;min-width:0}
+.s-top{height:72px;border-bottom:1px solid var(--line);display:flex;align-items:baseline;gap:16px;padding:18px 32px 0}
+.s-top b{font-size:30px;font-weight:700;letter-spacing:-.5px} .s-top span{font-size:17px;color:var(--muted);font-weight:600}
+.s-body{flex:1;padding:24px 24px 16px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));gap:20px}
+.w{border-radius:26px;background:var(--card);padding:20px 22px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden}
+.w small{font-size:14px;font-weight:700;color:var(--muted)}
+.w.map{grid-column:span 2;grid-row:span 2;padding:0;background:#171B1C}
+.w.map svg{position:absolute;inset:0;width:100%;height:100%}
+.turn{position:absolute;top:16px;left:16px;display:flex;align-items:center;gap:16px;padding:14px 20px 14px 16px;border-radius:20px;background:var(--bg)}
+.turn i{width:52px;height:52px;border-radius:14px;background:var(--accent);display:flex;align-items:center;justify-content:center}
+.turn b{display:block;font-size:26px;line-height:1.2} .turn span{font-size:16px;color:#B8B5AD}
+.eta{position:absolute;left:16px;right:16px;bottom:16px;padding:14px 20px;border-radius:20px;background:var(--bg);display:flex;gap:24px;align-items:baseline}
+.eta b{font-size:24px} .eta span{font-size:17px;color:#B8B5AD}
+.big{font-size:34px;font-weight:700;letter-spacing:-.5px;line-height:1.1}
+.sub{font-size:16px;color:#B8B5AD}
+.ctrls{display:flex;gap:10px} .ctrls i{flex:1;height:52px;border-radius:16px;background:#22252A;display:flex;align-items:center;justify-content:center}
+.ctrls i.on{background:var(--accent)}
+.pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.favs{height:104px;margin:0 24px 24px;padding:0 14px;border-radius:26px;background:var(--card);display:flex;align-items:center;gap:14px}
+.fav{height:76px;padding:0 22px 0 8px;border-radius:999px;background:var(--chip);display:flex;align-items:center;gap:12px;font-weight:700;font-size:17px;color:var(--text2)}
+.fav i{width:60px;height:60px;border-radius:50%;border:2px solid var(--ring);background:var(--tile);display:flex;align-items:center;justify-content:center}
+.fav svg{width:28px;height:28px}
+
+section{padding:56px 0}
+section h2{font-size:clamp(28px,4vw,40px);letter-spacing:-.8px;line-height:1.15;margin:0 0 12px;font-weight:800}
+section > .wrap > p.intro{color:#C9C6BE;max-width:680px;margin:0 0 32px;font-size:18px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
+.card{background:var(--card);border-radius:24px;padding:26px}
+.card .ic{width:56px;height:56px;border-radius:50%;border:2px solid var(--ring);background:var(--tile);display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+.card .ic svg{width:26px;height:26px}
+.card h3{margin:0 0 6px;font-size:20px;font-weight:700}
+.card p{margin:0;color:#B8B5AD;font-size:16px}
+.tag{display:inline-block;font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;margin-bottom:14px}
+.tag.now{background:#1B2419;color:#A9D58A}
+.tag.soon{background:var(--accent-bg);color:var(--accent-hi)}
+
+.guard{display:grid;grid-template-columns:minmax(0,1fr);gap:28px;background:var(--card);border-radius:28px;padding:32px}
+.guard h2{margin-top:0}
+.guard p{color:#C9C6BE;margin:0 0 12px}
+.flow{display:flex;flex-wrap:wrap;align-items:center;gap:12px;font-weight:700;font-size:15px}
+.flow span{padding:12px 18px;border-radius:999px;background:var(--chip)}
+.flow span.hl{background:var(--accent);color:var(--on-accent)}
+.flow em{font-style:normal;color:var(--dim)}
+
+ol.steps{list-style:none;counter-reset:s;margin:0;padding:0;display:grid;gap:14px}
+ol.steps li{counter-increment:s;background:var(--card);border-radius:20px;padding:20px 22px 20px 76px;position:relative;color:#C9C6BE}
+ol.steps li::before{content:counter(s);position:absolute;left:20px;top:18px;width:40px;height:40px;border-radius:50%;background:var(--accent);color:var(--on-accent);font-weight:800;display:flex;align-items:center;justify-content:center}
+ol.steps li b{color:var(--text)}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;background:var(--chip);padding:2px 6px;border-radius:6px;color:var(--text2)}
+
+footer{border-top:1px solid var(--line);padding:32px 0 48px;color:var(--muted);font-size:14px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-between}
+
+@media (min-width:900px){ .guard{grid-template-columns:1.1fr .9fr;align-items:center} }
+@media (max-width:640px){ nav.links{display:none} section{padding:40px 0} .card{padding:22px} }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="#">
+      <svg viewBox="0 0 108 108" aria-hidden="true"><rect width="108" height="108" rx="24" fill="#0E0F11" stroke="#1F2125" stroke-width="2"/><circle cx="54" cy="54" r="27" fill="#16181B" stroke="#F2A23A" stroke-width="4.5"/><path d="M52 34L56 34L65.58 78.39A27 27 0 0 1 42.42 78.39Z" fill="#F2A23A"/><path d="M54 73V66M54 60V55M54 50V46.5M54 42.5V40" stroke="#0E0F11" stroke-width="1.8" stroke-linecap="round"/></svg>
+      Road Trip
+    </a>
+    <nav class="links" aria-label="Sections">
+      <a href="#features">Features</a>
+      <a href="#guard">Stays in front</a>
+      <a href="#install">Install</a>
+      <a href="https://github.com/MightyX3N/Road-Trip">GitHub</a>
+    </nav>
+  </header>
+
+  <div class="hero">
+    <div>
+      <h1>A launcher made for <span>the car</span>.</h1>
+      <p class="lead">Road Trip turns an Android car box or head unit into a calm, glanceable home screen: big touch targets, your favorite apps one tap away, and it stays put, even on boxes that keep falling back to their own launcher.</p>
+      <div class="actions">
+        <a class="btn primary" href="https://github.com/MightyX3N/Road-Trip/releases/latest/download/road-trip.apk">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>
+          Download the APK
+        </a>
+        <a class="btn ghost" href="#install">How to install</a>
+      </div>
+      <p class="note">Free, with the source on GitHub. Android 7.0 or newer, landscape screens. Made for Ottocast-style car boxes and Android head units.</p>
+    </div>
+
+    <div class="screen-frame" role="img" aria-label="Road Trip's home screen: a map with the next turn, a radio widget, weather, calendar, and favorite apps along the bottom">
+      <div class="screen-scale" id="scale">
+        <div class="screen" id="screen" aria-hidden="true">
+          <div class="s-rail">
+            <div class="it on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M4 11l8-7 8 7v9h-5v-6H9v6H4z"/></svg>Home</div>
+            <div class="it"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z"/></svg>Apps</div>
+            <div class="it"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 18V5l11-2v13M9 18a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM20 16a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/></svg>Media</div>
+            <div class="grow"></div>
+            <div class="mic"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 3a3 3 0 0 1 3 3v5a3 3 0 0 1-6 0V6a3 3 0 0 1 3-3zM6 11a6 6 0 0 0 12 0M12 17v3"/></svg></div>
+          </div>
+          <div class="s-main">
+            <div class="s-top"><b>14:32</b><span>Thu 5 Nov</span></div>
+            <div class="s-body">
+              <div class="w map">
+                <svg viewBox="0 0 700 520" preserveAspectRatio="xMidYMid slice">
+                  <rect width="700" height="520" fill="#171B1C"/>
+                  <rect x="430" y="40" width="190" height="120" rx="10" fill="#1C2620"/>
+                  <rect x="60" y="330" width="160" height="140" rx="10" fill="#1C2620"/>
+                  <path d="M0 110 L700 145" stroke="#262B2E" stroke-width="18"/>
+                  <path d="M0 280 L700 262" stroke="#2C3135" stroke-width="26"/>
+                  <path d="M140 0 L180 520" stroke="#262B2E" stroke-width="16"/>
+                  <path d="M380 0 L362 520" stroke="#2C3135" stroke-width="22"/>
+                  <path d="M560 0 L595 520" stroke="#262B2E" stroke-width="14"/>
+                  <path d="M0 420 L700 455" stroke="#262B2E" stroke-width="14"/>
+                  <path d="M258 520 L264 360 L366 354 L370 270 L620 258" stroke="#F2A23A" stroke-width="10" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                  <circle cx="260" cy="470" r="18" fill="#F2A23A"/><circle cx="260" cy="470" r="7" fill="#0E0F11"/>
+                  <circle cx="620" cy="258" r="12" fill="#F3F1EC"/>
+                </svg>
+                <div class="turn"><i><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#1A1306" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 20V10h10M14 6l4 4-4 4"/></svg></i><div><b>300 m</b><span>Main street</span></div></div>
+                <div class="eta"><b>14:51</b><span>19 min · 12 km</span></div>
+              </div>
+              <div class="w">
+                <small>Radio</small>
+                <div><div class="big">94.7</div><div class="sub">Your local station</div></div>
+                <div class="ctrls"><i><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#E8E5DD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></i><i class="on"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1A1306" stroke-width="2.6" stroke-linecap="round"><path d="M9 5v14M15 5v14"/></svg></i><i><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#E8E5DD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></i></div>
+              </div>
+              <div class="pair">
+                <div class="w"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#F2A23A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18h10a4 4 0 0 0 .5-8A6 6 0 0 0 6 11a3.5 3.5 0 0 0 1 7z"/></svg><div><div class="big" style="font-size:32px">7°</div><div class="sub" style="font-size:14px">Cloudy</div></div></div>
+                <div class="w"><small style="color:#F2A23A">15:30</small><div><div style="font-size:17px;font-weight:700;line-height:1.25">Pick up groceries</div><div class="sub" style="font-size:14px">Calendar</div></div></div>
+              </div>
+            </div>
+            <div class="favs">
+              <div class="fav"><i><svg viewBox="0 0 24 24" fill="none" stroke="#F2A23A" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11zM12 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"/></svg></i>Maps</div>
+              <div class="fav"><i><svg viewBox="0 0 24 24" fill="none" stroke="#F2A23A" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l11-2v13M9 18a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM20 16a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/></svg></i>Music</div>
+              <div class="fav"><i><svg viewBox="0 0 24 24" fill="none" stroke="#F2A23A" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></i>Phone</div>
+              <div class="fav"><i><svg viewBox="0 0 24 24" fill="none" stroke="#F2A23A" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4V5z"/></svg></i>Messages</div>
+              <div class="fav"><i><svg viewBox="0 0 24 24" fill="none" stroke="#F2A23A" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a3 3 0 0 1 3 3v5a3 3 0 0 1-6 0V6a3 3 0 0 1 3-3zM6 11a6 6 0 0 0 12 0M12 17v4M8 21h8"/></svg></i>Podcasts</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="note" style="margin-top:-24px">The home screen as it's designed. The map and radio widgets are still on the way; see below for what works today.</p>
+  </div>
+</div>
+
+<section id="features">
+  <div class="wrap">
+    <h2>Everything you need, nothing you don't</h2>
+    <p class="intro">Road Trip is built for a screen you glance at while driving. Some of it works today, and the rest is on the way. Each piece is marked.</p>
+    <div class="grid">
+      <div class="card">
+        <span class="tag now">Available now</span>
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#F2A23A" stroke-width="1.8" stroke-linejoin="round"><path d="M4 11l8-7 8 7v9h-5v-6H9v6H4z"/></svg></div>
+        <h3>A home screen for driving</h3>
+        <p>Big, round touch targets, a clean dark look that's easy on the eyes at night, and a clock you can read at a glance.</p>
+      </div>
+      <div class="card">
+        <span class="tag now">Available now</span>
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#F2A23A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg></div>
+        <h3>Your favorite apps</h3>
+        <p>Pick three to five apps when you set it up. They sit along the bottom of the home screen, one tap away. Change them any time.</p>
+      </div>
+      <div class="card">
+        <span class="tag now">Available now</span>
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#F2A23A" stroke-width="1.8"><path d="M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z"/></svg></div>
+        <h3>All your apps</h3>
+        <p>Every app with its own icon, sorted by name. Swipe through pages; long-press for app info or to add a favorite.</p>
+      </div>
+      <div class="card">
+        <span class="tag now">Available now</span>
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#F2A23A" stroke-width="1.8" stroke-linejoin="round"><path d="M12 3l8 4v5c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V7z"/></svg></div>
+        <h3>Stays in front</h3>
+        <p>On boxes that keep dropping back to their own launcher, Road Trip notices and comes straight back.</p>
+      </div>
+      <div class="card">
+        <span class="tag soon">Coming soon</span>
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#F2A23A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2zM9 4v14M15 6v14"/></svg></div>
+        <h3>Offline maps</h3>
+        <p>Download your region once and the map works without data. Turn-by-turn from your nav app shows right on top.</p>
+      </div>
+      <div class="card">
+        <span class="tag soon">Coming soon</span>
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#F2A23A" stroke-width="1.8" stroke-linecap="round"><path d="M4 9h16v11H4zM7 9l10-5M13 13h4M13 16h4"/></svg></div>
+        <h3>Internet radio</h3>
+        <p>Thousands of stations, local ones suggested for you, presets, and your last station playing again when the car starts.</p>
+      </div>
+      <div class="card">
+        <span class="tag soon">Coming soon</span>
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#F2A23A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3l18 18M10.5 6H19a2 2 0 0 1 2 2v8M17 18H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2"/></svg></div>
+        <h3>No video while driving</h3>
+        <p>When you're moving, video apps get covered by the map and a now-playing card. The audio keeps going. On by default, and you can switch it off.</p>
+      </div>
+      <div class="card">
+        <span class="tag soon">Coming soon</span>
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#F2A23A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg></div>
+        <h3>Updates built in</h3>
+        <p>Road Trip checks for new versions and installs them over the top, keeping your favorites and settings.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="guard">
+  <div class="wrap">
+    <div class="guard">
+      <div>
+        <h2>Stays in front, even on buggy boxes</h2>
+        <p>Plenty of car boxes let you choose a different launcher and then quietly switch back to their own a while later: after a restart, after a phone connection ends, or for no reason at all.</p>
+        <p>Road Trip's <b>Keep in front</b> watches for that and brings you back in a split second. It only sees which app is on top, never what's on your screen, and it never interrupts apps you open yourself. Need the box's own launcher? Long-press the clock and open it for two minutes.</p>
+      </div>
+      <div class="flow" aria-label="The box switches to its own launcher, Road Trip notices, and returns">
+        <span>Box switches to its launcher</span><em>→</em>
+        <span>Road Trip notices</span><em>→</em>
+        <span class="hl">Back home in 0.3 s</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="install">
+  <div class="wrap">
+    <h2>Install it</h2>
+    <p class="intro">Road Trip isn't in an app store, so you install the APK yourself. It takes a couple of minutes.</p>
+    <ol class="steps">
+      <li><b>Download the APK</b> on the car box, or copy it over on a USB stick. <a href="https://github.com/MightyX3N/Road-Trip/releases/latest/download/road-trip.apk">Latest version</a>.</li>
+      <li><b>Open it</b> from the file manager. If Android asks, allow installing apps from that source.</li>
+      <li><b>Make it your home app.</b> Press Home and choose Road Trip → Always, or tap <i>Set as home app</i> in the banner on Road Trip's home screen.</li>
+      <li><b>Pick your favorite apps</b> when Road Trip asks: three to five of the ones you use most.</li>
+      <li><b>Turn on Keep in front.</b> Tap <i>Turn on</i> in the banner, then switch on <i>Road Trip: keep in front</i> in Accessibility. On Android 13 or newer the switch may be greyed out as a "restricted setting": go to Settings → Apps → Road Trip → ⋮ → <b>Allow restricted settings</b>, then try again.</li>
+    </ol>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Road Trip, made by MightyX3N. Built with <a href="https://love2d.org">LÖVE</a>.</span>
+    <span><a href="https://github.com/MightyX3N/Road-Trip">Source on GitHub</a> · <a href="https://github.com/MightyX3N/Road-Trip/releases">All versions</a> · Font: Manrope (SIL OFL)</span>
+  </div>
+</footer>
+
+<script>
+// scale the 1280x720 car-screen mockup to whatever width it gets
+(function () {
+  var box = document.getElementById('scale'), scr = document.getElementById('screen');
+  function fit() { scr.style.transform = 'scale(' + (box.clientWidth / 1280) + ')'; }
+  fit();
+  window.addEventListener('resize', fit);
+})();
+</script>
+</body>
+</html>

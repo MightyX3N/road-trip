@@ -5,12 +5,15 @@ name: Build APK
 on:
   push:
     branches: [main]
+    paths-ignore: [index.html, README.md]   # website and docs changes don't need a new APK
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 90
+    permissions:
+      contents: write   # to publish the release
     env:
       # love-android commit Road Trip was written against (LÖVE 12, SDL3)
       LOVE_ANDROID_COMMIT: 1c89bb0b2e35ac497e6b8f3f159c73df32cd5cb4
@@ -41,6 +44,13 @@ jobs:
           mkdir -p ~/.android
           cp android/debug.keystore ~/.android/debug.keystore
 
+      # Each build gets the next version, so a new APK always counts as an update
+      # (and the in-app updater can tell which one is newer).
+      - name: Set version from the build number
+        run: |
+          sed -i "s/^app.version_code=.*/app.version_code=${{ github.run_number }}/; s/^app.version_name=.*/app.version_name=0.1.${{ github.run_number }}/" love-android/gradle.properties
+          grep "^app.version" love-android/gradle.properties
+
       # Gradle downloads the exact SDK platform and NDK love-android asks for by itself,
       # as long as the licenses are accepted.
       - name: Accept Android SDK licenses
@@ -64,3 +74,15 @@ jobs:
         with:
           name: road-trip-apk
           path: out/road-trip.apk
+
+      # Every push to main becomes a release, so this link always gets the newest APK:
+      # https://github.com/<owner>/<repo>/releases/latest/download/road-trip.apk
+      - name: Publish release
+        if: github.event_name == 'push'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "v0.1.${{ github.run_number }}" out/road-trip.apk \
+            --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --latest \
+            --title "Road Trip 0.1.${{ github.run_number }}" \
+            --notes "$(git log -1 --format=%B)"
