@@ -80,7 +80,13 @@ public class MediaListener extends NotificationListenerService {
         String body = text(e, Notification.EXTRA_TEXT);
         if (body.isEmpty()) body = text(e, Notification.EXTRA_BIG_TEXT);
         String sub = text(e, Notification.EXTRA_SUB_TEXT);
-        if (title.isEmpty() && body.isEmpty()) return; // a "navigation is running" stub, nothing to show
+        if (sub.isEmpty()) sub = text(e, Notification.EXTRA_INFO_TEXT);
+        if (title.isEmpty() && n.tickerText != null) title = n.tickerText.toString().trim();
+        logNav(pkg + "  cat=" + n.category + (ongoing ? " ongoing" : "")
+            + "  title=\"" + title + "\"  text=\"" + body + "\"  sub=\"" + sub + "\""
+            + "  icon=" + (n.getLargeIcon() != null) + "  custom=" + (n.contentView != null || n.bigContentView != null));
+        // Google Maps often draws its own layout and leaves the text fields empty; still show
+        // that navigation is running (Lua words it from the app name)
         Bitmap icon = null;
         try {
             if (n.getLargeIcon() != null) {
@@ -108,6 +114,21 @@ public class MediaListener extends NotificationListenerService {
                 navIconGen++;
             }
         }
+    }
+
+    private static final java.util.ArrayDeque<String> NAV_LOG = new java.util.ArrayDeque<>();
+
+    private static synchronized void logNav(String line) {
+        String t = new java.text.SimpleDateFormat("HH:mm:ss", java.util.Locale.ROOT).format(new java.util.Date());
+        if (!NAV_LOG.isEmpty() && NAV_LOG.peekFirst().endsWith(line)) return; // same update repeated
+        NAV_LOG.addFirst(t + "  " + line);
+        while (NAV_LOG.size() > 12) NAV_LOG.removeLast();
+    }
+
+    static synchronized org.json.JSONArray navLogJson() {
+        org.json.JSONArray a = new org.json.JSONArray();
+        for (String s : NAV_LOG) a.put(s);
+        return a;
     }
 
     private static String text(Bundle e, String key) {

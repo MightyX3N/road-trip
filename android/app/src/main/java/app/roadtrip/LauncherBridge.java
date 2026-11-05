@@ -76,6 +76,36 @@ public final class LauncherBridge {
                 case "mediaCommand":
                     data = MediaListener.command(ctx, a.getString("action"), a.optLong("posMs", 0));
                     break;
+                case "fetch":
+                    data = Net.get(a.getString("url"));
+                    break;
+                case "fetchResult":
+                    data = Net.result(a.getInt("id"));
+                    break;
+                case "calendar":
+                    data = CalendarBridge.upcoming(ctx);
+                    break;
+                case "calendarAllow":
+                    data = CalendarBridge.request(ctx);
+                    break;
+                case "calendarOpen":
+                    data = CalendarBridge.open(ctx, a.optLong("at", System.currentTimeMillis()));
+                    break;
+                case "diagnostics": {
+                    JSONObject d = new JSONObject();
+                    d.put("guard", GuardService.logJson());
+                    d.put("nav", MediaListener.navLogJson());
+                    Intent home = new Intent(Intent.ACTION_MAIN);
+                    home.addCategory(Intent.CATEGORY_HOME);
+                    ResolveInfo ri = ctx.getPackageManager().resolveActivity(home, PackageManager.MATCH_DEFAULT_ONLY);
+                    d.put("defaultHome", ri == null || ri.activityInfo == null ? "none"
+                        : ri.activityInfo.packageName + "/" + ri.activityInfo.name);
+                    JSONArray watched = new JSONArray();
+                    for (String s : GuardService.otherHomeActivities(ctx)) watched.put(s);
+                    d.put("watched", watched);
+                    data = d;
+                    break;
+                }
                 case "navStatus":
                     data = MediaListener.navStatus(ctx, a.optString("dir", null));
                     break;

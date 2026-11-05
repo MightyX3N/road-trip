@@ -152,13 +152,51 @@ public class GuardService extends AccessibilityService {
         String c = cls == null ? "" : cls.toString();
         // dialogs, menus and toasts report widget classes, not an activity: not a screen change
         if (c.startsWith("android.widget.") || c.startsWith("android.app.Dialog")) return;
+        String said = eventText(event);
         front = p + "/" + c;
         handler.removeCallbacks(bringBack);
         refreshStock(false);
-        // only the launcher's home screen, never Recents or anything else in its package
-        if (stock.contains(front) && !c.contains("Recents") && active(this)) {
-            handler.postDelayed(bringBack, DELAY_MS);
-        }
+        // only the launcher's home screen, never Recents: when the stock launcher is the
+        // default home, Recents is drawn by that same activity, but it announces itself
+        boolean recents = c.contains("Recents") || looksLikeRecents(said);
+        boolean act = stock.contains(front) && !recents && active(this);
+        log(p + "/" + shortClass(c) + (said.isEmpty() ? "" : " \"" + said + "\"")
+            + (act ? "  -> returning" : recents ? "  -> recents, left alone" : ""));
+        if (act) handler.postDelayed(bringBack, DELAY_MS);
+    }
+
+    private static String eventText(AccessibilityEvent e) {
+        StringBuilder b = new StringBuilder();
+        if (e.getText() != null) for (CharSequence t : e.getText()) if (t != null) b.append(t).append(' ');
+        if (e.getContentDescription() != null) b.append(e.getContentDescription());
+        String s = b.toString().trim();
+        return s.length() > 60 ? s.substring(0, 60) : s;
+    }
+
+    private static boolean looksLikeRecents(String s) {
+        String l = s.toLowerCase(java.util.Locale.ROOT);
+        return l.contains("recent") || l.contains("overview") || l.contains("multitask");
+    }
+
+    private static String shortClass(String c) {
+        int i = c.lastIndexOf('.');
+        return i < 0 ? c : c.substring(i + 1);
+    }
+
+    // ---- diagnostics: the last screen changes the guard saw, shown in Road Trip's Settings ----
+
+    private static final java.util.ArrayDeque<String> LOG = new java.util.ArrayDeque<>();
+
+    static synchronized void log(String line) {
+        String t = new java.text.SimpleDateFormat("HH:mm:ss", java.util.Locale.ROOT).format(new java.util.Date());
+        LOG.addFirst(t + "  " + line);
+        while (LOG.size() > 30) LOG.removeLast();
+    }
+
+    static synchronized org.json.JSONArray logJson() {
+        org.json.JSONArray a = new org.json.JSONArray();
+        for (String s : LOG) a.put(s);
+        return a;
     }
 
     @Override

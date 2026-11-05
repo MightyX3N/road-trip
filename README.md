@@ -9,8 +9,8 @@ or remove a favorite or open the app's info page. On first launch you pick 3 to 
 favorite apps; change them any time with the pencil button on Home or by long-pressing a
 favorite. **Media** and the Now playing widget on Home show and control whatever's playing
 in any app, and the Navigation widget shows your next turn from Google Maps, Waze and
-other nav apps (both need notification access, which Road Trip asks for). **Settings**
-has everything else: Keep in front, permissions, favorites, accent colour and updates. The voice button opens the device's
+other nav apps (both need notification access, which Road Trip asks for). Home also shows the weather for your city (pick it in Settings) and your next calendar
+event. **Settings** has everything else: Keep in front, permissions, favorites, accent colour and updates. The voice button opens the device's
 assistant.
 
 ## Get the APK (no Android tools needed)

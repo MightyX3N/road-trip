@@ -302,6 +302,8 @@ end
 local stubApps = { "Maps", "Music", "Phone", "Messages", "Podcasts", "Calendar", "Weather",
   "Settings", "Camera", "Files", "Waze", "Radio", "Clock", "Contacts", "Browser" }
 
+local stubFetches = {}
+
 local function stubCall(method, args)
   if method == "getApps" then
     if args and args.known == 1 then return { version = 1 } end
@@ -316,6 +318,22 @@ local function stubCall(method, args)
     return { serviceOn = false, enabled = true, stock = { "com.example.stocklauncher" } }
   elseif method == "homePresses" then
     return 0
+  elseif method == "fetch" then
+    stubFetches[#stubFetches + 1] = args.url
+    return #stubFetches
+  elseif method == "fetchResult" then
+    local url = stubFetches[args.id] or ""
+    if url:find("geocoding") then
+      return { done = true, ok = true, body = '{"results":[{"name":"Copenhagen","admin1":"Capital Region","country":"Denmark","latitude":55.68,"longitude":12.57},{"name":"Copenhagen","admin1":"New York","country":"United States","latitude":43.89,"longitude":-75.67}]}' }
+    end
+    return { done = true, ok = true, body = '{"current":{"temperature_2m":7.4,"weather_code":3,"is_day":1},"daily":{"temperature_2m_max":[9.1],"temperature_2m_min":[3.2]}}' }
+  elseif method == "calendar" then
+    local now = os.time() * 1000
+    return { permission = true, events = { { title = "Pick up groceries", begin = now + 25 * 60000, ["end"] = now + 55 * 60000, allDay = false, location = "" } } }
+  elseif method == "diagnostics" then
+    return { defaultHome = "app.roadtrip/app.roadtrip.RoadTripActivity",
+      watched = { "com.android.launcher3/com.android.launcher3.uioverlays.QuickstepLauncher" },
+      guard = { "08:00:01  com.android.launcher3/RecentsActivity  -> recents, left alone" }, nav = {} }
   elseif method == "navStatus" then
     return { active = true, pkg = "com.google.android.apps.maps", app = "Maps", title = "300 m",
       text = "Turn right onto Main Street", sub = "14:51 · 19 min · 12 km" }
@@ -353,6 +371,15 @@ function M.mediaCommand(action, posMs) return M.call("mediaCommand", { action = 
 function M.openMediaAccess() return M.call("openMediaAccess") end
 -- the nav app's turn-by-turn notification (same notification access); turn arrow lands in dir
 function M.navStatus(dir) return M.call("navStatus", { dir = dir }) end
+-- background HTTPS GET: fetch() returns an id, fetchResult(id) -> { done, ok, body?, error? }
+function M.fetch(url) return M.call("fetch", { url = url }) end
+function M.fetchResult(id) return M.call("fetchResult", { id = id }) end
+-- calendar: { permission, events = { { title, begin, end, allDay, location } } } (times in ms)
+function M.calendar() return M.call("calendar") end
+function M.calendarAllow() return M.call("calendarAllow") end
+function M.calendarOpen(at) return M.call("calendarOpen", { at = at }) end
+-- what the guard saw and did, plus raw nav notifications; shown in Settings → Diagnostics
+function M.diagnostics() return M.call("diagnostics") end
 -- how many times Home was pressed while Road Trip was running (only ever goes up)
 function M.homePresses() return M.call("homePresses") end
 function M.setGuardEnabled(on) return M.call("setGuardEnabled", { on = on }) end

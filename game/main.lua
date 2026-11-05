@@ -28,9 +28,15 @@ local state = {
   guard = { serviceOn = true, enabled = true, stock = {} },
   update = { state = "idle" }, -- from Updater.java: idle|checking|none|available|downloading|ready|permission|error|offline
   manualCheck = false,         -- the user asked; report "up to date" too
-  timers = { update = 0, guard = 0, autoCheck = 0, home = 0, media = 0 },
+  timers = { update = 0, guard = 0, autoCheck = 0, home = 0, media = 0, fetch = 0, slow = 0, diag = 0 },
   media = { access = true },   -- from MediaListener.java: { access, current? }
   nav = { active = false },    -- the nav app's turn-by-turn notification
+  weather = nil,               -- { temp, code, isDay, hi, lo, at }
+  weatherBusy = false,
+  cal = { permission = true, events = {} },
+  pending = {},                -- fetch id -> handler
+  city = nil,                  -- city search dialog: { text, results?, busy, err? }
+  diag = nil,                  -- Settings → Diagnostics data
   navImg = nil,                -- { name, img } for the turn arrow
   mediaAt = 0,                 -- when `media` was read, to move the progress bar between reads
   art = {},                    -- album art file -> image
@@ -190,6 +196,106 @@ local function mediaCommand(action, posMs)
   state.dirty = true
 end
 
+----------------------------------------------------------------------------------------------
+-- weather (Open-Meteo, no account) and calendar
+----------------------------------------------------------------------------------------------
+
+local json = android.json
+local WEATHER_EVERY = 30 * 60
+
+local function request(url, handler)
+  local id = android.fetch(url)
+  if type(id) == "number" then state.pending[id] = handler end
+  return id
+end
+
+local function pollFetches()
+  for id, handler in pairs(state.pending) do
+    local r = android.fetchResult(id)
+    if type(r) == "table" and r.done then
+      state.pending[id] = nil
+      handler(r)
+      state.dirty = true
+    end
+  end
+end
+
+local function urlEncode(s)
+  return (s:gsub("[^%w%-_%.~]", function(c) return string.format("%%%02X", c:byte()) end))
+end
+
+-- WMO weather codes, as Open-Meteo reports them
+local function weatherLook(code, isDay)
+  code = code or 3
+  if code <= 1 then return code == 0 and "Clear" or "Mostly clear", isDay == 0 and "moon" or "sun" end
+  if code == 2 then return "Partly cloudy", "cloud" end
+  if code == 3 then return "Cloudy", "cloud" end
+  if code == 45 or code == 48 then return "Fog", "fog" end
+  if code >= 51 and code <= 57 then return "Drizzle", "rain" end
+  if code >= 61 and code <= 67 then return "Rain", "rain" end
+  if code >= 71 and code <= 77 then return "Snow", "snow" end
+  if code >= 80 and code <= 82 then return "Showers", "rain" end
+  if code == 85 or code == 86 then return "Snow showers", "snow" end
+  if code >= 95 then return "Thunderstorm", "storm" end
+  return "Weather", "cloud"
+end
+
+local function refreshWeather(force)
+  local place = config.get("weatherPlace")
+  if not place or state.weatherBusy then return end
+  if not force and state.weather and os.time() - state.weather.at < WEATHER_EVERY then return end
+  state.weatherBusy = true
+  local url = string.format("https://api.open-meteo.com/v1/forecast?latitude=%.4f&longitude=%.4f"
+    .. "&current=temperature_2m,weather_code,is_day&daily=temperature_2m_max,temperature_2m_min"
+    .. "&timezone=auto&forecast_days=1", place.lat, place.lon)
+  request(url, function(r)
+    state.weatherBusy = false
+    local d = r.ok and json.decode(r.body or "")
+    if d and d.current then
+      state.weather = {
+        temp = d.current.temperature_2m, code = d.current.weather_code, isDay = d.current.is_day,
+        hi = d.daily and d.daily.temperature_2m_max and d.daily.temperature_2m_max[1],
+        lo = d.daily and d.daily.temperature_2m_min and d.daily.temperature_2m_min[1],
+        at = os.time(),
+      }
+    end
+  end)
+end
+
+local function refreshCalendar()
+  local c = android.calendar()
+  if type(c) == "table" then state.cal = c end
+end
+
+local function openCity()
+  state.city = { text = "", busy = false }
+  love.keyboard.setTextInput(true)
+end
+
+local function closeCity()
+  state.city = nil
+  love.keyboard.setTextInput(false)
+end
+
+local function searchCity()
+  local c = state.city
+  if not c or c.busy or c.text:gsub("%s", "") == "" then return end
+  c.busy, c.err, c.results = true, nil, nil
+  request("https://geocoding-api.open-meteo.com/v1/search?count=5&language=en&format=json&name=" .. urlEncode(c.text),
+    function(r)
+      if not state.city then return end
+      state.city.busy = false
+      local d = r.ok and json.decode(r.body or "")
+      if not d then
+        state.city.err = "Couldn't search; check the connection"
+        return
+      end
+      state.city.results = d.results or {}
+      if #state.city.results == 0 then state.city.err = "No places called that" end
+      love.keyboard.setTextInput(false) -- make room for the results
+    end)
+end
+
 -- Cheap when nothing changed: Java keeps the list and only rebuilds it after an install,
 -- removal or update, and returns just a version number otherwise.
 local function refreshApps()
@@ -213,6 +319,8 @@ local function refreshApps()
   refreshGuard()
   pollUpdate()
   pollMedia()
+  refreshCalendar()
+  refreshWeather(false)
   state.dirty = true
 end
 
@@ -306,7 +414,7 @@ local function drawRail()
   ui.rect(ui.c.line, RAIL - 1, 0, 1, H)
   for i, item in ipairs(RAIL_ITEMS) do
     local x, y = 12, 20 + (i - 1) * 98
-    local on = state.screen == item.screen
+    local on = state.screen == item.screen or (item.screen == "settings" and state.screen == "diag")
     local color = on and ui.c.accent or ui.c.muted
     if on then ui.rect(ui.c.accentBg, x, y, 88, 88, 20) end
     ui.icon(item.icon, x + 29, y + 16, 30, color)
@@ -511,7 +619,8 @@ local function navWidget(x, y, w, h)
     end
     local tx = sx + sq + 28
     local tw = x + w - pad - tx
-    ui.text(ui.fit(nav.title or "", "bold", 46, tw), "bold", 46, ui.c.text, tx, sy + 4)
+    local title = (nav.title and nav.title ~= "") and nav.title or ("Navigating with " .. (nav.app or "your nav app"))
+    ui.text(ui.fit(title, "bold", 46, tw), "bold", 46, ui.c.text, tx, sy + 4)
     ui.text(ui.fit(nav.text or "", "semibold", 22, tw), "semibold", 22, ui.hex("C9C6BE"), tx, sy + 70)
     if nav.sub and nav.sub ~= "" then
       ui.rect(ui.c.bg, x + 16, y + h - 16 - 64, w - 32, 64, 20)
@@ -536,6 +645,75 @@ local function navWidget(x, y, w, h)
     if i > 2 then break end
     bx = bx + pill({ kind = "openNav", pkg = app.pkg }, "Open " .. app.label, bx, y + h - pad - 56, 56, i == 1 and "accent" or "off2") + 12
   end
+end
+
+local function weatherWidget(x, y, w, h)
+  ui.rect(ui.c.card, x, y, w, h, 26)
+  ui.hit({ kind = "cityOpen" }, x, y, w, h)
+  local place = config.get("weatherPlace")
+  local pad = 20
+  if not place then
+    ui.icon("sun", x + pad, y + pad, 34, ui.c.accent, 1.6)
+    ui.textWrap("Set your city to see the weather", "bold", 16, ui.c.text, x + pad, y + 70, w - pad * 2, 3)
+    return
+  end
+  local wx = state.weather
+  if not wx then
+    ui.icon("cloud", x + pad, y + pad, 34, ui.c.dim, 1.6)
+    ui.text(ui.fit(place.name, "semibold", 13, w - pad * 2), "semibold", 13, ui.c.muted, x + pad, y + 64)
+    ui.text(state.weatherBusy and "Loading…" or "No data yet", "semibold", 15, ui.c.muted, x + pad, y + h - pad - 22)
+    return
+  end
+  local label, icon = weatherLook(wx.code, wx.isDay)
+  ui.icon(icon, x + pad, y + pad, 34, ui.c.accent, 1.6)
+  ui.text(ui.fit(place.name, "semibold", 13, w - pad * 2 - 44), "semibold", 13, ui.c.muted, x + pad + 44, y + pad + 9)
+  ui.text(string.format("%d°", math.floor((wx.temp or 0) + 0.5)), "bold", 34, ui.c.text, x + pad, y + h - pad - 92)
+  ui.text(ui.fit(label, "semibold", 15, w - pad * 2), "semibold", 15, ui.hex("C9C6BE"), x + pad, y + h - pad - 44)
+  if wx.hi and wx.lo then
+    ui.text(string.format("%d° / %d°", math.floor(wx.hi + 0.5), math.floor(wx.lo + 0.5)), "semibold", 14, ui.c.muted,
+      x + pad, y + h - pad - 22)
+  end
+end
+
+local function sameDay(t1, t2) return os.date("%Y%m%d", t1) == os.date("%Y%m%d", t2) end
+
+local function calendarWidget(x, y, w, h)
+  ui.rect(ui.c.card, x, y, w, h, 26)
+  local pad = 20
+  local cal = state.cal
+  if not cal.permission then
+    ui.hit({ kind = "calAllow" }, x, y, w, h)
+    ui.icon("calendar", x + pad, y + pad, 30, ui.c.accent, 1.6)
+    ui.textWrap("See your next event", "bold", 16, ui.c.text, x + pad, y + 66, w - pad * 2, 2)
+    pill({ kind = "calAllow" }, "Allow", x + pad, y + h - pad - 44, 44, "accent")
+    return
+  end
+  local e = cal.events and cal.events[1]
+  if not e then
+    ui.hit({ kind = "calOpen" }, x, y, w, h)
+    ui.icon("calendar", x + pad, y + pad, 30, ui.c.dim, 1.6)
+    ui.textWrap("Nothing in the next two days", "semibold", 15, ui.c.muted, x + pad, y + 66, w - pad * 2, 3)
+    return
+  end
+  ui.hit({ kind = "calOpen", at = e.begin }, x, y, w, h)
+  local now, begin = os.time(), math.floor((e.begin or 0) / 1000)
+  local when
+  if e.allDay then
+    when = sameDay(begin, now) and "Today" or "Tomorrow"
+  else
+    when = (sameDay(begin, now) and "" or (sameDay(begin, now + 86400) and "Tomorrow " or os.date("%a ", begin)))
+      .. os.date("%H:%M", begin)
+  end
+  ui.text(ui.fit(when, "bold", 14, w - pad * 2), "bold", 14, ui.c.accent, x + pad, y + pad)
+  ui.textWrap(e.title ~= "" and e.title or "Event", "bold", 17, ui.c.text, x + pad, y + pad + 30, w - pad * 2, 3)
+  local mins = math.floor((begin - now) / 60)
+  local rel
+  if e.allDay then rel = "All day"
+  elseif mins <= 0 then rel = "Now"
+  elseif mins < 60 then rel = "In " .. mins .. " min"
+  elseif mins < 24 * 60 then rel = "In " .. math.floor(mins / 60 + 0.5) .. " h"
+  else rel = "" end
+  if rel ~= "" then ui.text(rel, "semibold", 14, ui.c.muted, x + pad, y + h - pad - 20) end
 end
 
 local function nowPlayingWidget(x, y, w, h)
@@ -621,8 +799,8 @@ local function drawHome()
   local rx = x + (colW + gap) * 2
   nowPlayingWidget(rx, y, colW, rowH)
   local halfW = (colW - gap) / 2
-  placeholderWidget(rx, y + rowH + gap, halfW, rowH, "Weather", "sun")
-  placeholderWidget(rx + halfW + gap, y + rowH + gap, halfW, rowH, "Calendar", "calendar")
+  weatherWidget(rx, y + rowH + gap, halfW, rowH)
+  calendarWidget(rx + halfW + gap, y + rowH + gap, halfW, rowH)
 
   drawFavorites(x, H - 24 - favH, w, favH)
 end
@@ -739,7 +917,7 @@ end
 
 -- rows: { title, sub, button = {label, id, style?}, toggle = {on, id}, swatches = true }
 local function settingsCard(title, rows, x, y, w)
-  local rowH = 84
+  local rowH = #rows > 6 and 72 or 80
   local h = 64 + #rows * rowH + 8
   ui.rect(ui.c.card, x, y, w, h, 26)
   ui.text(title, "bold", 14, ui.c.muted, x + 24, y + 24)
@@ -767,8 +945,9 @@ local function settingsCard(title, rows, x, y, w)
       end
     end
     local tw = right - 20 - (x + 24)
-    ui.text(ui.fit(r.title, "bold", 18, tw), "bold", 18, ui.c.text, x + 24, ry + 16)
-    if r.sub then ui.text(ui.fit(r.sub, "semibold", 14, tw), "semibold", 14, ui.c.muted, x + 24, ry + 46) end
+    local ty = r.sub and (cy - 26) or (cy - ui.fontHeight("bold", 18) / 2)
+    ui.text(ui.fit(r.title, "bold", 18, tw), "bold", 18, ui.c.text, x + 24, ty)
+    if r.sub then ui.text(ui.fit(r.sub, "semibold", 14, tw), "semibold", 14, ui.c.muted, x + 24, cy + 4) end
     ry = ry + rowH
   end
 end
@@ -791,6 +970,8 @@ local function drawSettings()
     { title = "Now playing and navigation",
       sub = state.media.access and "Allowed: reads what's playing and your next turn" or "Needs notification access",
       button = state.media.access and { "Open", { kind = "mediaAccess" } } or { "Allow", { kind = "mediaAccess" }, "accent" } },
+    { title = "Calendar", sub = state.cal.permission and "Allowed: your next event shows on Home" or "Show your next event on Home",
+      button = not state.cal.permission and { "Allow", { kind = "calAllow" }, "accent" } or nil },
     { title = "Home app", sub = state.isHome and "Road Trip opens when you press Home" or "Road Trip isn't the home app yet",
       button = { "Change", { kind = "setHome" } } },
     { title = "The box's own launcher", sub = "Open it for 2 minutes without Road Trip stepping in",
@@ -800,16 +981,85 @@ local function drawSettings()
   local right = {
     { title = "Favorite apps", sub = #favoriteApps() .. " of " .. FAV_MAX .. " picked", button = { "Edit", { kind = "editFavs" } } },
     { title = "Accent colour", swatches = true },
+    { title = "Weather", sub = config.get("weatherPlace") and config.get("weatherPlace").name or "Pick your city",
+      button = { config.get("weatherPlace") and "Change" or "Set", { kind = "cityOpen" } } },
     { title = "Updates", sub = "Version " .. ((u.currentName and u.currentName ~= "") and u.currentName or "?"),
       button = { "Check now", { kind = "updateCheckNow" } } },
     { title = "Check for updates on Wi-Fi only", sub = "Automatic checks, every 6 hours",
       toggle = { config.get("updateWifiOnly") ~= false, { kind = "wifiOnly" } } },
+    { title = "Diagnostics", sub = "What Keep in front saw and did", button = { "Show", { kind = "diag" } } },
     { title = "About Road Trip", sub = "mightyx3n.github.io/road-trip", button = { "Website", { kind = "site" } } },
   }
   local x, y = RAIL + 24, TOP + 24
   local colW = (W - RAIL - 48 - 20) / 2
   settingsCard("Road Trip on this box", left, x, y, colW)
   settingsCard("Yours", right, x + colW + 20, y, colW)
+end
+
+local function drawDiagnostics()
+  local d = state.diag or {}
+  local x, y = RAIL + 32, TOP + 24
+  pill({ kind = "diagBack" }, "Back to Settings", x - 8, y, 48, "off2")
+  ui.text("Diagnostics", "bold", 22, ui.c.text, x + 220, y + 10)
+  y = y + 68
+  ui.text(ui.fit("Default home app: " .. (d.defaultHome or "?"), "semibold", 14, W - x - 32), "semibold", 14, ui.c.text2, x, y)
+  local watched = table.concat(d.watched or {}, ", ")
+  ui.text(ui.fit("Keep in front watches: " .. (watched ~= "" and watched or "nothing"), "semibold", 14, W - x - 32),
+    "semibold", 14, ui.c.text2, x, y + 24)
+  y = y + 64
+  local colW = (W - x - 32 - 24) / 2
+  local function list(title, lines, lx)
+    ui.text(title, "bold", 14, ui.c.muted, lx, y)
+    local ly = y + 28
+    if not lines or #lines == 0 then ui.text("Nothing yet", "semibold", 13, ui.c.dim, lx, ly) end
+    for _, line in ipairs(lines or {}) do
+      if ly > H - 28 then break end
+      ui.text(ui.fit(line, "semibold", 13, colW), "semibold", 13, ui.c.text2, lx, ly)
+      ly = ly + 21
+    end
+  end
+  list("Screen changes (newest first)", d.guard, x)
+  list("Navigation notifications", d.nav, x + colW + 24)
+end
+
+local function drawCityDialog()
+  local c = state.city
+  if not c then return end
+  lg.setColor(0, 0, 0, 0.6)
+  lg.rectangle("fill", 0, 0, W, H)
+  ui.hit({ kind = "cityBlock" }, 0, 0, W, H)
+  local w = math.min(720, W - 80)
+  local results = c.results or {}
+  local h = 164 + (#results > 0 and (#results * 64 + 12) or 0) + (c.err and 36 or 0)
+  local x, y = (W - w) / 2, 32 -- near the top: the keyboard covers the bottom half
+  ui.rect(ui.c.card, x, y, w, h, 28)
+  ui.hit({ kind = "cityBlock" }, x, y, w, h)
+  ui.text("Weather location", "bold", 22, ui.c.text, x + 28, y + 24)
+  ui.icon("close", x + w - 52, y + 24, 24, ui.c.muted, 2.2)
+  ui.hit({ kind = "cityCancel" }, x + w - 64, y + 12, 56, 56)
+
+  local fx, fy, fw = x + 28, y + 76, w - 56 - 140
+  ui.rect(ui.c.bg, fx, fy, fw, 60, 18)
+  ui.hit({ kind = "cityField" }, fx, fy, fw, 60)
+  local shown = c.text ~= "" and c.text or "Type a city or town"
+  local blink = math.floor(love.timer.getTime() * 2) % 2 == 0
+  ui.text(ui.fit(shown, "semibold", 19, fw - 40) .. ((c.text ~= "" and blink) and "|" or ""), "semibold", 19,
+    c.text ~= "" and ui.c.text or ui.c.dim, fx + 20, fy + (60 - ui.fontHeight("semibold", 19)) / 2)
+  pill({ kind = "citySearch" }, c.busy and "…" or "Search", fx + fw + 16, fy + 4, 52, "accent")
+
+  local ry = fy + 76
+  if c.err then
+    ui.text(c.err, "semibold", 15, ui.hex("F09A8A"), x + 28, ry)
+    ry = ry + 36
+  end
+  for i, r in ipairs(results) do
+    local label = r.name .. ((r.admin1 and r.admin1 ~= "") and (", " .. r.admin1) or "") .. (r.country and (", " .. r.country) or "")
+    ui.rect(ui.c.chipHi, x + 20, ry, w - 40, 56, 18)
+    ui.icon("pin", x + 36, ry + 16, 24, ui.c.accent, 1.8)
+    ui.text(ui.fit(label, "bold", 17, w - 120), "bold", 17, ui.c.text2, x + 72, ry + (56 - ui.fontHeight("bold", 17)) / 2)
+    ui.hit({ kind = "cityPick", i = i }, x + 20, ry, w - 40, 56)
+    ry = ry + 64
+  end
 end
 
 ----------------------------------------------------------------------------------------------
@@ -972,11 +1222,13 @@ function love.draw()
     if state.screen == "home" then drawHome()
     elseif state.screen == "apps" then drawApps()
     elseif state.screen == "settings" then drawSettings()
+    elseif state.screen == "diag" then drawDiagnostics()
     else drawMedia() end
     drawTopBar()
     drawRail()
   end
   drawMenu()
+  drawCityDialog()
   drawToast()
   lg.pop()
   state.drew = true
@@ -1004,7 +1256,29 @@ end
 
 local function activate(id, vx)
   local k = id.kind
-  if k == "media" then mediaCommand(id.action)
+  if k == "cityBlock" then return
+  elseif k == "cityOpen" then openCity()
+  elseif k == "cityCancel" then closeCity()
+  elseif k == "cityField" then love.keyboard.setTextInput(true)
+  elseif k == "citySearch" then searchCity()
+  elseif k == "cityPick" then
+    local r = state.city and state.city.results and state.city.results[id.i]
+    if r then
+      config.set("weatherPlace", { name = r.name, country = r.country, lat = r.latitude, lon = r.longitude })
+      state.weather = nil
+      closeCity()
+      refreshWeather(true)
+      toast("Weather for " .. r.name)
+    end
+  elseif k == "calAllow" then
+    android.calendarAllow()
+  elseif k == "calOpen" then
+    android.calendarOpen(id.at)
+  elseif k == "diag" then
+    state.screen = "diag"
+    state.diag = android.diagnostics()
+  elseif k == "diagBack" then state.screen = "settings"
+  elseif k == "media" then mediaCommand(id.action)
   elseif k == "seek" then
     local frac = math.max(0, math.min(1, ((vx or id.x) - id.x) / id.w))
     mediaCommand("seek", math.floor(frac * id.dur))
@@ -1093,6 +1367,7 @@ local function goHome()
     saveFavorites({})
   end
   state.menu = nil
+  if state.city then closeCity() end
   state.screen = "home"
   state.dirty = true
 end
@@ -1159,10 +1434,32 @@ function love.mousereleased(x, y, button)
   end
 end
 
+function love.textinput(t)
+  if state.city then
+    state.city.text = state.city.text .. t
+    state.dirty = true
+  end
+end
+
 function love.keypressed(key)
+  if state.city then
+    if key == "backspace" then
+      local u8 = require("utf8")
+      local off = u8.offset(state.city.text, -1)
+      if off then state.city.text = state.city.text:sub(1, off - 1) end
+    elseif key == "return" or key == "kpenter" then
+      searchCity()
+    elseif key == "escape" then
+      closeCity()
+    end
+    state.dirty = true
+    return
+  end
   if key ~= "escape" then return end
   -- Android's back button arrives as "escape"
-  if state.menu then
+  if state.screen == "diag" then
+    state.screen = "settings"
+  elseif state.menu then
     state.menu = nil
   elseif state.screen == "favs" then
     activate({ kind = "pickerBack" })
@@ -1224,6 +1521,27 @@ function love.update(dt)
 
   local t = state.timers
   t.update, t.guard, t.autoCheck, t.home = t.update + dt, t.guard + dt, t.autoCheck + dt, t.home + dt
+  -- background downloads (weather, city search)
+  t.fetch = t.fetch + dt
+  if next(state.pending) and t.fetch > 0.2 then
+    t.fetch = 0
+    pollFetches()
+  end
+  -- weather and calendar: check once a minute (weather itself refreshes every 30 minutes)
+  t.slow = t.slow + dt
+  if t.slow > 60 then
+    t.slow = 0
+    refreshWeather(false)
+    if state.screen == "home" then refreshCalendar() end
+  end
+  if state.screen == "diag" then
+    t.diag = t.diag + dt
+    if t.diag > 1 then
+      t.diag = 0
+      state.diag = android.diagnostics()
+      state.dirty = true
+    end
+  end
   -- what's playing: once a second while it's on screen (Home's widget or Media)
   if state.screen == "home" or state.screen == "media" then
     t.media = t.media + dt
@@ -1284,7 +1602,7 @@ function love.update(dt)
 end
 
 local function animating()
-  if press or state.toast or love.timer.getTime() < state.burstUntil then return true end
+  if press or state.toast or state.city or love.timer.getTime() < state.burstUntil then return true end
   for _, pg in pairs(state.pagers) do
     if math.abs((pg.page - 1) - pg.x) > 0.001 then return true end
   end

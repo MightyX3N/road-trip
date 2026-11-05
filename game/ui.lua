@@ -104,6 +104,21 @@ end
 
 function ui.fontHeight(weight, size) return ui.font(weight, size):getHeight() / ui.S end
 
+-- wrapped text, at most maxLines lines (the last one gets an ellipsis if it doesn't fit)
+function ui.textWrap(text, weight, size, color, x, y, w, maxLines)
+  local f = ui.font(weight, size)
+  local _, lines = f:getWrap(text, w * ui.S)
+  if maxLines and #lines > maxLines then
+    local rest = table.concat(lines, " ", maxLines)
+    lines = { unpack(lines, 1, maxLines - 1) }
+    lines[#lines + 1] = ui.fit(rest, weight, size, w)
+  end
+  lg.setColor(color)
+  local lh = f:getHeight() / ui.S
+  for i, line in ipairs(lines) do lg.print(line, f, x, y + (i - 1) * lh, 0, 1 / ui.S) end
+  return #lines * lh
+end
+
 ----------------------------------------------------------------------------------------------
 -- shapes
 ----------------------------------------------------------------------------------------------
@@ -193,6 +208,35 @@ end
 
 function icons.check()
   lg.line(5, 12, 10, 17, 19, 7)
+end
+
+-- weather
+local function cloudShape(dy)
+  dy = dy or 0
+  lg.arc("line", "open", 8.5, 14 + dy, 3.5, math.pi * 0.5, math.pi * 1.5, 16)
+  lg.arc("line", "open", 13.5, 11.5 + dy, 5, math.pi * 1.1, math.pi * 1.95, 20)
+  lg.arc("line", "open", 17, 14.5 + dy, 3, math.pi * 1.5, math.pi * 2.5, 16)
+  lg.line(8.5, 17.5 + dy, 17, 17.5 + dy)
+end
+function icons.cloud() cloudShape(0) end
+function icons.rain()
+  cloudShape(-3)
+  lg.line(9, 17, 8, 20); lg.line(13, 17, 12, 20); lg.line(17, 17, 16, 20)
+end
+function icons.snow()
+  cloudShape(-3)
+  for _, x in ipairs({ 9, 13, 17 }) do lg.circle("fill", x - 0.5, 19, 1, 8) end
+end
+function icons.storm()
+  cloudShape(-3)
+  lg.line(13, 15.5, 11, 19, 14, 19, 12, 22.5)
+end
+function icons.fog()
+  lg.line(5, 9, 19, 9); lg.line(4, 13, 20, 13); lg.line(6, 17, 18, 17)
+end
+function icons.moon()
+  lg.arc("line", "open", 12, 12, 7, math.pi * 0.35, math.pi * 1.65, 24)
+  lg.arc("line", "open", 15.5, 9.5, 5.2, math.pi * 0.62, math.pi * 1.38, 20)
 end
 
 function icons.gear()
