@@ -20,6 +20,7 @@ ui.c = {
   tileOn  = hex("22252A"),
   ring    = hex("2A2C31"),
   chip    = hex("1A1C20"),
+  chipHi  = hex("1E2024"),
   text    = hex("F3F1EC"),
   text2   = hex("E8E5DD"),
   muted   = hex("9A9890"),
@@ -142,6 +143,48 @@ end
 function icons.close()
   lg.line(6, 6, 18, 18)
   lg.line(18, 6, 6, 18)
+end
+
+function icons.pin()
+  lg.arc("line", "open", 12, 10, 7, math.pi - 0.6, 2 * math.pi + 0.6, 24)
+  lg.line(6.2, 13.95, 12, 21, 17.8, 13.95)
+  lg.circle("line", 12, 10, 2.5, 16)
+end
+
+function icons.radio()
+  lg.rectangle("line", 4, 9, 16, 11)
+  lg.line(7, 9, 17, 4)
+  lg.circle("line", 8.5, 14.5, 2, 16)
+  lg.line(13, 13, 17, 13)
+  lg.line(13, 16, 17, 16)
+end
+
+function icons.sun()
+  lg.circle("line", 12, 12, 4, 20)
+  for i = 0, 7 do
+    local a = i * math.pi / 4
+    lg.line(12 + math.cos(a) * 6.5, 12 + math.sin(a) * 6.5, 12 + math.cos(a) * 9, 12 + math.sin(a) * 9)
+  end
+end
+
+function icons.calendar()
+  lg.rectangle("line", 4, 6, 16, 14)
+  lg.line(4, 10, 20, 10)
+  lg.line(8, 3, 8, 7)
+  lg.line(16, 3, 16, 7)
+end
+
+function icons.edit()
+  lg.line(4, 20, 8, 20, 19, 9, 15, 5, 4, 16, 4, 20)
+end
+
+function icons.check()
+  lg.line(5, 12, 10, 17, 19, 7)
+end
+
+function icons.plus()
+  lg.line(12, 5, 12, 19)
+  lg.line(5, 12, 19, 12)
 end
 
 -- draw icon `name` with its top-left at x,y and edge length `size`

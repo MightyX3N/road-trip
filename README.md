@@ -1,9 +1,13 @@
-# Road Trip — step 1
+# Road Trip
 
-A working home screen: your real apps in a paged grid of round tiles, tap to open,
-swipe between pages, long-press an app to open its Android info page (uninstall,
-permissions). The left rail (Home, Widgets, Media) and the voice button are in place;
-Widgets and Media are placeholders until step 3.
+An Android car launcher written in Lua on LÖVE.
+
+Right now: **Home** opens first, with your favorite apps along the bottom and spaces for
+the map, radio, weather and calendar widgets (those arrive in later updates). **Apps** has
+every app in a paged grid; tap to open, swipe between pages, long-press for a menu to add
+or remove a favorite or open the app's info page. On first launch you pick 3 to 5
+favorite apps; change them any time with the pencil button on Home or by long-pressing a
+favorite. The voice button opens the device's assistant.
 
 ## Get the APK (no Android tools needed)
 

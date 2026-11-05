@@ -1,4 +1,4 @@
--- Road Trip launcher — step 1: home screen with your real apps.
+-- Road Trip launcher: Home (widgets + favorites), Apps (all apps), Media, favorites picker.
 
 local android = require("android")
 local config = require("config")
@@ -9,21 +9,34 @@ local lg = love.graphics
 local DESIGN_H = 720
 local RAIL, TOP = 112, 72
 local LONG_PRESS = 0.6
+local FAV_MIN, FAV_MAX = 3, 5
 
 local W, H = 1280, 720 -- virtual size (H is always 720; W follows the screen's shape)
 
 local state = {
-  screen = "home",
+  screen = "home",   -- home | apps | media | favs
+  favsMode = "edit", -- favs picker: "setup" (first launch) or "edit"
   apps = {},
-  icons = {}, -- file name -> { img, modtime }
-  page = 1,
-  pageX = 0, -- animated page position (0 = first page)
+  byKey = {},        -- "pkg/activity" -> app
+  icons = {},        -- icon file -> { img, modtime }
+  pagers = { apps = { page = 1, x = 0 }, favs = { page = 1, x = 0 } },
+  pagerArea = {},    -- pager id -> area it was last drawn in
+  pick = {},         -- keys being picked in the favorites picker
+  menu = nil,        -- app whose long-press menu is open
+  toast = nil,       -- { text, until }
   isHome = true,
   error = nil,
-  dirty = true, -- redraw needed
+  dirty = true,
 }
 
-local press -- active touch: { x, y, t, id, moved, grid, done }
+local press -- active touch: { x, y, t, id, moved, pager, startX, done }
+
+local function keyOf(app) return app.pkg .. "/" .. (app.activity or "") end
+
+local function toast(text)
+  state.toast = { text = text, untilT = love.timer.getTime() + 2.5 }
+  state.dirty = true
+end
 
 ----------------------------------------------------------------------------------------------
 -- data
@@ -39,10 +52,34 @@ local function refreshApps()
   end
   table.sort(apps, function(a, b) return a.label:lower() < b.label:lower() end)
   state.apps = apps
+  state.byKey = {}
+  for _, app in ipairs(apps) do state.byKey[keyOf(app)] = app end
   state.error = nil
-  local home = android.isDefaultHome()
-  state.isHome = home ~= false
+  state.isHome = android.isDefaultHome() ~= false
   state.dirty = true
+end
+
+-- saved favorites that are still installed, in order
+local function favoriteApps()
+  local list = {}
+  for _, k in ipairs(config.get("favorites") or {}) do
+    local app = state.byKey[k]
+    if app then list[#list + 1] = app end
+  end
+  return list
+end
+
+local function isFavorite(app)
+  for _, k in ipairs(config.get("favorites") or {}) do
+    if k == keyOf(app) then return true end
+  end
+  return false
+end
+
+local function saveFavorites(keys)
+  local list = setmetatable({}, android.json.array)
+  for i, k in ipairs(keys) do list[i] = k end
+  config.set("favorites", list)
 end
 
 local function iconFor(app)
@@ -59,36 +96,29 @@ local function iconFor(app)
   return img
 end
 
-----------------------------------------------------------------------------------------------
--- layout
-----------------------------------------------------------------------------------------------
-
-local function showBanner()
-  return android.isAndroid and not state.isHome and not config.get("homeHintDismissed")
-end
-
-local function gridLayout()
-  local x0, cw = RAIL, W - RAIL
-  local top = TOP + (showBanner() and 104 or 0)
-  local bottom = H - 44
-  local cols = math.max(3, math.min(6, math.floor((cw - 48) / 220)))
-  local rows = math.max(2, math.min(4, math.floor((bottom - top) / 230)))
-  local cellW, cellH = (cw - 48) / cols, (bottom - top) / rows
-  local radius = math.min(64, cellW * 0.3, cellH * 0.3)
-  return {
-    x0 = x0, cw = cw, top = top, bottom = bottom,
-    cols = cols, rows = rows, per = cols * rows,
-    cellW = cellW, cellH = cellH, r = radius,
-  }
-end
-
-local function pageCount(g)
-  return math.max(1, math.ceil(#state.apps / g.per))
+local function openPicker(mode)
+  state.favsMode = mode
+  state.pick = {}
+  for _, app in ipairs(favoriteApps()) do state.pick[#state.pick + 1] = keyOf(app) end
+  state.pagers.favs.page, state.pagers.favs.x = 1, 0
+  state.screen = "favs"
 end
 
 ----------------------------------------------------------------------------------------------
--- drawing
+-- shared pieces
 ----------------------------------------------------------------------------------------------
+
+local function drawAppIcon(app, cx, cy, r)
+  local img = iconFor(app)
+  local size = r * 1.3
+  if img then
+    lg.setColor(1, 1, 1, 1)
+    lg.draw(img, cx - size / 2, cy - size / 2, 0, size / img:getWidth(), size / img:getHeight())
+  else
+    local fs = math.max(12, math.floor(r * 0.7))
+    ui.text(app.label:sub(1, 1):upper(), "bold", fs, ui.c.accent, cx - r, cy - ui.fontHeight("bold", fs) / 2, "center", r * 2)
+  end
+end
 
 local function drawTopBar()
   local x0 = RAIL
@@ -107,7 +137,7 @@ end
 
 local RAIL_ITEMS = {
   { screen = "home", label = "Home", icon = "home" },
-  { screen = "widgets", label = "Widgets", icon = "widgets" },
+  { screen = "apps", label = "Apps", icon = "widgets" },
   { screen = "media", label = "Media", icon = "media" },
 }
 
@@ -129,46 +159,46 @@ local function drawRail()
   ui.hit({ kind = "voice" }, RAIL / 2 - 36, vy, 72, 72)
 end
 
-local function drawBanner()
-  if not showBanner() then return end
-  local x, y, w, h = RAIL + 24, TOP + 20, W - RAIL - 48, 72
-  ui.rect(ui.c.card, x, y, w, h, 20)
-  ui.text("Road Trip isn't your home app yet", "bold", 19, ui.c.text, x + 24, y + 14)
-  ui.text("Set it so the Home button opens it", "semibold", 15, ui.c.muted, x + 24, y + 40)
-  local bw = ui.textWidth("Set as home app", "bold", 16) + 44
-  local bx = x + w - 64 - bw - 12
-  ui.rect(ui.c.accent, bx, y + 12, bw, 48, 24)
-  ui.text("Set as home app", "bold", 16, ui.c.onAccent, bx, y + 24, "center", bw)
-  ui.hit({ kind = "setHome" }, bx, y + 12, bw, 48)
-  ui.icon("close", x + w - 52, y + 24, 24, ui.c.muted, 2.2)
-  ui.hit({ kind = "dismissBanner" }, x + w - 64, y + 8, 56, 56)
+-- pill button; returns its width
+local function pill(id, label, x, y, h, style)
+  local size = h >= 60 and 18 or 16
+  local w = ui.textWidth(label, "bold", size) + (h >= 60 and 72 or 44)
+  local bg = style == "primary" and ui.c.text or style == "accent" and ui.c.accent or style == "off" and ui.c.chip or nil
+  local fg = style == "primary" and ui.c.bg or style == "accent" and ui.c.onAccent or style == "off" and ui.c.dim or ui.c.muted
+  if bg then ui.rect(bg, x, y, w, h, h / 2) end
+  ui.text(label, "bold", size, fg, x, y + (h - ui.fontHeight("bold", size)) / 2, "center", w)
+  if id then ui.hit(id, x, y, w, h) end
+  return w
 end
 
-local function drawTile(app, cx, cy, r, pressed)
-  ui.circle(pressed and ui.c.tileOn or ui.c.tile, cx, cy, r)
-  ui.ring(pressed and ui.c.accent or ui.c.ring, cx, cy, r, 2)
-  local img = iconFor(app)
-  local size = r * 1.3
-  if img then
-    lg.setColor(1, 1, 1, 1)
-    lg.draw(img, cx - size / 2, cy - size / 2, 0, size / img:getWidth(), size / img:getHeight())
-  else
-    local letter = app.label:sub(1, 1):upper()
-    ui.text(letter, "bold", math.floor(r * 0.7), ui.c.accent, cx - r, cy - ui.fontHeight("bold", math.floor(r * 0.7)) / 2, "center", r * 2)
-  end
-  local maxW = r * 2 + 48
-  local label = ui.fit(app.label, "semibold", 19, maxW)
-  ui.text(label, "semibold", 19, ui.c.text2, cx - maxW / 2, cy + r + 12, "center", maxW)
+----------------------------------------------------------------------------------------------
+-- paged app grid (Apps screen and the favorites picker)
+----------------------------------------------------------------------------------------------
+
+local function gridLayout(area, maxR)
+  local cols = math.max(3, math.min(area.maxCols or 6, math.floor((area.w - 48) / (area.cellMin or 220))))
+  local rows = math.max(2, math.min(4, math.floor((area.bottom - area.top) / 230)))
+  local cellW, cellH = (area.w - 48) / cols, (area.bottom - area.top) / rows
+  return {
+    x0 = area.x, cw = area.w, top = area.top, bottom = area.bottom,
+    cols = cols, rows = rows, per = cols * rows, cellW = cellW, cellH = cellH,
+    r = math.min(maxR or 64, cellW * 0.3, cellH * 0.3),
+  }
 end
 
-local function drawGrid()
-  local g = gridLayout()
+local function pageCount(g) return math.max(1, math.ceil(#state.apps / g.per)) end
+
+-- tile(app, cx, cy, r, slotIndex) draws one app; returns nothing
+local function drawPagedGrid(pagerId, area, maxR, tile)
+  local g = gridLayout(area, maxR)
+  local pg = state.pagers[pagerId]
+  state.pagerArea[pagerId] = g
   local pages = pageCount(g)
   local s = ui.S
-  lg.setScissor(g.x0 * s, 0, g.cw * s, H * s)
-  local first = math.max(1, math.floor(state.pageX) + 1)
+  lg.setScissor(g.x0 * s, g.top * s - 40 * s, g.cw * s, (g.bottom - g.top + 40) * s)
+  local first = math.max(1, math.floor(pg.x) + 1)
   for p = first, math.min(pages, first + 1) do
-    local offset = (p - 1 - state.pageX) * g.cw
+    local offset = (p - 1 - pg.x) * g.cw
     for slot = 1, g.per do
       local app = state.apps[(p - 1) * g.per + slot]
       if not app then break end
@@ -176,11 +206,9 @@ local function drawGrid()
       local row = math.floor((slot - 1) / g.cols)
       local cx = g.x0 + 24 + (col + 0.5) * g.cellW + offset
       local cy = g.top + (row + 0.5) * g.cellH - 14
-      local id = press and press.id
-      local pressed = id and id.kind == "tile" and id.app == app and not press.moved
-      drawTile(app, cx, cy, g.r, pressed)
+      tile(app, cx, cy, g.r)
       if math.abs(offset) < 1 then
-        ui.hit({ kind = "tile", app = app }, cx - g.cellW / 2, cy - g.r - 8, g.cellW, g.r * 2 + 48)
+        ui.hit({ kind = "tile", app = app, grid = pagerId }, cx - g.cellW / 2, cy - g.r - 8, g.cellW, g.r * 2 + 48)
       end
     end
   end
@@ -189,14 +217,224 @@ local function drawGrid()
   if pages > 1 then
     local total = (pages - 1) * 16 + 28
     local x = g.x0 + (g.cw - total) / 2
-    local cur = math.floor(state.pageX + 0.5) + 1
+    local cur = math.floor(pg.x + 0.5) + 1
     for p = 1, pages do
       local wDot = p == cur and 28 or 6
-      ui.rect(p == cur and ui.c.text2 or ui.c.dim, x, H - 28, wDot, 6, 3)
+      ui.rect(p == cur and ui.c.text2 or ui.c.dim, x, g.bottom + 14, wDot, 6, 3)
       x = x + wDot + 10
     end
   end
 end
+
+local function pressedTile(app)
+  return press and not press.moved and press.id and press.id.kind == "tile" and press.id.app == app
+end
+
+----------------------------------------------------------------------------------------------
+-- Home
+----------------------------------------------------------------------------------------------
+
+local function showBanner()
+  return android.isAndroid and not state.isHome and not config.get("homeHintDismissed")
+end
+
+local function drawBanner(y)
+  local x, w, h = RAIL + 24, W - RAIL - 48, 72
+  ui.rect(ui.c.card, x, y, w, h, 20)
+  ui.text("Road Trip isn't your home app yet", "bold", 19, ui.c.text, x + 24, y + 14)
+  ui.text("Set it so the Home button opens it", "semibold", 15, ui.c.muted, x + 24, y + 40)
+  local bw = ui.textWidth("Set as home app", "bold", 16) + 44
+  local bx = x + w - 64 - bw - 12
+  pill({ kind = "setHome" }, "Set as home app", bx, y + 12, 48, "accent")
+  ui.icon("close", x + w - 52, y + 24, 24, ui.c.muted, 2.2)
+  ui.hit({ kind = "dismissBanner" }, x + w - 64, y + 8, 56, 56)
+end
+
+-- a widget slot that isn't built yet: says what it will be, without pretending
+local function placeholderWidget(x, y, w, h, title, icon, note)
+  ui.rect(ui.c.card, x, y, w, h, 26)
+  ui.text(title, "bold", 14, ui.c.muted, x + 22, y + 20)
+  local big = math.min(64, h * 0.3)
+  ui.icon(icon, x + (w - big) / 2, y + (h - big) / 2 - 10, big, ui.c.dim, 1.4)
+  if note then
+    ui.text(note, "semibold", 14, ui.c.dim, x + 12, y + h - 38, "center", w - 24)
+  end
+end
+
+local function drawFavorites(x, y, w, h)
+  ui.rect(ui.c.card, x, y, w, h, 26)
+  local favs = favoriteApps()
+  local editX = x + w - 14 - 60
+  ui.circle(ui.c.chipHi, editX + 30, y + h / 2, 30)
+  ui.icon("edit", editX + 18, y + h / 2 - 12, 24, ui.c.muted, 2)
+  ui.hit({ kind = "editFavs" }, editX, y + (h - 60) / 2, 60, 60)
+
+  if #favs == 0 then
+    ui.text("Pick 3 to 5 favorite apps to keep them here", "semibold", 17, ui.c.muted, x + 28, y + (h - ui.fontHeight("semibold", 17)) / 2)
+    ui.hit({ kind = "editFavs" }, x, y, w - 90, h)
+    return
+  end
+
+  -- share the room between pills; labels shorten if they must
+  local room = editX - 14 - (x + 14) - 14 * (#favs - 1)
+  local each = room / #favs
+  local px = x + 14
+  local ph = 76
+  local py = y + (h - ph) / 2
+  for _, app in ipairs(favs) do
+    local labelMax = math.max(40, each - (8 + 60 + 12 + 22))
+    local label = ui.fit(app.label, "bold", 17, labelMax)
+    local pw = math.min(each, 8 + 60 + 12 + ui.textWidth(label, "bold", 17) + 22)
+    local down = press and not press.moved and press.id and press.id.kind == "fav" and press.id.app == app
+    ui.rect(down and ui.c.tileOn or ui.c.chipHi, px, py, pw, ph, ph / 2)
+    ui.circle(ui.c.tile, px + 38, py + ph / 2, 30)
+    ui.ring(down and ui.c.accent or ui.c.ring, px + 38, py + ph / 2, 30, 2)
+    drawAppIcon(app, px + 38, py + ph / 2, 30)
+    ui.text(label, "bold", 17, ui.c.text2, px + 80, py + (ph - ui.fontHeight("bold", 17)) / 2)
+    ui.hit({ kind = "fav", app = app }, px, py, pw, ph)
+    px = px + pw + 14
+  end
+end
+
+local function drawHome()
+  local y = TOP + 24
+  if showBanner() then
+    drawBanner(y)
+    y = y + 92
+  end
+  local favH = 104
+  local bottom = H - 24 - favH - 16
+  local x, w = RAIL + 24, W - RAIL - 48
+  local gap = 20
+  local colW = (w - gap * 2) / 3
+  local rowH = (bottom - y - gap) / 2
+
+  placeholderWidget(x, y, colW * 2 + gap, rowH * 2 + gap, "Map", "pin", "Live map and turn-by-turn arrive in a later update")
+  local rx = x + (colW + gap) * 2
+  placeholderWidget(rx, y, colW, rowH, "Radio", "radio", "Coming soon")
+  local halfW = (colW - gap) / 2
+  placeholderWidget(rx, y + rowH + gap, halfW, rowH, "Weather", "sun")
+  placeholderWidget(rx + halfW + gap, y + rowH + gap, halfW, rowH, "Calendar", "calendar")
+
+  drawFavorites(x, H - 24 - favH, w, favH)
+end
+
+----------------------------------------------------------------------------------------------
+-- Apps
+----------------------------------------------------------------------------------------------
+
+local function drawApps()
+  local top = TOP + 24
+  local area = { x = RAIL, w = W - RAIL, top = top + 20, bottom = H - 44 }
+  drawPagedGrid("apps", area, 64, function(app, cx, cy, r)
+    local down = pressedTile(app)
+    ui.circle(down and ui.c.tileOn or ui.c.tile, cx, cy, r)
+    ui.ring(down and ui.c.accent or ui.c.ring, cx, cy, r, 2)
+    drawAppIcon(app, cx, cy, r)
+    local maxW = r * 2 + 48
+    ui.text(ui.fit(app.label, "semibold", 19, maxW), "semibold", 19, ui.c.text2, cx - maxW / 2, cy + r + 12, "center", maxW)
+  end)
+end
+
+----------------------------------------------------------------------------------------------
+-- Favorites picker (first launch and edit)
+----------------------------------------------------------------------------------------------
+
+local function pickIndex(app)
+  local k = keyOf(app)
+  for i, p in ipairs(state.pick) do
+    if p == k then return i end
+  end
+end
+
+local function drawPicker()
+  local px = 56
+  local setup = state.favsMode == "setup"
+  ui.text(setup and "Welcome to Road Trip" or "Favorite apps", "bold", 15, ui.c.accent, px, 32)
+  ui.text("Pick your favorite apps", "bold", 34, ui.c.text, px, 54)
+  ui.text("Choose 3 to 5. They sit along the bottom of your home screen, one tap away.", "semibold", 16, ui.c.muted, px, 106)
+
+  local area = { x = px - 24, w = W - px * 2 + 48, top = 150, bottom = H - 120, maxCols = 6, cellMin = 180 }
+  drawPagedGrid("favs", area, 54, function(app, cx, cy, r)
+    local n = pickIndex(app)
+    local down = pressedTile(app)
+    ui.circle((n or down) and ui.hex("1E1A13") or ui.c.tile, cx, cy, r)
+    ui.ring(n and ui.c.accent or ui.c.ring, cx, cy, r, n and 3 or 2)
+    drawAppIcon(app, cx, cy, r)
+    if n then
+      local bx, by = cx + r * 0.72, cy - r * 0.72
+      ui.circle(ui.c.bg, bx, by, 20)
+      ui.circle(ui.c.accent, bx, by, 17)
+      ui.text(tostring(n), "bold", 16, ui.c.onAccent, bx - 17, by - ui.fontHeight("bold", 16) / 2, "center", 34)
+    end
+    local maxW = r * 2 + 40
+    ui.text(ui.fit(app.label, "semibold", 17, maxW), "semibold", 17, n and ui.c.text or ui.hex("B8B5AD"), cx - maxW / 2, cy + r + 12, "center", maxW)
+  end)
+
+  local by = H - 32 - 64
+  pill({ kind = "pickerBack" }, setup and "Skip for now" or "Cancel", px - 28, by, 64, nil)
+  local count = #state.pick
+  local ready = count >= FAV_MIN
+  local label = setup and "Continue" or "Done"
+  local bw = ui.textWidth(label, "bold", 18) + 72
+  local bx = W - px - bw
+  pill(ready and { kind = "pickerDone" } or { kind = "pickerNotReady" }, label, bx, by, 64, ready and "primary" or "off")
+  local info = count .. " of " .. FAV_MAX .. " picked"
+  local iw = ui.textWidth(info, "semibold", 16)
+  ui.text(info, "semibold", 16, ui.c.muted, bx - 20 - iw, by + (64 - ui.fontHeight("semibold", 16)) / 2)
+end
+
+----------------------------------------------------------------------------------------------
+-- long-press menu and toast
+----------------------------------------------------------------------------------------------
+
+local function drawMenu()
+  local app = state.menu
+  if not app then return end
+  lg.setColor(0, 0, 0, 0.55)
+  lg.rectangle("fill", 0, 0, W, H)
+  ui.hit({ kind = "menuClose" }, 0, 0, W, H)
+
+  local w, h = 460, 288
+  local x, y = (W - w) / 2, (H - h) / 2
+  ui.rect(ui.c.card, x, y, w, h, 28)
+  ui.hit({ kind = "menuBody" }, x, y, w, h)
+  ui.circle(ui.c.tile, x + 56, y + 56, 30)
+  ui.ring(ui.c.ring, x + 56, y + 56, 30, 2)
+  drawAppIcon(app, x + 56, y + 56, 30)
+  ui.text(ui.fit(app.label, "bold", 22, w - 130), "bold", 22, ui.c.text, x + 102, y + 42)
+
+  local fav = isFavorite(app)
+  local full = not fav and #favoriteApps() >= FAV_MAX
+  local rows = {
+    { id = { kind = fav and "unfav" or "fav+", app = app }, icon = fav and "close" or "plus",
+      label = fav and "Remove from favorites" or (full and "Favorites are full (5)" or "Add to favorites"), off = full },
+    { id = { kind = "appInfo", app = app }, icon = "edit", label = "App info" },
+  }
+  local ry = y + 108
+  for _, row in ipairs(rows) do
+    local color = row.off and ui.c.dim or ui.c.text2
+    ui.rect(ui.c.chipHi, x + 20, ry, w - 40, 64, 18)
+    ui.icon(row.icon, x + 40, ry + 20, 24, row.off and ui.c.dim or ui.c.accent, 2)
+    ui.text(row.label, "bold", 18, color, x + 82, ry + (64 - ui.fontHeight("bold", 18)) / 2)
+    if not row.off then ui.hit(row.id, x + 20, ry, w - 40, 64) end
+    ry = ry + 76
+  end
+end
+
+local function drawToast()
+  local t = state.toast
+  if not t then return end
+  if love.timer.getTime() > t.untilT then state.toast = nil return end
+  local w = ui.textWidth(t.text, "bold", 16) + 48
+  local x, y = (W - w) / 2, H - 150
+  ui.rect(ui.hex("2C2E33"), x, y, w, 52, 26)
+  ui.text(t.text, "bold", 16, ui.c.text, x, y + (52 - ui.fontHeight("bold", 16)) / 2, "center", w)
+end
+
+----------------------------------------------------------------------------------------------
+-- frame
+----------------------------------------------------------------------------------------------
 
 local function drawPlaceholder(label)
   local th = ui.fontHeight("semibold", 19)
@@ -207,16 +445,17 @@ function love.draw()
   ui.beginFrame()
   lg.push()
   lg.scale(ui.S)
-  if state.screen == "home" then
-    drawBanner()
-    drawGrid()
-  elseif state.screen == "widgets" then
-    drawPlaceholder("Widgets are coming in a later update")
+  if state.screen == "favs" then
+    drawPicker()
   else
-    drawPlaceholder("Media is coming in a later update")
+    if state.screen == "home" then drawHome()
+    elseif state.screen == "apps" then drawApps()
+    else drawPlaceholder("Media is coming in a later update") end
+    drawTopBar()
+    drawRail()
   end
-  drawTopBar()
-  drawRail()
+  drawMenu()
+  drawToast()
   lg.pop()
 end
 
@@ -224,32 +463,82 @@ end
 -- input (touch arrives as mouse events on Android too)
 ----------------------------------------------------------------------------------------------
 
+local function launch(app)
+  local ok, err = android.launch(app)
+  if not ok then state.error = err or ("Couldn't open " .. app.label) end
+end
+
+local function togglePick(app)
+  local i = pickIndex(app)
+  if i then
+    table.remove(state.pick, i)
+  elseif #state.pick >= FAV_MAX then
+    toast("You can pick up to " .. FAV_MAX)
+  else
+    state.pick[#state.pick + 1] = keyOf(app)
+  end
+end
+
 local function activate(id)
-  if id.kind == "tile" then
-    local ok, err = android.launch(id.app)
-    if not ok then state.error = err or ("Couldn't open " .. id.app.label) end
-  elseif id.kind == "rail" then
-    state.screen = id.screen
-  elseif id.kind == "voice" then
-    android.voice()
-  elseif id.kind == "setHome" then
-    android.openHomeSettings()
-  elseif id.kind == "dismissBanner" then
-    config.set("homeHintDismissed", true)
+  local k = id.kind
+  if k == "tile" and id.grid == "favs" then togglePick(id.app)
+  elseif k == "tile" or k == "fav" then launch(id.app)
+  elseif k == "rail" then state.screen = id.screen
+  elseif k == "voice" then android.voice()
+  elseif k == "setHome" then android.openHomeSettings()
+  elseif k == "dismissBanner" then config.set("homeHintDismissed", true)
+  elseif k == "editFavs" then openPicker("edit")
+  elseif k == "pickerBack" then
+    if state.favsMode == "setup" and config.get("favorites") == nil then saveFavorites({}) end
+    state.screen = "home"
+  elseif k == "pickerNotReady" then toast("Pick at least " .. FAV_MIN)
+  elseif k == "pickerDone" then
+    saveFavorites(state.pick)
+    state.screen = "home"
+  elseif k == "menuClose" then state.menu = nil
+  elseif k == "fav+" then
+    local keys = {}
+    for _, a in ipairs(favoriteApps()) do keys[#keys + 1] = keyOf(a) end
+    keys[#keys + 1] = keyOf(id.app)
+    saveFavorites(keys)
+    state.menu = nil
+    toast("Added to favorites")
+  elseif k == "unfav" then
+    local keys = {}
+    for _, a in ipairs(favoriteApps()) do
+      if a ~= id.app then keys[#keys + 1] = keyOf(a) end
+    end
+    saveFavorites(keys)
+    state.menu = nil
+    toast("Removed from favorites")
+  elseif k == "appInfo" then
+    state.menu = nil
+    android.openAppInfo(id.app)
   end
   state.dirty = true
+end
+
+local function sameTarget(a, b)
+  return a and b and a.kind == b.kind and a.app == b.app and a.screen == b.screen and a.grid == b.grid
+end
+
+local function pagerAt(vx, vy)
+  if state.menu then return nil end
+  local id = state.screen == "apps" and "apps" or state.screen == "favs" and "favs" or nil
+  local g = id and state.pagerArea[id]
+  if g and vx > g.x0 and vx < g.x0 + g.cw and vy > g.top - 40 and vy < g.bottom + 30 then return id end
 end
 
 function love.mousepressed(x, y, button)
   if button ~= 1 then return end
   local vx, vy = x / ui.S, y / ui.S
-  local g = gridLayout()
+  local pager = pagerAt(vx, vy)
   press = {
     x = vx, y = vy, t = love.timer.getTime(),
     id = ui.hitAt(vx, vy),
     moved = false,
-    grid = state.screen == "home" and vx > g.x0 and vy > g.top,
-    startPage = state.pageX,
+    pager = pager,
+    startX = pager and state.pagers[pager].x,
   }
 end
 
@@ -258,13 +547,12 @@ function love.mousemoved(x, y)
   local vx, vy = x / ui.S, y / ui.S
   local dx = vx - press.x
   if math.abs(dx) > 12 or math.abs(vy - press.y) > 12 then press.moved = true end
-  if press.grid and press.moved then
-    local g = gridLayout()
+  if press.pager and press.moved then
+    local g = state.pagerArea[press.pager]
     local maxX = pageCount(g) - 1
-    local pos = press.startPage - dx / g.cw
-    -- resist past the first and last page
+    local pos = press.startX - dx / g.cw
     if pos < 0 then pos = pos * 0.3 elseif pos > maxX then pos = maxX + (pos - maxX) * 0.3 end
-    state.pageX = pos
+    state.pagers[press.pager].x = pos
   end
 end
 
@@ -272,31 +560,39 @@ function love.mousereleased(x, y, button)
   if button ~= 1 or not press then return end
   local p = press
   press = nil
+  state.dirty = true
   if p.done then return end
   local vx, vy = x / ui.S, y / ui.S
   if p.moved then
-    if p.grid then
-      local g = gridLayout()
+    if p.pager then
+      local g = state.pagerArea[p.pager]
       local dx = vx - p.x
       local dt = math.max(0.016, love.timer.getTime() - p.t)
       local fling = math.abs(dx) / dt > 600
-      local target = math.floor(p.startPage + 0.5)
+      local target = math.floor(p.startX + 0.5)
       if dx < -80 or (fling and dx < 0) then target = target + 1
       elseif dx > 80 or (fling and dx > 0) then target = target - 1 end
-      state.page = math.max(1, math.min(pageCount(g), target + 1))
+      state.pagers[p.pager].page = math.max(1, math.min(pageCount(g), target + 1))
     end
   else
     local id = ui.hitAt(vx, vy)
-    if id and p.id and id.kind == p.id.kind and id.app == p.id.app and id.screen == p.id.screen then
-      activate(id)
-    end
+    if sameTarget(id, p.id) then activate(id) end
   end
-  state.dirty = true
 end
 
 function love.keypressed(key)
-  -- Android's back button arrives as "escape"; a home screen ignores it.
-  if key == "escape" and not android.isAndroid then love.event.quit() end
+  if key ~= "escape" then return end
+  -- Android's back button arrives as "escape"
+  if state.menu then
+    state.menu = nil
+  elseif state.screen == "favs" then
+    activate({ kind = "pickerBack" })
+  elseif state.screen ~= "home" then
+    state.screen = "home"
+  elseif not android.isAndroid then
+    love.event.quit()
+  end
+  state.dirty = true
 end
 
 ----------------------------------------------------------------------------------------------
@@ -316,35 +612,46 @@ function love.load()
   lg.setBackgroundColor(ui.c.bg)
   layout(lg.getDimensions())
   refreshApps()
+  if config.get("favorites") == nil then openPicker("setup") end
 end
 
 function love.resize(w, h) layout(w, h) end
 
 function love.focus(f)
-  if f then refreshApps() end -- coming back from an app: catch installs, removals, home changes
+  if f then refreshApps() end -- back from an app: catch installs, removals, home changes
 end
 
 function love.update(dt)
-  -- long press on an app opens its Android info page (uninstall, permissions)
-  if press and not press.moved and not press.done and press.id and press.id.kind == "tile"
+  -- long press: Apps tile -> menu, favorite -> edit favorites
+  if press and not press.moved and not press.done and press.id
     and love.timer.getTime() - press.t > LONG_PRESS then
-    press.done = true
-    android.openAppInfo(press.id.app)
+    local id = press.id
+    if id.kind == "tile" and id.grid == "apps" then
+      press.done = true
+      state.menu = id.app
+    elseif id.kind == "fav" then
+      press.done = true
+      openPicker("edit")
+    end
     state.dirty = true
   end
 
-  -- settle the page position
-  local g = gridLayout()
-  state.page = math.max(1, math.min(pageCount(g), state.page))
-  if not (press and press.grid and press.moved) then
-    local target = state.page - 1
-    local d = target - state.pageX
-    if math.abs(d) < 0.001 then
-      state.pageX = target
-    else
-      state.pageX = state.pageX + d * math.min(1, dt * 14)
+  for pid, pg in pairs(state.pagers) do
+    local g = state.pagerArea[pid]
+    if g then pg.page = math.max(1, math.min(pageCount(g), pg.page)) end
+    if not (press and press.pager == pid and press.moved) then
+      local d = (pg.page - 1) - pg.x
+      if math.abs(d) < 0.001 then pg.x = pg.page - 1 else pg.x = pg.x + d * math.min(1, dt * 14) end
     end
   end
+end
+
+local function animating()
+  if press or state.toast then return true end
+  for _, pg in pairs(state.pagers) do
+    if math.abs((pg.page - 1) - pg.x) > 0.001 then return true end
+  end
+  return false
 end
 
 -- Draw only when something changed, so the launcher idles quietly on the car box.
@@ -372,8 +679,8 @@ function love.run()
       state.dirty = true
     end
 
-    local animating = press ~= nil or math.abs((state.page - 1) - state.pageX) > 0.001
-    if (state.dirty or animating) and lg.isActive() then
+    local busy = animating()
+    if (state.dirty or busy) and lg.isActive() then
       lg.origin()
       lg.clear(lg.getBackgroundColor())
       love.draw()
@@ -381,6 +688,6 @@ function love.run()
       state.dirty = false
     end
 
-    love.timer.sleep(animating and 0.001 or 0.05)
+    love.timer.sleep(busy and 0.001 or 0.05)
   end
 end
