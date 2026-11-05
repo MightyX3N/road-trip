@@ -76,6 +76,9 @@ public final class LauncherBridge {
                 case "mediaCommand":
                     data = MediaListener.command(ctx, a.getString("action"), a.optLong("posMs", 0));
                     break;
+                case "navStatus":
+                    data = MediaListener.navStatus(ctx, a.optString("dir", null));
+                    break;
                 case "openMediaAccess":
                     data = MediaListener.openAccess(ctx);
                     break;
@@ -294,7 +297,17 @@ public final class LauncherBridge {
                 }
             }
         }
+        boolean offByUpdate = sp.getBoolean(GuardService.KEY_OFF_BY_UPDATE, false);
+        if (serviceOn && offByUpdate) {
+            sp.edit().putBoolean(GuardService.KEY_OFF_BY_UPDATE, false).apply();
+            offByUpdate = false;
+        } else if (!serviceOn && offByUpdate && GuardService.restore(ctx)) {
+            serviceOn = true; // adb-granted permission: put it straight back
+            offByUpdate = false;
+        }
         o.put("serviceOn", serviceOn);
+        o.put("offByUpdate", offByUpdate);
+        o.put("canRestore", GuardService.canRestore(ctx));
         o.put("connected", sp.getBoolean(GuardService.KEY_CONNECTED, false)); // diagnostics only
         o.put("enabled", sp.getBoolean(GuardService.KEY_ENABLED, true));
         o.put("pausedUntil", sp.getLong(GuardService.KEY_PAUSE_UNTIL, 0));

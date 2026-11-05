@@ -316,6 +316,9 @@ local function stubCall(method, args)
     return { serviceOn = false, enabled = true, stock = { "com.example.stocklauncher" } }
   elseif method == "homePresses" then
     return 0
+  elseif method == "navStatus" then
+    return { active = true, pkg = "com.google.android.apps.maps", app = "Maps", title = "300 m",
+      text = "Turn right onto Main Street", sub = "14:51 · 19 min · 12 km" }
   elseif method == "mediaStatus" then
     return { access = true, current = { pkg = "com.example.music", app = "Music", title = "Desert Highway",
       artist = "The Long Drives", album = "Mile Markers", durationMs = 241000, positionMs = 84000,
@@ -348,6 +351,8 @@ function M.guardStatus() return M.call("guardStatus") end
 function M.mediaStatus(artDir) return M.call("mediaStatus", { artDir = artDir }) end
 function M.mediaCommand(action, posMs) return M.call("mediaCommand", { action = action, posMs = posMs }) end
 function M.openMediaAccess() return M.call("openMediaAccess") end
+-- the nav app's turn-by-turn notification (same notification access); turn arrow lands in dir
+function M.navStatus(dir) return M.call("navStatus", { dir = dir }) end
 -- how many times Home was pressed while Road Trip was running (only ever goes up)
 function M.homePresses() return M.call("homePresses") end
 function M.setGuardEnabled(on) return M.call("setGuardEnabled", { on = on }) end

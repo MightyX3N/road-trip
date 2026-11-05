@@ -30,6 +30,8 @@ local state = {
   manualCheck = false,         -- the user asked; report "up to date" too
   timers = { update = 0, guard = 0, autoCheck = 0, home = 0, media = 0 },
   media = { access = true },   -- from MediaListener.java: { access, current? }
+  nav = { active = false },    -- the nav app's turn-by-turn notification
+  navImg = nil,                -- { name, img } for the turn arrow
   mediaAt = 0,                 -- when `media` was read, to move the progress bar between reads
   art = {},                    -- album art file -> image
   homeSeen = nil,              -- last Home-press count from Java
@@ -76,7 +78,8 @@ local function checkForUpdate(manual)
   if not manual and os.time() - last < UPDATE_EVERY then return end
   config.set("lastUpdateCheck", os.time())
   state.manualCheck = manual
-  if android.updateCheck(not manual) then state.update.state = "checking" end
+  local wifiOnly = not manual and config.get("updateWifiOnly") ~= false
+  if android.updateCheck(wifiOnly) then state.update.state = "checking" end
   if manual then toast("Checking for updates…") end
 end
 
@@ -108,6 +111,43 @@ local function pollMedia()
   state.media = res
   state.mediaAt = love.timer.getTime()
   if changed then state.dirty = true end
+
+  love.filesystem.createDirectory("nav")
+  local nav = android.navStatus(love.filesystem.getSaveDirectory() .. "/nav")
+  if type(nav) == "table" then
+    local o = state.nav
+    if nav.active ~= o.active or nav.title ~= o.title or nav.text ~= o.text or nav.sub ~= o.sub or nav.icon ~= o.icon then
+      state.dirty = true
+    end
+    state.nav = nav
+  end
+end
+
+-- nav apps Road Trip knows to offer, in order of preference
+local NAV_APPS = { "com.google.android.apps.maps", "com.waze", "net.osmand.plus", "net.osmand",
+  "com.here.app.maps", "com.sygic.aura", "cz.seznam.mapy" }
+
+local function installedNavApps()
+  local byPkg = {}
+  for _, app in ipairs(state.apps) do byPkg[app.pkg] = byPkg[app.pkg] or app end
+  local out = {}
+  for _, p in ipairs(NAV_APPS) do
+    if byPkg[p] then out[#out + 1] = byPkg[p] end
+  end
+  return out
+end
+
+local function navIcon()
+  local name = state.nav.icon
+  if not name then return nil end
+  if state.navImg and state.navImg.name == name then return state.navImg.img end
+  local path = "nav/" .. name
+  if not love.filesystem.getInfo(path) then return nil end
+  local ok, img = pcall(lg.newImage, path)
+  if not ok then return nil end
+  img:setFilter("linear", "linear")
+  state.navImg = { name = name, img = img }
+  return img
 end
 
 -- position now, moving it along since the last read while playing
@@ -258,6 +298,7 @@ local RAIL_ITEMS = {
   { screen = "home", label = "Home", icon = "home" },
   { screen = "apps", label = "Apps", icon = "widgets" },
   { screen = "media", label = "Media", icon = "media" },
+  { screen = "settings", label = "Settings", icon = "gear" },
 }
 
 local function drawRail()
@@ -282,8 +323,10 @@ end
 local function pill(id, label, x, y, h, style)
   local size = h >= 60 and 18 or 16
   local w = ui.textWidth(label, "bold", size) + (h >= 60 and 72 or 44)
-  local bg = style == "primary" and ui.c.text or style == "accent" and ui.c.accent or style == "off" and ui.c.chip or nil
-  local fg = style == "primary" and ui.c.bg or style == "accent" and ui.c.onAccent or style == "off" and ui.c.dim or ui.c.muted
+  local bg = style == "primary" and ui.c.text or style == "accent" and ui.c.accent
+    or (style == "off" or style == "off2") and ui.c.chipHi or nil
+  local fg = style == "primary" and ui.c.bg or style == "accent" and ui.c.onAccent or style == "off" and ui.c.dim
+    or style == "off2" and ui.c.text2 or ui.c.muted
   if bg then ui.rect(bg, x, y, w, h, h / 2) end
   ui.text(label, "bold", size, fg, x, y + (h - ui.fontHeight("bold", size)) / 2, "center", w)
   if id then ui.hit(id, x, y, w, h) end
@@ -386,6 +429,11 @@ local function currentBanner()
   end
   local active = updateBanner(true)
   if active then return active end
+  -- an update switched it off: say so even if the first-time hint was dismissed
+  if not state.guard.serviceOn and state.guard.offByUpdate then
+    return { title = "The update switched off Keep in front", sub = "Android does this to sideloaded apps; one switch turns it back on",
+      button = "Turn on", id = { kind = "a11y" } }
+  end
   if not state.guard.serviceOn and not config.get("guardHintDismissed") then
     return { title = "Keep Road Trip in front", sub = "Stops the box switching back to its own launcher",
       button = "Turn on", id = { kind = "a11y" }, dismiss = "guardHintDismissed" }
@@ -439,6 +487,54 @@ local function transportRow(x, y, w, h, m)
     local col = it.accent and ui.c.onAccent or (it.on and ui.c.text2 or ui.c.dim)
     ui.icon(it.icon, bx + (bw - s) / 2, y + (h - s) / 2, s, col)
     if it.on then ui.hit({ kind = "media", action = it.action }, bx, y, bw, h) end
+  end
+end
+
+local function navWidget(x, y, w, h)
+  ui.rect(ui.c.card, x, y, w, h, 26)
+  local nav = state.nav
+  local pad = 28
+  if nav.active then
+    ui.hit({ kind = "openNav", pkg = nav.pkg }, x, y, w, h)
+    ui.text(ui.fit("Navigation · " .. (nav.app or ""), "bold", 14, w - pad * 2), "bold", 14, ui.c.muted, x + pad, y + 24)
+    -- the nav app's own turn arrow, on an accent square
+    local sq = math.min(132, h * 0.34)
+    local sx, sy = x + pad, y + 64
+    ui.rect(ui.c.accent, sx, sy, sq, sq, 28)
+    local img = navIcon()
+    if img then
+      local s = (sq * 0.7) / math.max(img:getWidth(), img:getHeight())
+      lg.setColor(ui.c.onAccent)
+      lg.draw(img, sx + (sq - img:getWidth() * s) / 2, sy + (sq - img:getHeight() * s) / 2, 0, s, s)
+    else
+      ui.icon("turn", sx + sq * 0.18, sy + sq * 0.18, sq * 0.64, ui.c.onAccent, 2.4)
+    end
+    local tx = sx + sq + 28
+    local tw = x + w - pad - tx
+    ui.text(ui.fit(nav.title or "", "bold", 46, tw), "bold", 46, ui.c.text, tx, sy + 4)
+    ui.text(ui.fit(nav.text or "", "semibold", 22, tw), "semibold", 22, ui.hex("C9C6BE"), tx, sy + 70)
+    if nav.sub and nav.sub ~= "" then
+      ui.rect(ui.c.bg, x + 16, y + h - 16 - 64, w - 32, 64, 20)
+      ui.text(ui.fit(nav.sub, "bold", 20, w - 72), "bold", 20, ui.c.text, x + 36, y + h - 16 - 64 + (64 - ui.fontHeight("bold", 20)) / 2)
+    end
+    return
+  end
+
+  ui.icon("pin", x + pad, y + 28, 40, ui.c.accent, 1.6)
+  if not state.media.access then
+    ui.text("See your next turn here", "bold", 26, ui.c.text, x + pad, y + 92)
+    ui.text(ui.fit("Road Trip reads it from your nav app, using the same access as Now playing", "semibold", 16, w - pad * 2),
+      "semibold", 16, ui.c.muted, x + pad, y + 132)
+    pill({ kind = "mediaAccess" }, "Allow", x + pad, y + h - pad - 56, 56, "accent")
+    return
+  end
+  ui.text("Not navigating", "bold", 26, ui.c.text, x + pad, y + 92)
+  ui.text(ui.fit("Start a route in your nav app and the next turn shows here", "semibold", 16, w - pad * 2),
+    "semibold", 16, ui.c.muted, x + pad, y + 132)
+  local bx = x + pad
+  for i, app in ipairs(installedNavApps()) do
+    if i > 2 then break end
+    bx = bx + pill({ kind = "openNav", pkg = app.pkg }, "Open " .. app.label, bx, y + h - pad - 56, 56, i == 1 and "accent" or "off2") + 12
   end
 end
 
@@ -521,7 +617,7 @@ local function drawHome()
   local colW = (w - gap * 2) / 3
   local rowH = (bottom - y - gap) / 2
 
-  placeholderWidget(x, y, colW * 2 + gap, rowH * 2 + gap, "Map", "pin", "Live map and turn-by-turn arrive in a later update")
+  navWidget(x, y, colW * 2 + gap, rowH * 2 + gap)
   local rx = x + (colW + gap) * 2
   nowPlayingWidget(rx, y, colW, rowH)
   local halfW = (colW - gap) / 2
@@ -629,6 +725,91 @@ local function drawMedia()
   round("prev", "prev", 44, false, m.canPrev ~= false)
   round("toggle", m.playing and "pause" or "play", 56, true, true)
   round("next", "next", 44, false, m.canNext ~= false)
+end
+
+----------------------------------------------------------------------------------------------
+-- Settings
+----------------------------------------------------------------------------------------------
+
+local function toggle(id, on, x, y)
+  ui.rect(on and ui.c.accent or ui.hex("34363B"), x, y, 60, 34, 17)
+  ui.circle(ui.c.text, on and (x + 60 - 17) or (x + 17), y + 17, 13)
+  ui.hit(id, x - 10, y - 15, 80, 64)
+end
+
+-- rows: { title, sub, button = {label, id, style?}, toggle = {on, id}, swatches = true }
+local function settingsCard(title, rows, x, y, w)
+  local rowH = 84
+  local h = 64 + #rows * rowH + 8
+  ui.rect(ui.c.card, x, y, w, h, 26)
+  ui.text(title, "bold", 14, ui.c.muted, x + 24, y + 24)
+  local ry = y + 56
+  for i, r in ipairs(rows) do
+    if i > 1 then ui.rect(ui.c.line, x + 24, ry, w - 48, 1) end
+    local right = x + w - 24
+    local cy = ry + rowH / 2
+    if r.button then
+      local bw = ui.textWidth(r.button[1], "bold", 16) + 44
+      right = right - bw
+      pill(r.button[2], r.button[1], right, cy - 24, 48, r.button[3] or "off2")
+    elseif r.toggle then
+      right = right - 60
+      toggle(r.toggle[2], r.toggle[1], right, cy - 17)
+    elseif r.swatches then
+      local n = #ui.accents
+      right = right - (n * 52 - 12)
+      for j, a in ipairs(ui.accents) do
+        local sx = right + (j - 1) * 52 + 20
+        local cur = (config.get("accent") or ""):lower() == a.hex:lower()
+        if cur then ui.ring(ui.c.text, sx, cy, 23, 3) end
+        ui.circle(ui.hex(a.hex:sub(2)), sx, cy, 18)
+        ui.hit({ kind = "accent", hex = a.hex }, sx - 24, cy - 24, 48, 48)
+      end
+    end
+    local tw = right - 20 - (x + 24)
+    ui.text(ui.fit(r.title, "bold", 18, tw), "bold", 18, ui.c.text, x + 24, ry + 16)
+    if r.sub then ui.text(ui.fit(r.sub, "semibold", 14, tw), "semibold", 14, ui.c.muted, x + 24, ry + 46) end
+    ry = ry + rowH
+  end
+end
+
+local function drawSettings()
+  local g = state.guard
+  local guardSub, guardRow
+  if not g.serviceOn then
+    guardSub = g.offByUpdate and "Switched off by the last update" or "Off: the box can switch back to its own launcher"
+    guardRow = { title = "Keep in front", sub = guardSub, button = { "Turn on", { kind = "a11y" }, "accent" } }
+  else
+    guardRow = { title = "Keep in front", sub = g.enabled and "On: Road Trip returns if the box switches launcher" or "Paused",
+      toggle = { g.enabled ~= false, { kind = g.enabled and "guardOff" or "guardOn" } } }
+  end
+  local left = {
+    guardRow,
+    { title = "Keep in front after updates",
+      sub = g.canRestore and "Switches itself back on after each update"
+        or "Turn back on by hand, or allow it once with adb (see the website)" },
+    { title = "Now playing and navigation",
+      sub = state.media.access and "Allowed: reads what's playing and your next turn" or "Needs notification access",
+      button = state.media.access and { "Open", { kind = "mediaAccess" } } or { "Allow", { kind = "mediaAccess" }, "accent" } },
+    { title = "Home app", sub = state.isHome and "Road Trip opens when you press Home" or "Road Trip isn't the home app yet",
+      button = { "Change", { kind = "setHome" } } },
+    { title = "The box's own launcher", sub = "Open it for 2 minutes without Road Trip stepping in",
+      button = #(g.stock or {}) > 0 and { "Open", { kind = "stock" } } or nil },
+  }
+  local u = state.update
+  local right = {
+    { title = "Favorite apps", sub = #favoriteApps() .. " of " .. FAV_MAX .. " picked", button = { "Edit", { kind = "editFavs" } } },
+    { title = "Accent colour", swatches = true },
+    { title = "Updates", sub = "Version " .. ((u.currentName and u.currentName ~= "") and u.currentName or "?"),
+      button = { "Check now", { kind = "updateCheckNow" } } },
+    { title = "Check for updates on Wi-Fi only", sub = "Automatic checks, every 6 hours",
+      toggle = { config.get("updateWifiOnly") ~= false, { kind = "wifiOnly" } } },
+    { title = "About Road Trip", sub = "mightyx3n.github.io/road-trip", button = { "Website", { kind = "site" } } },
+  }
+  local x, y = RAIL + 24, TOP + 24
+  local colW = (W - RAIL - 48 - 20) / 2
+  settingsCard("Road Trip on this box", left, x, y, colW)
+  settingsCard("Yours", right, x + colW + 20, y, colW)
 end
 
 ----------------------------------------------------------------------------------------------
@@ -790,6 +971,7 @@ function love.draw()
   else
     if state.screen == "home" then drawHome()
     elseif state.screen == "apps" then drawApps()
+    elseif state.screen == "settings" then drawSettings()
     else drawMedia() end
     drawTopBar()
     drawRail()
@@ -827,6 +1009,12 @@ local function activate(id, vx)
     local frac = math.max(0, math.min(1, ((vx or id.x) - id.x) / id.w))
     mediaCommand("seek", math.floor(frac * id.dur))
   elseif k == "openMedia" then state.screen = "media"
+  elseif k == "openNav" then launch({ pkg = id.pkg, label = "the nav app" })
+  elseif k == "accent" then
+    config.set("accent", id.hex)
+    ui.setAccent(id.hex)
+  elseif k == "wifiOnly" then config.set("updateWifiOnly", config.get("updateWifiOnly") == false)
+  elseif k == "site" then love.system.openURL("https://mightyx3n.github.io/road-trip/")
   elseif k == "mediaAccess" then
     android.openMediaAccess()
     toast("Switch on Road Trip: now playing")

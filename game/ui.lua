@@ -30,7 +30,20 @@ ui.c = {
   accentBg = hex("262117"),
 }
 
-function ui.setAccent(h) ui.c.accent = hex(h) end
+-- accent colours offered in Settings, each with its dark tint for selected backgrounds
+ui.accents = {
+  { hex = "#F2A23A", tint = "262117" }, -- amber
+  { hex = "#5BC0BE", tint = "13262A" }, -- teal
+  { hex = "#E86F5A", tint = "2A1A16" }, -- coral
+  { hex = "#9BC53D", tint = "1D2414" }, -- green
+}
+
+function ui.setAccent(h)
+  ui.c.accent = hex(h)
+  for _, a in ipairs(ui.accents) do
+    if a.hex:lower() == h:lower() then ui.c.accentBg = hex(a.tint) end
+  end
+end
 
 ----------------------------------------------------------------------------------------------
 -- fonts: built at (size × scale) so text stays sharp, drawn back at 1/scale
@@ -180,6 +193,20 @@ end
 
 function icons.check()
   lg.line(5, 12, 10, 17, 19, 7)
+end
+
+function icons.gear()
+  lg.circle("line", 12, 12, 6.5, 24)
+  lg.circle("line", 12, 12, 2.5, 16)
+  for i = 0, 7 do
+    local a = i * math.pi / 4
+    lg.line(12 + math.cos(a) * 6.5, 12 + math.sin(a) * 6.5, 12 + math.cos(a) * 9.5, 12 + math.sin(a) * 9.5)
+  end
+end
+
+function icons.turn() -- generic "turn right" when the nav app gives no arrow
+  lg.line(8, 20, 8, 10, 17, 10)
+  lg.line(14, 6, 18, 10, 14, 14)
 end
 
 -- transport controls are solid shapes

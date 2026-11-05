@@ -1,5 +1,6 @@
 package app.roadtrip;
 
+import android.app.Notification;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -10,9 +11,11 @@ import android.media.session.MediaController;
 import android.media.session.MediaSessionManager;
 import android.media.session.PlaybackState;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.SystemClock;
 import android.provider.Settings;
 import android.service.notification.NotificationListenerService;
+import android.service.notification.StatusBarNotification;
 import android.util.Log;
 
 import org.json.JSONObject;
@@ -33,6 +36,110 @@ public class MediaListener extends NotificationListenerService {
     @Override
     public void onListenerConnected() {
         Log.i(TAG, "media: notification access connected");
+        try {
+            StatusBarNotification[] all = getActiveNotifications();
+            if (all != null) for (StatusBarNotification s : all) considerNav(this, s);
+        } catch (Throwable t) {
+            Log.w(TAG, "nav: initial scan failed", t);
+        }
+    }
+
+    // ---- navigation: the nav app's ongoing turn-by-turn notification ----------------------
+
+    private static final java.util.Set<String> NAV_APPS = new java.util.HashSet<>(java.util.Arrays.asList(
+        "com.google.android.apps.maps", "com.waze", "net.osmand", "net.osmand.plus",
+        "com.here.app.maps", "com.sygic.aura", "cz.seznam.mapy", "com.mapfactor.navigator"));
+
+    private static String navKey, navPkg, navTitle, navText, navSub;
+    private static Bitmap navIcon;
+    private static int navIconGen = 0;     // bumps when the turn arrow changes
+    private static int navIconWritten = -1;
+
+    @Override
+    public void onNotificationPosted(StatusBarNotification sbn) {
+        considerNav(this, sbn);
+    }
+
+    @Override
+    public void onNotificationRemoved(StatusBarNotification sbn) {
+        synchronized (MediaListener.class) {
+            if (sbn != null && sbn.getKey().equals(navKey)) navKey = null;
+        }
+    }
+
+    private static void considerNav(Context ctx, StatusBarNotification sbn) {
+        if (sbn == null) return;
+        Notification n = sbn.getNotification();
+        if (n == null) return;
+        String pkg = sbn.getPackageName();
+        boolean ongoing = (n.flags & Notification.FLAG_ONGOING_EVENT) != 0;
+        boolean isNav = Notification.CATEGORY_NAVIGATION.equals(n.category) || (NAV_APPS.contains(pkg) && ongoing);
+        if (!isNav) return;
+        Bundle e = n.extras;
+        String title = text(e, Notification.EXTRA_TITLE);
+        String body = text(e, Notification.EXTRA_TEXT);
+        if (body.isEmpty()) body = text(e, Notification.EXTRA_BIG_TEXT);
+        String sub = text(e, Notification.EXTRA_SUB_TEXT);
+        if (title.isEmpty() && body.isEmpty()) return; // a "navigation is running" stub, nothing to show
+        Bitmap icon = null;
+        try {
+            if (n.getLargeIcon() != null) {
+                android.graphics.drawable.Drawable d = n.getLargeIcon().loadDrawable(ctx);
+                if (d != null) {
+                    int w = Math.max(1, Math.min(256, d.getIntrinsicWidth() > 0 ? d.getIntrinsicWidth() : 128));
+                    int h = Math.max(1, Math.min(256, d.getIntrinsicHeight() > 0 ? d.getIntrinsicHeight() : 128));
+                    icon = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+                    android.graphics.Canvas c = new android.graphics.Canvas(icon);
+                    d.setBounds(0, 0, w, h);
+                    d.draw(c);
+                }
+            }
+        } catch (Throwable ignored) {
+            // no arrow; the text still shows
+        }
+        synchronized (MediaListener.class) {
+            navKey = sbn.getKey();
+            navPkg = pkg;
+            navTitle = title;
+            navText = body;
+            navSub = sub;
+            if (icon != null || navIcon != null) {
+                navIcon = icon;
+                navIconGen++;
+            }
+        }
+    }
+
+    private static String text(Bundle e, String key) {
+        if (e == null) return "";
+        CharSequence v = e.getCharSequence(key);
+        return v == null ? "" : v.toString().trim();
+    }
+
+    /** {active, pkg?, app?, title?, text?, sub?, icon?} */
+    static synchronized JSONObject navStatus(Context ctx, String dir) throws Exception {
+        JSONObject o = new JSONObject();
+        boolean active = navKey != null && hasAccess(ctx);
+        o.put("active", active);
+        if (!active) return o;
+        o.put("pkg", navPkg);
+        try {
+            PackageManager pm = ctx.getPackageManager();
+            o.put("app", pm.getApplicationLabel(pm.getApplicationInfo(navPkg, 0)).toString());
+        } catch (Throwable t) {
+            o.put("app", navPkg);
+        }
+        o.put("title", navTitle);
+        o.put("text", navText);
+        o.put("sub", navSub);
+        if (navIcon != null && dir != null) {
+            String name = "turn" + navIconGen + ".png";
+            if (navIconWritten == navIconGen || writeArt(navIcon, new File(dir), name)) {
+                navIconWritten = navIconGen;
+                o.put("icon", name);
+            }
+        }
+        return o;
     }
 
     static boolean hasAccess(Context ctx) {

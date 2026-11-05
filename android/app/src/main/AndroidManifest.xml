@@ -8,6 +8,9 @@
     <!-- in-app updates: check Wi-Fi, and install a downloaded new version (Android asks first) -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <!-- optional, adb-only: lets Road Trip switch Keep in front back on after an update -->
+    <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS"
+        tools:ignore="ProtectedPermissions" />
 
     <!-- Road Trip: see every app that has a launcher icon (Android 11+ package visibility) -->
     <queries>
@@ -71,6 +74,15 @@
                 <action android:name="android.service.notification.NotificationListenerService" />
             </intent-filter>
         </service>
+
+        <!-- After an update: restore Keep in front if the update switched it off -->
+        <receiver
+            android:name="app.roadtrip.UpdatedReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+            </intent-filter>
+        </receiver>
 
         <!-- Hands downloaded updates to Android's installer -->
         <provider

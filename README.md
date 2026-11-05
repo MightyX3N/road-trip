@@ -8,7 +8,9 @@ every app in a paged grid; tap to open, swipe between pages, long-press for a me
 or remove a favorite or open the app's info page. On first launch you pick 3 to 5
 favorite apps; change them any time with the pencil button on Home or by long-pressing a
 favorite. **Media** and the Now playing widget on Home show and control whatever's playing
-in any app (allow notification access when asked). The voice button opens the device's
+in any app, and the Navigation widget shows your next turn from Google Maps, Waze and
+other nav apps (both need notification access, which Road Trip asks for). **Settings**
+has everything else: Keep in front, permissions, favorites, accent colour and updates. The voice button opens the device's
 assistant.
 
 ## Get the APK (no Android tools needed)
@@ -65,6 +67,16 @@ walks you through it, or by hand:
 2. Settings → Apps → Road Trip → ⋮ (top right) → **Allow restricted settings**.
 3. Back in Accessibility, switch it on.
 (APKs installed by dragging onto Genymotion or with adb aren't affected.)
+
+**Keeping it on through updates.** Some Android builds switch off a sideloaded app's
+accessibility service when the app updates. Road Trip then shows a banner to turn it
+back on. To make it switch itself back on, run this once from a computer with adb:
+
+```sh
+adb shell pm grant app.roadtrip android.permission.WRITE_SECURE_SETTINGS
+```
+
+Settings → *Keep in front after updates* shows whether it's allowed.
 
 Long-press the clock any time for:
 - **Open the box's launcher for 2 minutes**, to use the stock launcher on purpose

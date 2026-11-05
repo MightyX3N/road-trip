@@ -79,9 +79,65 @@ public class GuardService extends AccessibilityService {
 
     @Override
     public boolean onUnbind(Intent intent) {
-        getSharedPreferences(PREFS, MODE_PRIVATE).edit().putBoolean(KEY_CONNECTED, false).apply();
+        // commit(), not apply(): during an update the process is about to be killed
+        getSharedPreferences(PREFS, MODE_PRIVATE).edit()
+            .putBoolean(KEY_CONNECTED, false)
+            .putLong(KEY_UNBOUND_AT, System.currentTimeMillis())
+            .commit();
         handler.removeCallbacks(bringBack);
         return super.onUnbind(intent);
+    }
+
+    // ---- surviving updates --------------------------------------------------------------------
+
+    static final String KEY_UNBOUND_AT = "guard_unbound_at";
+    static final String KEY_OFF_BY_UPDATE = "guard_off_by_update";
+    private static final long UPDATE_WINDOW_MS = 10 * 60_000; // unbound this close to an update = the update did it
+
+    static boolean serviceEnabled(Context ctx) {
+        String on = android.provider.Settings.Secure.getString(ctx.getContentResolver(),
+            android.provider.Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES);
+        if (on == null) return false;
+        android.content.ComponentName me = new android.content.ComponentName(ctx, GuardService.class);
+        for (String s : on.split(":")) {
+            if (me.equals(android.content.ComponentName.unflattenFromString(s))) return true;
+        }
+        return false;
+    }
+
+    /** Granted only with adb: pm grant <pkg> android.permission.WRITE_SECURE_SETTINGS */
+    static boolean canRestore(Context ctx) {
+        return ctx.checkSelfPermission("android.permission.WRITE_SECURE_SETTINGS")
+            == PackageManager.PERMISSION_GRANTED;
+    }
+
+    /** Called when Road Trip has just been updated: was the guard on until the update turned it off? */
+    static void afterUpdate(Context ctx) {
+        SharedPreferences sp = ctx.getSharedPreferences(PREFS, MODE_PRIVATE);
+        if (serviceEnabled(ctx)) return;
+        long unbound = sp.getLong(KEY_UNBOUND_AT, 0);
+        if (System.currentTimeMillis() - unbound > UPDATE_WINDOW_MS) return; // it was already off
+        if (!restore(ctx)) sp.edit().putBoolean(KEY_OFF_BY_UPDATE, true).apply();
+    }
+
+    /** Switches the guard back on in Accessibility; only works with WRITE_SECURE_SETTINGS. */
+    static boolean restore(Context ctx) {
+        if (!canRestore(ctx)) return false;
+        try {
+            android.content.ContentResolver cr = ctx.getContentResolver();
+            String key = android.provider.Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES;
+            String me = new android.content.ComponentName(ctx, GuardService.class).flattenToString();
+            String cur = android.provider.Settings.Secure.getString(cr, key);
+            String next = (cur == null || cur.isEmpty()) ? me : (serviceEnabled(ctx) ? cur : cur + ":" + me);
+            android.provider.Settings.Secure.putString(cr, key, next);
+            android.provider.Settings.Secure.putInt(cr, android.provider.Settings.Secure.ACCESSIBILITY_ENABLED, 1);
+            ctx.getSharedPreferences(PREFS, MODE_PRIVATE).edit().putBoolean(KEY_OFF_BY_UPDATE, false).apply();
+            Log.i(TAG, "guard: switched back on after update");
+            return true;
+        } catch (Throwable t) {
+            Log.w(TAG, "guard: restore failed", t);
+            return false;
+        }
     }
 
     @Override
