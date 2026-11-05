@@ -349,3 +349,9 @@ Pesquisar na biblioteca
 O navegador fica oculto enquanto conduz
 Vídeo oculto durante a condução. O som continua.
 Navegador
+Ocultar mapa
+Mostrar mapa
+Trocar de lado
+Não foi possível reproduzir este vídeo ({error})
+Sair do ecrã inteiro
+Momentos lentos e bloqueios

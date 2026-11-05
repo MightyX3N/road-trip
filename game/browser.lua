@@ -69,7 +69,10 @@ end
 -- the page's rectangle (virtual units)
 function M.pageRect(x, y, w, h, navigating)
   local top = y + 76
-  if M.split and navigating then return x + 16, top, math.floor(w * 0.58) - 24, h - 76 - 16 end
+  if M.split and navigating then
+    local px, pw, mx, mw = ui.split(x + 16, w - 32, 16, config.get("splitSwap"))
+    return px, top, pw, h - 76 - 16, mx, mw
+  end
   return x + 16, top, w - 32, h - 76 - 16
 end
 
@@ -88,11 +91,17 @@ function M.draw(x, y, w, h, drawMapCard, navigating)
   bx = bx + iconButton({ kind = "web:reload" }, "reload", bx, by, true) + 12
   local right = x + w - 16
   if navigating then
-    local label = M.split and T("Full screen") or T("Next to the map")
+    local label = M.split and T("Hide map") or T("Show map")
     local pw = ui.textWidth(label, "bold", 16) + 44
     right = right - pw
     ui.pill({ kind = "web:split" }, label, right, by + 4, 48, "off2")
     right = right - 12
+    if M.split then
+      local sw = ui.textWidth(T("Swap sides"), "bold", 16) + 44
+      right = right - sw
+      ui.pill({ kind = "web:swap" }, T("Swap sides"), right, by + 4, 48, "off2")
+      right = right - 12
+    end
   end
   -- the address field
   local fw = right - bx
@@ -120,11 +129,9 @@ function M.draw(x, y, w, h, drawMapCard, navigating)
   end
   ui.hit({ kind = "web:field" }, bx, by, fw, 56)
 
-  local px, py, pw, ph = M.pageRect(x, y, w, h, navigating)
+  local px, py, pw, ph, mx, mw = M.pageRect(x, y, w, h, navigating)
   ui.rect(ui.hex("FFFFFF"), px, py, pw, ph, 0) -- under Android's page
-  if M.split and navigating then
-    drawMapCard(px + pw + 16, py, x + w - 16 - (px + pw + 16), ph)
-  end
+  if mx then drawMapCard(mx, py, mw, ph) end
 end
 
 function M.wantsText() return M.field.typing end
@@ -138,7 +145,7 @@ function M.keypressed(key)
     if off then M.field.text = M.field.text:sub(1, off - 1) end
   elseif key == "return" or key == "kpenter" then
     M.field.typing = false
-    love.keyboard.setTextInput(false)
+    ui.closeKeyboard()
     M.load(M.field.text)
   end
 end
@@ -146,7 +153,7 @@ end
 function M.back()
   if M.field.typing then
     M.field.typing = false
-    love.keyboard.setTextInput(false)
+    ui.closeKeyboard()
     return true
   end
   if M.status.canBack then
@@ -164,10 +171,11 @@ function M.activate(id)
   elseif k == "web:forward" then android.webCommand("forward")
   elseif k == "web:reload" then android.webCommand((M.status.progress or 100) < 100 and "stop" or "reload")
   elseif k == "web:split" then M.split = not M.split
+  elseif k == "web:swap" then config.set("splitSwap", not config.get("splitSwap"))
   elseif k == "web:field" then
     M.field.typing = true
     M.field.text = ""
-    love.keyboard.setTextInput(true)
+    ui.openKeyboard()
   else
     return false
   end

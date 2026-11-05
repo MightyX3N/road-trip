@@ -349,3 +349,9 @@ Zoek in je bibliotheek
 De browser is verborgen tijdens het rijden
 Video verborgen tijdens het rijden. Het geluid speelt door.
 Browser
+Kaart verbergen
+Kaart tonen
+Kanten wisselen
+Kan deze video niet afspelen ({error})
+Volledig scherm sluiten
+Trage momenten en vastlopers

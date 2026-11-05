@@ -423,6 +423,34 @@ end
 -- tap targets: register while drawing, look up on release
 ----------------------------------------------------------------------------------------------
 
+-- show the keyboard. Android's keyboard can be closed with its own button without SDL
+-- noticing; SDL then thinks it's still up and won't show it again, so close it first.
+-- Closing goes through Android's main thread, so it's shown again a moment later (ui.tick).
+function ui.openKeyboard()
+  love.keyboard.setTextInput(false)
+  ui.keyboardAt = love.timer.getTime() + 0.15
+end
+
+function ui.closeKeyboard()
+  ui.keyboardAt = nil
+  love.keyboard.setTextInput(false)
+end
+
+function ui.tick()
+  if ui.keyboardAt and love.timer.getTime() >= ui.keyboardAt then
+    ui.keyboardAt = nil
+    love.keyboard.setTextInput(true)
+  end
+end
+
+-- side by side with the map: the main part (58%) and the map, swapped if asked
+function ui.split(x, w, gap, swap)
+  local mw = math.floor((w - gap) * 0.58)
+  local pw = w - gap - mw
+  if swap then return x + pw + gap, mw, x, pw end
+  return x, mw, x + mw + gap, pw
+end
+
 function ui.beginFrame() ui.hits = {} end
 
 -- `id` is any value identifying the target; later registrations win (drawn on top)

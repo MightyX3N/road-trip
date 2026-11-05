@@ -349,3 +349,9 @@ Bibliothek durchsuchen
 Der Browser ist während der Fahrt ausgeblendet
 Video während der Fahrt ausgeblendet. Der Ton läuft weiter.
 Browser
+Karte ausblenden
+Karte zeigen
+Seiten tauschen
+Video kann nicht abgespielt werden ({error})
+Vollbild beenden
+Langsame Momente und Hänger

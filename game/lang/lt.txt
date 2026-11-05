@@ -349,3 +349,9 @@ Ieškoti bibliotekoje
 Vairuojant naršyklė paslėpta
 Vairuojant vaizdo įrašas paslėptas. Garsas tęsiasi.
 Naršyklė
+Slėpti žemėlapį
+Rodyti žemėlapį
+Sukeisti puses
+Nepavyko paleisti vaizdo įrašo ({error})
+Išeiti iš viso ekrano
+Sulėtėjimai ir užstrigimai

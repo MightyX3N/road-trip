@@ -349,3 +349,9 @@ Szukaj w bibliotece
 Przeglądarka jest ukryta podczas jazdy
 Wideo ukryte podczas jazdy. Dźwięk gra dalej.
 Przeglądarka
+Ukryj mapę
+Pokaż mapę
+Zamień strony
+Nie można odtworzyć filmu ({error})
+Zamknij pełny ekran
+Spowolnienia i zawieszenia

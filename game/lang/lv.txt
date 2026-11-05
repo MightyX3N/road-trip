@@ -349,3 +349,9 @@ Meklēt bibliotēkā
 Pārlūks braukšanas laikā ir paslēpts
 Video braukšanas laikā paslēpts. Skaņa turpinās.
 Pārlūks
+Paslēpt karti
+Rādīt karti
+Samainīt puses
+Video nevar atskaņot ({error})
+Iziet no pilnekrāna
+Palēninājumi un sastingumi

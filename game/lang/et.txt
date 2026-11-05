@@ -349,3 +349,9 @@ Otsi kogust
 Brauser on sõidu ajal peidetud
 Video on sõidu ajal peidetud. Heli mängib edasi.
 Brauser
+Peida kaart
+Näita kaarti
+Vaheta pooli
+Videot ei saa esitada ({error})
+Välju täisekraanist
+Aeglased hetked ja hangumised

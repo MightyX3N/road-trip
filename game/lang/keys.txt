@@ -347,3 +347,9 @@ Search your library
 The browser is hidden while you drive
 Video hidden while driving. The sound keeps playing.
 Browser
+Hide map
+Show map
+Swap sides
+Couldn't play this video ({error})
+Exit full screen
+Slow moments and freezes

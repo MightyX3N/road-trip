@@ -349,3 +349,9 @@ Pretraži knjižnicu
 Preglednik je skriven dok vozite
 Video je skriven tijekom vožnje. Zvuk se nastavlja.
 Preglednik
+Sakrij kartu
+Prikaži kartu
+Zamijeni strane
+Videozapis se ne može reproducirati ({error})
+Izađi iz cijelog zaslona
+Usporavanja i zamrzavanja

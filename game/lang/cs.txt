@@ -349,3 +349,9 @@ Hledat v knihovně
 Prohlížeč je během jízdy skrytý
 Video je při jízdě skryté. Zvuk hraje dál.
 Prohlížeč
+Skrýt mapu
+Zobrazit mapu
+Prohodit strany
+Video nelze přehrát ({error})
+Ukončit celou obrazovku
+Zpomalení a zamrznutí

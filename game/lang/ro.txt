@@ -349,3 +349,9 @@ Caută în bibliotecă
 Browserul este ascuns cât timp conduci
 Video ascuns în timpul condusului. Sunetul continuă.
 Browser
+Ascunde harta
+Arată harta
+Schimbă părțile
+Videoclipul nu poate fi redat ({error})
+Ieși din ecran complet
+Momente lente și blocări

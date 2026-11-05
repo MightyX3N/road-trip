@@ -349,3 +349,9 @@ Hae kirjastosta
 Selain on piilossa ajon aikana
 Video piilotettu ajon ajaksi. Ääni jatkuu.
 Selain
+Piilota kartta
+Näytä kartta
+Vaihda puolta
+Videota ei voitu toistaa ({error})
+Poistu koko näytöstä
+Hitaat hetket ja jumitukset

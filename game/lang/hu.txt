@@ -349,3 +349,9 @@ Keresés a könyvtárban
 A böngésző vezetés közben rejtve van
 Vezetés közben a videó rejtve. A hang szól tovább.
 Böngésző
+Térkép elrejtése
+Térkép megjelenítése
+Oldalcsere
+A videó nem játszható le ({error})
+Kilépés a teljes képernyőből
+Lassulások és lefagyások

@@ -349,3 +349,9 @@ Sök i biblioteket
 Webbläsaren är dold medan du kör
 Video dold under körning. Ljudet fortsätter.
 Webbläsare
+Dölj kartan
+Visa kartan
+Byt sida
+Kunde inte spela videon ({error})
+Avsluta helskärm
+Långsamma ögonblick och frysningar

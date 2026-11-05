@@ -349,3 +349,9 @@ Cerca nella libreria
 Il browser è nascosto mentre guidi
 Video nascosto durante la guida. L'audio continua.
 Browser
+Nascondi mappa
+Mostra mappa
+Scambia i lati
+Impossibile riprodurre il video ({error})
+Esci dallo schermo intero
+Rallentamenti e blocchi

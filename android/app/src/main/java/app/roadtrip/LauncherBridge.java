@@ -34,10 +34,15 @@ public final class LauncherBridge {
 
     @Keep
     public static String call(Context ctx, String method, String argsJson) {
+        Watchdog.start();
         try {
             JSONObject a = (argsJson == null || argsJson.isEmpty()) ? new JSONObject() : new JSONObject(argsJson);
             Object data;
             switch (method) {
+                case "logSlow":
+                    Watchdog.add(a.optString("text"));
+                    data = true;
+                    break;
                 case "getApps":
                     data = getAppsCached(ctx, a.optString("iconDir", null), a.optInt("iconSize", 192), a.optInt("known", -1));
                     break;
@@ -211,6 +216,7 @@ public final class LauncherBridge {
                     d.put("location", LocationBridge.providers(ctx));
                     d.put("radio", RadioService.status());
                     d.put("overlay", Overlay.status(ctx));
+                    d.put("slow", Watchdog.json());
                     data = d;
                     break;
                 }

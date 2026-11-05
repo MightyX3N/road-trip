@@ -349,3 +349,9 @@ Iskanje v knjižnici
 Brskalnik je med vožnjo skrit
 Video je med vožnjo skrit. Zvok se nadaljuje.
 Brskalnik
+Skrij zemljevid
+Pokaži zemljevid
+Zamenjaj strani
+Videa ni mogoče predvajati ({error})
+Zapri celozaslonski način
+Počasni trenutki in zamrznitve

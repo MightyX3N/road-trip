@@ -343,6 +343,7 @@ local function stubCall(method, args)
       return { done = true, ok = true, body = '{"code":"Ok","routes":[{"distance":2400,"duration":420,"geometry":"_ibagBsz`pVvJtL","legs":[{"steps":[{"distance":1200,"duration":200,"name":"Vesterbrogade","maneuver":{"type":"depart","modifier":"straight","location":[12.5683,55.6761]}},{"distance":1200,"duration":220,"name":"Bernstorffsgade","maneuver":{"type":"turn","modifier":"right","location":[12.565,55.672]}},{"distance":0,"duration":0,"name":"","maneuver":{"type":"arrive","location":[12.5681,55.6737]}}]}]},{"distance":2700,"duration":480,"geometry":"_ibagBsz`pVvJtL","legs":[{"steps":[]}]}]}' }
     end
     if url:find("^jf:") then
+      if url:find("/PlaybackInfo") then return { done = true, ok = true, body = '{"PlaySessionId":"ps1","MediaSources":[{"Id":"m1","SupportsDirectPlay":true,"TranscodingUrl":"/videos/m1/master.m3u8?MediaSourceId=m1&ApiKey=tok123"}]}' } end
       if url:find("/System/Info/Public") then return { done = true, ok = true, body = '{"ServerName":"Home","Version":"10.10.3"}' } end
       if url:find("AuthenticateByName") then return { done = true, ok = true, body = '{"AccessToken":"tok123","User":{"Id":"u1","Name":"Patrick"}}' } end
       if url:find("/Views") then return { done = true, ok = true, body = '{"Items":[{"Id":"lib1","Name":"Music","CollectionType":"music"},{"Id":"lib2","Name":"Movies","CollectionType":"movies"}]}' } end
@@ -518,6 +519,7 @@ function M.calendarAllow() return M.call("calendarAllow") end
 function M.calendarOpen(at) return M.call("calendarOpen", { at = at }) end
 -- what the guard saw and did, plus raw nav notifications; shown in Settings → Diagnostics
 function M.diagnostics() return M.call("diagnostics") end
+function M.logSlow(text) return M.call("logSlow", { text = text }) end
 -- how many times Home was pressed while Road Trip was running (only ever goes up)
 function M.homePresses() return M.call("homePresses") end
 function M.setGuardEnabled(on) return M.call("setGuardEnabled", { on = on }) end

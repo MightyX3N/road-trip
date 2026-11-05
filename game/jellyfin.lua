@@ -16,10 +16,17 @@ M.stack = {}         -- what's open: { { title, key, req, items?, busy?, err?, p
 M.login = { server = "", user = "", pass = "", focus = nil, busy = false, err = nil, qc = nil }
 M.music = { state = "idle" }  -- from MusicService
 M.video = nil        -- { item, title } while a video is open
-M.split = true       -- video next to the map
 M.search = { text = "", typing = false }
 
 local pending = {}
+
+-- a server (or a router answering at that address) can send anything; never let that crash
+local function decode(body)
+  if type(body) ~= "string" or body == "" then return nil end
+  local ok, v = pcall(json.decode, body)
+  if ok and type(v) == "table" then return v end
+  return nil
+end
 local images = {}
 local imgDownloads = 0
 local lastPoll = 0
@@ -90,7 +97,7 @@ local function checkServer(after)
   if base == "" then M.login.err = T("Type your server's address") return end
   M.login.busy, M.login.err = true, nil
   request("GET", "/System/Info/Public", nil, function(r)
-    local d = r.ok and json.decode(r.body or "")
+    local d = r.ok and decode(r.body)
     if not d or not d.Version then
       M.login.busy = false
       M.login.err = T("No Jellyfin server answered at {address}", { address = base })
@@ -105,7 +112,7 @@ end
 function M.signIn()
   checkServer(function()
     request("POST", "/Users/AuthenticateByName", { Username = M.login.user, Pw = M.login.pass }, function(r)
-      signedIn(r.ok and json.decode(r.body or ""))
+      signedIn(r.ok and decode(r.body))
     end)
   end)
 end
@@ -114,7 +121,7 @@ end
 function M.quickConnect()
   checkServer(function()
     request("POST", "/QuickConnect/Initiate", nil, function(r)
-      local d = r.ok and json.decode(r.body or "")
+      local d = r.ok and decode(r.body)
       M.login.busy = false
       if not d or not d.Secret then
         M.login.err = T("Quick Connect isn't switched on for this server")
@@ -144,7 +151,7 @@ local function push(title, path)
   v.busy = true
   request("GET", path, nil, function(r)
     v.busy = false
-    local d = r.ok and json.decode(r.body or "")
+    local d = r.ok and decode(r.body)
     if not d then v.err = T("Couldn't reach your server") return end
     v.items = d.Items or d
     if #v.items == 0 then v.err = T("Nothing here") end
@@ -239,11 +246,51 @@ local function audioURL(it)
   return server() .. "/Audio/" .. it.Id .. "/stream?static=true&api_key=" .. (token() or "")
 end
 
-local function videoURL(it)
-  -- HLS, so the server can repackage or convert what the car's player can't decode
-  return server() .. "/Videos/" .. it.Id .. "/master.m3u8?MediaSourceId=" .. it.Id .. "&DeviceId=" .. deviceId()
-    .. "&VideoCodec=h264&AudioCodec=aac,mp3&MaxStreamingBitrate=8000000&TranscodingMaxAudioChannels=2"
-    .. "&SegmentContainer=ts&api_key=" .. (token() or "")
+-- what this device can play itself; anything else the server converts to H.264 + AAC (HLS)
+local function deviceProfile()
+  local A = json.array
+  return {
+    Name = "Road Trip", MaxStreamingBitrate = 20000000, MaxStaticBitrate = 100000000,
+    DirectPlayProfiles = { { Container = "mp4,m4v,mkv,webm,mov", Type = "Video",
+      VideoCodec = "h264,vp8,vp9", AudioCodec = "aac,mp3,opus,flac,vorbis" } },
+    TranscodingProfiles = { { Container = "ts", Type = "Video", VideoCodec = "h264", AudioCodec = "aac,mp3",
+      Protocol = "hls", Context = "Streaming", MaxAudioChannels = "2", MinSegments = 1, BreakOnNonKeyFrames = true } },
+    ContainerProfiles = setmetatable({}, A), CodecProfiles = setmetatable({}, A),
+    SubtitleProfiles = setmetatable({}, A),
+  }
+end
+
+local function withKey(u)
+  local l = u:lower()
+  if l:find("api_key=") or l:find("apikey=") then return u end
+  return u .. (u:find("?", 1, true) and "&" or "?") .. "api_key=" .. (token() or "")
+end
+
+-- the addresses to try, best first: the file as it is (if this device can play it), the
+-- server's own conversion, and plain HLS as the last resort
+local function videoURLs(it, cb)
+  request("POST", "/Items/" .. it.Id .. "/PlaybackInfo?UserId=" .. uid(), {
+    UserId = uid(), MaxStreamingBitrate = 20000000, StartTimeTicks = 0, IsPlayback = true,
+    AutoOpenLiveStream = true, DeviceProfile = deviceProfile(),
+  }, function(r)
+    local d = r.ok and decode(r.body)
+    local src = d and d.MediaSources and d.MediaSources[1]
+    local session = d and d.PlaySessionId or ""
+    local srcId = src and src.Id or it.Id
+    local urls = {}
+    if src and (src.SupportsDirectPlay or src.SupportsDirectStream) then
+      urls[#urls + 1] = withKey(server() .. "/Videos/" .. it.Id .. "/stream?static=true&MediaSourceId=" .. urlEncode(srcId)
+        .. "&PlaySessionId=" .. urlEncode(session) .. "&DeviceId=" .. deviceId())
+    end
+    if src and type(src.TranscodingUrl) == "string" and src.TranscodingUrl ~= "" then
+      urls[#urls + 1] = withKey(server() .. src.TranscodingUrl)
+    end
+    urls[#urls + 1] = withKey(server() .. "/Videos/" .. it.Id .. "/master.m3u8?MediaSourceId=" .. urlEncode(srcId)
+      .. "&PlaySessionId=" .. urlEncode(session) .. "&DeviceId=" .. deviceId()
+      .. "&VideoCodec=h264&AudioCodec=aac,mp3&MaxStreamingBitrate=8000000&TranscodingMaxAudioChannels=2"
+      .. "&SegmentContainer=ts&MinSegments=1&BreakOnNonKeyFrames=True")
+    cb(urls, session, (not r.ok) and (r.status and ("HTTP " .. r.status) or r.error) or nil)
+  end)
 end
 
 local function subOf(it)
@@ -290,14 +337,29 @@ end
 local function playVideo(it)
   android.musicCommand("pause")
   android.radioCommand("pause")
-  M.video = { item = it, title = it.Name or "" }
-  android.videoPlay(videoURL(it), 0)
+  local v = { item = it, title = it.Name or "", state = "starting", try = 0, controlsAt = love.timer.getTime() }
+  M.video = v
+  M.vstat = {}
+  videoURLs(it, function(urls, session, infoErr)
+    if M.video ~= v then return end
+    v.urls, v.session, v.infoErr, v.try = urls, session, infoErr, 1
+    android.videoPlay(urls[1], 0)
+  end)
 end
 
 function M.closeVideo()
-  if M.video then android.videoCommand("stop") end
-  M.video = nil
+  local v = M.video
+  if v then
+    android.videoCommand("stop")
+    -- tell the server it can stop converting
+    if v.session and v.session ~= "" then
+      request("DELETE", "/Videos/ActiveEncodings?DeviceId=" .. deviceId() .. "&PlaySessionId=" .. urlEncode(v.session), nil, function() end)
+    end
+  end
+  M.video, M.full = nil, false
 end
+
+function M.isFull() return M.video ~= nil and M.full end
 
 -- the playing track's picture, if it's been loaded
 function M.trackImage()
@@ -319,9 +381,13 @@ function M.init(deps)
   M.login.user = config.get("jfUser") or ""
 end
 
+local fetchPoll = 0
+local skipFetch = false
 function M.update(dt)
   local done = {}
-  for id in pairs(pending) do
+  local now = love.timer.getTime()
+  if now - fetchPoll < 0.1 then skipFetch = true else fetchPoll = now skipFetch = false end
+  for id in pairs(skipFetch and {} or pending) do
     local r = android.fetchResult(id)
     if type(r) == "table" and r.done then done[#done + 1] = { id, r } end
   end
@@ -331,19 +397,49 @@ function M.update(dt)
     if h then h(d[2]) end
     app.dirty()
   end
-  local now = love.timer.getTime()
   local qc = M.login.qc
   if qc and now > qc.next then
     qc.next = now + 3
     request("GET", "/QuickConnect/Connect?secret=" .. urlEncode(qc.secret), nil, function(r)
-      local d = r.ok and json.decode(r.body or "")
+      local d = r.ok and decode(r.body)
       if d and d.Authenticated and M.login.qc == qc then
         M.login.qc = nil
         request("POST", "/Users/AuthenticateWithQuickConnect", { Secret = qc.secret }, function(r2)
-          signedIn(r2.ok and json.decode(r2.body or ""))
+          signedIn(r2.ok and decode(r2.body))
         end)
       end
     end)
+  end
+  local v = M.video
+  if v and v.urls and now - (v.polled or 0) > 0.5 then
+    v.polled = now
+    local st = android.videoStatus()
+    if type(st) == "table" then
+      local before = M.vstat or {}
+      M.vstat = st
+      if st.error and st.error ~= "" and (st.url == nil or st.url == v.urls[v.try]) then
+        if v.try < #v.urls then
+          -- this way didn't work; try the next one from where it got to
+          v.errors = v.errors or {}
+          v.errors[#v.errors + 1] = st.error
+          v.try = v.try + 1
+          android.videoPlay(v.urls[v.try], st.positionMs or 0)
+          M.vstat = {}
+        else
+          v.state = "error"
+        end
+        app.dirty()
+      elseif st.state ~= before.state or math.floor((st.positionMs or 0) / 1000) ~= math.floor((before.positionMs or 0) / 1000)
+        or st.width ~= before.width then
+        v.state = st.state
+        app.dirty()
+      end
+      -- full screen: the controls step aside after a few seconds of playing
+      if M.full and v.controls ~= false and st.state == "playing" and now - (v.controlsAt or now) > 5 then
+        v.controls = false
+        app.dirty()
+      end
+    end
   end
   if now - lastPoll > 1 then
     lastPoll = now
@@ -382,13 +478,13 @@ function M.keypressed(key)
   elseif key == "return" or key == "kpenter" or key == "tab" then
     if field == "search" then
       M.search.typing = false
-      love.keyboard.setTextInput(false)
+      ui.closeKeyboard()
       M.runSearch()
     elseif field == "server" then M.login.focus = "user"
     elseif field == "user" then M.login.focus = "pass"
     else
       M.login.focus = nil
-      love.keyboard.setTextInput(false)
+      ui.closeKeyboard()
       M.signIn()
     end
   end
@@ -397,9 +493,10 @@ end
 function M.back()
   if M.search.typing or M.login.focus then
     M.search.typing, M.login.focus = false, nil
-    love.keyboard.setTextInput(false)
+    ui.closeKeyboard()
     return true
   end
+  if M.full then M.full = false return true end
   if M.video then M.closeVideo() return true end
   if #M.stack > 1 then M.stack[#M.stack] = nil return true end
   return false
@@ -487,37 +584,116 @@ local function drawRows(v, x, y, w, h)
   end
 end
 
--- the rectangle the video sits in, or nil (in virtual units)
-function M.videoRect(x, y, w, h, navigating)
-  if not M.video then return nil end
-  local top = y + 64
-  if M.split and navigating then return x + 16, top, math.floor(w * 0.58) - 24, h - 64 - 16 end
-  return x + 16, top, w - 32, h - 64 - 16
+local function fmt(ms)
+  local t = math.floor((ms or 0) / 1000)
+  local h, m = math.floor(t / 3600), math.floor(t / 60) % 60
+  if h > 0 then return string.format("%d:%02d:%02d", h, m, t % 60) end
+  return string.format("%d:%02d", m, t % 60)
 end
 
--- the Jellyfin tab of the Media screen. `map` draws the map card for the split view.
-function M.draw(x, y, w, h, drawMapCard, navigating)
-  if not M.signedIn() then drawLogin(x, y, w, h) return end
-  if M.video then
-    -- a bar over the video: title, split/full, close
-    ui.text(ui.fit(M.video.title, "bold", 20, w - 420), "bold", 20, ui.c.text, x + 20, y + 14)
-    local bx = x + w - 16
-    local cw = ui.textWidth(T("Close"), "bold", 16) + 44
-    bx = bx - cw
-    ui.pill({ kind = "jf:closeVideo" }, T("Close"), bx, y + 6, 48, "off2")
-    if navigating then
-      local label = M.split and T("Full screen") or T("Next to the map")
-      local sw = ui.textWidth(label, "bold", 16) + 44
-      bx = bx - sw - 10
-      ui.pill({ kind = "jf:split" }, label, bx, y + 6, 48, "off2")
-    end
-    local vx, vy, vw, vh = M.videoRect(x, y, w, h, navigating)
-    ui.rect(ui.hex("000000"), vx, vy, vw, vh, 0) -- under Android's video view
-    if M.split and navigating then
-      drawMapCard(vx + vw + 16, vy, x + w - 16 - (vx + vw + 16), vh)
-    end
-    return
+-- the video's own shape inside the room it has (TextureView stretches, so it's sized here)
+local function fit(x, y, w, h)
+  local st = M.vstat or {}
+  local aspect = ((st.width or 0) > 0 and (st.height or 0) > 0) and st.width / st.height or 16 / 9
+  local vw, vh = w, w / aspect
+  if vh > h then vh, vw = h, h * aspect end
+  return math.floor(x + (w - vw) / 2), math.floor(y + (h - vh) / 2), math.floor(vw), math.floor(vh)
+end
+
+local function statusLine()
+  local v = M.video
+  if v.state == "error" then
+    local e = (M.vstat and M.vstat.error) or v.infoErr or "?"
+    return T("Couldn't play this video ({error})", { error = e }), ui.hex("F09A8A")
   end
+  if v.state == "starting" or v.state == "connecting" or v.state == "idle" then return T("Loading…"), ui.c.muted end
+  return nil
+end
+
+-- play/pause, jump back and forward, the position
+local function controls(x, y, w, h)
+  local st = M.vstat or {}
+  local on = st.state == "playing"
+  local bh = h - 8
+  ui.rect(ui.c.accent, x, y + 4, bh + 12, bh, bh / 2)
+  ui.icon(on and "pause" or "play", x + (bh + 12 - 26) / 2, y + 4 + (bh - 26) / 2, 26, ui.c.onAccent)
+  ui.hit({ kind = "jf:vcmd", what = "toggle" }, x, y + 4, bh + 12, bh)
+  local bx = x + bh + 24
+  bx = bx + ui.pill({ kind = "jf:vjump", d = -10000 }, "−10", bx, y + 4, bh, "off2") + 8
+  bx = bx + ui.pill({ kind = "jf:vjump", d = 30000 }, "+30", bx, y + 4, bh, "off2") + 16
+  local dur, pos = st.durationMs or 0, st.positionMs or 0
+  local label = fmt(pos) .. " / " .. fmt(dur)
+  local tw = ui.textWidth(label, "semibold", 15)
+  local sw = x + w - tw - 16 - bx
+  if dur > 0 and sw > 40 then
+    local sy = y + h / 2
+    ui.rect(ui.hex("2C2E33"), bx, sy - 3, sw, 6, 3)
+    ui.rect(ui.c.accent, bx, sy - 3, sw * math.min(1, pos / dur), 6, 3)
+    ui.circle(ui.c.text, bx + sw * math.min(1, pos / dur), sy, 9)
+    ui.hit({ kind = "jf:vseek", x = bx, w = sw, dur = dur }, bx, y, sw, h)
+  end
+  ui.text(label, "semibold", 15, ui.c.muted, x + w - tw, y + (h - ui.fontHeight("semibold", 15)) / 2)
+end
+
+-- where the video goes, or nil (virtual units). Lua draws around it; Android draws the picture.
+M.rect = nil
+
+-- the Jellyfin tab of the Media screen. drawMapCard draws the map for the split view.
+local function drawVideo(x, y, w, h, drawMapCard, navigating)
+  local v = M.video
+  -- top bar: title, swap, full screen, close
+  local bx = x + w - 16
+  local cw = ui.textWidth(T("Close"), "bold", 16) + 44
+  bx = bx - cw
+  ui.pill({ kind = "jf:closeVideo" }, T("Close"), bx, y + 6, 48, "off2")
+  local fw = ui.textWidth(T("Full screen"), "bold", 16) + 44
+  bx = bx - fw - 10
+  ui.pill({ kind = "jf:full" }, T("Full screen"), bx, y + 6, 48, "off2")
+  if navigating then
+    local sw = ui.textWidth(T("Swap sides"), "bold", 16) + 44
+    bx = bx - sw - 10
+    ui.pill({ kind = "jf:swap" }, T("Swap sides"), bx, y + 6, 48, "off2")
+  end
+  ui.text(ui.fit(v.title, "bold", 20, bx - x - 36), "bold", 20, ui.c.text, x + 20, y + 16)
+  local top, bottom = y + 64, y + h - 12
+  local ax, aw = x + 16, w - 32
+  if navigating then
+    local mx, mw
+    ax, aw, mx, mw = ui.split(x + 16, w - 32, 16, config.get("splitSwap"))
+    drawMapCard(mx, top, mw, bottom - top)
+  end
+  local ch = 60
+  local areaH = bottom - top - ch - 8
+  ui.rect(ui.hex("000000"), ax, top, aw, areaH, 14)
+  local line, col = statusLine()
+  if line then ui.textWrap(line, "semibold", 16, col, ax + 20, top + areaH / 2 - 12, aw - 40, 3) end
+  local vx, vy, vw, vh = fit(ax, top, aw, areaH)
+  if v.state ~= "error" and v.urls then M.rect = { vx, vy, vw, vh } end
+  controls(ax, top + areaH + 8, aw, ch)
+end
+
+-- full screen: the video over everything; tap it for the controls
+function M.drawFull(W, H)
+  local v = M.video
+  ui.rect(ui.hex("000000"), 0, 0, W, H, 0)
+  ui.hit({ kind = "jf:vtap" }, 0, 0, W, H)
+  local ch = (v.controls ~= false) and 76 or 0
+  local line, col = statusLine()
+  if line then ui.textWrap(line, "semibold", 18, col, 40, H / 2 - 14, W - 80, 3) end
+  local vx, vy, vw, vh = fit(0, 0, W, H - ch)
+  if v.state ~= "error" and v.urls then M.rect = { vx, vy, vw, vh } end
+  if ch > 0 then
+    local cx, cw = 24, W - 48
+    local ew = ui.textWidth(T("Exit full screen"), "bold", 16) + 44
+    ui.pill({ kind = "jf:full" }, T("Exit full screen"), W - 24 - ew, H - ch + 10, 56, "off2")
+    controls(cx, H - ch + 8, cw - ew - 16, 60)
+  end
+end
+
+function M.draw(x, y, w, h, drawMapCard, navigating)
+  M.rect = nil
+  if not M.signedIn() then drawLogin(x, y, w, h) return end
+  if M.video then drawVideo(x, y, w, h, drawMapCard, navigating) return end
   local v = M.stack[#M.stack]
   if not v then M.openRoot() v = M.stack[#M.stack] end
   -- header: back, where you are, search, account
@@ -580,19 +756,19 @@ function M.drawWidget(x, y, w, h)
 end
 
 -- returns true if it handled the id
-function M.activate(id)
+function M.activate(id, vx)
   local k = id.kind
   if k == "jf:field" then
     M.login.focus = id.field
     M.search.typing = false
-    love.keyboard.setTextInput(true)
+    ui.openKeyboard()
   elseif k == "jf:signIn" then
     M.login.focus = nil
-    love.keyboard.setTextInput(false)
+    ui.closeKeyboard()
     M.signIn()
   elseif k == "jf:qc" then
     M.login.focus = nil
-    love.keyboard.setTextInput(false)
+    ui.closeKeyboard()
     M.quickConnect()
   elseif k == "jf:qcCancel" then M.login.qc = nil
   elseif k == "jf:signOut" then M.signOut()
@@ -603,7 +779,7 @@ function M.activate(id)
   elseif k == "jf:searchField" then
     M.search.typing = true
     M.login.focus = nil
-    love.keyboard.setTextInput(true)
+    ui.openKeyboard()
   elseif k == "jf:item" then
     local it = id.item
     if AUDIO[it.Type] then playAudio(id.list, id.index)
@@ -613,7 +789,26 @@ function M.activate(id)
     android.musicCommand(id.what)
     lastPoll = 0
   elseif k == "jf:closeVideo" then M.closeVideo()
-  elseif k == "jf:split" then M.split = not M.split
+  elseif k == "jf:swap" then config.set("splitSwap", not config.get("splitSwap"))
+  elseif k == "jf:full" then
+    M.full = not M.full
+    if M.video then M.video.controls, M.video.controlsAt = true, love.timer.getTime() end
+  elseif k == "jf:vtap" then
+    if M.video then
+      M.video.controls = M.video.controls == false
+      M.video.controlsAt = love.timer.getTime()
+    end
+  elseif k == "jf:vcmd" then
+    android.videoCommand(id.what)
+    if M.video then M.video.controlsAt, M.video.polled = love.timer.getTime(), 0 end
+  elseif k == "jf:vjump" then
+    local st = M.vstat or {}
+    android.videoCommand("seek", math.max(0, (st.positionMs or 0) + id.d))
+    if M.video then M.video.controlsAt, M.video.polled = love.timer.getTime(), 0 end
+  elseif k == "jf:vseek" then
+    local f = math.max(0, math.min(1, ((vx or id.x) - id.x) / id.w))
+    android.videoCommand("seek", math.floor(f * id.dur))
+    if M.video then M.video.controlsAt, M.video.polled = love.timer.getTime(), 0 end
   elseif k == "jf:none" then -- busy
   else
     return false

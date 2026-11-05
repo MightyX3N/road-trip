@@ -930,12 +930,12 @@ end
 function M.openSearch(pickFor)
   M.mode = "search"
   M.search = { text = "", busy = false, pickFor = pickFor }
-  love.keyboard.setTextInput(true)
+  ui.openKeyboard()
 end
 
 local function closeSearch()
   M.search = nil
-  love.keyboard.setTextInput(false)
+  ui.closeKeyboard()
   M.mode = M.routes and "overview" or "browse"
 end
 
@@ -946,7 +946,7 @@ local function choose(place)
   if pf then
     config.set(SAVED[pf], { name = place.name, sub = place.sub, lat = place.lat, lon = place.lon })
     M.search = nil
-    love.keyboard.setTextInput(false)
+    ui.closeKeyboard()
     M.mode = M.routes and "overview" or "browse"
     app.toast(pf == "home" and T("Home saved") or T("Work saved"))
     if M.onPicked then M.onPicked(pf) end
@@ -954,7 +954,7 @@ local function choose(place)
   end
   M.dest = place
   M.search = nil
-  love.keyboard.setTextInput(false)
+  ui.closeKeyboard()
   requestRoutes(place.lat, place.lon)
   M.mode = "overview"
   M.routes = nil
@@ -1617,13 +1617,13 @@ end
 function M.activate(id)
   local k = id.kind
   if k == "map:search" or k == "map:field" then
-    if not M.search then M.openSearch() else love.keyboard.setTextInput(true) end
+    if not M.search then M.openSearch() else ui.openKeyboard() end
   elseif k == "map:closeSearch" then closeSearch()
   elseif k == "map:pick" then choose(id.place)
   elseif k == "map:setPlace" then
     M.search = { text = "", busy = false, pickFor = id.which }
     M.mode = "search"
-    love.keyboard.setTextInput(true)
+    ui.openKeyboard()
   elseif k == "map:sel" then M.sel = id.i M.wantFit = true
   elseif k == "map:start" then startNav()
   elseif k == "map:cancel" then endNav()

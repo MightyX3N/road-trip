@@ -349,3 +349,9 @@ Cari dalam koleksi
 Pelayar disembunyikan semasa memandu
 Video disembunyikan semasa memandu. Bunyi terus dimainkan.
 Pelayar
+Sembunyikan peta
+Tunjukkan peta
+Tukar sisi
+Video ini tidak dapat dimainkan ({error})
+Keluar skrin penuh
+Detik perlahan dan tergantung

@@ -32,9 +32,12 @@ open, a next-turn banner sits at the top of the screen. **Media** shows what's p
 has a **Jellyfin** tab: sign in to your own Jellyfin server (with a password or Quick Connect),
 browse music, audiobooks, films and series, and play music in the background with the
 steering-wheel buttons. Video plays inside Road Trip, next to the map while a route is on
-(or full screen); while the car moves the picture is covered and the sound keeps going.
+(Swap sides puts the map on the other side) or full screen; while the car moves the picture is
+covered and the sound keeps going. Road Trip asks the server how to play each video and plays
+the file as it is when the device can, otherwise the server's H.264 conversion.
 **Browser** is a web browser (Android's own Chromium WebView) with the same rule: covered while
-you drive, and next to the map if you like. **Settings** has everything else: Keep in front, permissions, favorites, accent colour,
+you drive, and next to the map if you like. Settings → Diagnostics lists slow moments and freezes (with where Android was stuck), to
+send in when something hangs. **Settings** has everything else: Keep in front, permissions, favorites, accent colour,
 language and updates. Road Trip comes in 33 languages and follows the device's language
 unless you pick one; the translations are made by AI, so some words may be off. The voice button opens the device's
 assistant.

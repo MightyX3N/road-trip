@@ -349,3 +349,9 @@ Cerca a la biblioteca
 El navegador s'amaga mentre condueixes
 Vídeo amagat mentre condueixes. El so continua.
 Navegador
+Amaga el mapa
+Mostra el mapa
+Canvia de costat
+No s'ha pogut reproduir el vídeo ({error})
+Surt de la pantalla completa
+Moments lents i bloquejos

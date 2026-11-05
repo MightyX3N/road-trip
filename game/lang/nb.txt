@@ -349,3 +349,9 @@ Søk i biblioteket
 Nettleseren er skjult mens du kjører
 Video skjult under kjøring. Lyden fortsetter.
 Nettleser
+Skjul kartet
+Vis kartet
+Bytt side
+Kunne ikke spille av videoen ({error})
+Avslutt fullskjerm
+Trege øyeblikk og frys

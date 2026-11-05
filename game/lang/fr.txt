@@ -349,3 +349,9 @@ Rechercher dans la bibliothèque
 Le navigateur est masqué pendant la conduite
 Vidéo masquée pendant la conduite. Le son continue.
 Navigateur
+Masquer la carte
+Afficher la carte
+Inverser les côtés
+Impossible de lire cette vidéo ({error})
+Quitter le plein écran
+Lenteurs et blocages

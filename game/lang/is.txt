@@ -349,3 +349,9 @@ Leita í safninu
 Vafrinn er falinn meðan þú ekur
 Myndband falið við akstur. Hljóðið heldur áfram.
 Vafri
+Fela kort
+Sýna kort
+Víxla hliðum
+Ekki tókst að spila myndbandið ({error})
+Hætta í öllum skjánum
+Hæg augnablik og frost

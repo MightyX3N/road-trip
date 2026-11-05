@@ -349,3 +349,9 @@ Cari di koleksi Anda
 Browser disembunyikan saat Anda mengemudi
 Video disembunyikan saat mengemudi. Suara tetap diputar.
 Browser
+Sembunyikan peta
+Tampilkan peta
+Tukar sisi
+Video ini tidak bisa diputar ({error})
+Keluar dari layar penuh
+Momen lambat dan macet

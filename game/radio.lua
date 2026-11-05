@@ -375,7 +375,7 @@ function M.keypressed(key)
       if off then f.text = f.text:sub(1, off - 1) end
     elseif key == "return" or key == "kpenter" or key == "escape" then
       f.typing = false
-      love.keyboard.setTextInput(false)
+      ui.closeKeyboard()
     end
     return
   end
@@ -387,23 +387,23 @@ function M.keypressed(key)
   elseif key == "return" or key == "kpenter" then
     s.dueAt = nil
     s.typing = false
-    love.keyboard.setTextInput(false)
+    ui.closeKeyboard()
     load("search", true)
   elseif key == "escape" then
     s.typing = false
-    love.keyboard.setTextInput(false)
+    ui.closeKeyboard()
   end
 end
 
 function M.back()
   if M.filter.typing then
     M.filter.typing = false
-    love.keyboard.setTextInput(false)
+    ui.closeKeyboard()
     return true
   end
   if M.search.typing then
     M.search.typing = false
-    love.keyboard.setTextInput(false)
+    ui.closeKeyboard()
     return true
   end
   if M.tab == "countries" then M.tab = "country" return true end
@@ -685,27 +685,27 @@ function M.activate(id)
   elseif k == "radio:fav" then toggleFavorite(id.station)
   elseif k == "radio:cmd" then M.command(id.what)
   elseif k == "radio:tab" then
-    if M.filter.typing then M.filter.typing = false love.keyboard.setTextInput(false) end
+    if M.filter.typing then M.filter.typing = false ui.closeKeyboard() end
     M.tab = id.tab
     if id.tab == "search" then
       M.search.typing = true
-      love.keyboard.setTextInput(true)
+      ui.openKeyboard()
     elseif id.tab ~= "favs" then
       load(id.tab)
     end
     if id.tab ~= "search" and M.search.typing then
       M.search.typing = false
-      love.keyboard.setTextInput(false)
+      ui.closeKeyboard()
     end
   elseif k == "radio:filter" then
     M.filter.typing = true
-    love.keyboard.setTextInput(true)
+    ui.openKeyboard()
   elseif k == "radio:filterClear" then
     M.filter.text = ""
     for _, l in pairs(M.lists) do l.page = 1 end
   elseif k == "radio:field" then
     M.search.typing = true
-    love.keyboard.setTextInput(true)
+    ui.openKeyboard()
   elseif k == "radio:page" then
     local l = M.lists[M.tab]
     if l then l.page = (l.page or 1) + id.d end

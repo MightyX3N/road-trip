@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
@@ -24,7 +25,7 @@ import androidx.media3.common.MediaItem;
 import androidx.media3.common.PlaybackException;
 import androidx.media3.common.Player;
 import androidx.media3.exoplayer.ExoPlayer;
-import androidx.media3.ui.PlayerView;
+import androidx.media3.common.VideoSize;
 
 import org.json.JSONObject;
 
@@ -51,7 +52,11 @@ final class Panel {
     private static volatile boolean webBack = false, webFwd = false;
 
     private static ExoPlayer video;
-    private static PlayerView videoView;
+    // a TextureView, not a SurfaceView: it draws inside the window, over LÖVE's own surface.
+    // (A second SurfaceView can end up behind LÖVE's and never be seen.) It stretches to its
+    // size, so Lua sizes it to the video's shape; the controls are drawn by Lua.
+    private static TextureView videoView;
+    private static volatile int videoW = 0, videoH = 0;
     private static volatile JSONObject videoStatus = new JSONObject();
 
     private Panel() {}
@@ -199,13 +204,16 @@ final class Panel {
             .build();
         video.addListener(new Player.Listener() {
             @Override public void onPlayerError(PlaybackException e) {
-                try { videoStatus = new JSONObject(videoStatus.toString()).put("error", e.getMessage()); } catch (Exception ignored) {}
+                try { videoStatus = new JSONObject(videoStatus.toString()).put("error", describe(e)); } catch (Exception ignored) {}
+            }
+            @Override public void onVideoSizeChanged(VideoSize vs) {
+                videoW = Math.round(vs.width * (vs.pixelWidthHeightRatio > 0 ? vs.pixelWidthHeightRatio : 1f));
+                videoH = vs.height;
             }
         });
-        videoView = new PlayerView(a);
-        videoView.setPlayer(video);
-        videoView.setUseController(true);
+        videoView = new TextureView(a);
         videoView.setKeepScreenOn(true);
+        video.setVideoTextureView(videoView);
         return videoView;
     }
 
@@ -215,6 +223,8 @@ final class Panel {
                 ensureRoot(a);
                 if (video == null) videoView(a);
                 MusicService.command(a, "pause", 0);
+                videoW = 0;
+                videoH = 0;
                 video.setMediaItem(MediaItem.fromUri(Uri.parse(url).toString()), Math.max(0, startMs));
                 video.prepare();
                 video.play();
@@ -271,11 +281,23 @@ final class Panel {
                     : video.getPlaybackState() == Player.STATE_IDLE ? "idle" : "paused");
                 o.put("positionMs", Math.max(0, video.getCurrentPosition()));
                 o.put("durationMs", d == C.TIME_UNSET ? 0 : d);
+                o.put("width", videoW).put("height", videoH);
+                o.put("url", video.getCurrentMediaItem() == null || video.getCurrentMediaItem().localConfiguration == null
+                    ? "" : String.valueOf(video.getCurrentMediaItem().localConfiguration.uri));
                 PlaybackException e = video.getPlayerError();
-                if (e != null) o.put("error", e.getMessage());
+                if (e != null) o.put("error", describe(e));
                 videoStatus = o;
             } catch (Throwable ignored) {}
         }
+    }
+
+    // the error code name says more than the message ("ERROR_CODE_IO_BAD_HTTP_STATUS")
+    private static String describe(PlaybackException e) {
+        String m = e.getErrorCodeName();
+        Throwable c = e.getCause();
+        if (c != null && c.getMessage() != null) m += ": " + c.getMessage();
+        else if (e.getMessage() != null) m += ": " + e.getMessage();
+        return m;
     }
 
     private static String label(String k, String fallback) {

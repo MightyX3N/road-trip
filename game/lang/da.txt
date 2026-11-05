@@ -349,3 +349,9 @@ Søg i dit bibliotek
 Browseren er skjult, mens du kører
 Video skjult under kørsel. Lyden spiller videre.
 Browser
+Skjul kort
+Vis kort
+Byt side
+Kunne ikke afspille videoen ({error})
+Afslut fuld skærm
+Langsomme øjeblikke og frys

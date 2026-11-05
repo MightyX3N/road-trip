@@ -310,12 +310,12 @@ end
 
 local function openCity()
   state.city = { text = "", busy = false }
-  love.keyboard.setTextInput(true)
+  ui.openKeyboard()
 end
 
 local function closeCity()
   state.city = nil
-  love.keyboard.setTextInput(false)
+  ui.closeKeyboard()
 end
 
 local function searchCity()
@@ -333,7 +333,7 @@ local function searchCity()
       end
       state.city.results = d.results or {}
       if #state.city.results == 0 then state.city.err = T("No places called that") end
-      love.keyboard.setTextInput(false) -- make room for the results
+      ui.closeKeyboard() -- make room for the results
     end)
 end
 
@@ -985,8 +985,8 @@ local function drawMedia()
   mediaTabs()
   if state.mediaTab == "jellyfin" then
     jellyfin.draw(RAIL, TOP + 72, W - RAIL, H - TOP - 72, mapCard, navigating())
-    local vx, vy, vw, vh = jellyfin.videoRect(RAIL, TOP + 72, W - RAIL, H - TOP - 72, navigating())
-    if vx then state.panelWant = { kind = "video", x = vx, y = vy, w = vw, h = vh } end
+    local r = jellyfin.rect
+    if r then state.panelWant = { kind = "video", x = r[1], y = r[2], w = r[3], h = r[4] } end
     return
   end
   local media = state.media
@@ -1235,7 +1235,7 @@ local function drawDiagnostics()
     .. " · nav age " .. tostring(o.navAgeS) .. "s · draw " .. tostring(o.canDraw) .. " · guard " .. tostring(o.guard),
     "semibold", 14, W - x - 32), "semibold", 14, ui.c.text2, x, y + 96)
   y = y + 136
-  local colW = (W - x - 32 - 24) / 2
+  local colW = (W - x - 32 - 48) / 3
   local function list(title, lines, lx)
     ui.text(title, "bold", 14, ui.c.muted, lx, y)
     local ly = y + 28
@@ -1248,6 +1248,7 @@ local function drawDiagnostics()
   end
   list(T("Screen changes (newest first)"), d.guard, x)
   list(T("Navigation notifications"), d.nav, x + colW + 24)
+  list(T("Slow moments and freezes"), d.slow, x + (colW + 24) * 2)
 end
 
 local function drawCityDialog()
@@ -1627,7 +1628,12 @@ function love.draw()
   state.panelWant = nil
   lg.push()
   lg.scale(ui.S)
-  if state.screen == "favs" then
+  if state.screen == "media" and state.mediaTab == "jellyfin" and jellyfin.isFull() then
+    jellyfin.rect = nil
+    jellyfin.drawFull(W, H)
+    local r = jellyfin.rect
+    if r then state.panelWant = { kind = "video", x = r[1], y = r[2], w = r[3], h = r[4] } end
+  elseif state.screen == "favs" then
     drawPicker()
   elseif state.screen == "setup" then
     drawSetup()
@@ -1704,7 +1710,7 @@ local function activate(id, vx)
   if k == "cityBlock" then return
   elseif k == "cityOpen" then openCity()
   elseif k == "cityCancel" then closeCity()
-  elseif k == "cityField" then love.keyboard.setTextInput(true)
+  elseif k == "cityField" then ui.openKeyboard()
   elseif k == "citySearch" then searchCity()
   elseif k == "cityPick" then
     local r = state.city and state.city.results and state.city.results[id.i]
@@ -1730,7 +1736,7 @@ local function activate(id, vx)
   elseif k:sub(1, 6) == "voice:" then voice.activate(id)
   elseif k == "gridSearch" then
     state.typing = id.id
-    love.keyboard.setTextInput(true)
+    ui.openKeyboard()
   elseif k == "gridSearchClear" then
     state.gridSearch[id.id].text = ""
     state.pagers[id.id].page, state.pagers[id.id].x = 1, 0
@@ -1772,7 +1778,7 @@ local function activate(id, vx)
   elseif k == "tile" or k == "fav" then launch(id.app)
   elseif k:sub(1, 4) == "map:" then map.activate(id)
   elseif k:sub(1, 3) == "jf:" then
-    if k == "jf:open" then state.screen, state.mediaTab = "media", "jellyfin" else jellyfin.activate(id) end
+    if k == "jf:open" then state.screen, state.mediaTab = "media", "jellyfin" else jellyfin.activate(id, vx) end
   elseif k:sub(1, 4) == "web:" then browser.activate(id)
   elseif k == "mediaTab" then
     state.mediaTab = id.tab
@@ -1786,7 +1792,7 @@ local function activate(id, vx)
     map.open()
     if k == "openMapSearch" then map.openSearch() end
   elseif k == "rail" then
-    if state.typing then state.typing = nil love.keyboard.setTextInput(false) end
+    if state.typing then state.typing = nil ui.closeKeyboard() end
     if jellyfin.wantsText() then jellyfin.back() end
     if browser.wantsText() then browser.back() end
     state.screen = id.screen
@@ -1890,7 +1896,7 @@ local function goHome()
   if browser.wantsText() then browser.back() end
   if state.setup then setupGo(SETUP_STEPS + 1) end
   state.pickReturn = nil
-  if state.typing then state.typing = nil love.keyboard.setTextInput(false) end
+  if state.typing then state.typing = nil ui.closeKeyboard() end
   state.gridSearch.apps.text = ""
   state.screen = "home"
   state.dirty = true
@@ -2008,7 +2014,7 @@ function love.keypressed(key)
       return
     elseif key == "return" or key == "kpenter" or key == "escape" then
       state.typing = nil
-      love.keyboard.setTextInput(false)
+      ui.closeKeyboard()
       state.dirty = true
       return
     end
@@ -2125,16 +2131,27 @@ function love.visible(v)
   if v then burst() end
 end
 
+-- runs f and remembers the slowest part of this frame (for the slow-frame note)
+local slowest = 0
+local function timed(name, f, ...)
+  local t = love.timer.getTime()
+  f(...)
+  t = love.timer.getTime() - t
+  if t > slowest then slowest, state.slowPart = t, name end
+end
+
 function love.update(dt)
+  slowest, state.slowPart = 0.1, nil
+  ui.tick()
   local splitMap = (state.screen == "web" or state.screen == "media") and navigating()
-  map.update(dt, state.screen == "map" or state.screen == "home" or splitMap)
-  jellyfin.update(dt)
-  browser.update(dt, state.screen == "web")
-  radio.update(dt, state.screen == "radio" or state.screen == "home")
-  voice.update(dt)
+  timed("map", map.update, dt, state.screen == "map" or state.screen == "home" or splitMap)
+  timed("jellyfin", jellyfin.update, dt)
+  timed("browser", browser.update, dt, state.screen == "web")
+  timed("radio", radio.update, dt, state.screen == "radio" or state.screen == "home")
+  timed("voice", voice.update, dt)
   if state.needRefresh and state.drew then
     state.needRefresh = false
-    refreshApps()
+    timed("app list", refreshApps)
     if state.firstLoad then
       state.firstLoad = false
       local n = android.homePresses()
@@ -2199,7 +2216,7 @@ function love.update(dt)
   t.fetch = t.fetch + dt
   if next(state.pending) and t.fetch > 0.2 then
     t.fetch = 0
-    pollFetches()
+    timed("downloads", pollFetches)
   end
   -- weather and calendar: check once a minute (weather itself refreshes every 30 minutes)
   t.slow = t.slow + dt
@@ -2221,7 +2238,7 @@ function love.update(dt)
     t.media = t.media + dt
     if t.media > 1 then
       t.media = 0
-      pollMedia()
+      timed("now playing", pollMedia)
     end
   end
   if state.homeSeen and t.home > 0.25 then
@@ -2278,12 +2295,24 @@ end
 local function animating()
   if press or state.toast or state.city or love.timer.getTime() < state.burstUntil then return true end
   if state.screen == "map" and map.busy() then return true end
-  if (state.screen == "home" or state.screen == "web" or state.screen == "media") and (map.nav or map.turning) then return true end
+  -- (next to the browser or a video the map moves on once a second, which keeps those screens light)
+  if state.screen == "home" and (map.nav or map.turning) then return true end
   if state.screen == "radio" and radio.busy() then return true end
   for _, pg in pairs(state.pagers) do
     if math.abs((pg.page - 1) - pg.x) > 0.001 then return true end
   end
   return false
+end
+
+-- a frame that took long enough to feel like a freeze goes to Settings → Diagnostics
+local lastSlow = 0
+local function noteSlow(tUpdate, tDraw)
+  if tUpdate + tDraw < 0.3 then return end
+  local now = love.timer.getTime()
+  if now - lastSlow < 2 then return end
+  lastSlow = now
+  android.logSlow(string.format("Lua frame %.1fs on %s (update %.1fs%s, draw %.1fs)", tUpdate + tDraw, state.screen,
+    tUpdate, state.slowPart and (" mostly " .. state.slowPart) or "", tDraw))
 end
 
 -- Draw only when something changed, so the launcher idles quietly on the car box.
@@ -2305,7 +2334,9 @@ function love.run()
     end
 
     local dt = love.timer.step()
+    local t0 = love.timer.getTime()
     love.update(dt)
+    local tUpdate = love.timer.getTime() - t0
 
     local minute = os.date("%H:%M")
     if minute ~= lastMinute then
@@ -2328,10 +2359,14 @@ function love.run()
     if (state.dirty or busy) and state.foreground and lg.isActive() then
       lg.origin()
       lg.clear(lg.getBackgroundColor())
+      local t1 = love.timer.getTime()
       love.draw()
       lg.present()
       state.dirty = false
       lastDraw = now
+      noteSlow(tUpdate, love.timer.getTime() - t1)
+    elseif tUpdate > 0.3 then
+      noteSlow(tUpdate, 0)
     end
 
     love.timer.sleep(busy and 0.001 or (state.foreground and 0.05 or 0.2))

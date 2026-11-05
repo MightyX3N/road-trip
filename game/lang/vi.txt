@@ -349,3 +349,9 @@ Tìm trong thư viện
 Trình duyệt bị ẩn khi bạn lái xe
 Video bị ẩn khi lái xe. Âm thanh vẫn phát.
 Trình duyệt
+Ẩn bản đồ
+Hiện bản đồ
+Đổi bên
+Không phát được video này ({error})
+Thoát toàn màn hình
+Lúc chậm và bị treo

@@ -349,3 +349,9 @@ Maghanap sa library mo
 Nakatago ang browser habang nagmamaneho
 Nakatago ang video habang nagmamaneho. Tuloy ang tunog.
 Browser
+Itago ang mapa
+Ipakita ang mapa
+Pagpalitin ang gilid
+Hindi ma-play ang video na ito ({error})
+Lumabas sa buong screen
+Mabagal na sandali at pag-freeze

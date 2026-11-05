@@ -349,3 +349,9 @@ Hľadať v knižnici
 Prehliadač je počas jazdy skrytý
 Video je počas jazdy skryté. Zvuk hrá ďalej.
 Prehliadač
+Skryť mapu
+Zobraziť mapu
+Vymeniť strany
+Video sa nedá prehrať ({error})
+Ukončiť celú obrazovku
+Spomalenia a zamrznutia

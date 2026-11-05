@@ -349,3 +349,9 @@ Kitaplığınızda arayın
 Sürüş sırasında tarayıcı gizlenir
 Sürüş sırasında video gizli. Ses devam ediyor.
 Tarayıcı
+Haritayı gizle
+Haritayı göster
+Tarafları değiştir
+Bu video oynatılamadı ({error})
+Tam ekrandan çık
+Yavaşlamalar ve donmalar
