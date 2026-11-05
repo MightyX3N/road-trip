@@ -298,13 +298,17 @@ function M.autoplay()
 end
 
 function M.update(dt, onScreen)
-  for id, handler in pairs(pending) do
+  -- collect first: a handler may start a new request (adding to `pending` mid-loop isn't allowed)
+  local done = {}
+  for id in pairs(pending) do
     local r = android.fetchResult(id)
-    if type(r) == "table" and r.done then
-      pending[id] = nil
-      handler(r)
-      app.dirty()
-    end
+    if type(r) == "table" and r.done then done[#done + 1] = { id, r } end
+  end
+  for _, d in ipairs(done) do
+    local handler = pending[d[1]]
+    pending[d[1]] = nil
+    if handler then handler(d[2]) end
+    app.dirty()
   end
   local now = love.timer.getTime()
   -- what the player is doing: often on the Radio screen, now and then elsewhere

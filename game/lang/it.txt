@@ -287,3 +287,8 @@ Cerca l'indirizzo di casa
 Cerca l'indirizzo del lavoro
 Cerca un indirizzo da salvare
 Casa
+Impossibile evitarli; mostro il percorso solito
+Evita
+Autostrade
+Pedaggi
+Traghetti

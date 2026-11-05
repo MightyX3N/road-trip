@@ -238,13 +238,16 @@ local function request(url, handler)
 end
 
 local function pollFetches()
-  for id, handler in pairs(state.pending) do
+  local done = {}
+  for id in pairs(state.pending) do
     local r = android.fetchResult(id)
-    if type(r) == "table" and r.done then
-      state.pending[id] = nil
-      handler(r)
-      state.dirty = true
-    end
+    if type(r) == "table" and r.done then done[#done + 1] = { id, r } end
+  end
+  for _, d in ipairs(done) do
+    local handler = state.pending[d[1]]
+    state.pending[d[1]] = nil
+    if handler then handler(d[2]) end
+    state.dirty = true
   end
 end
 

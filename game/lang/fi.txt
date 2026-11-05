@@ -287,3 +287,8 @@ Hae kotiosoitettasi
 Hae työosoitettasi
 Hae tallennettava osoite
 Koti
+Niitä ei voitu kiertää; näytetään tavallinen reitti
+Vältä
+Moottoritiet
+Tietullit
+Lautat

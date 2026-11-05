@@ -16,6 +16,8 @@ local MAX_TILES = 80   -- decoded tiles kept in memory
 local TILEJSON = "https://tiles.openfreemap.org/planet"
 local PHOTON = "https://photon.komoot.io/api/?limit=6&q="
 local OSRM = "https://routing.openstreetmap.de/routed-car/route/v1/driving/"
+-- routes that avoid motorways, tolls or ferries: FOSSGIS's Valhalla (their OSRM has no avoid options)
+local VALHALLA = "https://valhalla1.openstreetmap.de/route?json="
 
 local hex = function(h) return ui.hex(h) end
 local listening = false -- location updates started (needs permission first)
@@ -632,6 +634,66 @@ local function parseRoute(r)
   return { coords = coords, cum = cum, distance = r.distance or cum[#cum], duration = r.duration or 0, steps = steps }
 end
 
+-- Valhalla's maneuver types -> the OSRM-style type and modifier the guidance uses
+local VTYPE = {
+  [1] = { "depart" }, [2] = { "depart" }, [3] = { "depart" },
+  [4] = { "arrive" }, [5] = { "arrive" }, [6] = { "arrive" },
+  [7] = { "new name", "straight" }, [8] = { "continue", "straight" }, [22] = { "continue", "straight" },
+  [9] = { "turn", "slight right" }, [10] = { "turn", "right" }, [11] = { "turn", "sharp right" },
+  [12] = { "turn", "uturn" }, [13] = { "turn", "uturn" },
+  [14] = { "turn", "sharp left" }, [15] = { "turn", "left" }, [16] = { "turn", "slight left" },
+  [17] = { "on ramp", "straight" }, [18] = { "on ramp", "right" }, [19] = { "on ramp", "left" },
+  [20] = { "off ramp", "right" }, [21] = { "off ramp", "left" },
+  [23] = { "fork", "right" }, [24] = { "fork", "left" },
+  [25] = { "merge", "straight" }, [37] = { "merge", "right" }, [38] = { "merge", "left" },
+  [26] = { "roundabout" }, [28] = { "continue", "straight" }, [29] = { "continue", "straight" },
+}
+
+local function parseValhalla(trip)
+  local coords, steps = {}, {}
+  local cum = {}
+  for _, leg in ipairs(trip.legs or {}) do
+    local base = #coords
+    local pts = decodePolyline(leg.shape or "", 6)
+    for _, c in ipairs(pts) do coords[#coords + 1] = c end
+    for i = math.max(2, base + 1), #coords do
+      cum[1] = 0
+      cum[i] = (cum[i - 1] or 0) + haversine(coords[i - 1][1], coords[i - 1][2], coords[i][1], coords[i][2])
+    end
+    for _, m in ipairs(leg.maneuvers or {}) do
+      local vt = VTYPE[m.type]
+      if vt then
+        local idx = base + (m.begin_shape_index or 0) + 1
+        local c = coords[idx] or coords[#coords]
+        steps[#steps + 1] = {
+          type = vt[1], modifier = vt[2], exit = m.roundabout_exit_count,
+          name = (m.street_names and m.street_names[1]) or (m.begin_street_names and m.begin_street_names[1]) or "",
+          at = cum[idx] or 0, lat = c and c[1], lon = c and c[2],
+        }
+      end
+    end
+  end
+  if #coords < 2 then return nil end
+  cum[1] = 0
+  local sm = trip.summary or {}
+  return { coords = coords, cum = cum, distance = (sm.length or 0) * 1000, duration = sm.time or 0, steps = steps }
+end
+M.parseValhalla = parseValhalla -- for tests
+
+local function avoids()
+  local a = config.get("mapAvoid") or {}
+  return a, (a.motorway or a.toll or a.ferry) and true or false
+end
+
+local function valhallaURL(fromLat, fromLon, toLat, toLon)
+  local a = avoids()
+  local body = string.format('{"locations":[{"lat":%.6f,"lon":%.6f},{"lat":%.6f,"lon":%.6f}],"costing":"auto",'
+    .. '"costing_options":{"auto":{"use_highways":%s,"use_tolls":%s,"use_ferry":%s}},'
+    .. '"directions_options":{"units":"kilometers"},"alternates":2}',
+    fromLat, fromLon, toLat, toLon, a.motorway and "0" or "1", a.toll and "0" or "1", a.ferry and "0" or "1")
+  return VALHALLA .. (body:gsub("[^%w%-_%.~]", function(c) return string.format("%%%02X", c:byte()) end))
+end
+
 local function routeURL(fromLat, fromLon, toLat, toLon)
   return string.format("%s%.6f,%.6f;%.6f,%.6f?overview=full&geometries=polyline6&steps=true&alternatives=true",
     OSRM, fromLon, fromLat, toLon, toLat)
@@ -660,7 +722,8 @@ end
 
 -- from: where to start; defaults to your position. Without one yet, the request waits for
 -- the first fix (or for "From the map's centre" in the route panel).
-local function requestRoutes(lat, lon, from)
+local requestRoutes
+function requestRoutes(lat, lon, from)
   local f = from or M.fix
   if not f then
     M.waitingFix = { lat = lat, lon = lon }
@@ -670,18 +733,39 @@ local function requestRoutes(lat, lon, from)
   end
   M.waitingFix = nil
   M.routesBusy = true
-  local id = android.fetch(routeURL(f.lat, f.lon, lat, lon))
+  local _, avoiding = avoids()
+  local id = android.fetch(avoiding and valhallaURL(f.lat, f.lon, lat, lon) or routeURL(f.lat, f.lon, lat, lon))
   request(id, function(r)
     M.routesBusy = false
     local d = r.ok and json.decode(r.body or "")
-    if not d or d.code ~= "Ok" or not d.routes or #d.routes == 0 then
-      app.toast(d and d.message or T("Couldn't find a route"))
-      return
-    end
     local list = {}
-    for _, rr in ipairs(d.routes) do
-      local p = parseRoute(rr)
-      if p then list[#list + 1] = p end
+    if avoiding then
+      if d and d.trip then
+        local p = parseValhalla(d.trip)
+        if p then list[#list + 1] = p end
+        for _, alt in ipairs(d.alternates or {}) do
+          local q = alt.trip and parseValhalla(alt.trip)
+          if q then list[#list + 1] = q end
+        end
+      end
+      if #list == 0 then
+        -- the avoid-router didn't answer: fall back to the usual route, and say so
+        app.toast(T("Couldn't plan around those; showing the usual route"))
+        local saved = config.get("mapAvoid")
+        config.data.mapAvoid = nil
+        requestRoutes(lat, lon, from)
+        config.data.mapAvoid = saved
+        return
+      end
+    else
+      if not d or d.code ~= "Ok" or not d.routes or #d.routes == 0 then
+        app.toast(d and d.message or T("Couldn't find a route"))
+        return
+      end
+      for _, rr in ipairs(d.routes) do
+        local p = parseRoute(rr)
+        if p then list[#list + 1] = p end
+      end
     end
     if #list == 0 then app.toast(T("Couldn't find a route")) return end
     if not M.dest then return end -- cancelled meanwhile
@@ -935,13 +1019,17 @@ end
 
 function M.update(dt, onScreen)
   frame = frame + 1
-  for id, handler in pairs(pending) do
+  -- collect first: a handler may start a new request (adding to `pending` mid-loop isn't allowed)
+  local done = {}
+  for id in pairs(pending) do
     local r = android.fetchResult(id)
-    if type(r) == "table" and r.done then
-      pending[id] = nil
-      handler(r)
-      app.dirty()
-    end
+    if type(r) == "table" and r.done then done[#done + 1] = { id, r } end
+  end
+  for _, d in ipairs(done) do
+    local handler = pending[d[1]]
+    pending[d[1]] = nil
+    if handler then handler(d[2]) end
+    app.dirty()
   end
   if onScreen then decodeNext() end
 
@@ -1466,7 +1554,18 @@ function M.drawUI(x0, y0, w, h)
     ui.text(ui.fit(d.name or "", "bold", 28, pw - 120), "bold", 28, ui.c.text, px + 26, py + 26)
     ui.text(ui.fit(d.sub or "", "semibold", 15, pw - 120), "semibold", 15, ui.c.muted, px + 26, py + 68)
     mapButton({ kind = "map:cancel" }, "close", px + pw - 26 - 64, py + 22)
-    local ry = py + 110
+    local ry = py + 104
+    -- avoid: motorways, tolls, ferries (changing one asks for new routes)
+    do
+      local a = config.get("mapAvoid") or {}
+      local lx = px + 26
+      ui.text(T("Avoid"), "bold", 14, ui.c.muted, lx, ry + (44 - ui.fontHeight("bold", 14)) / 2)
+      lx = lx + ui.textWidth(T("Avoid"), "bold", 14) + 12
+      for _, it in ipairs({ { "motorway", T("Motorways") }, { "toll", T("Tolls") }, { "ferry", T("Ferries") } }) do
+        lx = lx + ui.pill({ kind = "map:avoid", what = it[1] }, it[2], lx, ry, 44, a[it[1]] and "accent" or "off2") + 8
+      end
+      ry = ry + 60
+    end
     if M.waitingFix then
       ui.text(M.permission and T("Waiting for your location…") or T("Road Trip needs location access to find routes from you"),
         "semibold", 17, ui.c.muted, px + 26, ry)
@@ -1520,6 +1619,14 @@ function M.activate(id)
   elseif k == "map:cancel" then endNav()
   elseif k == "map:end" then endNav()
   elseif k == "map:allow" then listening = android.locationStart() == true
+  elseif k == "map:avoid" then
+    local a = config.get("mapAvoid") or {}
+    a[id.what] = not a[id.what]
+    config.set("mapAvoid", a)
+    if M.dest then
+      M.routes = nil
+      requestRoutes(M.dest.lat, M.dest.lon)
+    end
   elseif k == "map:fromCentre" then
     if M.waitingFix then
       local w = M.waitingFix

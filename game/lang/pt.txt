@@ -287,3 +287,8 @@ Procure o endereço de casa
 Procure o endereço do trabalho
 Procure um endereço para salvar
 Casa
+Não foi possível desviar; mostrando a rota normal
+Evitar
+Rodovias
+Pedágios
+Balsas

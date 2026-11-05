@@ -287,3 +287,8 @@ Cari alamat rumah anda
 Cari alamat tempat kerja anda
 Cari alamat untuk disimpan
 Rumah
+Tidak dapat mengelaknya; menunjukkan laluan biasa
+Elak
+Lebuh raya
+Tol
+Feri

@@ -287,3 +287,8 @@ Suche deine Wohnadresse
 Suche deine Arbeitsadresse
 Suche eine Adresse zum Speichern
 Zuhause
+Konnte sie nicht umgehen; zeige die übliche Route
+Meiden
+Autobahnen
+Maut
+Fähren

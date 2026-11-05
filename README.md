@@ -13,7 +13,7 @@ in any app, and the Navigation widget shows your next turn from Google Maps, Waz
 other nav apps (both need notification access, which Road Trip asks for). Home also shows the weather for your city (pick it in Settings) and your next calendar
 event. On first launch a short setup walks through permissions, favorite apps, Home and Work, and
 local radio stations (run it again from Settings). **Map** shows where you are, with street
-and place names, turned the way you're driving; searches places (with one-tap Home and Work), offers route choices and guides you turn
+and place names, turned the way you're driving; searches places (with one-tap Home and Work), offers route choices (avoiding motorways, tolls or ferries if you like) and guides you turn
 by turn, finding a new route if you leave it; the next turn also shows on Home. It needs
 location access (Road Trip asks). Without a position yet, a route waits for the first fix
 or can start from the middle of the map. **Radio** plays internet radio from
@@ -158,7 +158,7 @@ JSON; Java escapes all non-ASCII so JNI's modified UTF-8 never gets in the way.
 
 Map data © [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors. Tiles
 from [OpenFreeMap](https://openfreemap.org), place search by [Photon](https://photon.komoot.io),
-routes by the [FOSSGIS OSRM server](https://routing.openstreetmap.de). Radio stations come from
+routes by the [FOSSGIS OSRM server](https://routing.openstreetmap.de) (and FOSSGIS's Valhalla server for routes that avoid motorways, tolls or ferries). Radio stations come from
 [Radio Browser](https://www.radio-browser.info), a free community directory; Road Trip
 reports each play to it, as it asks. None of them need an account or key. Road Trip asks the routing server for at most one route at a time, and
 waits at least 15 seconds between new routes while you drive.

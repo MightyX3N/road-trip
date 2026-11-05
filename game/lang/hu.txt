@@ -287,3 +287,8 @@ Keresd meg az otthoni címed
 Keresd meg a munkahelyi címed
 Keress egy menthető címet
 Otthon
+Nem sikerült elkerülni őket; a szokásos útvonal látszik
+Kerülendő
+Autópályák
+Útdíj
+Kompok

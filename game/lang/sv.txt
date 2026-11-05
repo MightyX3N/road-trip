@@ -287,3 +287,8 @@ Sök efter din hemadress
 Sök efter din jobbadress
 Sök efter en adress att spara
 Hem
+Kunde inte planera runt dem; visar den vanliga rutten
+Undvik
+Motorvägar
+Avgiftsvägar
+Färjor

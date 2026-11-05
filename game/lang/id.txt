@@ -287,3 +287,8 @@ Cari alamat rumah Anda
 Cari alamat kantor Anda
 Cari alamat untuk disimpan
 Rumah
+Tidak bisa menghindarinya; menampilkan rute biasa
+Hindari
+Jalan tol bebas hambatan
+Tol
+Feri

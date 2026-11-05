@@ -287,3 +287,8 @@ Søg efter din hjemadresse
 Søg efter din arbejdsadresse
 Søg efter en adresse at gemme
 Hjem
+Kunne ikke planlægge uden om dem; viser den normale rute
+Undgå
+Motorveje
+Betalingsveje
+Færger

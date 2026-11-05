@@ -287,3 +287,8 @@ Hanapin ang address ng bahay mo
 Hanapin ang address ng trabaho mo
 Maghanap ng address na ise-save
 Bahay
+Hindi maiwasan; ipinapakita ang karaniwang ruta
+Iwasan
+Expressway
+Toll
+Ferry

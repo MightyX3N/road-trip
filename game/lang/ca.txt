@@ -287,3 +287,8 @@ Cerca l'adreça de casa
 Cerca l'adreça de la feina
 Cerca una adreça per desar
 Casa
+No s'han pogut evitar; es mostra la ruta habitual
+Evita
+Autopistes
+Peatges
+Transbordadors

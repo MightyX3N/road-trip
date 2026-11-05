@@ -287,3 +287,8 @@ Ieškokite namų adreso
 Ieškokite darbo adreso
 Ieškokite adreso išsaugoti
 Namai
+Nepavyko jų apeiti; rodomas įprastas maršrutas
+Vengti
+Greitkeliai
+Mokami keliai
+Keltai

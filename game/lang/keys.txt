@@ -285,3 +285,8 @@ Search for your home address
 Search for your work address
 Search for an address to save
 @place:Home
+Couldn't plan around those; showing the usual route
+Avoid
+Motorways
+Tolls
+Ferries

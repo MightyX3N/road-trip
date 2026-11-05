@@ -287,3 +287,8 @@ Wyszukaj adres domu
 Wyszukaj adres pracy
 Wyszukaj adres do zapisania
 Dom
+Nie udało się ich ominąć; pokazuję zwykłą trasę
+Unikaj
+Autostrady
+Płatne drogi
+Promy

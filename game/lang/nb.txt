@@ -287,3 +287,8 @@ Søk etter hjemmeadressen din
 Søk etter jobbadressen din
 Søk etter en adresse å lagre
 Hjem
+Kunne ikke planlegge rundt dem; viser den vanlige ruten
+Unngå
+Motorveier
+Bomveier
+Ferjer

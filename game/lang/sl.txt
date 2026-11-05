@@ -287,3 +287,8 @@ Poišči domači naslov
 Poišči naslov službe
 Poišči naslov za shranjevanje
 Dom
+Ni se jim bilo mogoče izogniti; prikazujem običajno pot
+Izogni se
+Avtoceste
+Cestnine
+Trajekti

@@ -287,3 +287,8 @@ Hľadajte adresu domova
 Hľadajte adresu práce
 Hľadajte adresu na uloženie
 Domov
+Nepodarilo sa im vyhnúť; ukazujem obvyklú trasu
+Vyhnúť sa
+Diaľnice
+Mýto
+Trajekty

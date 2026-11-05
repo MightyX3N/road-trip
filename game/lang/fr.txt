@@ -287,3 +287,8 @@ Cherchez votre adresse
 Cherchez l'adresse de votre travail
 Cherchez une adresse à enregistrer
 Domicile
+Impossible de les éviter ; itinéraire habituel affiché
+Éviter
+Autoroutes
+Péages
+Ferries

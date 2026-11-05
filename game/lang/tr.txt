@@ -287,3 +287,8 @@ Ev adresinizi arayın
 İş adresinizi arayın
 Kaydedilecek bir adres arayın
 Ev
+Bunlardan kaçınılamadı; normal rota gösteriliyor
+Kaçın
+Otoyollar
+Ücretli yollar
+Feribotlar

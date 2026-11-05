@@ -287,3 +287,8 @@ Caută adresa de acasă
 Caută adresa de la serviciu
 Caută o adresă de salvat
 Acasă
+Nu s-au putut ocoli; se arată traseul obișnuit
+Evită
+Autostrăzi
+Taxe de drum
+Feriboturi

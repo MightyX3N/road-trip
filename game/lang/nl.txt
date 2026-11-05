@@ -287,3 +287,8 @@ Zoek je thuisadres
 Zoek je werkadres
 Zoek een adres om te bewaren
 Thuis
+Kon er niet omheen plannen; de gewone route wordt getoond
+Vermijd
+Snelwegen
+Tol
+Veerboten

@@ -287,3 +287,8 @@ Tìm địa chỉ nhà bạn
 Tìm địa chỉ cơ quan
 Tìm địa chỉ để lưu
 Nhà
+Không thể tránh; hiển thị lộ trình thông thường
+Tránh
+Đường cao tốc
+Trạm thu phí
+Phà

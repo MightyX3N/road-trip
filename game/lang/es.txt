@@ -287,3 +287,8 @@ Busca la dirección de tu casa
 Busca la dirección de tu trabajo
 Busca una dirección para guardar
 Casa
+No se pudieron evitar; se muestra la ruta habitual
+Evitar
+Autopistas
+Peajes
+Ferris

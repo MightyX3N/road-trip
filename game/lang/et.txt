@@ -287,3 +287,8 @@ Otsi oma koduaadressi
 Otsi oma tööaadressi
 Otsi salvestatavat aadressi
 Kodu
+Neist ei õnnestunud mööda planeerida; näitan tavalist teekonda
+Väldi
+Kiirteed
+Teemaksud
+Praamid
