@@ -324,3 +324,28 @@ Hapus
 Mengunduh suara; akan dipakai setelah siap
 Petunjuk suara mati
 Petunjuk suara aktif
+Layar penuh
+Di samping peta
+Cari atau ketik alamat
+Tidak bisa masuk; periksa nama dan kata sandi
+Masuk ke Jellyfin
+Ketik alamat server Anda
+Tidak ada server Jellyfin yang menjawab di {address}
+Quick Connect tidak aktif di server ini
+Server tidak bisa dijangkau
+Pencarian: {text}
+Hubungkan server Jellyfin Anda
+Musik, buku audio, dan video Anda dari rumah. Gunakan alamat yang akan Anda ketik di browser, seperti 192.168.1.20:8096.
+Kode Quick Connect
+Di aplikasi Jellyfin lain, buka Setelan → Quick Connect lalu masukkan kode ini. Road Trip akan masuk sendiri.
+Alamat server
+Nama pengguna
+Kata sandi
+Masuk
+Pakai Quick Connect
+Tutup
+Keluar
+Cari di koleksi Anda
+Browser disembunyikan saat Anda mengemudi
+Video disembunyikan saat mengemudi. Suara tetap diputar.
+Browser

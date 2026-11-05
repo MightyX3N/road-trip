@@ -305,6 +305,8 @@ local stubApps = { "Maps", "Music", "Phone", "Messages", "Podcasts", "Calendar",
 local stubFetches = {}
 local stubRadio
 local stubVoice
+local stubMusic, stubWebUrl, stubVideo
+stubPanel = nil
 stubSaid = nil -- what the desktop stub "said", for tests
 
 local function stubCall(method, args)
@@ -339,6 +341,15 @@ local function stubCall(method, args)
     end
     if url:find("routed%-car") then
       return { done = true, ok = true, body = '{"code":"Ok","routes":[{"distance":2400,"duration":420,"geometry":"_ibagBsz`pVvJtL","legs":[{"steps":[{"distance":1200,"duration":200,"name":"Vesterbrogade","maneuver":{"type":"depart","modifier":"straight","location":[12.5683,55.6761]}},{"distance":1200,"duration":220,"name":"Bernstorffsgade","maneuver":{"type":"turn","modifier":"right","location":[12.565,55.672]}},{"distance":0,"duration":0,"name":"","maneuver":{"type":"arrive","location":[12.5681,55.6737]}}]}]},{"distance":2700,"duration":480,"geometry":"_ibagBsz`pVvJtL","legs":[{"steps":[]}]}]}' }
+    end
+    if url:find("^jf:") then
+      if url:find("/System/Info/Public") then return { done = true, ok = true, body = '{"ServerName":"Home","Version":"10.10.3"}' } end
+      if url:find("AuthenticateByName") then return { done = true, ok = true, body = '{"AccessToken":"tok123","User":{"Id":"u1","Name":"Patrick"}}' } end
+      if url:find("/Views") then return { done = true, ok = true, body = '{"Items":[{"Id":"lib1","Name":"Music","CollectionType":"music"},{"Id":"lib2","Name":"Movies","CollectionType":"movies"}]}' } end
+      if url:find("MusicAlbum") then return { done = true, ok = true, body = '{"Items":[{"Id":"al1","Name":"Mile Markers","Type":"MusicAlbum","IsFolder":true,"AlbumArtist":"The Long Drives","ProductionYear":2021}]}' } end
+      if url:find("ParentId=al1") then return { done = true, ok = true, body = '{"Items":[{"Id":"t1","Name":"Desert Highway","Type":"Audio","Album":"Mile Markers","AlbumArtist":"The Long Drives","RunTimeTicks":2410000000},{"Id":"t2","Name":"Night Exit","Type":"Audio","Album":"Mile Markers","AlbumArtist":"The Long Drives"}]}' } end
+      if url:find("IncludeItemTypes=Movie") then return { done = true, ok = true, body = '{"Items":[{"Id":"m1","Name":"Road Movie","Type":"Movie","ProductionYear":1999}]}' } end
+      return { done = true, ok = true, body = '{"Items":[]}' }
     end
     if url:find("json/servers") then
       return { done = true, ok = true, body = '[{"name":"de1.api.radio-browser.info"},{"name":"nl1.api.radio-browser.info"}]' }
@@ -383,6 +394,31 @@ local function stubCall(method, args)
     return "DK"
   elseif method == "overlayStatus" then
     return { canDraw = false, guard = false, moving = false, why = "desktop", front = "", covering = false }
+  elseif method == "httpRequest" then
+    stubFetches[#stubFetches + 1] = "jf:" .. args.method .. " " .. args.url .. " " .. (args.body or "")
+    return #stubFetches
+  elseif method == "musicPlay" then
+    stubMusic = { state = "playing", index = args.index, count = #args.tracks, positionMs = 1000, durationMs = 200000,
+      track = args.tracks[(args.index or 0) + 1] }
+    return true
+  elseif method == "musicStatus" then
+    return stubMusic or { state = "idle" }
+  elseif method == "musicCommand" then
+    if args.what == "stop" then stubMusic = nil elseif stubMusic then stubMusic.state = stubMusic.state == "playing" and "paused" or "playing" end
+    return true
+  elseif method == "webStatus" then
+    return { url = stubWebUrl or "", title = "Page", progress = 100, canBack = false, canForward = false, open = true }
+  elseif method == "webCommand" then
+    if args.what == "load" then stubWebUrl = args.url end
+    return true
+  elseif method == "videoStatus" then
+    return { state = stubVideo and "playing" or "idle", positionMs = 5000, durationMs = 3600000 }
+  elseif method == "videoPlay" then
+    stubVideo = args.url
+    return true
+  elseif method == "panelShow" or method == "panelHide" or method == "panelLabels" or method == "videoCommand" then
+    stubPanel = method == "panelShow" and args or (method == "panelHide" and "hidden" or stubPanel)
+    return true
   elseif method == "voiceStatus" then
     stubVoice = stubVoice or { engine = "system", installed = {}, downloads = {},
       systemVoices = { { name = "da-dk-x-kfm-local", country = "Danmark", network = false } } }
@@ -457,6 +493,20 @@ function M.overlayStatus() return M.call("overlayStatus") end
 function M.overlayPermission() return M.call("overlayPermission") end
 function M.resumed() return M.call("resumed") end
 function M.voiceConfig(c) return M.call("voiceConfig", c) end
+function M.httpRequest(method, url, headers, body)
+  return M.call("httpRequest", { method = method, url = url, headers = headers, body = body })
+end
+function M.musicPlay(tracks, index) return M.call("musicPlay", { tracks = tracks, index = index }) end
+function M.musicCommand(what, posMs) return M.call("musicCommand", { what = what, posMs = posMs }) end
+function M.musicStatus() return M.call("musicStatus") end
+function M.panelShow(kind, x, y, w, h) return M.call("panelShow", { kind = kind, x = x, y = y, w = w, h = h }) end
+function M.panelHide() return M.call("panelHide") end
+function M.panelLabels(l) return M.call("panelLabels", { labels = l }) end
+function M.webCommand(what, url) return M.call("webCommand", { what = what, url = url }) end
+function M.webStatus() return M.call("webStatus") end
+function M.videoPlay(url, startMs) return M.call("videoPlay", { url = url, startMs = startMs or 0 }) end
+function M.videoCommand(what, posMs) return M.call("videoCommand", { what = what, posMs = posMs }) end
+function M.videoStatus() return M.call("videoStatus") end
 function M.voiceSpeak(text) return M.call("voiceSpeak", { text = text }) end
 function M.voicePrepare(texts) return M.call("voicePrepare", { texts = texts }) end
 function M.voiceStatus() return M.call("voiceStatus") end

@@ -364,6 +364,27 @@ function icons.mute()
   lg.line(22, 9, 16, 15)
 end
 
+function icons.globe()
+  lg.circle("line", 12, 12, 8.5, 32)
+  lg.ellipse("line", 12, 12, 3.6, 8.5, 24)
+  lg.line(3.5, 12, 20.5, 12)
+end
+
+function icons.back()
+  lg.line(19, 12, 5, 12)
+  lg.line(11, 6, 5, 12, 11, 18)
+end
+
+function icons.forward()
+  lg.line(5, 12, 19, 12)
+  lg.line(13, 6, 19, 12, 13, 18)
+end
+
+function icons.reload()
+  lg.arc("line", "open", 12, 12, 7, -math.pi * 0.35, math.pi * 1.4, 24)
+  lg.polygon("fill", 15.5, 2.5, 19.5, 7.5, 13.5, 8.5)
+end
+
 function icons.plus()
   lg.line(12, 5, 12, 19)
   lg.line(5, 12, 19, 12)

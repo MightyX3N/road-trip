@@ -62,12 +62,63 @@ final class Net {
         return id;
     }
 
+    /**
+     * Any method, with headers and a body; http is allowed too, because home media servers
+     * (Jellyfin) usually answer on plain http inside the house or over a VPN.
+     */
+    static int request(final String method, final String url, final JSONObject headers, final String body) throws Exception {
+        if (!url.startsWith("https://") && !url.startsWith("http://")) throw new Exception("http(s) only");
+        final int id = NEXT.getAndIncrement();
+        RESULTS.put(id, new JSONObject().put("done", false));
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                JSONObject r = new JSONObject();
+                try {
+                    HttpURLConnection c = (HttpURLConnection) new URL(url).openConnection();
+                    c.setConnectTimeout(15000);
+                    c.setReadTimeout(30000);
+                    c.setRequestMethod(method);
+                    c.setRequestProperty("User-Agent", UA);
+                    if (headers != null) {
+                        java.util.Iterator<String> it = headers.keys();
+                        while (it.hasNext()) { String k = it.next(); c.setRequestProperty(k, headers.optString(k)); }
+                    }
+                    if (body != null) {
+                        c.setDoOutput(true);
+                        if (headers == null || !headers.has("Content-Type")) c.setRequestProperty("Content-Type", "application/json");
+                        byte[] b = body.getBytes("UTF-8");
+                        c.setFixedLengthStreamingMode(b.length);
+                        try (java.io.OutputStream o = c.getOutputStream()) { o.write(b); }
+                    }
+                    int code = c.getResponseCode();
+                    InputStream in = code < 400 ? c.getInputStream() : c.getErrorStream();
+                    ByteArrayOutputStream b = new ByteArrayOutputStream();
+                    if (in != null) {
+                        byte[] buf = new byte[16 * 1024];
+                        int n;
+                        while ((n = in.read(buf)) > 0 && b.size() < 4_000_000) b.write(buf, 0, n);
+                        in.close();
+                    }
+                    c.disconnect();
+                    r.put("done", true).put("ok", code < 400).put("status", code).put("body", b.toString("UTF-8"));
+                } catch (Throwable t) {
+                    try {
+                        r.put("done", true).put("ok", false).put("error", t.getMessage() == null ? t.getClass().getSimpleName() : t.getMessage());
+                    } catch (Throwable ignored) {}
+                }
+                RESULTS.put(id, r);
+            }
+        }, "roadtrip-req").start();
+        return id;
+    }
+
     // FOSSGIS, Photon and OpenFreeMap ask for an app name that says who's calling
     static final String UA = "RoadTrip/0.1 (+https://mightyx3n.github.io/road-trip/)";
 
     /** Downloads url to an absolute file path (written via a temp file); result(id) reports it. */
     static int download(final String url, final String path) throws Exception {
-        if (!url.startsWith("https://")) throw new Exception("https only");
+        if (!url.startsWith("https://") && !url.startsWith("http://")) throw new Exception("http(s) only");
         final int id = NEXT.getAndIncrement();
         RESULTS.put(id, new JSONObject().put("done", false));
         new Thread(new Runnable() {

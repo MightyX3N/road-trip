@@ -324,3 +324,28 @@ Smazat
 Stahuji hlas; použije se, až bude připraven
 Hlasové pokyny vypnuty
 Hlasové pokyny zapnuty
+Celá obrazovka
+Vedle mapy
+Hledejte nebo zadejte adresu
+Přihlášení selhalo; zkontrolujte jméno a heslo
+Přihlášeno k Jellyfin
+Zadejte adresu svého serveru
+Na adrese {address} neodpověděl žádný server Jellyfin
+Quick Connect není na tomto serveru zapnutý
+Server je nedostupný
+Hledání: {text}
+Připojte svůj server Jellyfin
+Vaše hudba, audioknihy a videa z domova. Použijte adresu, kterou byste zadali do prohlížeče, např. 192.168.1.20:8096.
+Kód Quick Connect
+V jiné aplikaci Jellyfin otevřete Nastavení → Quick Connect a zadejte tento kód. Road Trip se přihlásí sám.
+Adresa serveru
+Uživatelské jméno
+Heslo
+Přihlásit
+Použít Quick Connect
+Zavřít
+Odhlásit
+Hledat v knihovně
+Prohlížeč je během jízdy skrytý
+Video je při jízdě skryté. Zvuk hraje dál.
+Prohlížeč

@@ -117,6 +117,13 @@ final class Overlay {
         main.post(TICK);
     }
 
+    /** Moving now (or no speed and "hide video" chosen), and hiding video while driving is on. */
+    static boolean drivingNow() {
+        if (!video) return false;
+        if (app == null) return "block".equals(noSpeed);
+        return moving;
+    }
+
     static boolean canDrawOverlays(Context ctx) {
         return Build.VERSION.SDK_INT < 23 || android.provider.Settings.canDrawOverlays(ctx);
     }

@@ -324,3 +324,28 @@ Löschen
 Die Stimme wird geladen und danach verwendet
 Sprachansagen aus
 Sprachansagen an
+Vollbild
+Neben der Karte
+Suchen oder Adresse eingeben
+Anmeldung fehlgeschlagen; Name und Passwort prüfen
+Bei Jellyfin angemeldet
+Gib die Adresse deines Servers ein
+Kein Jellyfin-Server unter {address} erreichbar
+Quick Connect ist auf diesem Server nicht aktiviert
+Server nicht erreichbar
+Suche: {text}
+Jellyfin-Server verbinden
+Deine Musik, Hörbücher und Videos von zu Hause. Nutze die Adresse, die du im Browser eingeben würdest, z. B. 192.168.1.20:8096.
+Quick-Connect-Code
+Öffne in einer anderen Jellyfin-App Einstellungen → Quick Connect und gib diesen Code ein. Road Trip meldet sich selbst an.
+Serveradresse
+Benutzername
+Passwort
+Anmelden
+Quick Connect verwenden
+Schließen
+Abmelden
+Bibliothek durchsuchen
+Der Browser ist während der Fahrt ausgeblendet
+Video während der Fahrt ausgeblendet. Der Ton läuft weiter.
+Browser

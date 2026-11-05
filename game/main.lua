@@ -6,6 +6,8 @@ local ui = require("ui")
 local map = require("map")
 local radio = require("radio")
 local voice = require("voice")
+local jellyfin = require("jellyfin")
+local browser = require("browser")
 local lang = require("lang")
 local T = lang.T
 
@@ -216,6 +218,11 @@ local function artImage(m)
 end
 
 local function mediaCommand(action, posMs)
+  if state.mediaJf and state.screen == "media" then
+    android.musicCommand(action, posMs)
+    state.dirty = true
+    return
+  end
   local m = state.media.current
   if m then
     -- answer the tap now; the next read confirms it
@@ -443,6 +450,7 @@ local RAIL_ITEMS = {
   { screen = "map", label = "Map", icon = "map" },
   { screen = "radio", label = "Radio", icon = "radio" },
   { screen = "media", label = "Media", icon = "media" },
+  { screen = "web", label = "Browser", icon = "globe" },
   { screen = "settings", label = "Settings", icon = "gear" },
 }
 
@@ -450,13 +458,13 @@ local function drawRail()
   ui.rect(ui.c.rail, 0, 0, RAIL, H)
   ui.rect(ui.c.line, RAIL - 1, 0, 1, H)
   for i, item in ipairs(RAIL_ITEMS) do
-    local x, y = 12, 20 + (i - 1) * 98
+    local x, y = 12, 16 + (i - 1) * 84
     local on = state.screen == item.screen or (item.screen == "settings" and (state.screen == "diag" or state.screen == "lang" or state.screen == "voice"))
     local color = on and ui.c.accent or ui.c.muted
-    if on then ui.rect(ui.c.accentBg, x, y, 88, 88, 20) end
-    ui.icon(item.icon, x + 29, y + 16, 30, color)
-    ui.text(ui.fit(T(item.label), "semibold", 13, 84), "semibold", 13, color, x, y + 56, "center", 88)
-    ui.hit({ kind = "rail", screen = item.screen }, x, y, 88, 88)
+    if on then ui.rect(ui.c.accentBg, x, y, 88, 80, 20) end
+    ui.icon(item.icon, x + 30, y + 12, 28, color)
+    ui.text(ui.fit(T(item.label), "semibold", 13, 84), "semibold", 13, color, x, y + 50, "center", 88)
+    ui.hit({ kind = "rail", screen = item.screen }, x, y, 88, 80)
   end
   local vy = H - 20 - 72
   ui.ring(ui.c.accent, RAIL / 2, vy + 36, 35, 2)
@@ -822,6 +830,10 @@ end
 
 local function nowPlayingWidget(x, y, w, h)
   local m0 = state.media.current
+  if jellyfin.musicActive() and not (m0 and m0.playing) then
+    jellyfin.drawWidget(x, y, w, h)
+    return
+  end
   if radio.active() and not (m0 and m0.playing and radio.status.state ~= "playing") then
     radio.drawWidget(x, y, w, h)
     return
@@ -945,13 +957,47 @@ end
 -- Media (now playing)
 ----------------------------------------------------------------------------------------------
 
+local function jfMedia()
+  local mu = jellyfin.music
+  local t = mu.track or {}
+  return { jf = true, app = "Jellyfin", title = t.title or "", artist = t.artist or "", artImg = jellyfin.trackImage(),
+    durationMs = mu.durationMs or 0, positionMs = mu.positionMs or 0, speed = 0,
+    playing = mu.state == "playing" or mu.state == "connecting", canPrev = true, canNext = true, canSeek = true }
+end
+
+-- the map card next to video or the browser, while a route is on
+local function mapCard(x, y, w, h)
+  map.drawWidget(x, y, w, h, 22)
+  ui.hit({ kind = "openMap" }, x, y, w, h)
+end
+
+local function navigating() return map.nav ~= nil or state.nav.active == true end
+
+local function mediaTabs()
+  local tx = RAIL + 24
+  for _, tab in ipairs({ { "now", T("Now playing") }, { "jellyfin", "Jellyfin" } }) do
+    local on = (state.mediaTab or "now") == tab[1]
+    tx = tx + pill({ kind = "mediaTab", tab = tab[1] }, tab[2], tx, TOP + 12, 48, on and "accent" or "off2") + 10
+  end
+end
+
 local function drawMedia()
+  mediaTabs()
+  if state.mediaTab == "jellyfin" then
+    jellyfin.draw(RAIL, TOP + 72, W - RAIL, H - TOP - 72, mapCard, navigating())
+    local vx, vy, vw, vh = jellyfin.videoRect(RAIL, TOP + 72, W - RAIL, H - TOP - 72, navigating())
+    if vx then state.panelWant = { kind = "video", x = vx, y = vy, w = vw, h = vh } end
+    return
+  end
   local media = state.media
   local m = media.current
+  if jellyfin.musicActive() and not (m and m.playing) then m = jfMedia() end
+  state.mediaJf = m and m.jf or false
+  local TOP = TOP + 56
   local cx0, cw = RAIL, W - RAIL
   local midY = TOP + (H - TOP) / 2
 
-  if not media.access then
+  if not media.access and not (m and m.jf) then
     local w, h = 640, 268
     local x, y = cx0 + (cw - w) / 2, midY - h / 2
     ui.rect(ui.c.card, x, y, w, h, 28)
@@ -974,7 +1020,7 @@ local function drawMedia()
   local size = math.min(420, H - TOP - 88)
   local ax, ay = cx0 + 56, TOP + (H - TOP - size) / 2
   ui.rect(ui.hex("2A2620"), ax, ay, size, size, 28)
-  local img = artImage(m)
+  local img = m.artImg or artImage(m)
   if img then
     local inset = 14
     local s = math.min((size - inset * 2) / img:getWidth(), (size - inset * 2) / img:getHeight())
@@ -1549,8 +1595,36 @@ local function drawPlaceholder(label)
   ui.text(label, "semibold", 19, ui.c.muted, RAIL, (H + TOP - th) / 2, "center", W - RAIL)
 end
 
+-- the browser page or the video: an Android view over Road Trip's screen, placed where the
+-- screen left room for it. Only tells Android when something changed.
+local function syncPanel()
+  local want = state.panelWant
+  if state.menu or state.city or not state.foreground then want = nil end
+  local key
+  if want then
+    local ps = select(2, lg.getPixelDimensions()) / DESIGN_H -- real pixels per virtual unit
+    want.px, want.py = math.floor(want.x * ps + 0.5), math.floor(want.y * ps + 0.5)
+    want.pw, want.ph = math.floor(want.w * ps + 0.5), math.floor(want.h * ps + 0.5)
+    key = string.format("%s %d %d %d %d", want.kind, want.px, want.py, want.pw, want.ph)
+  end
+  if key == state.panelKey then return end
+  state.panelKey = key
+  if want then
+    android.panelShow(want.kind, want.px, want.py, want.pw, want.ph)
+    if want.kind == "web" then browser.opened() end
+  else
+    android.panelHide()
+  end
+end
+
+local function sendPanelLabels()
+  android.panelLabels({ web = T("The browser is hidden while you drive"),
+    video = T("Video hidden while driving. The sound keeps playing.") })
+end
+
 function love.draw()
   ui.beginFrame()
+  state.panelWant = nil
   lg.push()
   lg.scale(ui.S)
   if state.screen == "favs" then
@@ -1569,6 +1643,11 @@ function love.draw()
       map.drawUI(RAIL, 0, W - RAIL, H)
     elseif state.screen == "radio" then
       radio.draw(RAIL, TOP, W - RAIL, H - TOP)
+    elseif state.screen == "web" then
+      local nav = navigating()
+      browser.draw(RAIL, TOP, W - RAIL, H - TOP, mapCard, nav)
+      local px, py, pw, ph = browser.pageRect(RAIL, TOP, W - RAIL, H - TOP, nav)
+      state.panelWant = { kind = "web", x = px, y = py, w = pw, h = ph }
     else drawMedia() end
     if state.screen ~= "map" then drawTopBar() end -- the map runs edge to edge
     drawRail()
@@ -1577,6 +1656,7 @@ function love.draw()
   drawCityDialog()
   drawToast()
   lg.pop()
+  syncPanel()
   state.drew = true
 end
 
@@ -1672,6 +1752,7 @@ local function activate(id, vx)
     sendOverlayConfig()
     voice.send()
     if lang.code ~= "en" then toast(T("Translated by AI, so some words may be off")) end
+    sendPanelLabels()
   elseif k == "media" then mediaCommand(id.action)
   elseif k == "seek" then
     local frac = math.max(0, math.min(1, ((vx or id.x) - id.x) / id.w))
@@ -1690,6 +1771,12 @@ local function activate(id, vx)
   elseif k == "tile" and id.grid == "favs" then togglePick(id.app)
   elseif k == "tile" or k == "fav" then launch(id.app)
   elseif k:sub(1, 4) == "map:" then map.activate(id)
+  elseif k:sub(1, 3) == "jf:" then
+    if k == "jf:open" then state.screen, state.mediaTab = "media", "jellyfin" else jellyfin.activate(id) end
+  elseif k:sub(1, 4) == "web:" then browser.activate(id)
+  elseif k == "mediaTab" then
+    state.mediaTab = id.tab
+    if id.tab == "jellyfin" then jellyfin.openRoot() end
   elseif k == "radio:open" then
     state.screen = "radio"
     radio.open()
@@ -1700,6 +1787,8 @@ local function activate(id, vx)
     if k == "openMapSearch" then map.openSearch() end
   elseif k == "rail" then
     if state.typing then state.typing = nil love.keyboard.setTextInput(false) end
+    if jellyfin.wantsText() then jellyfin.back() end
+    if browser.wantsText() then browser.back() end
     state.screen = id.screen
     if id.screen == "map" then map.open() end
     if id.screen == "radio" then radio.open() end
@@ -1797,6 +1886,8 @@ local function goHome()
   if state.city then closeCity() end
   if map.wantsText() then map.back() end
   if radio.wantsText() then radio.back() end
+  if jellyfin.wantsText() then jellyfin.back() end
+  if browser.wantsText() then browser.back() end
   if state.setup then setupGo(SETUP_STEPS + 1) end
   state.pickReturn = nil
   if state.typing then state.typing = nil love.keyboard.setTextInput(false) end
@@ -1891,6 +1982,16 @@ function love.textinput(t)
     state.dirty = true
     return
   end
+  if state.screen == "media" and jellyfin.wantsText() then
+    jellyfin.textinput(t)
+    state.dirty = true
+    return
+  end
+  if state.screen == "web" and browser.wantsText() then
+    browser.textinput(t)
+    state.dirty = true
+    return
+  end
   if state.city then
     state.city.text = state.city.text .. t
     state.dirty = true
@@ -1922,6 +2023,16 @@ function love.keypressed(key)
     state.dirty = true
     return
   end
+  if state.screen == "media" and jellyfin.wantsText() and key ~= "escape" then
+    jellyfin.keypressed(key)
+    state.dirty = true
+    return
+  end
+  if state.screen == "web" and browser.wantsText() and key ~= "escape" then
+    browser.keypressed(key)
+    state.dirty = true
+    return
+  end
   if state.city then
     if key == "backspace" then
       local u8 = require("utf8")
@@ -1947,6 +2058,10 @@ function love.keypressed(key)
     -- closed the map's search or route overview
   elseif state.screen == "radio" and not state.menu and radio.back() then
     -- closed the radio's keyboard or country list
+  elseif state.screen == "media" and state.mediaTab == "jellyfin" and not state.menu and jellyfin.back() then
+    -- up one level in Jellyfin, or closed the video
+  elseif state.screen == "web" and not state.menu and browser.back() then
+    -- back a page
   elseif state.menu then
     state.menu = nil
   elseif state.screen == "favs" then
@@ -1986,6 +2101,9 @@ function love.load()
   radio.init(deps)
   deps.map = map
   voice.init(deps)
+  jellyfin.init(deps)
+  browser.init(deps)
+  sendPanelLabels()
   -- show a frame first, load apps right after (see love.update)
   state.needRefresh, state.firstLoad, state.drew = true, true, false
   burst()
@@ -2008,7 +2126,10 @@ function love.visible(v)
 end
 
 function love.update(dt)
-  map.update(dt, state.screen == "map" or state.screen == "home")
+  local splitMap = (state.screen == "web" or state.screen == "media") and navigating()
+  map.update(dt, state.screen == "map" or state.screen == "home" or splitMap)
+  jellyfin.update(dt)
+  browser.update(dt, state.screen == "web")
   radio.update(dt, state.screen == "radio" or state.screen == "home")
   voice.update(dt)
   if state.needRefresh and state.drew then
@@ -2157,7 +2278,7 @@ end
 local function animating()
   if press or state.toast or state.city or love.timer.getTime() < state.burstUntil then return true end
   if state.screen == "map" and map.busy() then return true end
-  if state.screen == "home" and (map.nav or map.turning) then return true end
+  if (state.screen == "home" or state.screen == "web" or state.screen == "media") and (map.nav or map.turning) then return true end
   if state.screen == "radio" and radio.busy() then return true end
   for _, pg in pairs(state.pagers) do
     if math.abs((pg.page - 1) - pg.x) > 0.001 then return true end

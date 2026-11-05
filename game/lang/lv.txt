@@ -324,3 +324,28 @@ Dzēst
 Lejupielādē balsi; to izmantos, kad tā būs gatava
 Balss norādes izslēgtas
 Balss norādes ieslēgtas
+Pilnekrāns
+Blakus kartei
+Meklējiet vai ievadiet adresi
+Neizdevās pieteikties; pārbaudiet vārdu un paroli
+Pieteicies Jellyfin
+Ievadiet servera adresi
+Adresē {address} neatbildēja neviens Jellyfin serveris
+Šajā serverī Quick Connect nav ieslēgts
+Serveris nav sasniedzams
+Meklēšana: {text}
+Pievienojiet savu Jellyfin serveri
+Jūsu mūzika, audiogrāmatas un video no mājām. Izmantojiet adresi, ko ievadītu pārlūkā, piem., 192.168.1.20:8096.
+Quick Connect kods
+Citā Jellyfin lietotnē atveriet Iestatījumi → Quick Connect un ievadiet šo kodu. Road Trip pieteiksies pats.
+Servera adrese
+Lietotājvārds
+Parole
+Pieteikties
+Izmantot Quick Connect
+Aizvērt
+Atteikties
+Meklēt bibliotēkā
+Pārlūks braukšanas laikā ir paslēpts
+Video braukšanas laikā paslēpts. Skaņa turpinās.
+Pārlūks

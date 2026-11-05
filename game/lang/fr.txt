@@ -324,3 +324,28 @@ Supprimer
 Téléchargement de la voix ; elle sera utilisée une fois prête
 Guidage vocal désactivé
 Guidage vocal activé
+Plein écran
+À côté de la carte
+Rechercher ou saisir une adresse
+Connexion impossible ; vérifiez le nom et le mot de passe
+Connecté à Jellyfin
+Saisissez l'adresse de votre serveur
+Aucun serveur Jellyfin n'a répondu à {address}
+Quick Connect n'est pas activé sur ce serveur
+Impossible de joindre votre serveur
+Recherche : {text}
+Connectez votre serveur Jellyfin
+Votre musique, vos livres audio et vos vidéos depuis chez vous. Utilisez l'adresse que vous saisiriez dans un navigateur, par ex. 192.168.1.20:8096.
+Code Quick Connect
+Dans une autre app Jellyfin, ouvrez Paramètres → Quick Connect et saisissez ce code. Road Trip se connecte tout seul.
+Adresse du serveur
+Nom d'utilisateur
+Mot de passe
+Se connecter
+Utiliser Quick Connect
+Fermer
+Se déconnecter
+Rechercher dans la bibliothèque
+Le navigateur est masqué pendant la conduite
+Vidéo masquée pendant la conduite. Le son continue.
+Navigateur

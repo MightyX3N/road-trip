@@ -324,3 +324,28 @@ Törlés
 A hang letöltése folyamatban; ha kész, ezt használjuk
 Hangos útmutatás ki
 Hangos útmutatás be
+Teljes képernyő
+A térkép mellett
+Keresés vagy cím
+Nem sikerült bejelentkezni; ellenőrizd a nevet és a jelszót
+Bejelentkezve a Jellyfinbe
+Írd be a szerver címét
+Egyetlen Jellyfin-szerver sem válaszolt itt: {address}
+A Quick Connect nincs bekapcsolva ezen a szerveren
+A szerver nem érhető el
+Keresés: {text}
+Csatlakoztasd a Jellyfin-szervered
+Zenéid, hangoskönyveid és videóid otthonról. Azt a címet használd, amit böngészőbe írnál, pl. 192.168.1.20:8096.
+Quick Connect-kód
+Egy másik Jellyfin-alkalmazásban nyisd meg a Beállítások → Quick Connect menüt, és írd be ezt a kódot. A Road Trip magától bejelentkezik.
+Szerver címe
+Felhasználónév
+Jelszó
+Bejelentkezés
+Quick Connect használata
+Bezárás
+Kijelentkezés
+Keresés a könyvtárban
+A böngésző vezetés közben rejtve van
+Vezetés közben a videó rejtve. A hang szól tovább.
+Böngésző

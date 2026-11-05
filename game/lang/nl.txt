@@ -324,3 +324,28 @@ Verwijderen
 De stem wordt gedownload en daarna gebruikt
 Gesproken aanwijzingen uit
 Gesproken aanwijzingen aan
+Volledig scherm
+Naast de kaart
+Zoek of typ een adres
+Inloggen mislukt; controleer naam en wachtwoord
+Ingelogd bij Jellyfin
+Typ het adres van je server
+Geen Jellyfin-server reageerde op {address}
+Quick Connect staat niet aan op deze server
+Je server is niet bereikbaar
+Zoeken: {text}
+Verbind je Jellyfin-server
+Je muziek, luisterboeken en video's van thuis. Gebruik het adres dat je in een browser zou typen, bijv. 192.168.1.20:8096.
+Quick Connect-code
+Open in een andere Jellyfin-app Instellingen → Quick Connect en voer deze code in. Road Trip logt zelf in.
+Serveradres
+Gebruikersnaam
+Wachtwoord
+Inloggen
+Quick Connect gebruiken
+Sluiten
+Uitloggen
+Zoek in je bibliotheek
+De browser is verborgen tijdens het rijden
+Video verborgen tijdens het rijden. Het geluid speelt door.
+Browser

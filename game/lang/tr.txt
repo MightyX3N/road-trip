@@ -324,3 +324,28 @@ Sil
 Ses indiriliyor; hazır olunca kullanılacak
 Sesli yönlendirme kapalı
 Sesli yönlendirme açık
+Tam ekran
+Haritanın yanında
+Arayın veya adres yazın
+Giriş yapılamadı; adı ve şifreyi kontrol edin
+Jellyfin'e giriş yapıldı
+Sunucunuzun adresini yazın
+{address} adresinde yanıt veren Jellyfin sunucusu yok
+Bu sunucuda Quick Connect açık değil
+Sunucunuza ulaşılamadı
+Arama: {text}
+Jellyfin sunucunuzu bağlayın
+Evdeki müzikleriniz, sesli kitaplarınız ve videolarınız. Tarayıcıya yazacağınız adresi kullanın, örn. 192.168.1.20:8096.
+Quick Connect kodu
+Başka bir Jellyfin uygulamasında Ayarlar → Quick Connect'i açıp bu kodu girin. Road Trip kendisi giriş yapar.
+Sunucu adresi
+Kullanıcı adı
+Şifre
+Giriş yap
+Quick Connect kullan
+Kapat
+Çıkış yap
+Kitaplığınızda arayın
+Sürüş sırasında tarayıcı gizlenir
+Sürüş sırasında video gizli. Ses devam ediyor.
+Tarayıcı

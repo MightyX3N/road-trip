@@ -324,3 +324,28 @@ Suprimeix
 Baixant la veu; s'utilitzarà quan estigui a punt
 Indicacions per veu desactivades
 Indicacions per veu activades
+Pantalla completa
+Al costat del mapa
+Cerca o escriu una adreça
+No s'ha pogut iniciar la sessió; revisa el nom i la contrasenya
+Sessió iniciada a Jellyfin
+Escriu l'adreça del teu servidor
+Cap servidor Jellyfin ha respost a {address}
+Quick Connect no està activat en aquest servidor
+No s'ha pogut connectar amb el servidor
+Cerca: {text}
+Connecta el teu servidor Jellyfin
+La teva música, audiollibres i vídeos des de casa. Fes servir l'adreça que escriuries en un navegador, com ara 192.168.1.20:8096.
+Codi de Quick Connect
+En una altra app de Jellyfin, obre Configuració → Quick Connect i introdueix aquest codi. Road Trip inicia la sessió sol.
+Adreça del servidor
+Nom d'usuari
+Contrasenya
+Inicia la sessió
+Fes servir Quick Connect
+Tanca
+Tanca la sessió
+Cerca a la biblioteca
+El navegador s'amaga mentre condueixes
+Vídeo amagat mentre condueixes. El so continua.
+Navegador

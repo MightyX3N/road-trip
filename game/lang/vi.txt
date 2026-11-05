@@ -324,3 +324,28 @@ Xóa
 Đang tải giọng; sẽ dùng khi sẵn sàng
 Đã tắt chỉ đường bằng giọng nói
 Đã bật chỉ đường bằng giọng nói
+Toàn màn hình
+Bên cạnh bản đồ
+Tìm kiếm hoặc nhập địa chỉ
+Không đăng nhập được; kiểm tra tên và mật khẩu
+Đã đăng nhập Jellyfin
+Nhập địa chỉ máy chủ của bạn
+Không có máy chủ Jellyfin nào trả lời tại {address}
+Máy chủ này chưa bật Quick Connect
+Không kết nối được máy chủ
+Tìm kiếm: {text}
+Kết nối máy chủ Jellyfin của bạn
+Nhạc, sách nói và video của bạn ở nhà. Dùng địa chỉ bạn sẽ gõ vào trình duyệt, ví dụ 192.168.1.20:8096.
+Mã Quick Connect
+Trong một ứng dụng Jellyfin khác, mở Cài đặt → Quick Connect và nhập mã này. Road Trip sẽ tự đăng nhập.
+Địa chỉ máy chủ
+Tên người dùng
+Mật khẩu
+Đăng nhập
+Dùng Quick Connect
+Đóng
+Đăng xuất
+Tìm trong thư viện
+Trình duyệt bị ẩn khi bạn lái xe
+Video bị ẩn khi lái xe. Âm thanh vẫn phát.
+Trình duyệt

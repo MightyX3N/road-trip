@@ -324,3 +324,28 @@ Testează
 Se descarcă vocea; va fi folosită când e gata
 Indicații vocale oprite
 Indicații vocale pornite
+Ecran complet
+Lângă hartă
+Caută sau scrie o adresă
+Autentificare eșuată; verifică numele și parola
+Conectat la Jellyfin
+Scrie adresa serverului
+Niciun server Jellyfin nu a răspuns la {address}
+Quick Connect nu este activat pe acest server
+Serverul nu poate fi contactat
+Căutare: {text}
+Conectează serverul Jellyfin
+Muzica, cărțile audio și videoclipurile tale de acasă. Folosește adresa pe care ai scrie-o într-un browser, de ex. 192.168.1.20:8096.
+Cod Quick Connect
+Într-o altă aplicație Jellyfin, deschide Setări → Quick Connect și introdu acest cod. Road Trip se conectează singur.
+Adresa serverului
+Nume de utilizator
+Parolă
+Conectare
+Folosește Quick Connect
+Închide
+Deconectare
+Caută în bibliotecă
+Browserul este ascuns cât timp conduci
+Video ascuns în timpul condusului. Sunetul continuă.
+Browser

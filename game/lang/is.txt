@@ -324,3 +324,28 @@ Eyða
 Sæki röddina; hún er notuð þegar hún er tilbúin
 Töluð leiðsögn af
 Töluð leiðsögn á
+Allur skjárinn
+Við hlið kortsins
+Leitaðu eða sláðu inn vefslóð
+Innskráning mistókst; athugaðu nafn og lykilorð
+Skráð(ur) inn á Jellyfin
+Sláðu inn vistfang netþjónsins
+Enginn Jellyfin-netþjónn svaraði á {address}
+Quick Connect er ekki virkt á þessum netþjóni
+Náði ekki sambandi við netþjóninn
+Leit: {text}
+Tengdu Jellyfin-netþjóninn þinn
+Tónlistin, hljóðbækurnar og myndböndin þín að heiman. Notaðu slóðina sem þú myndir slá inn í vafra, t.d. 192.168.1.20:8096.
+Quick Connect-kóði
+Opnaðu Stillingar → Quick Connect í öðru Jellyfin-forriti og sláðu inn kóðann. Road Trip skráir sig inn sjálft.
+Vistfang netþjóns
+Notandanafn
+Lykilorð
+Skrá inn
+Nota Quick Connect
+Loka
+Skrá út
+Leita í safninu
+Vafrinn er falinn meðan þú ekur
+Myndband falið við akstur. Hljóðið heldur áfram.
+Vafri

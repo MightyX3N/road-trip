@@ -324,3 +324,28 @@ Burahin
 Dina-download ang boses; gagamitin ito kapag handa na
 Naka-off ang mga direksyong binibigkas
 Naka-on ang mga direksyong binibigkas
+Buong screen
+Katabi ng mapa
+Maghanap o mag-type ng address
+Hindi makapag-sign in; tingnan ang pangalan at password
+Naka-sign in sa Jellyfin
+I-type ang address ng server mo
+Walang Jellyfin server na sumagot sa {address}
+Hindi naka-on ang Quick Connect sa server na ito
+Hindi maabot ang server mo
+Paghahanap: {text}
+Ikonekta ang Jellyfin server mo
+Ang musika, audiobook at video mo mula sa bahay. Gamitin ang address na ita-type mo sa browser, tulad ng 192.168.1.20:8096.
+Quick Connect code
+Sa ibang Jellyfin app, buksan ang Settings → Quick Connect at ilagay ang code na ito. Kusang magsa-sign in ang Road Trip.
+Address ng server
+User name
+Password
+Mag-sign in
+Gamitin ang Quick Connect
+Isara
+Mag-sign out
+Maghanap sa library mo
+Nakatago ang browser habang nagmamaneho
+Nakatago ang video habang nagmamaneho. Tuloy ang tunog.
+Browser

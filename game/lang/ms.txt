@@ -324,3 +324,28 @@ Padam
 Memuat turun suara; ia digunakan apabila sedia
 Arahan suara dimatikan
 Arahan suara dihidupkan
+Skrin penuh
+Di sebelah peta
+Cari atau taip alamat
+Tidak dapat log masuk; semak nama dan kata laluan
+Telah log masuk ke Jellyfin
+Taip alamat pelayan anda
+Tiada pelayan Jellyfin menjawab di {address}
+Quick Connect tidak dihidupkan pada pelayan ini
+Pelayan tidak dapat dicapai
+Carian: {text}
+Sambungkan pelayan Jellyfin anda
+Muzik, buku audio dan video anda dari rumah. Gunakan alamat yang anda taip dalam pelayar, contohnya 192.168.1.20:8096.
+Kod Quick Connect
+Dalam aplikasi Jellyfin lain, buka Tetapan → Quick Connect dan masukkan kod ini. Road Trip akan log masuk sendiri.
+Alamat pelayan
+Nama pengguna
+Kata laluan
+Log masuk
+Guna Quick Connect
+Tutup
+Log keluar
+Cari dalam koleksi
+Pelayar disembunyikan semasa memandu
+Video disembunyikan semasa memandu. Bunyi terus dimainkan.
+Pelayar

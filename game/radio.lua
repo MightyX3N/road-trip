@@ -231,6 +231,7 @@ function M.play(st)
   local art
   local e = icons[st.uuid]
   if e and e.img then art = love.filesystem.getSaveDirectory() .. "/" .. iconPath(st) end
+  android.musicCommand("stop") -- one thing at a time: Jellyfin music stops
   android.radioPlay({ uuid = st.uuid, name = st.name, url = st.url, art = art, sub = subLine(st),
     lConnecting = T("Connecting…"), lPaused = T("Paused"), lError = T("Can't play this station") })
   M.status = { state = "connecting", station = st }

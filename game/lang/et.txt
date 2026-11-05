@@ -324,3 +324,28 @@ Kustuta
 Laadin häält alla; seda kasutatakse, kui see on valmis
 Häälnavigatsioon väljas
 Häälnavigatsioon sees
+Täisekraan
+Kaardi kõrval
+Otsi või sisesta aadress
+Sisselogimine ebaõnnestus; kontrolli nime ja parooli
+Jellyfini sisse logitud
+Sisesta serveri aadress
+Aadressil {address} ei vastanud ükski Jellyfini server
+Quick Connect pole selles serveris sisse lülitatud
+Serveriga ei saa ühendust
+Otsing: {text}
+Ühenda oma Jellyfini server
+Sinu muusika, audioraamatud ja videod kodust. Kasuta aadressi, mille sisestaksid brauserisse, nt 192.168.1.20:8096.
+Quick Connecti kood
+Ava teises Jellyfini rakenduses Seaded → Quick Connect ja sisesta see kood. Road Trip logib ise sisse.
+Serveri aadress
+Kasutajanimi
+Parool
+Logi sisse
+Kasuta Quick Connecti
+Sulge
+Logi välja
+Otsi kogust
+Brauser on sõidu ajal peidetud
+Video on sõidu ajal peidetud. Heli mängib edasi.
+Brauser

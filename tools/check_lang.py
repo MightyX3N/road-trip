@@ -9,7 +9,7 @@ day and month lines) with the same {placeholders}. Run with --write to rewrite k
 import glob, os, re, sys
 
 ROOT = os.path.join(os.path.dirname(__file__), "..", "game")
-EXTRA = ["Home", "Apps", "Map", "Radio", "Media", "Settings", "Favorites", "Country", "Popular", "Search"]
+EXTRA = ["Home", "Apps", "Map", "Radio", "Media", "Settings", "Favorites", "Country", "Popular", "Search", "Browser"]
 
 
 def unescape(s):

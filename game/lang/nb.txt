@@ -324,3 +324,28 @@ Slett
 Laster ned stemmen; den brukes når den er klar
 Talt veiledning av
 Talt veiledning på
+Fullskjerm
+Ved siden av kartet
+Søk eller skriv en adresse
+Kunne ikke logge inn; sjekk navn og passord
+Logget inn på Jellyfin
+Skriv inn serverens adresse
+Ingen Jellyfin-server svarte på {address}
+Quick Connect er ikke slått på for denne serveren
+Fikk ikke kontakt med serveren
+Søk: {text}
+Koble til Jellyfin-serveren din
+Musikk, lydbøker og videoer hjemmefra. Bruk adressen du ville skrevet i en nettleser, f.eks. 192.168.1.20:8096.
+Quick Connect-kode
+Åpne Innstillinger → Quick Connect i en annen Jellyfin-app og skriv inn koden. Road Trip logger inn av seg selv.
+Serveradresse
+Brukernavn
+Passord
+Logg inn
+Bruk Quick Connect
+Lukk
+Logg ut
+Søk i biblioteket
+Nettleseren er skjult mens du kjører
+Video skjult under kjøring. Lyden fortsetter.
+Nettleser

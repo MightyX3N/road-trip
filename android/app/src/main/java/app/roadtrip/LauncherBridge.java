@@ -101,6 +101,44 @@ public final class LauncherBridge {
                     RadioService.setList(a.optJSONArray("list"));
                     data = true;
                     break;
+                case "httpRequest":
+                    data = Net.request(a.optString("method", "GET"), a.getString("url"), a.optJSONObject("headers"),
+                        a.has("body") ? a.optString("body") : null);
+                    break;
+                case "musicPlay":
+                    data = MusicService.play(ctx, a.optJSONArray("tracks"), a.optInt("index", 0));
+                    break;
+                case "musicCommand":
+                    data = MusicService.command(ctx, a.getString("what"), a.optLong("posMs", 0));
+                    break;
+                case "musicStatus":
+                    data = MusicService.status();
+                    break;
+                case "panelShow":
+                    data = Panel.show((android.app.Activity) ctx, a.getString("kind"), a.getInt("x"), a.getInt("y"), a.getInt("w"), a.getInt("h"));
+                    break;
+                case "panelHide":
+                    data = Panel.hide();
+                    break;
+                case "panelLabels":
+                    Panel.setLabels(a.optJSONObject("labels"));
+                    data = true;
+                    break;
+                case "webCommand":
+                    data = Panel.webCommand(a.getString("what"), a.optString("url", ""));
+                    break;
+                case "webStatus":
+                    data = Panel.webStatus();
+                    break;
+                case "videoPlay":
+                    data = Panel.videoPlay((android.app.Activity) ctx, a.getString("url"), a.optLong("startMs", 0));
+                    break;
+                case "videoCommand":
+                    data = Panel.videoCommand(a.getString("what"), a.optLong("posMs", 0));
+                    break;
+                case "videoStatus":
+                    data = Panel.videoStatus();
+                    break;
                 case "voiceConfig":
                     data = Voice.configure(ctx, a);
                     break;

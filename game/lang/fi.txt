@@ -324,3 +324,28 @@ Poista
 Ääntä ladataan; se otetaan käyttöön, kun se on valmis
 Puheopastus pois
 Puheopastus päällä
+Koko näyttö
+Kartan vieressä
+Hae tai kirjoita osoite
+Kirjautuminen epäonnistui; tarkista nimi ja salasana
+Kirjauduttu Jellyfiniin
+Kirjoita palvelimesi osoite
+Mikään Jellyfin-palvelin ei vastannut osoitteessa {address}
+Quick Connect ei ole käytössä tällä palvelimella
+Palvelimeen ei saatu yhteyttä
+Haku: {text}
+Yhdistä Jellyfin-palvelimesi
+Musiikkisi, äänikirjasi ja videosi kotoa. Käytä osoitetta, jonka kirjoittaisit selaimeen, esim. 192.168.1.20:8096.
+Quick Connect -koodi
+Avaa toisessa Jellyfin-sovelluksessa Asetukset → Quick Connect ja syötä tämä koodi. Road Trip kirjautuu itse.
+Palvelimen osoite
+Käyttäjänimi
+Salasana
+Kirjaudu
+Käytä Quick Connectia
+Sulje
+Kirjaudu ulos
+Hae kirjastosta
+Selain on piilossa ajon aikana
+Video piilotettu ajon ajaksi. Ääni jatkuu.
+Selain

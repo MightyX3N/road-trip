@@ -324,3 +324,28 @@ Eliminar
 Descargando la voz; se usará cuando esté lista
 Indicaciones por voz desactivadas
 Indicaciones por voz activadas
+Pantalla completa
+Junto al mapa
+Busca o escribe una dirección
+No se pudo iniciar sesión; revisa el nombre y la contraseña
+Sesión iniciada en Jellyfin
+Escribe la dirección de tu servidor
+Ningún servidor Jellyfin respondió en {address}
+Quick Connect no está activado en este servidor
+No se pudo conectar con tu servidor
+Búsqueda: {text}
+Conecta tu servidor Jellyfin
+Tu música, audiolibros y vídeos desde casa. Usa la dirección que escribirías en un navegador, como 192.168.1.20:8096.
+Código de Quick Connect
+En otra app de Jellyfin, abre Ajustes → Quick Connect e introduce este código. Road Trip inicia sesión solo.
+Dirección del servidor
+Nombre de usuario
+Contraseña
+Iniciar sesión
+Usar Quick Connect
+Cerrar
+Cerrar sesión
+Buscar en tu biblioteca
+El navegador se oculta mientras conduces
+Vídeo oculto al conducir. El sonido sigue.
+Navegador

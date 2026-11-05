@@ -324,3 +324,28 @@ Ištrinti
 Balsas atsisiunčiamas; jis bus naudojamas, kai bus paruoštas
 Balso nurodymai išjungti
 Balso nurodymai įjungti
+Visas ekranas
+Šalia žemėlapio
+Ieškokite arba įveskite adresą
+Nepavyko prisijungti; patikrinkite vardą ir slaptažodį
+Prisijungta prie Jellyfin
+Įveskite serverio adresą
+Adresu {address} neatsakė joks Jellyfin serveris
+Šiame serveryje Quick Connect neįjungtas
+Serveris nepasiekiamas
+Paieška: {text}
+Prijunkite savo Jellyfin serverį
+Jūsų muzika, garsinės knygos ir vaizdo įrašai iš namų. Naudokite adresą, kurį įvestumėte naršyklėje, pvz., 192.168.1.20:8096.
+Quick Connect kodas
+Kitoje Jellyfin programoje atidarykite Nustatymai → Quick Connect ir įveskite šį kodą. Road Trip prisijungs pats.
+Serverio adresas
+Naudotojo vardas
+Slaptažodis
+Prisijungti
+Naudoti Quick Connect
+Uždaryti
+Atsijungti
+Ieškoti bibliotekoje
+Vairuojant naršyklė paslėpta
+Vairuojant vaizdo įrašas paslėptas. Garsas tęsiasi.
+Naršyklė

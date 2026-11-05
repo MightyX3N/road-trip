@@ -322,3 +322,28 @@ Delete
 Downloading the voice; it's used when it's ready
 Spoken directions off
 Spoken directions on
+Full screen
+Next to the map
+Search or type an address
+Couldn't sign in; check the name and password
+Signed in to Jellyfin
+Type your server's address
+No Jellyfin server answered at {address}
+Quick Connect isn't switched on for this server
+Couldn't reach your server
+Search: {text}
+Connect your Jellyfin server
+Your music, audiobooks and videos from home. Use the address you'd type in a browser, like 192.168.1.20:8096.
+Quick Connect code
+In another Jellyfin app, open Settings → Quick Connect and enter this code. Road Trip signs in by itself.
+Server address
+User name
+Password
+Sign in
+Use Quick Connect
+Close
+Sign out
+Search your library
+The browser is hidden while you drive
+Video hidden while driving. The sound keeps playing.
+Browser

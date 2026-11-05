@@ -324,3 +324,28 @@ Izbriši
 Preuzimam glas; koristit će se kad bude spreman
 Glasovne upute isključene
 Glasovne upute uključene
+Cijeli zaslon
+Uz kartu
+Pretražite ili upišite adresu
+Prijava nije uspjela; provjerite ime i lozinku
+Prijavljeni ste u Jellyfin
+Upišite adresu svog poslužitelja
+Nijedan Jellyfin poslužitelj nije odgovorio na {address}
+Quick Connect nije uključen na ovom poslužitelju
+Poslužitelj nije dostupan
+Pretraga: {text}
+Povežite svoj Jellyfin poslužitelj
+Vaša glazba, audioknjige i videozapisi od kuće. Upotrijebite adresu koju biste upisali u preglednik, npr. 192.168.1.20:8096.
+Quick Connect kod
+U drugoj Jellyfin aplikaciji otvorite Postavke → Quick Connect i unesite ovaj kod. Road Trip se prijavljuje sam.
+Adresa poslužitelja
+Korisničko ime
+Lozinka
+Prijava
+Koristi Quick Connect
+Zatvori
+Odjava
+Pretraži knjižnicu
+Preglednik je skriven dok vozite
+Video je skriven tijekom vožnje. Zvuk se nastavlja.
+Preglednik

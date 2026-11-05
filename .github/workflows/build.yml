@@ -60,6 +60,10 @@ jobs:
           // Road Trip: unpacking downloaded voices (.tar.bz2)
           dependencies {
               implementation 'org.apache.commons:commons-compress:1.21'
+              // Jellyfin: streaming music in the background, and video in Road Trip's screen
+              implementation 'androidx.media3:media3-exoplayer:1.4.1'
+              implementation 'androidx.media3:media3-exoplayer-hls:1.4.1'
+              implementation 'androidx.media3:media3-ui:1.4.1'
           }
           GRADLE
 

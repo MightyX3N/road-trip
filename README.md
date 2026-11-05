@@ -28,7 +28,13 @@ on the Radio screen). While the car moves, video apps are covered by the next tu
 sound keeps going; the video comes back once you've stopped for a few seconds). It needs
 Keep in front to see which app is open, and GPS speed; Settings chooses what happens
 without speed (hide video by default). While Road Trip guides you and another app is
-open, a next-turn banner sits at the top of the screen. **Settings** has everything else: Keep in front, permissions, favorites, accent colour,
+open, a next-turn banner sits at the top of the screen. **Media** shows what's playing and
+has a **Jellyfin** tab: sign in to your own Jellyfin server (with a password or Quick Connect),
+browse music, audiobooks, films and series, and play music in the background with the
+steering-wheel buttons. Video plays inside Road Trip, next to the map while a route is on
+(or full screen); while the car moves the picture is covered and the sound keeps going.
+**Browser** is a web browser (Android's own Chromium WebView) with the same rule: covered while
+you drive, and next to the map if you like. **Settings** has everything else: Keep in front, permissions, favorites, accent colour,
 language and updates. Road Trip comes in 33 languages and follows the device's language
 unless you pick one; the translations are made by AI, so some words may be off. The voice button opens the device's
 assistant.
@@ -56,17 +62,6 @@ ones, since they're all signed with the same key (`android/debug.keystore`).
 
 If the run fails with a red cross, open it, click the failed step, and send me the
 last 30 or so lines.
-
-## Run it in Genymotion
-
-1. Use a virtual device with **Android 11 or newer**. The APK contains x86_64 code for
-   emulators and ARM code for the Ottocast; older Genymotion images are 32-bit x86 and
-   won't install it.
-2. Drag `road-trip.apk` onto the Genymotion window. It installs and appears in the app
-   drawer as Road Trip.
-3. Make it the home app: press the Home button and choose Road Trip → Always, or go to
-   Settings → Apps → Default apps → Home app → Road Trip.
-4. Set the virtual device to landscape (the rotate button in Genymotion's side bar).
 
 ## Keep Road Trip in front (the guard)
 

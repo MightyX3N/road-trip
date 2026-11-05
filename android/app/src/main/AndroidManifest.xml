@@ -91,6 +91,12 @@
             </intent-filter>
         </service>
 
+        <!-- Jellyfin music player -->
+        <service
+            android:name="app.roadtrip.MusicService"
+            android:exported="false"
+            android:foregroundServiceType="mediaPlayback" />
+
         <!-- Radio player -->
         <service
             android:name="app.roadtrip.RadioService"

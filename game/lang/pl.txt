@@ -324,3 +324,28 @@ Usuń
 Pobieram głos; zostanie użyty, gdy będzie gotowy
 Wskazówki głosowe wyłączone
 Wskazówki głosowe włączone
+Pełny ekran
+Obok mapy
+Szukaj lub wpisz adres
+Nie udało się zalogować; sprawdź nazwę i hasło
+Zalogowano do Jellyfin
+Wpisz adres swojego serwera
+Żaden serwer Jellyfin nie odpowiedział pod {address}
+Quick Connect nie jest włączony na tym serwerze
+Nie można połączyć się z serwerem
+Wyszukiwanie: {text}
+Połącz swój serwer Jellyfin
+Twoja muzyka, audiobooki i filmy z domu. Użyj adresu, który wpisałbyś w przeglądarce, np. 192.168.1.20:8096.
+Kod Quick Connect
+W innej aplikacji Jellyfin otwórz Ustawienia → Quick Connect i wpisz ten kod. Road Trip zaloguje się sam.
+Adres serwera
+Nazwa użytkownika
+Hasło
+Zaloguj
+Użyj Quick Connect
+Zamknij
+Wyloguj
+Szukaj w bibliotece
+Przeglądarka jest ukryta podczas jazdy
+Wideo ukryte podczas jazdy. Dźwięk gra dalej.
+Przeglądarka
