@@ -292,3 +292,35 @@ Vermijd
 Snelwegen
 Tol
 Veerboten
+Apps zoeken
+Geen apps gevonden
+Gesproken aanwijzingen
+Zenders filteren
+Geen zenders gevonden
+Uit
+Natuurlijke stem
+Android-stem
+{n} kilometer
+1 kilometer
+{n} meter
+Stem klaar
+{instruction}, daarna {next}
+Over {dist}, {instruction}
+Geen gesproken aanwijzingen
+De stem van dit apparaat
+Android-stem {n}
+Heeft internet nodig
+Werkt offline
+Natuurlijke stem · gedownload
+Downloaden… {n}%
+Uitpakken…
+Downloaden mislukt: {error}
+Natuurlijke stem · {n} MB downloaden
+Natuurlijke stemmen draaien na het downloaden op dit apparaat. Ze komen van het Piper-project; elke stem heeft een eigen licentie.
+Voor deze taal is er nog geen natuurlijke stem; de Android-stem spreekt in plaats daarvan.
+Downloaden
+Testen
+Verwijderen
+De stem wordt gedownload en daarna gebruikt
+Gesproken aanwijzingen uit
+Gesproken aanwijzingen aan

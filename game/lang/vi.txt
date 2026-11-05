@@ -292,3 +292,35 @@ Tránh
 Đường cao tốc
 Trạm thu phí
 Phà
+Tìm ứng dụng
+Không có ứng dụng phù hợp
+Chỉ đường bằng giọng nói
+Lọc đài
+Không có đài phù hợp
+Tắt
+Giọng tự nhiên
+Giọng Android
+{n} ki-lô-mét
+1 ki-lô-mét
+{n} mét
+Giọng đã sẵn sàng
+{instruction}, sau đó {next}
+Sau {dist}, {instruction}
+Không chỉ đường bằng giọng nói
+Giọng có sẵn trên thiết bị
+Giọng Android {n}
+Cần internet
+Hoạt động ngoại tuyến
+Giọng tự nhiên · đã tải
+Đang tải… {n}%
+Đang giải nén…
+Tải xuống thất bại: {error}
+Giọng tự nhiên · tải {n} MB
+Giọng tự nhiên chạy trên thiết bị sau khi tải. Chúng đến từ dự án Piper; mỗi giọng có giấy phép riêng.
+Chưa có giọng tự nhiên cho ngôn ngữ này; giọng Android sẽ nói thay.
+Tải xuống
+Thử
+Xóa
+Đang tải giọng; sẽ dùng khi sẵn sàng
+Đã tắt chỉ đường bằng giọng nói
+Đã bật chỉ đường bằng giọng nói

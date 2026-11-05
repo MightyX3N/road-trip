@@ -304,6 +304,8 @@ local stubApps = { "Maps", "Music", "Phone", "Messages", "Podcasts", "Calendar",
 
 local stubFetches = {}
 local stubRadio
+local stubVoice
+stubSaid = nil -- what the desktop stub "said", for tests
 
 local function stubCall(method, args)
   if method == "getApps" then
@@ -381,6 +383,20 @@ local function stubCall(method, args)
     return "DK"
   elseif method == "overlayStatus" then
     return { canDraw = false, guard = false, moving = false, why = "desktop", front = "", covering = false }
+  elseif method == "voiceStatus" then
+    stubVoice = stubVoice or { engine = "system", installed = {}, downloads = {},
+      systemVoices = { { name = "da-dk-x-kfm-local", country = "Danmark", network = false } } }
+    return stubVoice
+  elseif method == "voiceDownload" then
+    stubVoice = stubVoice or { installed = {}, downloads = {}, systemVoices = {} }
+    table.insert(stubVoice.installed, args.id)
+    return true
+  elseif method == "voiceSpeak" then
+    stubSaid = stubSaid or {}
+    stubSaid[#stubSaid + 1] = args.text
+    return true
+  elseif method == "voiceConfig" or method == "voicePrepare" or method == "voiceDelete" then
+    return true
   elseif method == "resumed" then
     return true
   elseif method == "overlayConfig" or method == "overlayNav" then
@@ -440,6 +456,12 @@ function M.overlayNav(g) return M.call("overlayNav", { nav = g }) end
 function M.overlayStatus() return M.call("overlayStatus") end
 function M.overlayPermission() return M.call("overlayPermission") end
 function M.resumed() return M.call("resumed") end
+function M.voiceConfig(c) return M.call("voiceConfig", c) end
+function M.voiceSpeak(text) return M.call("voiceSpeak", { text = text }) end
+function M.voicePrepare(texts) return M.call("voicePrepare", { texts = texts }) end
+function M.voiceStatus() return M.call("voiceStatus") end
+function M.voiceDownload(id, url) return M.call("voiceDownload", { id = id, url = url }) end
+function M.voiceDelete(id) return M.call("voiceDelete", { id = id }) end
 
 function M.calendar() return M.call("calendar") end
 function M.calendarAllow() return M.call("calendarAllow") end

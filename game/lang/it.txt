@@ -292,3 +292,35 @@ Evita
 Autostrade
 Pedaggi
 Traghetti
+Cerca app
+Nessuna app corrisponde
+Indicazioni vocali
+Filtra stazioni
+Nessuna stazione corrisponde
+Spento
+Voce naturale
+Voce di Android
+{n} chilometri
+1 chilometro
+{n} metri
+Voce pronta
+{instruction}, poi {next}
+Tra {dist}, {instruction}
+Nessuna indicazione vocale
+La voce integrata in questo dispositivo
+Voce di Android {n}
+Serve internet
+Funziona offline
+Voce naturale · scaricata
+Download… {n}%
+Estrazione…
+Download non riuscito: {error}
+Voce naturale · {n} MB da scaricare
+Le voci naturali funzionano sul dispositivo una volta scaricate. Vengono dal progetto Piper; ognuna ha la sua licenza.
+Non c'è ancora una voce naturale per questa lingua; parla la voce di Android.
+Scarica
+Prova
+Elimina
+Scarico la voce; verrà usata quando è pronta
+Indicazioni vocali spente
+Indicazioni vocali accese

@@ -292,3 +292,35 @@ Vengti
 Greitkeliai
 Mokami keliai
 Keltai
+Ieškoti programų
+Nėra atitinkančių programų
+Balso nurodymai
+Filtruoti stotis
+Nėra atitinkančių stočių
+Išjungta
+Natūralus balsas
+Android balsas
+{n} kilometrų
+1 kilometro
+{n} metrų
+Balsas paruoštas
+{instruction}, tada {next}
+Po {dist}: {instruction}
+Be balso nurodymų
+Įrenginyje įdiegtas balsas
+Android balsas {n}
+Reikia interneto
+Veikia be ryšio
+Natūralus balsas · atsisiųstas
+Atsisiunčiama… {n}%
+Išpakuojama…
+Atsisiųsti nepavyko: {error}
+Natūralus balsas · {n} MB atsisiųsti
+Natūralūs balsai atsisiuntus veikia įrenginyje. Jie iš Piper projekto; kiekvienas turi savo licenciją.
+Šiai kalbai dar nėra natūralaus balso; vietoj jo kalba Android balsas.
+Atsisiųsti
+Išbandyti
+Ištrinti
+Balsas atsisiunčiamas; jis bus naudojamas, kai bus paruoštas
+Balso nurodymai išjungti
+Balso nurodymai įjungti

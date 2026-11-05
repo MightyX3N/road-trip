@@ -292,3 +292,35 @@ Kaçın
 Otoyollar
 Ücretli yollar
 Feribotlar
+Uygulama ara
+Eşleşen uygulama yok
+Sesli yönlendirme
+İstasyonları filtrele
+Eşleşen istasyon yok
+Kapalı
+Doğal ses
+Android sesi
+{n} kilometre
+1 kilometre
+{n} metre
+Ses hazır
+{instruction}, sonra {next}
+{dist} sonra {instruction}
+Sesli yönlendirme yok
+Bu cihazdaki yerleşik ses
+Android sesi {n}
+İnternet gerekir
+Çevrimdışı çalışır
+Doğal ses · indirildi
+İndiriliyor… %{n}
+Açılıyor…
+İndirme başarısız: {error}
+Doğal ses · {n} MB indirme
+Doğal sesler indirildikten sonra cihazda çalışır. Piper projesinden gelirler; her birinin kendi lisansı vardır.
+Bu dil için henüz doğal ses yok; onun yerine Android sesi konuşur.
+İndir
+Dene
+Sil
+Ses indiriliyor; hazır olunca kullanılacak
+Sesli yönlendirme kapalı
+Sesli yönlendirme açık

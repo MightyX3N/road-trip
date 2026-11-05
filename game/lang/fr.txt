@@ -292,3 +292,35 @@ Impossible de les éviter ; itinéraire habituel affiché
 Autoroutes
 Péages
 Ferries
+Rechercher des apps
+Aucune app ne correspond
+Guidage vocal
+Filtrer les stations
+Aucune station ne correspond
+Désactivé
+Voix naturelle
+Voix Android
+{n} kilomètres
+1 kilomètre
+{n} mètres
+Voix prête
+{instruction}, puis {next}
+Dans {dist}, {instruction}
+Pas de guidage vocal
+La voix intégrée à cet appareil
+Voix Android {n}
+Nécessite Internet
+Fonctionne hors ligne
+Voix naturelle · téléchargée
+Téléchargement… {n} %
+Décompression…
+Échec du téléchargement : {error}
+Voix naturelle · {n} Mo à télécharger
+Les voix naturelles fonctionnent sur l'appareil une fois téléchargées. Elles viennent du projet Piper ; chacune a sa propre licence.
+Il n'y a pas encore de voix naturelle pour cette langue ; la voix Android parle à la place.
+Télécharger
+Tester
+Supprimer
+Téléchargement de la voix ; elle sera utilisée une fois prête
+Guidage vocal désactivé
+Guidage vocal activé

@@ -292,3 +292,35 @@ Evitar
 Autopistas
 Peajes
 Ferris
+Buscar apps
+Ninguna app coincide
+Indicaciones por voz
+Filtrar emisoras
+Ninguna emisora coincide
+Desactivado
+Voz natural
+Voz de Android
+{n} kilómetros
+1 kilómetro
+{n} metros
+Voz lista
+{instruction}, después {next}
+En {dist}, {instruction}
+Sin indicaciones por voz
+La voz integrada en este dispositivo
+Voz de Android {n}
+Necesita internet
+Funciona sin conexión
+Voz natural · descargada
+Descargando… {n} %
+Descomprimiendo…
+Error en la descarga: {error}
+Voz natural · {n} MB de descarga
+Las voces naturales funcionan en el dispositivo una vez descargadas. Vienen del proyecto Piper; cada una tiene su propia licencia.
+Aún no hay voz natural para este idioma; habla la voz de Android.
+Descargar
+Probar
+Eliminar
+Descargando la voz; se usará cuando esté lista
+Indicaciones por voz desactivadas
+Indicaciones por voz activadas

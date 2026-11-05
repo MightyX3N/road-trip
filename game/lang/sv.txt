@@ -292,3 +292,35 @@ Undvik
 Motorvägar
 Avgiftsvägar
 Färjor
+Sök appar
+Inga appar matchar
+Talad vägledning
+Filtrera stationer
+Inga stationer matchar
+Av
+Naturlig röst
+Android-röst
+{n} kilometer
+1 kilometer
+{n} meter
+Rösten är klar
+{instruction}, sedan {next}
+Om {dist}, {instruction}
+Ingen talad vägledning
+Rösten som finns i enheten
+Android-röst {n}
+Kräver internet
+Fungerar offline
+Naturlig röst · hämtad
+Hämtar… {n}%
+Packar upp…
+Hämtningen misslyckades: {error}
+Naturlig röst · {n} MB att hämta
+Naturliga röster körs på enheten när de är hämtade. De kommer från Piper-projektet; varje röst har sin egen licens.
+Det finns ingen naturlig röst för det här språket än; Androids röst talar i stället.
+Hämta
+Testa
+Ta bort
+Hämtar rösten; den används när den är klar
+Talad vägledning av
+Talad vägledning på

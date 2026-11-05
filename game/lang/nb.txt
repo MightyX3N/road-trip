@@ -292,3 +292,35 @@ Unngå
 Motorveier
 Bomveier
 Ferjer
+Søk i apper
+Ingen apper passer
+Talt veiledning
+Filtrer stasjoner
+Ingen stasjoner passer
+Av
+Naturlig stemme
+Android-stemme
+{n} kilometer
+1 kilometer
+{n} meter
+Stemmen er klar
+{instruction}, deretter {next}
+Om {dist}, {instruction}
+Ingen talt veiledning
+Stemmen som er innebygd i enheten
+Android-stemme {n}
+Krever internett
+Virker uten nett
+Naturlig stemme · lastet ned
+Laster ned… {n}%
+Pakker ut…
+Nedlastingen mislyktes: {error}
+Naturlig stemme · {n} MB å laste ned
+Naturlige stemmer kjører på enheten når de er lastet ned. De kommer fra Piper-prosjektet; hver har sin egen lisens.
+Det finnes ingen naturlig stemme for dette språket ennå; Androids stemme snakker i stedet.
+Last ned
+Test
+Slett
+Laster ned stemmen; den brukes når den er klar
+Talt veiledning av
+Talt veiledning på

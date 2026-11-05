@@ -292,3 +292,35 @@ Kerülendő
 Autópályák
 Útdíj
 Kompok
+Alkalmazások keresése
+Nincs egyező alkalmazás
+Hangos útmutatás
+Állomások szűrése
+Nincs egyező állomás
+Ki
+Természetes hang
+Android-hang
+{n} kilométer
+1 kilométer
+{n} méter
+A hang kész
+{instruction}, aztán {next}
+{dist} múlva: {instruction}
+Nincs hangos útmutatás
+Az eszköz beépített hangja
+Android-hang {n}
+Internet kell
+Offline is működik
+Természetes hang · letöltve
+Letöltés… {n}%
+Kicsomagolás…
+A letöltés nem sikerült: {error}
+Természetes hang · {n} MB letöltés
+A természetes hangok letöltés után az eszközön futnak. A Piper projektből származnak; mindegyiknek saját licence van.
+Ehhez a nyelvhez még nincs természetes hang; helyette az Android hangja beszél.
+Letöltés
+Kipróbálás
+Törlés
+A hang letöltése folyamatban; ha kész, ezt használjuk
+Hangos útmutatás ki
+Hangos útmutatás be

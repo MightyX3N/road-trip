@@ -5,6 +5,7 @@ local config = require("config")
 local ui = require("ui")
 local map = require("map")
 local radio = require("radio")
+local voice = require("voice")
 local lang = require("lang")
 local T = lang.T
 
@@ -25,6 +26,8 @@ local state = {
   icons = {},        -- icon file -> { img, modtime }
   pagers = { apps = { page = 1, x = 0 }, favs = { page = 1, x = 0 } },
   pagerArea = {},    -- pager id -> area it was last drawn in
+  gridSearch = { apps = { text = "" }, favs = { text = "" } }, -- what each app grid is filtered by
+  typing = nil,      -- which search field the keyboard is typing into
   pick = {},         -- keys being picked in the favorites picker
   menu = nil,        -- open menu: { title, app?, rows = { { label, icon, id, off } } }
   toast = nil,       -- { text, untilT }
@@ -393,6 +396,7 @@ local function iconFor(app)
 end
 
 local function openPicker(mode)
+  state.gridSearch.favs.text = ""
   state.favsMode = mode
   state.pick = {}
   for _, app in ipairs(favoriteApps()) do state.pick[#state.pick + 1] = keyOf(app) end
@@ -447,7 +451,7 @@ local function drawRail()
   ui.rect(ui.c.line, RAIL - 1, 0, 1, H)
   for i, item in ipairs(RAIL_ITEMS) do
     local x, y = 12, 20 + (i - 1) * 98
-    local on = state.screen == item.screen or (item.screen == "settings" and (state.screen == "diag" or state.screen == "lang"))
+    local on = state.screen == item.screen or (item.screen == "settings" and (state.screen == "diag" or state.screen == "lang" or state.screen == "voice"))
     local color = on and ui.c.accent or ui.c.muted
     if on then ui.rect(ui.c.accentBg, x, y, 88, 88, 20) end
     ui.icon(item.icon, x + 29, y + 16, 30, color)
@@ -477,11 +481,50 @@ local function gridLayout(area, maxR)
   }
 end
 
-local function pageCount(g) return math.max(1, math.ceil(#state.apps / g.per)) end
+-- the apps a grid shows: all of them, or the ones matching its search
+local function gridApps(id)
+  local q = state.gridSearch[id] and state.gridSearch[id].text or ""
+  q = q:lower():gsub("^%s+", ""):gsub("%s+$", "")
+  if q == "" then return state.apps end
+  local cache = state.gridSearch[id]
+  if cache.q == q and cache.n == #state.apps then return cache.list end
+  local out = {}
+  for _, a in ipairs(state.apps) do
+    if (a.label or ""):lower():find(q, 1, true) then out[#out + 1] = a end
+  end
+  cache.q, cache.n, cache.list = q, #state.apps, out
+  return out
+end
+
+local function pageCount(g) return math.max(1, math.ceil(#gridApps(g.id) / g.per)) end
+
+-- a search field for an app grid: tap to type; the X clears it
+local function gridSearchField(id, x, y, w)
+  local gs = state.gridSearch[id]
+  local typing = state.typing == id
+  ui.rect(ui.c.chip, x, y, w, 56, 20)
+  if typing then
+    lg.setColor(ui.c.accent)
+    lg.setLineWidth(2)
+    lg.rectangle("line", x, y, w, 56, 20, 20, 16)
+  end
+  ui.icon("search", x + 16, y + 16, 24, ui.c.muted, 2.2)
+  local text = gs and gs.text or ""
+  local blink = typing and math.floor(love.timer.getTime() * 2) % 2 == 0
+  ui.text(ui.fit(text ~= "" and text or T("Search apps"), "semibold", 18, w - 110) .. (blink and "|" or ""), "semibold", 18,
+    text ~= "" and ui.c.text or ui.c.dim, x + 52, y + (56 - ui.fontHeight("semibold", 18)) / 2)
+  ui.hit({ kind = "gridSearch", id = id }, x, y, w, 56)
+  if text ~= "" then
+    ui.icon("close", x + w - 42, y + 16, 24, ui.c.muted, 2.2)
+    ui.hit({ kind = "gridSearchClear", id = id }, x + w - 56, y, 56, 56)
+  end
+end
 
 -- tile(app, cx, cy, r, slotIndex) draws one app; returns nothing
 local function drawPagedGrid(pagerId, area, maxR, tile)
   local g = gridLayout(area, maxR)
+  g.id = pagerId
+  local list = gridApps(pagerId)
   local pg = state.pagers[pagerId]
   state.pagerArea[pagerId] = g
   local pages = pageCount(g)
@@ -491,7 +534,7 @@ local function drawPagedGrid(pagerId, area, maxR, tile)
   for p = first, math.min(pages, first + 1) do
     local offset = (p - 1 - pg.x) * g.cw
     for slot = 1, g.per do
-      local app = state.apps[(p - 1) * g.per + slot]
+      local app = list[(p - 1) * g.per + slot]
       if not app then break end
       local col = (slot - 1) % g.cols
       local row = math.floor((slot - 1) / g.cols)
@@ -883,7 +926,11 @@ end
 
 local function drawApps()
   local top = TOP + 24
-  local area = { x = RAIL, w = W - RAIL, top = top + 20, bottom = H - 44 }
+  gridSearchField("apps", RAIL + 48, top - 4, math.min(520, W - RAIL - 96))
+  local area = { x = RAIL, w = W - RAIL, top = top + 84, bottom = H - 44 }
+  if #gridApps("apps") == 0 and #state.apps > 0 then
+    ui.text(T("No apps match"), "semibold", 18, ui.c.muted, RAIL + 56, top + 100)
+  end
   drawPagedGrid("apps", area, 64, function(app, cx, cy, r)
     local down = pressedTile(app)
     ui.circle(down and ui.c.tileOn or ui.c.tile, cx, cy, r)
@@ -1036,9 +1083,7 @@ local function drawSettings()
   end
   local left = {
     guardRow,
-    { title = T("Keep in front after updates"),
-      sub = g.canRestore and T("Switches itself back on after each update")
-        or T("Turn back on by hand, or allow it once with adb (see the website)") },
+    { title = T("Spoken directions"), sub = voice.currentName(), button = { T("Change"), { kind = "voiceOpen" } } },
     { title = T("Now playing and navigation"),
       sub = state.media.access and T("Allowed: reads what's playing and your next turn") or T("Needs notification access"),
       button = state.media.access and { T("Open"), { kind = "mediaAccess" } } or { T("Allow"), { kind = "mediaAccess" }, "accent" } },
@@ -1238,7 +1283,8 @@ local function drawPicker()
   end
   ui.text(T("Choose 3 to 5. They sit along the bottom of your home screen, one tap away."), "semibold", 16, ui.c.muted, px, 106)
 
-  local area = { x = px - 24, w = W - px * 2 + 48, top = 150, bottom = H - 120, maxCols = 6, cellMin = 180 }
+  gridSearchField("favs", W - px - 380, 92, 380)
+  local area = { x = px - 24, w = W - px * 2 + 48, top = 164, bottom = H - 120, maxCols = 6, cellMin = 180 }
   drawPagedGrid("favs", area, 54, function(app, cx, cy, r)
     local n = pickIndex(app)
     local down = pressedTile(app)
@@ -1517,6 +1563,7 @@ function love.draw()
     elseif state.screen == "settings" then drawSettings()
     elseif state.screen == "diag" then drawDiagnostics()
     elseif state.screen == "lang" then drawLanguages()
+    elseif state.screen == "voice" then voice.draw(RAIL, TOP, W - RAIL, H - TOP)
     elseif state.screen == "map" then
       map.drawMap(RAIL, 0, W - RAIL, H)
       map.drawUI(RAIL, 0, W - RAIL, H)
@@ -1597,6 +1644,16 @@ local function activate(id, vx)
     state.diag = android.diagnostics()
   elseif k == "diagBack" or k == "langBack" then state.screen = "settings"
   elseif k == "langOpen" then state.screen = "lang"
+  elseif k == "voiceOpen" then state.screen = "voice"
+  elseif k == "voice:back" then state.screen = "settings"
+  elseif k == "voiceMute" then voice.toggleMute()
+  elseif k:sub(1, 6) == "voice:" then voice.activate(id)
+  elseif k == "gridSearch" then
+    state.typing = id.id
+    love.keyboard.setTextInput(true)
+  elseif k == "gridSearchClear" then
+    state.gridSearch[id.id].text = ""
+    state.pagers[id.id].page, state.pagers[id.id].x = 1, 0
   elseif k == "ovVideo" then
     config.set("overlayVideo", config.get("overlayVideo") == false)
     sendOverlayConfig()
@@ -1613,6 +1670,7 @@ local function activate(id, vx)
     config.set("language", id.code)
     lang.set(lang.resolve(id.code, state.deviceLang))
     sendOverlayConfig()
+    voice.send()
     if lang.code ~= "en" then toast(T("Translated by AI, so some words may be off")) end
   elseif k == "media" then mediaCommand(id.action)
   elseif k == "seek" then
@@ -1641,6 +1699,7 @@ local function activate(id, vx)
     map.open()
     if k == "openMapSearch" then map.openSearch() end
   elseif k == "rail" then
+    if state.typing then state.typing = nil love.keyboard.setTextInput(false) end
     state.screen = id.screen
     if id.screen == "map" then map.open() end
     if id.screen == "radio" then radio.open() end
@@ -1740,6 +1799,8 @@ local function goHome()
   if radio.wantsText() then radio.back() end
   if state.setup then setupGo(SETUP_STEPS + 1) end
   state.pickReturn = nil
+  if state.typing then state.typing = nil love.keyboard.setTextInput(false) end
+  state.gridSearch.apps.text = ""
   state.screen = "home"
   state.dirty = true
 end
@@ -1813,6 +1874,13 @@ function love.mousereleased(x, y, button)
 end
 
 function love.textinput(t)
+  if state.typing and (state.screen == "apps" or state.screen == "favs") then
+    local gs = state.gridSearch[state.typing]
+    gs.text = gs.text .. t
+    state.pagers[state.typing].page, state.pagers[state.typing].x = 1, 0
+    state.dirty = true
+    return
+  end
   if state.screen == "map" and map.wantsText() then
     map.textinput(t)
     state.dirty = true
@@ -1830,6 +1898,20 @@ function love.textinput(t)
 end
 
 function love.keypressed(key)
+  if state.typing and (state.screen == "apps" or state.screen == "favs") then
+    local gs = state.gridSearch[state.typing]
+    if key == "backspace" then
+      local off = require("utf8").offset(gs.text, -1)
+      if off then gs.text = gs.text:sub(1, off - 1) end
+      state.dirty = true
+      return
+    elseif key == "return" or key == "kpenter" or key == "escape" then
+      state.typing = nil
+      love.keyboard.setTextInput(false)
+      state.dirty = true
+      return
+    end
+  end
   if state.screen == "map" and map.wantsText() then
     map.keypressed(key)
     state.dirty = true
@@ -1859,7 +1941,7 @@ function love.keypressed(key)
     if state.setup and state.setup.step > 1 then setupGo(state.setup.step - 1) end
   elseif state.screen == "favs" and state.setup then
     setupGo(1)
-  elseif state.screen == "diag" or state.screen == "lang" then
+  elseif state.screen == "diag" or state.screen == "lang" or state.screen == "voice" then
     state.screen = "settings"
   elseif state.screen == "map" and not state.menu and map.back() then
     -- closed the map's search or route overview
@@ -1902,6 +1984,8 @@ function love.load()
     app = { toast = toast, dirty = function() state.dirty = true end } }
   map.init(deps)
   radio.init(deps)
+  deps.map = map
+  voice.init(deps)
   -- show a frame first, load apps right after (see love.update)
   state.needRefresh, state.firstLoad, state.drew = true, true, false
   burst()
@@ -1926,6 +2010,7 @@ end
 function love.update(dt)
   map.update(dt, state.screen == "map" or state.screen == "home")
   radio.update(dt, state.screen == "radio" or state.screen == "home")
+  voice.update(dt)
   if state.needRefresh and state.drew then
     state.needRefresh = false
     refreshApps()

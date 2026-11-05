@@ -292,3 +292,35 @@ Hindari
 Jalan tol bebas hambatan
 Tol
 Feri
+Cari aplikasi
+Tidak ada aplikasi yang cocok
+Petunjuk suara
+Saring stasiun
+Tidak ada stasiun yang cocok
+Mati
+Suara alami
+Suara Android
+{n} kilometer
+1 kilometer
+{n} meter
+Suara siap
+{instruction}, lalu {next}
+Dalam {dist}, {instruction}
+Tanpa petunjuk suara
+Suara bawaan perangkat ini
+Suara Android {n}
+Perlu internet
+Berfungsi offline
+Suara alami · sudah diunduh
+Mengunduh… {n}%
+Membuka paket…
+Unduhan gagal: {error}
+Suara alami · unduhan {n} MB
+Suara alami berjalan di perangkat setelah diunduh. Suara ini dari proyek Piper; masing-masing punya lisensinya sendiri.
+Belum ada suara alami untuk bahasa ini; suara Android yang berbicara.
+Unduh
+Uji
+Hapus
+Mengunduh suara; akan dipakai setelah siap
+Petunjuk suara mati
+Petunjuk suara aktif

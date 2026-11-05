@@ -842,6 +842,8 @@ local function updateNav()
 end
 
 -- what's next, for the turn card and Home's Navigation widget
+M.speed = function() return M.fix and M.fix.speed or -1 end
+
 function M.guidance()
   local n = M.nav
   if not n then return nil end
@@ -866,6 +868,10 @@ function M.guidance()
   else
     g.title = fmtDist(next.at - n.along)
     g.text = instruction(next)
+    -- for spoken directions
+    g.step, g.dist, g.route = next, next.at - n.along, r
+    g.afterText = after and after.type ~= "arrive" and instruction(after) or nil
+    g.afterGap = after and (after.at - next.at) or nil
     g.icon = arrowIcon(next)
     if after and after.type ~= "arrive" then 
       local nx = instruction(after)
@@ -1442,6 +1448,10 @@ function M.drawUI(x0, y0, w, h)
     lg.pop()
     ui.hit({ kind = "map:compass" }, right, y0 + 172, 64, 64)
     if not M.view.follow and M.fix then mapButton({ kind = "map:recenter" }, "locate", right, y0 + 248) end
+    if mode == "nav" then
+      local muted = config.get("voiceMuted") == true
+      mapButton({ kind = "voiceMute" }, muted and "mute" or "sound", right, y0 + (M.view.follow and 248 or 324))
+    end
   end
 
   if mode == "nav" then

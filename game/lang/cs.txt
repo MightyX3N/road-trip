@@ -292,3 +292,35 @@ Vyhnout se
 Dálnice
 Mýtné
 Trajekty
+Hledat aplikace
+Žádné aplikace neodpovídají
+Hlasové pokyny
+Filtrovat stanice
+Žádné stanice neodpovídají
+Vypnuto
+Přirozený hlas
+Hlas Androidu
+{n} kilometrů
+1 kilometr
+{n} metrů
+Hlas je připraven
+{instruction}, pak {next}
+Za {dist}: {instruction}
+Bez hlasových pokynů
+Hlas zabudovaný v zařízení
+Hlas Androidu {n}
+Vyžaduje internet
+Funguje offline
+Přirozený hlas · stažen
+Stahuji… {n} %
+Rozbaluji…
+Stahování selhalo: {error}
+Přirozený hlas · {n} MB ke stažení
+Přirozené hlasy po stažení běží v zařízení. Pocházejí z projektu Piper; každý má vlastní licenci.
+Pro tento jazyk zatím není přirozený hlas; místo něj mluví hlas Androidu.
+Stáhnout
+Vyzkoušet
+Smazat
+Stahuji hlas; použije se, až bude připraven
+Hlasové pokyny vypnuty
+Hlasové pokyny zapnuty

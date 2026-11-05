@@ -353,6 +353,17 @@ function icons.work() -- a briefcase
   lg.line(4, 13, 20, 13)
 end
 
+function icons.sound()
+  lg.polygon("fill", 4, 9, 8, 9, 13, 5, 13, 19, 8, 15, 4, 15)
+  lg.arc("line", "open", 13, 12, 4, -0.9, 0.9, 10)
+  lg.arc("line", "open", 13, 12, 7.5, -0.9, 0.9, 14)
+end
+function icons.mute()
+  lg.polygon("fill", 4, 9, 8, 9, 13, 5, 13, 19, 8, 15, 4, 15)
+  lg.line(16, 9, 22, 15)
+  lg.line(22, 9, 16, 15)
+end
+
 function icons.plus()
   lg.line(12, 5, 12, 19)
   lg.line(5, 12, 19, 12)

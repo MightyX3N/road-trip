@@ -292,3 +292,35 @@ Iwasan
 Expressway
 Toll
 Ferry
+Maghanap ng app
+Walang tugmang app
+Mga direksyong binibigkas
+I-filter ang mga istasyon
+Walang tugmang istasyon
+Off
+Natural na boses
+Boses ng Android
+{n} kilometro
+1 kilometro
+{n} metro
+Handa na ang boses
+{instruction}, pagkatapos {next}
+Sa loob ng {dist}, {instruction}
+Walang binibigkas na direksyon
+Ang boses na kasama ng device
+Boses ng Android {n}
+Kailangan ng internet
+Gumagana offline
+Natural na boses · na-download
+Nagda-download… {n}%
+Ina-unpack…
+Hindi na-download: {error}
+Natural na boses · {n} MB na i-download
+Tumatakbo sa device ang mga natural na boses kapag na-download. Galing sila sa Piper project; may kani-kaniyang lisensya ang bawat isa.
+Wala pang natural na boses para sa wikang ito; ang boses ng Android ang magsasalita.
+I-download
+Subukan
+Burahin
+Dina-download ang boses; gagamitin ito kapag handa na
+Naka-off ang mga direksyong binibigkas
+Naka-on ang mga direksyong binibigkas

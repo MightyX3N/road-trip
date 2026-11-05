@@ -292,3 +292,35 @@ Elak
 Lebuh raya
 Tol
 Feri
+Cari apl
+Tiada apl yang sepadan
+Arahan suara
+Tapis stesen
+Tiada stesen yang sepadan
+Mati
+Suara semula jadi
+Suara Android
+{n} kilometer
+1 kilometer
+{n} meter
+Suara sedia
+{instruction}, kemudian {next}
+Dalam {dist}, {instruction}
+Tiada arahan suara
+Suara terbina dalam peranti ini
+Suara Android {n}
+Perlu internet
+Berfungsi luar talian
+Suara semula jadi · dimuat turun
+Memuat turun… {n}%
+Membuka pakej…
+Muat turun gagal: {error}
+Suara semula jadi · muat turun {n} MB
+Suara semula jadi berjalan pada peranti selepas dimuat turun. Ia datang daripada projek Piper; setiap satu ada lesennya sendiri.
+Belum ada suara semula jadi untuk bahasa ini; suara Android bercakap sebagai ganti.
+Muat turun
+Uji
+Padam
+Memuat turun suara; ia digunakan apabila sedia
+Arahan suara dimatikan
+Arahan suara dihidupkan

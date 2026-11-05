@@ -292,3 +292,35 @@ Unikaj
 Autostrady
 Płatne drogi
 Promy
+Szukaj aplikacji
+Brak pasujących aplikacji
+Wskazówki głosowe
+Filtruj stacje
+Brak pasujących stacji
+Wyłączone
+Naturalny głos
+Głos Androida
+{n} kilometrów
+1 kilometr
+{n} metrów
+Głos gotowy
+{instruction}, potem {next}
+Za {dist}: {instruction}
+Bez wskazówek głosowych
+Głos wbudowany w urządzenie
+Głos Androida {n}
+Wymaga internetu
+Działa offline
+Naturalny głos · pobrany
+Pobieranie… {n}%
+Rozpakowywanie…
+Pobieranie nie powiodło się: {error}
+Naturalny głos · {n} MB do pobrania
+Naturalne głosy działają na urządzeniu po pobraniu. Pochodzą z projektu Piper; każdy ma własną licencję.
+Dla tego języka nie ma jeszcze naturalnego głosu; zamiast niego mówi głos Androida.
+Pobierz
+Testuj
+Usuń
+Pobieram głos; zostanie użyty, gdy będzie gotowy
+Wskazówki głosowe wyłączone
+Wskazówki głosowe włączone

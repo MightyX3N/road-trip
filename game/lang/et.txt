@@ -292,3 +292,35 @@ Väldi
 Kiirteed
 Teemaksud
 Praamid
+Otsi rakendusi
+Sobivaid rakendusi pole
+Häälnavigatsioon
+Filtreeri jaamu
+Sobivaid jaamu pole
+Väljas
+Loomulik hääl
+Androidi hääl
+{n} kilomeetri
+1 kilomeetri
+{n} meetri
+Hääl on valmis
+{instruction}, siis {next}
+{dist} pärast: {instruction}
+Häälnavigatsioon puudub
+Seadmesse sisse ehitatud hääl
+Androidi hääl {n}
+Vajab internetti
+Töötab võrguta
+Loomulik hääl · alla laaditud
+Laadin… {n}%
+Pakin lahti…
+Allalaadimine ebaõnnestus: {error}
+Loomulik hääl · {n} MB allalaadimine
+Loomulikud hääled töötavad pärast allalaadimist seadmes. Need pärinevad Piperi projektist; igal on oma litsents.
+Selle keele jaoks pole veel loomulikku häält; selle asemel räägib Androidi hääl.
+Laadi alla
+Proovi
+Kustuta
+Laadin häält alla; seda kasutatakse, kui see on valmis
+Häälnavigatsioon väljas
+Häälnavigatsioon sees

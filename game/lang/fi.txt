@@ -292,3 +292,35 @@ Vältä
 Moottoritiet
 Tietullit
 Lautat
+Hae sovelluksia
+Ei sopivia sovelluksia
+Puheopastus
+Suodata asemia
+Ei sopivia asemia
+Pois
+Luonnollinen ääni
+Androidin ääni
+{n} kilometrin
+1 kilometrin
+{n} metrin
+Ääni on valmis
+{instruction}, sitten {next}
+{dist} päästä: {instruction}
+Ei puheopastusta
+Laitteen oma puheääni
+Androidin ääni {n}
+Vaatii internetin
+Toimii ilman verkkoa
+Luonnollinen ääni · ladattu
+Ladataan… {n}%
+Puretaan…
+Lataus epäonnistui: {error}
+Luonnollinen ääni · {n} Mt ladattavaa
+Luonnolliset äänet toimivat laitteessa, kun ne on ladattu. Ne ovat Piper-projektista; jokaisella on oma lisenssinsä.
+Tälle kielelle ei vielä ole luonnollista ääntä; Androidin ääni puhuu sen sijaan.
+Lataa
+Kokeile
+Poista
+Ääntä ladataan; se otetaan käyttöön, kun se on valmis
+Puheopastus pois
+Puheopastus päällä

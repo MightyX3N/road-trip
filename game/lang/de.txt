@@ -292,3 +292,35 @@ Meiden
 Autobahnen
 Maut
 Fähren
+Apps suchen
+Keine passenden Apps
+Sprachansagen
+Sender filtern
+Keine passenden Sender
+Aus
+Natürliche Stimme
+Android-Stimme
+{n} Kilometern
+1 Kilometer
+{n} Metern
+Stimme bereit
+{instruction}, dann {next}
+In {dist}: {instruction}
+Keine Sprachansagen
+Die Stimme dieses Geräts
+Android-Stimme {n}
+Braucht Internet
+Funktioniert offline
+Natürliche Stimme · geladen
+Lade… {n} %
+Entpacke…
+Download fehlgeschlagen: {error}
+Natürliche Stimme · {n} MB Download
+Natürliche Stimmen laufen nach dem Laden auf dem Gerät. Sie stammen aus dem Piper-Projekt; jede hat ihre eigene Lizenz.
+Für diese Sprache gibt es noch keine natürliche Stimme; stattdessen spricht die Android-Stimme.
+Laden
+Testen
+Löschen
+Die Stimme wird geladen und danach verwendet
+Sprachansagen aus
+Sprachansagen an

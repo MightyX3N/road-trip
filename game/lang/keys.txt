@@ -290,3 +290,35 @@ Avoid
 Motorways
 Tolls
 Ferries
+Search apps
+No apps match
+Spoken directions
+Filter stations
+No stations match
+Off
+Natural voice
+Android voice
+{n} kilometres
+1 kilometre
+{n} metres
+Voice ready
+{instruction}, then {next}
+In {dist}, {instruction}
+No spoken directions
+The voice built into this device
+Android voice {n}
+Needs internet
+Works offline
+Natural voice · downloaded
+Downloading… {n}%
+Unpacking…
+Download failed: {error}
+Natural voice · {n} MB download
+Natural voices run on this device once downloaded. They come from the Piper project; each has its own licence.
+There's no natural voice for this language yet; Android's voice speaks instead.
+Download
+Test
+Delete
+Downloading the voice; it's used when it's ready
+Spoken directions off
+Spoken directions on

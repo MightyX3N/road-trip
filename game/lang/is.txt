@@ -292,3 +292,35 @@ Forðast
 Hraðbrautir
 Veggjöld
 Ferjur
+Leita í forritum
+Engin forrit passa
+Töluð leiðsögn
+Sía stöðvar
+Engar stöðvar passa
+Slökkt
+Náttúruleg rödd
+Android-rödd
+{n} kílómetra
+1 kílómetra
+{n} metra
+Röddin er tilbúin
+{instruction}, svo {next}
+Eftir {dist}, {instruction}
+Engin töluð leiðsögn
+Röddin sem fylgir tækinu
+Android-rödd {n}
+Þarf internet
+Virkar án nets
+Náttúruleg rödd · sótt
+Sæki… {n}%
+Afpakka…
+Niðurhal mistókst: {error}
+Náttúruleg rödd · {n} MB niðurhal
+Náttúrulegar raddir keyra á tækinu þegar þær hafa verið sóttar. Þær koma frá Piper-verkefninu; hver hefur sitt eigið leyfi.
+Engin náttúruleg rödd er enn til fyrir þetta tungumál; rödd Android talar í staðinn.
+Sækja
+Prófa
+Eyða
+Sæki röddina; hún er notuð þegar hún er tilbúin
+Töluð leiðsögn af
+Töluð leiðsögn á

@@ -292,3 +292,35 @@ Undgå
 Motorveje
 Betalingsveje
 Færger
+Søg i apps
+Ingen apps passer
+Talt vejvisning
+Filtrer stationer
+Ingen stationer passer
+Fra
+Naturlig stemme
+Android-stemme
+{n} kilometer
+1 kilometer
+{n} meter
+Stemmen er klar
+{instruction}, derefter {next}
+Om {dist}, {instruction}
+Ingen talt vejvisning
+Stemmen, der er indbygget i enheden
+Android-stemme {n}
+Kræver internet
+Virker offline
+Naturlig stemme · hentet
+Henter… {n}%
+Pakker ud…
+Hentning mislykkedes: {error}
+Naturlig stemme · {n} MB at hente
+Naturlige stemmer kører på enheden, når de er hentet. De kommer fra Piper-projektet; hver har sin egen licens.
+Der er endnu ingen naturlig stemme til dette sprog; Androids stemme taler i stedet.
+Hent
+Test
+Slet
+Henter stemmen; den bruges, når den er klar
+Talt vejvisning slået fra
+Talt vejvisning slået til

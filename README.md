@@ -16,7 +16,10 @@ local radio stations (run it again from Settings). **Map** shows where you are, 
 and place names, turned the way you're driving; searches places (with one-tap Home and Work), offers route choices (avoiding motorways, tolls or ferries if you like) and guides you turn
 by turn, finding a new route if you leave it; the next turn also shows on Home. It needs
 location access (Road Trip asks). Without a position yet, a route waits for the first fix
-or can start from the middle of the map. **Radio** plays internet radio from
+or can start from the middle of the map. Directions are spoken, with Android's voice or a natural voice (Piper, through
+[sherpa-onnx](https://github.com/k2-fsa/sherpa-onnx)) downloaded once in Settings → Spoken
+directions and run on the device; the mute button on the map silences them. **Apps** and the
+radio lists can be searched. **Radio** plays internet radio from
 [Radio Browser](https://www.radio-browser.info): the most listened stations in your country
 (change it with Change country), popular ones worldwide, or search by name. Star stations to
 keep them as favorites; next and previous (on screen, in the notification or on the steering

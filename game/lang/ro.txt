@@ -292,3 +292,35 @@ Evită
 Autostrăzi
 Taxe de drum
 Feriboturi
+Caută aplicații
+Nicio aplicație nu se potrivește
+Indicații vocale
+Filtrează posturile
+Niciun post nu se potrivește
+Oprit
+Voce naturală
+Vocea Android
+{n} kilometri
+1 kilometru
+{n} metri
+Vocea e gata
+{instruction}, apoi {next}
+Peste {dist}, {instruction}
+Fără indicații vocale
+Vocea inclusă în acest dispozitiv
+Vocea Android {n}
+Necesită internet
+Funcționează offline
+Voce naturală · descărcată
+Se descarcă… {n}%
+Se dezarhivează…
+Descărcarea a eșuat: {error}
+Voce naturală · {n} MB de descărcat
+Vocile naturale rulează pe dispozitiv după descărcare. Vin din proiectul Piper; fiecare are licența ei.
+Încă nu există o voce naturală pentru această limbă; vorbește vocea Android.
+Descarcă
+Testează
+Șterge
+Se descarcă vocea; va fi folosită când e gata
+Indicații vocale oprite
+Indicații vocale pornite

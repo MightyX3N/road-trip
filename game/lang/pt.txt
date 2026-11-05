@@ -292,3 +292,35 @@ Evitar
 Rodovias
 Pedágios
 Balsas
+Pesquisar apps
+Nenhum app corresponde
+Instruções por voz
+Filtrar estações
+Nenhuma estação corresponde
+Desligado
+Voz natural
+Voz do Android
+{n} quilômetros
+1 quilômetro
+{n} metros
+Voz pronta
+{instruction}, depois {next}
+Em {dist}, {instruction}
+Sem instruções por voz
+A voz que vem neste aparelho
+Voz do Android {n}
+Precisa de internet
+Funciona offline
+Voz natural · baixada
+Baixando… {n}%
+Descompactando…
+Falha no download: {error}
+Voz natural · {n} MB para baixar
+Vozes naturais rodam no aparelho depois de baixadas. Elas vêm do projeto Piper; cada uma tem sua própria licença.
+Ainda não há voz natural para este idioma; a voz do Android fala no lugar.
+Baixar
+Testar
+Excluir
+Baixando a voz; ela será usada quando estiver pronta
+Instruções por voz desligadas
+Instruções por voz ligadas

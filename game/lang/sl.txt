@@ -292,3 +292,35 @@ Izogni se
 Avtoceste
 Cestnine
 Trajekti
+Išči aplikacije
+Nobena aplikacija se ne ujema
+Glasovna navodila
+Filtriraj postaje
+Nobena postaja se ne ujema
+Izklopljeno
+Naraven glas
+Androidov glas
+{n} kilometrov
+1 kilometer
+{n} metrov
+Glas je pripravljen
+{instruction}, nato {next}
+Čez {dist}: {instruction}
+Brez glasovnih navodil
+Glas, vgrajen v napravo
+Androidov glas {n}
+Potrebuje internet
+Deluje brez povezave
+Naraven glas · prenesen
+Prenašam… {n} %
+Razpakiram…
+Prenos ni uspel: {error}
+Naraven glas · {n} MB za prenos
+Naravni glasovi po prenosu delujejo na napravi. Prihajajo iz projekta Piper; vsak ima svojo licenco.
+Za ta jezik še ni naravnega glasu; namesto njega govori Androidov glas.
+Prenesi
+Preizkusi
+Izbriši
+Prenašam glas; uporabljen bo, ko bo pripravljen
+Glasovna navodila izklopljena
+Glasovna navodila vklopljena

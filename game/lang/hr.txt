@@ -292,3 +292,35 @@ Izbjegni
 Autoceste
 Cestarine
 Trajekti
+Pretraži aplikacije
+Nijedna aplikacija ne odgovara
+Glasovne upute
+Filtriraj postaje
+Nijedna postaja ne odgovara
+Isključeno
+Prirodan glas
+Androidov glas
+{n} kilometara
+1 kilometar
+{n} metara
+Glas je spreman
+{instruction}, zatim {next}
+Za {dist}: {instruction}
+Bez glasovnih uputa
+Glas ugrađen u uređaj
+Androidov glas {n}
+Treba internet
+Radi bez mreže
+Prirodan glas · preuzet
+Preuzimanje… {n} %
+Raspakiravanje…
+Preuzimanje nije uspjelo: {error}
+Prirodan glas · {n} MB za preuzimanje
+Prirodni glasovi rade na uređaju nakon preuzimanja. Dolaze iz projekta Piper; svaki ima svoju licencu.
+Za ovaj jezik još nema prirodnog glasa; umjesto njega govori Androidov glas.
+Preuzmi
+Isprobaj
+Izbriši
+Preuzimam glas; koristit će se kad bude spreman
+Glasovne upute isključene
+Glasovne upute uključene

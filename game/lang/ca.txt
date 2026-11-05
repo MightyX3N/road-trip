@@ -292,3 +292,35 @@ Evita
 Autopistes
 Peatges
 Transbordadors
+Cerca apps
+Cap app coincideix
+Indicacions per veu
+Filtra emissores
+Cap emissora coincideix
+Desactivat
+Veu natural
+Veu d'Android
+{n} quilòmetres
+1 quilòmetre
+{n} metres
+Veu a punt
+{instruction}, després {next}
+D'aquí a {dist}, {instruction}
+Sense indicacions per veu
+La veu integrada en aquest dispositiu
+Veu d'Android {n}
+Necessita internet
+Funciona sense connexió
+Veu natural · baixada
+Baixant… {n} %
+Descomprimint…
+Error en baixar: {error}
+Veu natural · {n} MB per baixar
+Les veus naturals funcionen al dispositiu un cop baixades. Vénen del projecte Piper; cadascuna té la seva llicència.
+Encara no hi ha veu natural per a aquest idioma; parla la veu d'Android.
+Baixa
+Prova
+Suprimeix
+Baixant la veu; s'utilitzarà quan estigui a punt
+Indicacions per veu desactivades
+Indicacions per veu activades

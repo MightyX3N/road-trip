@@ -292,3 +292,35 @@ Izvairīties
 Automaģistrāles
 Maksas ceļi
 Prāmji
+Meklēt lietotnes
+Nav atbilstošu lietotņu
+Balss norādes
+Filtrēt stacijas
+Nav atbilstošu staciju
+Izslēgts
+Dabiska balss
+Android balss
+{n} kilometriem
+1 kilometra
+{n} metriem
+Balss gatava
+{instruction}, tad {next}
+Pēc {dist}: {instruction}
+Bez balss norādēm
+Ierīcē iebūvētā balss
+Android balss {n}
+Vajag internetu
+Darbojas bezsaistē
+Dabiska balss · lejupielādēta
+Lejupielādē… {n}%
+Izpako…
+Lejupielāde neizdevās: {error}
+Dabiska balss · {n} MB lejupielāde
+Dabiskās balsis pēc lejupielādes darbojas ierīcē. Tās nāk no Piper projekta; katrai ir sava licence.
+Šai valodai vēl nav dabiskas balss; tās vietā runā Android balss.
+Lejupielādēt
+Izmēģināt
+Dzēst
+Lejupielādē balsi; to izmantos, kad tā būs gatava
+Balss norādes izslēgtas
+Balss norādes ieslēgtas

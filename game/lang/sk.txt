@@ -292,3 +292,35 @@ Vyhnúť sa
 Diaľnice
 Mýto
 Trajekty
+Hľadať aplikácie
+Žiadne aplikácie nevyhovujú
+Hlasové pokyny
+Filtrovať stanice
+Žiadne stanice nevyhovujú
+Vypnuté
+Prirodzený hlas
+Hlas Androidu
+{n} kilometrov
+1 kilometer
+{n} metrov
+Hlas je pripravený
+{instruction}, potom {next}
+O {dist}: {instruction}
+Bez hlasových pokynov
+Hlas zabudovaný v zariadení
+Hlas Androidu {n}
+Vyžaduje internet
+Funguje offline
+Prirodzený hlas · stiahnutý
+Sťahujem… {n} %
+Rozbaľujem…
+Sťahovanie zlyhalo: {error}
+Prirodzený hlas · {n} MB na stiahnutie
+Prirodzené hlasy po stiahnutí bežia v zariadení. Pochádzajú z projektu Piper; každý má vlastnú licenciu.
+Pre tento jazyk zatiaľ nie je prirodzený hlas; namiesto neho hovorí hlas Androidu.
+Stiahnuť
+Vyskúšať
+Odstrániť
+Sťahujem hlas; použije sa, keď bude pripravený
+Hlasové pokyny vypnuté
+Hlasové pokyny zapnuté

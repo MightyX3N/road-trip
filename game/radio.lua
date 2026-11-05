@@ -15,6 +15,7 @@ M.status = { state = "idle" } -- from RadioService: { state, error?, station? }
 M.tab = "favs"                -- favs | country | popular | search | countries
 M.lists = {}                  -- tab -> { items?, busy, err?, page }
 M.search = { text = "", typing = false, dueAt = nil }
+M.filter = { text = "", typing = false } -- narrows the Favorites, Country and Popular lists
 
 local servers, serverAt = nil, 1
 local pending = {}            -- fetch id -> handler
@@ -353,14 +354,30 @@ end
 -- text input (search)
 ----------------------------------------------------------------------------------------------
 
-function M.wantsText() return M.tab == "search" and M.search.typing end
+function M.wantsText() return (M.tab == "search" and M.search.typing) or M.filter.typing end
 
 function M.textinput(t)
+  if M.filter.typing then
+    M.filter.text = M.filter.text .. t
+    for _, l in pairs(M.lists) do l.page = 1 end
+    return
+  end
   M.search.text = M.search.text .. t
   M.search.dueAt = love.timer.getTime() + 0.8
 end
 
 function M.keypressed(key)
+  if M.filter.typing then
+    local f = M.filter
+    if key == "backspace" then
+      local off = require("utf8").offset(f.text, -1)
+      if off then f.text = f.text:sub(1, off - 1) end
+    elseif key == "return" or key == "kpenter" or key == "escape" then
+      f.typing = false
+      love.keyboard.setTextInput(false)
+    end
+    return
+  end
   local s = M.search
   if key == "backspace" then
     local off = require("utf8").offset(s.text, -1)
@@ -378,6 +395,11 @@ function M.keypressed(key)
 end
 
 function M.back()
+  if M.filter.typing then
+    M.filter.typing = false
+    love.keyboard.setTextInput(false)
+    return true
+  end
   if M.search.typing then
     M.search.typing = false
     love.keyboard.setTextInput(false)
@@ -551,12 +573,34 @@ function M.draw(x0, y0, w, h)
       s.text ~= "" and ui.c.text or ui.c.dim, lx + 56, ly + (60 - ui.fontHeight("semibold", 19)) / 2)
     ui.hit({ kind = "radio:field" }, lx, ly, lw, 60)
     ly, lh = ly + 76, lh - 76
-  elseif M.tab == "country" then
-    local name = config.get("radioCountryName") or countryCode()
-    ui.text(ui.fit(T("Most listened in {country}", { country = name }), "bold", 15, lw - 200), "bold", 15, ui.c.muted, lx + 4, ly + 12)
-    local cw = ui.textWidth(T("Change country"), "bold", 16) + 44
-    ui.pill({ kind = "radio:tab", tab = "countries" }, T("Change country"), lx + lw - cw, ly, 44, "off2")
-    ly, lh = ly + 60, lh - 60
+  elseif M.tab ~= "countries" then
+    -- filter the list by name (the Search tab searches every station online)
+    local cw = 0
+    if M.tab == "country" then
+      cw = ui.textWidth(T("Change country"), "bold", 16) + 44
+      ui.pill({ kind = "radio:tab", tab = "countries" }, T("Change country"), lx + lw - cw, ly + 4, 44, "off2")
+      cw = cw + 12
+    end
+    local fw = lw - cw
+    local f = M.filter
+    ui.rect(ui.c.chip, lx, ly, fw, 52, 18)
+    if f.typing then
+      lg.setColor(ui.c.accent)
+      lg.setLineWidth(2)
+      lg.rectangle("line", lx, ly, fw, 52, 18, 18, 16)
+    end
+    ui.icon("search", lx + 16, ly + 14, 24, ui.c.muted, 2.2)
+    local blink = f.typing and math.floor(love.timer.getTime() * 2) % 2 == 0
+    local hint = M.tab == "country" and T("Most listened in {country}", { country = config.get("radioCountryName") or countryCode() })
+      or T("Filter stations")
+    ui.text(ui.fit(f.text ~= "" and f.text or hint, "semibold", 17, fw - 100) .. (blink and "|" or ""), "semibold", 17,
+      f.text ~= "" and ui.c.text or ui.c.dim, lx + 50, ly + (52 - ui.fontHeight("semibold", 17)) / 2)
+    ui.hit({ kind = "radio:filter" }, lx, ly, fw, 52)
+    if f.text ~= "" then
+      ui.icon("close", lx + fw - 40, ly + 14, 24, ui.c.muted, 2.2)
+      ui.hit({ kind = "radio:filterClear" }, lx + fw - 52, ly, 52, 52)
+    end
+    ly, lh = ly + 66, lh - 66
   end
 
   local items, l
@@ -581,6 +625,18 @@ function M.draw(x0, y0, w, h)
     items = l.items or {}
     if M.tab == "search" and #items == 0 then
       ui.text(T("Type a station's name and press Enter"), "semibold", 17, ui.c.muted, lx + 4, ly + 8)
+      return
+    end
+  end
+  local q = M.filter.text:lower():gsub("^%s+", ""):gsub("%s+$", "")
+  if q ~= "" and M.tab ~= "search" then
+    local out = {}
+    for _, it in ipairs(items) do
+      if (it.name or ""):lower():find(q, 1, true) or (it.tags or ""):lower():find(q, 1, true) then out[#out + 1] = it end
+    end
+    items = out
+    if #items == 0 then
+      ui.text(T("No stations match"), "semibold", 17, ui.c.muted, lx + 4, ly + 8)
       return
     end
   end
@@ -628,6 +684,7 @@ function M.activate(id)
   elseif k == "radio:fav" then toggleFavorite(id.station)
   elseif k == "radio:cmd" then M.command(id.what)
   elseif k == "radio:tab" then
+    if M.filter.typing then M.filter.typing = false love.keyboard.setTextInput(false) end
     M.tab = id.tab
     if id.tab == "search" then
       M.search.typing = true
@@ -639,6 +696,12 @@ function M.activate(id)
       M.search.typing = false
       love.keyboard.setTextInput(false)
     end
+  elseif k == "radio:filter" then
+    M.filter.typing = true
+    love.keyboard.setTextInput(true)
+  elseif k == "radio:filterClear" then
+    M.filter.text = ""
+    for _, l in pairs(M.lists) do l.page = 1 end
   elseif k == "radio:field" then
     M.search.typing = true
     love.keyboard.setTextInput(true)

@@ -101,6 +101,25 @@ public final class LauncherBridge {
                     RadioService.setList(a.optJSONArray("list"));
                     data = true;
                     break;
+                case "voiceConfig":
+                    data = Voice.configure(ctx, a);
+                    break;
+                case "voiceSpeak":
+                    data = Voice.speak(a.optString("text"));
+                    break;
+                case "voicePrepare":
+                    Voice.prepare(a.optJSONArray("texts"));
+                    data = true;
+                    break;
+                case "voiceStatus":
+                    data = Voice.status(ctx);
+                    break;
+                case "voiceDownload":
+                    data = Voice.download(ctx, a.getString("id"), a.getString("url"));
+                    break;
+                case "voiceDelete":
+                    data = Voice.delete(ctx, a.getString("id"));
+                    break;
                 case "overlayConfig":
                     Overlay.configure(ctx, a);
                     data = true;

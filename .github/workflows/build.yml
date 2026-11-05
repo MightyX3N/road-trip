@@ -56,7 +56,25 @@ jobs:
                   }
               }
           }
+
+          // Road Trip: unpacking downloaded voices (.tar.bz2)
+          dependencies {
+              implementation 'org.apache.commons:commons-compress:1.21'
+          }
           GRADLE
+
+      # Natural voices: sherpa-onnx's prebuilt Android libraries (Piper/VITS voices through
+      # ONNX Runtime). 1.13.8 is the last release with espeak-ng built in, which Piper needs.
+      - name: Add the voice engine
+        run: |
+          curl -sSfL --retry 4 -o sherpa.tar.bz2 \
+            "https://github.com/k2-fsa/sherpa-onnx/releases/download/v1.13.8/sherpa-onnx-v1.13.8-android.tar.bz2"
+          tar xjf sherpa.tar.bz2
+          for abi in arm64-v8a armeabi-v7a x86_64; do
+            mkdir -p love-android/app/src/main/jniLibs/$abi
+            cp jniLibs/$abi/libsherpa-onnx-jni.so jniLibs/$abi/libonnxruntime.so love-android/app/src/main/jniLibs/$abi/
+          done
+          ls -la love-android/app/src/main/jniLibs/*
 
       # Each build gets the next version, so a new APK always counts as an update
       # (and the in-app updater can tell which one is newer).
