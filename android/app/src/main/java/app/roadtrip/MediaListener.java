@@ -197,7 +197,10 @@ public class MediaListener extends NotificationListenerService {
     private static MediaController pick(Context ctx) {
         MediaSessionManager msm = (MediaSessionManager) ctx.getSystemService(Context.MEDIA_SESSION_SERVICE);
         if (msm == null) return null;
-        List<MediaController> list = msm.getActiveSessions(new ComponentName(ctx, MediaListener.class));
+        List<MediaController> list = new java.util.ArrayList<>();
+        // Road Trip's own radio is shown by Road Trip itself; only other apps here
+        for (MediaController c : msm.getActiveSessions(new ComponentName(ctx, MediaListener.class)))
+            if (!ctx.getPackageName().equals(c.getPackageName())) list.add(c);
         for (MediaController c : list) {
             PlaybackState s = c.getPlaybackState();
             if (s != null && s.getState() == PlaybackState.STATE_PLAYING) return c;

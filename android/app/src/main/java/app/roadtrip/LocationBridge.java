@@ -59,20 +59,42 @@ final class LocationBridge {
         if (started) return true;
         LocationManager lm = (LocationManager) ctx.getSystemService(Context.LOCATION_SERVICE);
         if (lm == null) return false;
-        for (String p : new String[] { LocationManager.GPS_PROVIDER, LocationManager.NETWORK_PROVIDER }) {
+        // the newest position any provider remembers, so routes can start before a new fix
+        try {
+            for (String p : lm.getAllProviders()) {
+                try {
+                    //noinspection MissingPermission
+                    Location k = lm.getLastKnownLocation(p);
+                    if (k != null && (last == null || k.getTime() > last.getTime())) last = k;
+                } catch (Throwable ignored) {}
+            }
+        } catch (Throwable ignored) {}
+        String[] wanted = android.os.Build.VERSION.SDK_INT >= 31
+            ? new String[] { LocationManager.GPS_PROVIDER, LocationManager.NETWORK_PROVIDER, "fused" }
+            : new String[] { LocationManager.GPS_PROVIDER, LocationManager.NETWORK_PROVIDER };
+        int listening = 0;
+        for (String p : wanted) {
             try {
                 if (!lm.isProviderEnabled(p)) continue;
                 //noinspection MissingPermission
                 lm.requestLocationUpdates(p, 1000, 0, LISTENER, Looper.getMainLooper());
-                //noinspection MissingPermission
-                Location k = lm.getLastKnownLocation(p);
-                if (k != null && (last == null || k.getTime() > last.getTime())) last = k;
+                listening++;
             } catch (Throwable ignored) {
                 // provider missing on this device
             }
         }
-        started = true;
+        started = listening > 0;
         return true;
+    }
+
+    /** Which providers this device has and which are switched on, for Diagnostics. */
+    static JSONObject providers(Context ctx) {
+        JSONObject o = new JSONObject();
+        try {
+            LocationManager lm = (LocationManager) ctx.getSystemService(Context.LOCATION_SERVICE);
+            for (String p : lm.getAllProviders()) o.put(p, lm.isProviderEnabled(p));
+        } catch (Throwable ignored) {}
+        return o;
     }
 
     /** {permission, fix?: {lat, lon, accuracy, speed, bearing, ageMs, provider}} */

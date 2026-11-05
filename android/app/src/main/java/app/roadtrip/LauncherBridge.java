@@ -88,6 +88,25 @@ public final class LauncherBridge {
                 case "location":
                     data = LocationBridge.status(ctx);
                     break;
+                case "radioPlay":
+                    data = RadioService.play(ctx, a.getJSONObject("station"));
+                    break;
+                case "radioCommand":
+                    data = RadioService.command(ctx, a.getString("what"));
+                    break;
+                case "radioStatus":
+                    data = RadioService.status();
+                    break;
+                case "radioList":
+                    RadioService.setList(a.optJSONArray("list"));
+                    data = true;
+                    break;
+                case "uptime":
+                    data = android.os.SystemClock.elapsedRealtime();
+                    break;
+                case "country":
+                    data = java.util.Locale.getDefault().getCountry();
+                    break;
                 case "fetchResult":
                     data = Net.result(a.getInt("id"));
                     break;
@@ -112,6 +131,8 @@ public final class LauncherBridge {
                     JSONArray watched = new JSONArray();
                     for (String s : GuardService.otherHomeActivities(ctx)) watched.put(s);
                     d.put("watched", watched);
+                    d.put("location", LocationBridge.providers(ctx));
+                    d.put("radio", RadioService.status());
                     data = d;
                     break;
                 }

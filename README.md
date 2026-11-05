@@ -2,8 +2,9 @@
 
 An Android car launcher written in Lua on LÖVE.
 
-Right now: **Home** opens first, with your favorite apps along the bottom, the next turn,
-now playing, weather and your next calendar event (radio arrives in a later update). **Apps** has
+Right now: **Home** opens first, with a live map (and the next turn while you're guided),
+now playing or the radio, weather, your next calendar event, and your favorite apps along
+the bottom. **Apps** has
 every app in a paged grid; tap to open, swipe between pages, long-press for a menu to add
 or remove a favorite or open the app's info page. On first launch you pick 3 to 5
 favorite apps; change them any time with the pencil button on Home or by long-pressing a
@@ -12,7 +13,13 @@ in any app, and the Navigation widget shows your next turn from Google Maps, Waz
 other nav apps (both need notification access, which Road Trip asks for). Home also shows the weather for your city (pick it in Settings) and your next calendar
 event. **Map** shows where you are, searches places, offers route choices and guides you turn
 by turn, finding a new route if you leave it; the next turn also shows on Home. It needs
-location access (Road Trip asks) and a GPS in the device. **Settings** has everything else: Keep in front, permissions, favorites, accent colour and updates. The voice button opens the device's
+location access (Road Trip asks). Without a position yet, a route waits for the first fix
+or can start from the middle of the map. **Radio** plays internet radio from
+[Radio Browser](https://www.radio-browser.info): the most listened stations in your country
+(change it with Change country), popular ones worldwide, or search by name. Star stations to
+keep them as favorites; next and previous (on screen, in the notification or on the steering
+wheel) step through them. The last station plays again when the car starts (switch that off
+on the Radio screen). **Settings** has everything else: Keep in front, permissions, favorites, accent colour and updates. The voice button opens the device's
 assistant.
 
 ## Get the APK (no Android tools needed)
@@ -143,6 +150,7 @@ JSON; Java escapes all non-ASCII so JNI's modified UTF-8 never gets in the way.
 
 Map data © [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors. Tiles
 from [OpenFreeMap](https://openfreemap.org), place search by [Photon](https://photon.komoot.io),
-routes by the [FOSSGIS OSRM server](https://routing.openstreetmap.de). None of them need an
-account or key. Road Trip asks the routing server for at most one route at a time, and
+routes by the [FOSSGIS OSRM server](https://routing.openstreetmap.de). Radio stations come from
+[Radio Browser](https://www.radio-browser.info), a free community directory; Road Trip
+reports each play to it, as it asks. None of them need an account or key. Road Trip asks the routing server for at most one route at a time, and
 waits at least 15 seconds between new routes while you drive.

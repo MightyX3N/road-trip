@@ -13,6 +13,11 @@
     <!-- Calendar widget: your next event (Android asks first) -->
     <uses-permission android:name="android.permission.READ_CALENDAR" />
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <!-- Radio: keep playing in the background, with a media notification -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <!-- optional, adb-only: lets Road Trip switch Keep in front back on after an update -->
     <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS"
         tools:ignore="ProtectedPermissions" />
@@ -43,6 +48,7 @@
 
     <application
         android:allowBackup="true"
+        android:usesCleartextTraffic="true"
         android:icon="@mipmap/ic_launcher"
         android:roundIcon="@mipmap/ic_launcher"
         android:label="${NAME}">
@@ -79,6 +85,12 @@
                 <action android:name="android.service.notification.NotificationListenerService" />
             </intent-filter>
         </service>
+
+        <!-- Radio player -->
+        <service
+            android:name="app.roadtrip.RadioService"
+            android:exported="false"
+            android:foregroundServiceType="mediaPlayback" />
 
         <!-- After an update: restore Keep in front if the update switched it off -->
         <receiver

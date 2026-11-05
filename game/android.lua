@@ -303,6 +303,7 @@ local stubApps = { "Maps", "Music", "Phone", "Messages", "Podcasts", "Calendar",
   "Settings", "Camera", "Files", "Waze", "Radio", "Clock", "Contacts", "Browser" }
 
 local stubFetches = {}
+local stubRadio
 
 local function stubCall(method, args)
   if method == "getApps" then
@@ -337,6 +338,15 @@ local function stubCall(method, args)
     if url:find("routed%-car") then
       return { done = true, ok = true, body = '{"code":"Ok","routes":[{"distance":2400,"duration":420,"geometry":"_ibagBsz`pVvJtL","legs":[{"steps":[{"distance":1200,"duration":200,"name":"Vesterbrogade","maneuver":{"type":"depart","modifier":"straight","location":[12.5683,55.6761]}},{"distance":1200,"duration":220,"name":"Bernstorffsgade","maneuver":{"type":"turn","modifier":"right","location":[12.565,55.672]}},{"distance":0,"duration":0,"name":"","maneuver":{"type":"arrive","location":[12.5681,55.6737]}}]}]},{"distance":2700,"duration":480,"geometry":"_ibagBsz`pVvJtL","legs":[{"steps":[]}]}]}' }
     end
+    if url:find("json/servers") then
+      return { done = true, ok = true, body = '[{"name":"de1.api.radio-browser.info"},{"name":"nl1.api.radio-browser.info"}]' }
+    end
+    if url:find("radio%-browser") and url:find("/json/url/") then
+      return { done = true, ok = true, body = '{"ok":true}' }
+    end
+    if url:find("radio%-browser") then
+      return { done = true, ok = true, body = '[{"stationuuid":"u1","name":"DR P3","url_resolved":"https://live-icy.dr.dk/A/A05H.mp3","favicon":"","tags":"pop,hits","countrycode":"DK","country":"Denmark","codec":"MP3","bitrate":128,"clickcount":900},{"stationuuid":"u2","name":"Radio 100","url_resolved":"https://example.com/r100.aac","favicon":"","tags":"","countrycode":"DK","country":"Denmark","codec":"AAC","bitrate":64,"clickcount":500},{"stationuuid":"u3","name":"Nova FM","url_resolved":"https://example.com/nova.mp3","favicon":"","tags":"rock","countrycode":"DK","country":"Denmark","codec":"MP3","bitrate":128,"clickcount":300}]' }
+    end
     if url:find("geocoding") then
       return { done = true, ok = true, body = '{"results":[{"name":"Copenhagen","admin1":"Capital Region","country":"Denmark","latitude":55.68,"longitude":12.57},{"name":"Copenhagen","admin1":"New York","country":"United States","latitude":43.89,"longitude":-75.67}]}' }
     end
@@ -355,6 +365,22 @@ local function stubCall(method, args)
     return { access = true, current = { pkg = "com.example.music", app = "Music", title = "Desert Highway",
       artist = "The Long Drives", album = "Mile Markers", durationMs = 241000, positionMs = 84000,
       playing = true, speed = 1, canPrev = true, canNext = true, canSeek = true } }
+  elseif method == "radioPlay" then
+    stubRadio = { state = "playing", station = args.station }
+    return true
+  elseif method == "radioCommand" then
+    stubRadio = stubRadio or { state = "idle" }
+    if args.what == "stop" then stubRadio = { state = "idle" }
+    elseif args.what == "pause" then stubRadio.state = "paused"
+    elseif args.what == "play" and stubRadio.station then stubRadio.state = "playing"
+    elseif args.what == "toggle" and stubRadio.station then stubRadio.state = stubRadio.state == "playing" and "paused" or "playing" end
+    return true
+  elseif method == "radioStatus" then
+    return stubRadio or { state = "idle" }
+  elseif method == "country" then
+    return "DK"
+  elseif method == "uptime" then
+    return 60000
   elseif method == "updateStatus" then
     return { state = "none", current = 0, currentName = "desktop", latest = 0, latestName = "", notes = "", progress = 0 }
   end
@@ -394,6 +420,13 @@ function M.download(url, path) return M.call("download", { url = url, path = pat
 function M.locationStart() return M.call("locationStart") end
 function M.location() return M.call("location") end
 -- calendar: { permission, events = { { title, begin, end, allDay, location } } } (times in ms)
+function M.radioPlay(station) return M.call("radioPlay", { station = station }) end
+function M.radioCommand(what) return M.call("radioCommand", { what = what }) end
+function M.radioStatus() return M.call("radioStatus") end
+function M.radioList(list) return M.call("radioList", { list = list }) end
+function M.country() return M.call("country") end
+function M.uptime() return M.call("uptime") end
+
 function M.calendar() return M.call("calendar") end
 function M.calendarAllow() return M.call("calendarAllow") end
 function M.calendarOpen(at) return M.call("calendarOpen", { at = at }) end

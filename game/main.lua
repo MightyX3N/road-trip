@@ -4,6 +4,7 @@ local android = require("android")
 local config = require("config")
 local ui = require("ui")
 local map = require("map")
+local radio = require("radio")
 
 local lg = love.graphics
 
@@ -407,6 +408,7 @@ local RAIL_ITEMS = {
   { screen = "home", label = "Home", icon = "home" },
   { screen = "apps", label = "Apps", icon = "widgets" },
   { screen = "map", label = "Map", icon = "map" },
+  { screen = "radio", label = "Radio", icon = "radio" },
   { screen = "media", label = "Media", icon = "media" },
   { screen = "settings", label = "Settings", icon = "gear" },
 }
@@ -588,74 +590,79 @@ local function transportRow(x, y, w, h, m)
   end
 end
 
+-- Home's big card: the live map, with the next turn on top while anything is guiding you
 local function navWidget(x, y, w, h)
-  ui.rect(ui.c.card, x, y, w, h, 26)
+  local guided = map.drawWidget(x, y, w, h, 26)
+  ui.hit({ kind = "openMap" }, x, y, w, h)
   local nav = state.nav
-  local pad = 28
-
-  -- Road Trip navigating by itself
-  local g = map.guidance()
-  if g then
-    ui.hit({ kind = "openMap" }, x, y, w, h)
-    ui.text("Navigation · Road Trip", "bold", 14, ui.c.muted, x + pad, y + 24)
-    local sq = math.min(132, h * 0.34)
-    local sx, sy = x + pad, y + 64
-    ui.rect(ui.c.accent, sx, sy, sq, sq, 28)
-    ui.icon(g.icon, sx + sq * 0.2, sy + sq * 0.2, sq * 0.6, ui.c.onAccent, 2.4)
-    local tx = sx + sq + 28
-    local tw = x + w - pad - tx
-    ui.text(ui.fit(g.title, "bold", 46, tw), "bold", 46, ui.c.text, tx, sy + 4)
-    ui.text(ui.fit(g.text or "", "semibold", 22, tw), "semibold", 22, ui.hex("C9C6BE"), tx, sy + 70)
-    local sub = g.arrival .. " arrival · " .. map.fmtDur(g.remTime) .. " · " .. map.fmtDist(g.remaining)
-    ui.rect(ui.c.bg, x + 16, y + h - 16 - 64, w - 32, 64, 20)
-    ui.text(ui.fit(sub, "bold", 20, w - 72), "bold", 20, ui.c.text, x + 36, y + h - 16 - 64 + (64 - ui.fontHeight("bold", 20)) / 2)
-    return
+  local attrib = "© OpenFreeMap © OpenStreetMap"
+  local function attribution()
+    local aw = ui.textWidth(attrib, "semibold", 11) + 20
+    ui.rect(ui.c.bg, x + w - 16 - aw, y + h - 16 - 24, aw, 24, 12)
+    ui.text(attrib, "semibold", 11, ui.hex("6A6C71"), x + w - 16 - aw, y + h - 16 - 24 + (24 - ui.fontHeight("semibold", 11)) / 2, "center", aw)
   end
+  if guided then return end
 
   if nav.active then
-    ui.hit({ kind = "openNav", pkg = nav.pkg }, x, y, w, h)
-    ui.text(ui.fit("Navigation · " .. (nav.app or ""), "bold", 14, w - pad * 2), "bold", 14, ui.c.muted, x + pad, y + 24)
-    -- the nav app's own turn arrow, on an accent square
-    local sq = math.min(132, h * 0.34)
-    local sx, sy = x + pad, y + 64
-    ui.rect(ui.c.accent, sx, sy, sq, sq, 28)
+    -- your nav app's next turn, over Road Trip's map
+    local cw = math.min(520, w - 32)
+    local cx, cy = x + 16, y + 16
+    ui.rect(ui.c.bg, cx, cy, cw, 140, 26)
+    ui.hit({ kind = "openNav", pkg = nav.pkg }, cx, cy, cw, 140)
+    local sq = 104
+    ui.rect(ui.c.accent, cx + 18, cy + 18, sq, sq, 24)
     local img = navIcon()
     if img then
       local s = (sq * 0.7) / math.max(img:getWidth(), img:getHeight())
       lg.setColor(ui.c.onAccent)
-      lg.draw(img, sx + (sq - img:getWidth() * s) / 2, sy + (sq - img:getHeight() * s) / 2, 0, s, s)
+      lg.draw(img, cx + 18 + (sq - img:getWidth() * s) / 2, cy + 18 + (sq - img:getHeight() * s) / 2, 0, s, s)
     else
-      ui.icon("turn", sx + sq * 0.18, sy + sq * 0.18, sq * 0.64, ui.c.onAccent, 2.4)
+      ui.icon("turn", cx + 18 + sq * 0.18, cy + 18 + sq * 0.18, sq * 0.64, ui.c.onAccent, 2.4)
     end
-    local tx = sx + sq + 28
-    local tw = x + w - pad - tx
+    local tx = cx + 18 + sq + 18
+    local tw = cx + cw - 18 - tx
     local title = (nav.title and nav.title ~= "") and nav.title or ("Navigating with " .. (nav.app or "your nav app"))
-    ui.text(ui.fit(title, "bold", 46, tw), "bold", 46, ui.c.text, tx, sy + 4)
-    ui.text(ui.fit(nav.text or "", "semibold", 22, tw), "semibold", 22, ui.hex("C9C6BE"), tx, sy + 70)
+    ui.text(ui.fit(title, "bold", 40, tw), "bold", 40, ui.c.text, tx, cy + 18)
+    ui.text(ui.fit(nav.text or "", "semibold", 19, tw), "semibold", 19, ui.hex("C9C6BE"), tx, cy + 70)
+    ui.text(ui.fit(nav.app or "", "semibold", 14, tw), "semibold", 14, ui.hex("77756F"), tx, cy + 100)
     if nav.sub and nav.sub ~= "" then
-      ui.rect(ui.c.bg, x + 16, y + h - 16 - 64, w - 32, 64, 20)
-      ui.text(ui.fit(nav.sub, "bold", 20, w - 72), "bold", 20, ui.c.text, x + 36, y + h - 16 - 64 + (64 - ui.fontHeight("bold", 20)) / 2)
+      local by = y + h - 16 - 64
+      local bw = w - 32
+      ui.rect(ui.c.bg, x + 16, by, bw, 64, 20)
+      ui.text(ui.fit(nav.sub, "bold", 20, bw - 40), "bold", 20, ui.c.text, x + 36, by + (64 - ui.fontHeight("bold", 20)) / 2)
+      ui.hit({ kind = "openNav", pkg = nav.pkg }, x + 16, by, bw, 64)
+    else
+      attribution()
     end
     return
   end
 
-  ui.icon("pin", x + pad, y + 28, 40, ui.c.accent, 1.6)
-  if not state.media.access then
-    ui.text("See your next turn here", "bold", 26, ui.c.text, x + pad, y + 92)
-    ui.text(ui.fit("Road Trip reads it from your nav app, using the same access as Now playing", "semibold", 16, w - pad * 2),
-      "semibold", 16, ui.c.muted, x + pad, y + 132)
-    pill({ kind = "mediaAccess" }, "Allow", x + pad, y + h - pad - 56, 56, "accent")
-    return
+  -- not navigating: a search bar, and your nav app one tap away
+  local apps = installedNavApps()
+  local navApp = apps[1]
+  local pillW = navApp and (ui.textWidth("Open " .. navApp.label, "bold", 16) + 44) or 0
+  local bw = math.min(440, w - 32 - (navApp and pillW + 12 or 0))
+  ui.rect(ui.c.bg, x + 16, y + 16, bw, 64, 22)
+  ui.icon("search", x + 36, y + 36, 24, ui.c.muted, 2.2)
+  ui.text("Where to?", "bold", 20, ui.c.text2, x + 72, y + 16 + (64 - ui.fontHeight("bold", 20)) / 2)
+  ui.hit({ kind = "openMapSearch" }, x + 16, y + 16, bw, 64)
+  if navApp then
+    ui.rect(ui.c.bg, x + w - 16 - pillW, y + 16, pillW, 64, 32)
+    ui.text("Open " .. navApp.label, "bold", 16, ui.c.text2, x + w - 16 - pillW, y + 16 + (64 - ui.fontHeight("bold", 16)) / 2, "center", pillW)
+    ui.hit({ kind = "openNav", pkg = navApp.pkg }, x + w - 16 - pillW, y + 16, pillW, 64)
   end
-  ui.text("Where to?", "bold", 26, ui.c.text, x + pad, y + 92)
-  ui.text(ui.fit("Navigate with Road Trip's map, or your nav app's next turn shows here", "semibold", 16, w - pad * 2),
-    "semibold", 16, ui.c.muted, x + pad, y + 132)
-  local bx = x + pad
-  bx = bx + pill({ kind = "openMapSearch" }, "Search a place", bx, y + h - pad - 56, 56, "accent") + 12
-  for i, app in ipairs(installedNavApps()) do
-    if i > 1 then break end
-    bx = bx + pill({ kind = "openNav", pkg = app.pkg }, "Open " .. app.label, bx, y + h - pad - 56, 56, "off2") + 12
+  if not map.permission then
+    local cw = math.min(440, w - 32)
+    ui.rect(ui.c.bg, x + 16, y + 92, cw, 72, 20)
+    ui.text(ui.fit("Allow location to see where you are", "bold", 16, cw - 150), "bold", 16, ui.c.text, x + 36, y + 92 + 26)
+    pill({ kind = "map:allow" }, "Allow", x + 16 + cw - 104, y + 104, 48, "accent")
+  elseif not map.fix then
+    local t = "Waiting for your location…"
+    local tw = ui.textWidth(t, "semibold", 15) + 32
+    ui.rect(ui.c.bg, x + 16, y + 92, tw, 40, 20)
+    ui.text(t, "semibold", 15, ui.c.muted, x + 16, y + 92 + (40 - ui.fontHeight("semibold", 15)) / 2, "center", tw)
   end
+  attribution()
 end
 
 local function weatherWidget(x, y, w, h)
@@ -728,6 +735,11 @@ local function calendarWidget(x, y, w, h)
 end
 
 local function nowPlayingWidget(x, y, w, h)
+  local m0 = state.media.current
+  if radio.active() and not (m0 and m0.playing and radio.status.state ~= "playing") then
+    radio.drawWidget(x, y, w, h)
+    return
+  end
   ui.rect(ui.c.card, x, y, w, h, 26)
   local media = state.media
   local m = media.current
@@ -742,7 +754,13 @@ local function nowPlayingWidget(x, y, w, h)
   end
   if not m then
     ui.text("Nothing playing", "bold", 22, ui.c.text, x + pad, y + 56)
-    ui.text(ui.fit("Start music in any app", "semibold", 15, w - pad * 2), "semibold", 15, ui.c.muted, x + pad, y + 88)
+    ui.text(ui.fit("Start music in any app, or the radio", "semibold", 15, w - pad * 2), "semibold", 15, ui.c.muted, x + pad, y + 88)
+    local last = config.get("radioLast")
+    if last then
+      pill({ kind = "radio:cmd", what = "toggle" }, ui.fit("Play " .. last.name, "bold", 16, w - pad * 2 - 44), x + pad, y + h - 22 - 52, 52, "accent")
+    else
+      pill({ kind = "radio:open" }, "Open radio", x + pad, y + h - 22 - 52, 52, "off2")
+    end
     return
   end
   ui.text(ui.fit(m.title ~= "" and m.title or (m.app or ""), "bold", 24, w - pad * 2), "bold", 24, ui.c.text, x + pad, y + 50)
@@ -1017,7 +1035,20 @@ local function drawDiagnostics()
   local watched = table.concat(d.watched or {}, ", ")
   ui.text(ui.fit("Keep in front watches: " .. (watched ~= "" and watched or "nothing"), "semibold", 14, W - x - 32),
     "semibold", 14, ui.c.text2, x, y + 24)
-  y = y + 64
+  local prov = {}
+  for name, on in pairs(d.location or {}) do prov[#prov + 1] = name .. (on and " on" or " off") end
+  table.sort(prov)
+  local f = map.fix
+  local fixText = f and string.format("%.5f, %.5f ±%dm via %s, %ds old", f.lat, f.lon, math.floor(f.accuracy or -1),
+    tostring(f.provider), math.floor((f.ageMs or 0) / 1000)) or "none yet"
+  ui.text(ui.fit("Location: " .. (map.permission and "allowed" or "not allowed") .. " · providers: "
+    .. (#prov > 0 and table.concat(prov, ", ") or "none") .. " · fix: " .. fixText, "semibold", 14, W - x - 32),
+    "semibold", 14, ui.c.text2, x, y + 48)
+  local r = d.radio or {}
+  ui.text(ui.fit("Radio: " .. tostring(r.state or "?") .. (r.error and (" · " .. r.error) or "")
+    .. (r.station and r.station.url and (" · " .. r.station.url) or ""), "semibold", 14, W - x - 32),
+    "semibold", 14, ui.c.text2, x, y + 72)
+  y = y + 112
   local colW = (W - x - 32 - 24) / 2
   local function list(title, lines, lx)
     ui.text(title, "bold", 14, ui.c.muted, lx, y)
@@ -1237,6 +1268,8 @@ function love.draw()
     elseif state.screen == "map" then
       map.drawMap(RAIL, 0, W - RAIL, H)
       map.drawUI(RAIL, 0, W - RAIL, H)
+    elseif state.screen == "radio" then
+      radio.draw(RAIL, TOP, W - RAIL, H - TOP)
     else drawMedia() end
     if state.screen ~= "map" then drawTopBar() end -- the map runs edge to edge
     drawRail()
@@ -1309,6 +1342,10 @@ local function activate(id, vx)
   elseif k == "tile" and id.grid == "favs" then togglePick(id.app)
   elseif k == "tile" or k == "fav" then launch(id.app)
   elseif k:sub(1, 4) == "map:" then map.activate(id)
+  elseif k == "radio:open" then
+    state.screen = "radio"
+    radio.open()
+  elseif k:sub(1, 6) == "radio:" then radio.activate(id)
   elseif k == "openMap" or k == "openMapSearch" then
     state.screen = "map"
     map.open()
@@ -1316,6 +1353,7 @@ local function activate(id, vx)
   elseif k == "rail" then
     state.screen = id.screen
     if id.screen == "map" then map.open() end
+    if id.screen == "radio" then radio.open() end
   elseif k == "voice" then android.voice()
   elseif k == "setHome" then
     state.menu = nil
@@ -1390,6 +1428,7 @@ local function goHome()
   state.menu = nil
   if state.city then closeCity() end
   if map.wantsText() then map.back() end
+  if radio.wantsText() then radio.back() end
   state.screen = "home"
   state.dirty = true
 end
@@ -1468,6 +1507,11 @@ function love.textinput(t)
     state.dirty = true
     return
   end
+  if state.screen == "radio" and radio.wantsText() then
+    radio.textinput(t)
+    state.dirty = true
+    return
+  end
   if state.city then
     state.city.text = state.city.text .. t
     state.dirty = true
@@ -1477,6 +1521,11 @@ end
 function love.keypressed(key)
   if state.screen == "map" and map.wantsText() then
     map.keypressed(key)
+    state.dirty = true
+    return
+  end
+  if state.screen == "radio" and radio.wantsText() and key ~= "escape" then
+    radio.keypressed(key)
     state.dirty = true
     return
   end
@@ -1499,6 +1548,8 @@ function love.keypressed(key)
     state.screen = "settings"
   elseif state.screen == "map" and not state.menu and map.back() then
     -- closed the map's search or route overview
+  elseif state.screen == "radio" and not state.menu and radio.back() then
+    -- closed the radio's keyboard or country list
   elseif state.menu then
     state.menu = nil
   elseif state.screen == "favs" then
@@ -1527,8 +1578,10 @@ function love.load()
   ui.setAccent(config.get("accent"))
   lg.setBackgroundColor(ui.c.bg)
   layout(lg.getDimensions())
-  map.init({ android = android, config = config, ui = ui,
-    app = { toast = toast, dirty = function() state.dirty = true end } })
+  local deps = { android = android, config = config, ui = ui,
+    app = { toast = toast, dirty = function() state.dirty = true end } }
+  map.init(deps)
+  radio.init(deps)
   -- show a frame first, load apps right after (see love.update)
   state.needRefresh, state.firstLoad, state.drew = true, true, false
   burst()
@@ -1549,7 +1602,8 @@ function love.visible(v)
 end
 
 function love.update(dt)
-  map.update(dt, state.screen == "map")
+  map.update(dt, state.screen == "map" or state.screen == "home")
+  radio.update(dt, state.screen == "radio" or state.screen == "home")
   if state.needRefresh and state.drew then
     state.needRefresh = false
     refreshApps()
@@ -1559,6 +1613,8 @@ function love.update(dt)
       state.homeSeen = type(n) == "number" and n or 0
       if config.get("favorites") == nil then openPicker("setup") end
       checkForUpdate(false)
+      radio.autoplay()
+      map.open() -- Home's map needs your position too
     end
   end
 
@@ -1647,6 +1703,8 @@ end
 local function animating()
   if press or state.toast or state.city or love.timer.getTime() < state.burstUntil then return true end
   if state.screen == "map" and map.busy() then return true end
+  if state.screen == "home" and map.nav then return true end
+  if state.screen == "radio" and radio.busy() then return true end
   for _, pg in pairs(state.pagers) do
     if math.abs((pg.page - 1) - pg.x) > 0.001 then return true end
   end

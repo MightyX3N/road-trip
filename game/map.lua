@@ -17,6 +17,7 @@ local PHOTON = "https://photon.komoot.io/api/?limit=6&q="
 local OSRM = "https://routing.openstreetmap.de/routed-car/route/v1/driving/"
 
 local hex = function(h) return ui.hex(h) end
+local listening = false -- location updates started (needs permission first)
 local COL -- colours, filled in init (ui.hex needs ui)
 
 M.view = { lat = 55.6761, lon = 12.5683, zoom = 15, rot = 0, follow = true }
@@ -576,12 +577,17 @@ local function fitRoute(route, w, h)
   zoomTarget = nil
 end
 
-local function requestRoutes(lat, lon)
-  local f = M.fix
+-- from: where to start; defaults to your position. Without one yet, the request waits for
+-- the first fix (or for "From the map's centre" in the route panel).
+local function requestRoutes(lat, lon, from)
+  local f = from or M.fix
   if not f then
-    app.toast("Waiting for your location")
+    M.waitingFix = { lat = lat, lon = lon }
+    M.routesBusy = false
+    app.dirty()
     return
   end
+  M.waitingFix = nil
   M.routesBusy = true
   local id = android.fetch(routeURL(f.lat, f.lon, lat, lon))
   request(id, function(r)
@@ -597,6 +603,7 @@ local function requestRoutes(lat, lon)
       if p then list[#list + 1] = p end
     end
     if #list == 0 then app.toast("Couldn't find a route") return end
+    if not M.dest then return end -- cancelled meanwhile
     if M.mode == "nav" and M.nav then
       -- a re-route: swap in the new line, keep going
       M.nav.route, M.nav.idx, M.nav.off = list[1], 1, 0
@@ -630,7 +637,7 @@ local function startNav()
 end
 
 local function endNav()
-  M.nav, M.routes, M.dest = nil, nil, nil
+  M.nav, M.routes, M.dest, M.waitingFix = nil, nil, nil, nil
   M.mode = "browse"
   M.view.rot, M.view.follow = 0, true
 end
@@ -803,7 +810,7 @@ end
 
 -- called when the Map screen opens: start location, get the tile address
 function M.open()
-  android.locationStart()
+  listening = android.locationStart() == true
   if not tileURL then
     request(android.fetch(TILEJSON), function(r)
       local d = r.ok and json.decode(r.body or "")
@@ -830,15 +837,17 @@ function M.update(dt, onScreen)
   if onScreen then decodeNext() end
 
   local now = love.timer.getTime()
-  if (onScreen or M.nav) and now - lastLocPoll > 0.5 then
+  if (onScreen or M.nav or M.waitingFix) and now - lastLocPoll > 0.5 then
     lastLocPoll = now
     local s = android.location()
     if type(s) == "table" then
       M.permission = s.permission
+      if s.permission and not listening then listening = android.locationStart() == true end
       local f = s.fix
       if f and (not M.fix or f.lat ~= M.fix.lat or f.lon ~= M.fix.lon) then
         M.fix = f
         if M.nav then updateNav() end
+        if M.waitingFix and M.dest then requestRoutes(M.waitingFix.lat, M.waitingFix.lon) end
         app.dirty()
       end
     end
@@ -916,9 +925,9 @@ local function drawRouteLine(pts, width, color, casing)
 end
 
 -- the map itself, filling x0..x0+w, y0..y0+h (virtual units)
-function M.drawMap(x0, y0, w, h)
+function M.drawMap(x0, y0, w, h, opts)
   local S = ui.S
-  local v = M.view
+  local v = (opts and opts.view) or M.view
   lg.setScissor(x0 * S, y0 * S, w * S, h * S)
   ui.rect(COL.bg, x0, y0, w, h)
   local z = v.zoom
@@ -1005,13 +1014,68 @@ function M.drawMap(x0, y0, w, h)
   lg.pop()
   lg.setScissor()
 
-  if M.wantFit and M.routes then
+  if M.wantFit and M.routes and not opts then
     M.wantFit = nil
     fitRoute(M.routes[M.sel], w - 540, h) -- leave room for the side panel
     local cx2, cy2 = project(M.view.lat, M.view.lon, M.view.zoom)
     M.view.lat, M.view.lon = unproject(cx2 - 270, cy2, M.view.zoom) -- centre in the free area
     app.dirty()
   end
+end
+
+local drawTurnCard -- defined with the Map screen UI below
+
+-- rounded corners for a map drawn in a card: fill the corners outside the radius
+local function cornerMasks(x, y, w, h, r, col)
+  lg.setColor(col)
+  local steps = 8
+  local corners = {
+    { x, y, x + r, y + r, math.pi, 1.5 * math.pi },
+    { x + w, y, x + w - r, y + r, 1.5 * math.pi, 2 * math.pi },
+    { x + w, y + h, x + w - r, y + h - r, 0, 0.5 * math.pi },
+    { x, y + h, x + r, y + h - r, 0.5 * math.pi, math.pi },
+  }
+  for _, c in ipairs(corners) do
+    local px, py, cx, cy, a0, a1 = c[1], c[2], c[3], c[4], c[5], c[6]
+    local lx, ly = cx + math.cos(a0) * r, cy + math.sin(a0) * r
+    for i = 1, steps do
+      local a = a0 + (a1 - a0) * i / steps
+      local nx, ny = cx + math.cos(a) * r, cy + math.sin(a) * r
+      lg.polygon("fill", px, py, lx, ly, nx, ny)
+      lx, ly = nx, ny
+    end
+  end
+end
+
+local homeView = { lat = 0, lon = 0, zoom = 15.5, rot = 0 }
+
+-- Home's map card: your position (or the active route), with the turn card on top while
+-- Road Trip guides you. Returns true when it drew guidance.
+function M.drawWidget(x, y, w, h, radius)
+  local v
+  if M.nav and M.view.follow then
+    v = M.view
+  else
+    local f = M.fix
+    homeView.lat = f and f.lat or M.view.lat
+    homeView.lon = f and f.lon or M.view.lon
+    homeView.zoom = M.nav and 16 or 15.5
+    homeView.rot = M.nav and M.view.rot or 0
+    v = homeView
+  end
+  M.drawMap(x, y, w, h, { view = v })
+  cornerMasks(x, y, w, h, radius or 26, ui.c.bg)
+  local g = M.guidance()
+  if g then
+    local cw = math.min(500, w - 32)
+    drawTurnCard(g, x + 16, y + 16, cw)
+    local by = y + h - 16 - 64
+    ui.rect(ui.c.bg, x + 16, by, w - 32, 64, 20)
+    local sub = g.arrival .. " arrival · " .. fmtDur(g.remTime) .. " · " .. fmtDist(g.remaining)
+    ui.text(ui.fit(sub, "bold", 20, w - 72), "bold", 20, ui.c.text, x + 36, by + (64 - ui.fontHeight("bold", 20)) / 2)
+    return true
+  end
+  return false
 end
 
 -- a round 64x64 map button
@@ -1026,7 +1090,7 @@ local function attribution(x, y, w)
     "semibold", 12, hex("5A5C61"), x, y)
 end
 
-local function drawTurnCard(g, x, y, w)
+function drawTurnCard(g, x, y, w)
   ui.rect(ui.c.bg, x, y, w, 140, 26)
   ui.rect(ui.c.accent, x + 18, y + 18, 104, 104, 24)
   ui.icon(g.icon or "straight", x + 18 + 22, y + 18 + 22, 60, ui.c.onAccent, 2.4)
@@ -1144,7 +1208,13 @@ function M.drawUI(x0, y0, w, h)
     ui.text(ui.fit(d.sub or "", "semibold", 15, pw - 120), "semibold", 15, ui.c.muted, px + 26, py + 68)
     mapButton({ kind = "map:cancel" }, "close", px + pw - 26 - 64, py + 22)
     local ry = py + 110
-    if M.routesBusy or not M.routes then
+    if M.waitingFix then
+      ui.text(M.permission and "Waiting for your location…" or "Road Trip needs location access to find routes from you",
+        "semibold", 17, ui.c.muted, px + 26, ry)
+      ui.text("Or start the route from the middle of the map:", "semibold", 15, ui.c.muted, px + 26, ry + 40)
+      ui.pill({ kind = "map:fromCentre" }, "From the map's centre", px + 26, ry + 76, 56, "accent")
+      if not M.permission then ui.pill({ kind = "map:allow" }, "Allow location", px + 26, ry + 146, 56, "off2") end
+    elseif M.routesBusy or not M.routes then
       ui.text("Finding routes…", "semibold", 17, ui.c.muted, px + 26, ry)
     else
       local fastest = math.huge
@@ -1186,7 +1256,12 @@ function M.activate(id)
   elseif k == "map:start" then startNav()
   elseif k == "map:cancel" then endNav()
   elseif k == "map:end" then endNav()
-  elseif k == "map:allow" then android.locationStart()
+  elseif k == "map:allow" then listening = android.locationStart() == true
+  elseif k == "map:fromCentre" then
+    if M.waitingFix then
+      local w = M.waitingFix
+      requestRoutes(w.lat, w.lon, { lat = M.view.lat, lon = M.view.lon })
+    end
   elseif k == "map:recenter" then M.view.follow = true if M.mode ~= "nav" then M.view.rot = 0 end
   elseif k == "map:zoom" then
     zoomTarget = math.max(3, math.min(18, math.floor((zoomTarget or M.view.zoom) + 0.5) + id.d))

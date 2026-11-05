@@ -326,6 +326,27 @@ function icons.next()
   lg.rectangle("fill", 16.4, 5, 2.6, 14, 1, 1)
 end
 
+local STAR = {}
+for i = 0, 9 do
+  local a = -math.pi / 2 + i * math.pi / 5
+  local r = i % 2 == 0 and 9.5 or 4.2
+  STAR[#STAR + 1] = 12 + math.cos(a) * r
+  STAR[#STAR + 1] = 12.8 + math.sin(a) * r
+end
+function icons.star()
+  local closed = { unpack(STAR) }
+  closed[#closed + 1], closed[#closed + 2] = STAR[1], STAR[2]
+  lg.line(closed)
+end
+function icons.starFill()
+  -- concave: draw as a fan of triangles from the centre
+  for i = 1, #STAR, 2 do
+    local j = i + 2 > #STAR and 1 or i + 2
+    lg.polygon("fill", 12, 12.8, STAR[i], STAR[i + 1], STAR[j], STAR[j + 1])
+  end
+end
+function icons.stop() lg.rectangle("fill", 6, 6, 12, 12, 1.5, 1.5) end
+
 function icons.plus()
   lg.line(12, 5, 12, 19)
   lg.line(5, 12, 19, 12)
