@@ -40,9 +40,23 @@ jobs:
           rsync -a --exclude debug.keystore android/ love-android/
           mkdir -p love-android/app/src/embed/assets
           cp -r game/. love-android/app/src/embed/assets/
-          # same signing key every build, so a new APK installs over the old one
-          mkdir -p ~/.android
-          cp android/debug.keystore ~/.android/debug.keystore
+          # Sign every build with the key in this repo, so a new APK installs over the old
+          # one. (Copying it to ~/.android isn't enough: the runner points Gradle elsewhere.)
+          cp android/debug.keystore love-android/roadtrip.keystore
+          cat >> love-android/app/build.gradle <<'GRADLE'
+
+          // Road Trip: one fixed signing key for every build
+          android {
+              signingConfigs {
+                  debug {
+                      storeFile rootProject.file("roadtrip.keystore")
+                      storePassword "android"
+                      keyAlias "androiddebugkey"
+                      keyPassword "android"
+                  }
+              }
+          }
+          GRADLE
 
       # Each build gets the next version, so a new APK always counts as an update
       # (and the in-app updater can tell which one is newer).
@@ -68,6 +82,11 @@ jobs:
         run: |
           mkdir -p out
           cp love-android/app/build/outputs/apk/embedNoRecord/debug/*.apk out/road-trip.apk
+
+      - name: Check it's signed with the Road Trip key
+        run: |
+          WANT=$(keytool -list -v -keystore android/debug.keystore -storepass android -alias androiddebugkey | grep -m1 "SHA256:" | awk '{print $2}')
+          python3 tools/check_signature.py out/road-trip.apk "$WANT"
 
       - name: Upload APK
         uses: actions/upload-artifact@v5
