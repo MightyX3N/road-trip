@@ -26,6 +26,9 @@ local state = {
   toast = nil,       -- { text, untilT }
   isHome = true,
   guard = { serviceOn = true, enabled = true, stock = {} },
+  update = { state = "idle" }, -- from Updater.java: idle|checking|none|available|downloading|ready|permission|error|offline
+  manualCheck = false,         -- the user asked; report "up to date" too
+  timers = { update = 0, guard = 0, autoCheck = 0 },
   error = nil,
   dirty = true,
 }
@@ -42,6 +45,49 @@ end
 ----------------------------------------------------------------------------------------------
 -- data
 ----------------------------------------------------------------------------------------------
+
+local function refreshGuard()
+  local g = android.guardStatus()
+  if type(g) ~= "table" then return end
+  local changed = g.serviceOn ~= state.guard.serviceOn or g.enabled ~= state.guard.enabled
+  state.guard = g
+  -- came back from Accessibility with the guard now on: close the how-to
+  if state.menu and state.menu.restricted and g.serviceOn then
+    state.menu = nil
+    toast("Keep in front is on")
+  end
+  if changed then state.dirty = true end
+end
+
+local UPDATE_EVERY = 6 * 3600 -- seconds between automatic checks
+
+-- automatic checks are Wi-Fi only and at most every 6 hours; `manual` ignores both
+local function checkForUpdate(manual)
+  if not android.isAndroid then
+    if manual then toast("Updates only work on Android") end
+    return
+  end
+  local last = config.get("lastUpdateCheck") or 0
+  if not manual and os.time() - last < UPDATE_EVERY then return end
+  config.set("lastUpdateCheck", os.time())
+  state.manualCheck = manual
+  if android.updateCheck(not manual) then state.update.state = "checking" end
+  if manual then toast("Checking for updates…") end
+end
+
+local function pollUpdate()
+  local u = android.updateStatus()
+  if type(u) ~= "table" then return end
+  local before = state.update.state
+  local changed = u.state ~= before or u.progress ~= state.update.progress
+  state.update = u
+  if state.manualCheck and before == "checking" and u.state ~= "checking" then
+    state.manualCheck = false
+    if u.state == "none" then toast("Road Trip " .. (u.currentName or "") .. " is up to date")
+    elseif u.state == "error" then toast("Couldn't check for updates (" .. (u.error or "") .. ")") end
+  end
+  if changed then state.dirty = true end
+end
 
 -- Cheap when nothing changed: Java keeps the list and only rebuilds it after an install,
 -- removal or update, and returns just a version number otherwise.
@@ -63,13 +109,8 @@ local function refreshApps()
   state.appsVersion = res.version
   state.error = nil
   state.isHome = android.isDefaultHome() ~= false
-  local g = android.guardStatus()
-  if type(g) == "table" then state.guard = g end
-  -- came back from Accessibility with the guard now on: close the how-to
-  if state.menu and state.menu.restricted and state.guard.serviceOn then
-    state.menu = nil
-    toast("Keep in front is on")
-  end
+  refreshGuard()
+  pollUpdate()
   state.dirty = true
 end
 
@@ -250,28 +291,63 @@ end
 -- Home
 ----------------------------------------------------------------------------------------------
 
--- one banner at a time: home app first, then the guard
+local function updateBanner(activeOnly)
+  local u = state.update
+  local s = u.state
+  if s == "downloading" then
+    return { title = "Downloading Road Trip " .. (u.latestName or "") .. " · " .. (u.progress or 0) .. "%",
+      sub = "Keep using Road Trip; Android will ask to install when it's done" }
+  elseif s == "permission" then
+    return { title = "Allow Road Trip to install its updates",
+      sub = "Switch on \"Allow from this source\", then come back and tap Install",
+      button = "Install", id = { kind = "updateInstall" } }
+  elseif s == "ready" then
+    return { title = "Road Trip " .. (u.latestName or "") .. " is downloaded",
+      sub = "Android asks you to confirm; your settings and favorites stay",
+      button = "Install", id = { kind = "updateInstall" } }
+  elseif s == "error" and (u.latest or 0) > (u.current or 0) then
+    return { title = "The update didn't finish", sub = "Check the connection and try again (" .. (u.error or "") .. ")",
+      button = "Retry", id = { kind = "updateGo" } }
+  elseif s == "available" and not activeOnly and config.get("dismissedUpdate") ~= u.latest then
+    local notes = (u.notes and u.notes ~= "") and u.notes or "Tap Update to download and install it"
+    return { title = "Road Trip " .. (u.latestName or "") .. " is available", sub = notes,
+      button = "Update", id = { kind = "updateGo" }, dismiss = "dismissedUpdate", dismissValue = u.latest }
+  end
+end
+
+-- one banner at a time: home app, an update in progress, the guard, then a new version
 local function currentBanner()
   if not android.isAndroid then return nil end
   if not state.isHome and not config.get("homeHintDismissed") then
     return { title = "Road Trip isn't your home app yet", sub = "Set it so the Home button opens it",
       button = "Set as home app", id = { kind = "setHome" }, dismiss = "homeHintDismissed" }
   end
+  local active = updateBanner(true)
+  if active then return active end
   if not state.guard.serviceOn and not config.get("guardHintDismissed") then
     return { title = "Keep Road Trip in front", sub = "Stops the box switching back to its own launcher",
       button = "Turn on", id = { kind = "a11y" }, dismiss = "guardHintDismissed" }
   end
+  return updateBanner(false)
 end
 
 local function drawBanner(b, y)
   local x, w, h = RAIL + 24, W - RAIL - 48, 72
   ui.rect(ui.c.card, x, y, w, h, 20)
-  ui.text(b.title, "bold", 19, ui.c.text, x + 24, y + 14)
-  ui.text(b.sub, "semibold", 15, ui.c.muted, x + 24, y + 40)
-  local bw = ui.textWidth(b.button, "bold", 16) + 44
-  pill(b.id, b.button, x + w - 64 - bw - 12, y + 12, 48, "accent")
-  ui.icon("close", x + w - 52, y + 24, 24, ui.c.muted, 2.2)
-  ui.hit({ kind = "dismissBanner", key = b.dismiss }, x + w - 64, y + 8, 56, 56)
+  local right = x + w - 24
+  if b.dismiss then
+    ui.icon("close", x + w - 52, y + 24, 24, ui.c.muted, 2.2)
+    ui.hit({ kind = "dismissBanner", key = b.dismiss, value = b.dismissValue }, x + w - 64, y + 8, 56, 56)
+    right = x + w - 64
+  end
+  if b.button then
+    local bw = ui.textWidth(b.button, "bold", 16) + 44
+    right = right - 12 - bw
+    pill(b.id, b.button, right, y + 12, 48, "accent")
+  end
+  local textW = right - 24 - (x + 24)
+  ui.text(ui.fit(b.title, "bold", 19, textW), "bold", 19, ui.c.text, x + 24, y + 14)
+  ui.text(ui.fit(b.sub, "semibold", 15, textW), "semibold", 15, ui.c.muted, x + 24, y + 40)
 end
 
 -- a widget slot that isn't built yet: says what it will be, without pretending
@@ -442,8 +518,10 @@ local function launcherMenu()
   else
     rows[#rows + 1] = { id = { kind = "guardOn" }, icon = "check", label = "Keep in front is off · turn on" }
   end
+  rows[#rows + 1] = { id = { kind = "updateCheckNow" }, icon = "check", label = "Check for updates" }
   rows[#rows + 1] = { id = { kind = "setHome" }, icon = "edit", label = "Default home app" }
-  return { title = "Road Trip", rows = rows }
+  local v = state.update.currentName
+  return { title = (v and v ~= "") and ("Road Trip " .. v) or "Road Trip", rows = rows }
 end
 
 -- Android 13+ hides accessibility for sideloaded apps behind "Allow restricted settings".
@@ -558,7 +636,15 @@ local function activate(id)
   elseif k == "setHome" then
     state.menu = nil
     android.openHomeSettings()
-  elseif k == "dismissBanner" then config.set(id.key, true)
+  elseif k == "dismissBanner" then
+    if id.value ~= nil then config.set(id.key, id.value) else config.set(id.key, true) end
+  elseif k == "updateGo" then
+    if android.updateDownload() then state.update.state = "downloading" end
+  elseif k == "updateInstall" then
+    android.updateInstall()
+  elseif k == "updateCheckNow" then
+    state.menu = nil
+    checkForUpdate(true)
   elseif k == "a11y" then
     if (state.guard.sdk or 0) >= 33 then
       state.menu = restrictedMenu()
@@ -721,7 +807,25 @@ function love.update(dt)
     if state.firstLoad then
       state.firstLoad = false
       if config.get("favorites") == nil then openPicker("setup") end
+      checkForUpdate(false)
     end
+  end
+
+  local t = state.timers
+  t.update, t.guard, t.autoCheck = t.update + dt, t.guard + dt, t.autoCheck + dt
+  local us = state.update.state
+  if (us == "checking" or us == "downloading") and t.update > 0.5 then
+    t.update = 0
+    pollUpdate()
+  end
+  -- turning the guard on happens in Settings; notice it even if no focus event arrives
+  if android.isAndroid and not state.guard.serviceOn and t.guard > 3 then
+    t.guard = 0
+    refreshGuard()
+  end
+  if t.autoCheck > 60 then
+    t.autoCheck = 0
+    checkForUpdate(false)
   end
 
   -- long press: Apps tile -> menu, favorite -> edit favorites
@@ -765,6 +869,8 @@ function love.run()
   if love.timer then love.timer.step() end
   local lastMinute
 
+  local lastW, lastH, lastDraw = 0, 0, 0
+
   return function()
     love.event.pump()
     for name, a, b, c, d, e, f in love.event.poll() do
@@ -784,6 +890,17 @@ function love.run()
       state.dirty = true
     end
 
+    -- Android resizes the surface after launch (system bars hide) without always sending an
+    -- event; re-lay out when the size changes, and redraw at least once a second so a stale,
+    -- shifted frame never sits on screen
+    local w, h = lg.getDimensions()
+    if w ~= lastW or h ~= lastH then
+      lastW, lastH = w, h
+      layout(w, h)
+    end
+    local now = love.timer.getTime()
+    if now - lastDraw > 1 then state.dirty = true end
+
     local busy = animating()
     if (state.dirty or busy) and lg.isActive() then
       lg.origin()
@@ -791,6 +908,7 @@ function love.run()
       love.draw()
       lg.present()
       state.dirty = false
+      lastDraw = now
     end
 
     love.timer.sleep(busy and 0.001 or 0.05)

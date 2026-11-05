@@ -70,6 +70,18 @@ public final class LauncherBridge {
                 case "openStockLauncher":
                     data = openStockLauncher(ctx, a.optLong("pauseMs", 120_000));
                     break;
+                case "updateStatus":
+                    data = Updater.status(ctx);
+                    break;
+                case "updateCheck":
+                    data = Updater.check(ctx, a.optBoolean("wifiOnly", true));
+                    break;
+                case "updateDownload":
+                    data = Updater.download(ctx);
+                    break;
+                case "updateInstall":
+                    data = Updater.install(ctx);
+                    break;
                 case "openAccessibilitySettings":
                     data = openSettings(ctx, Settings.ACTION_ACCESSIBILITY_SETTINGS);
                     break;
@@ -256,7 +268,22 @@ public final class LauncherBridge {
             }
         }
         android.content.SharedPreferences sp = ctx.getSharedPreferences(GuardService.PREFS, Context.MODE_PRIVATE);
+        // the settings string varies between vendors; also ask the accessibility manager
+        if (!serviceOn) {
+            android.view.accessibility.AccessibilityManager am =
+                (android.view.accessibility.AccessibilityManager) ctx.getSystemService(Context.ACCESSIBILITY_SERVICE);
+            if (am != null) {
+                for (android.accessibilityservice.AccessibilityServiceInfo info :
+                        am.getEnabledAccessibilityServiceList(android.accessibilityservice.AccessibilityServiceInfo.FEEDBACK_ALL_MASK)) {
+                    if (info.getResolveInfo() != null && info.getResolveInfo().serviceInfo != null
+                            && ctx.getPackageName().equals(info.getResolveInfo().serviceInfo.packageName)) {
+                        serviceOn = true;
+                    }
+                }
+            }
+        }
         o.put("serviceOn", serviceOn);
+        o.put("connected", sp.getBoolean(GuardService.KEY_CONNECTED, false)); // diagnostics only
         o.put("enabled", sp.getBoolean(GuardService.KEY_ENABLED, true));
         o.put("pausedUntil", sp.getLong(GuardService.KEY_PAUSE_UNTIL, 0));
         o.put("now", System.currentTimeMillis());

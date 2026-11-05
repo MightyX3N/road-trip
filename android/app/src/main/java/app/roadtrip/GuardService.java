@@ -37,6 +37,9 @@ public class GuardService extends AccessibilityService {
     private static final long COOL_OFF_MS = 60_000;
 
     private final Handler handler = new Handler(Looper.getMainLooper());
+    // "package/ActivityClass" of other launchers' home screens. Matching the activity, not just
+    // the package, matters: Recents (the open-apps list) usually lives in the stock launcher's
+    // package too, and must be left alone.
     private Set<String> stock = new HashSet<>();
     private long stockAt = 0;
     private String front = "";
@@ -46,7 +49,7 @@ public class GuardService extends AccessibilityService {
     private final Runnable bringBack = new Runnable() {
         @Override
         public void run() {
-            if (!stock.contains(front) || !active(GuardService.this)) return;
+            if (!stock.contains(front) || !active(GuardService.this)) return; // front = "pkg/Class"
             long now = SystemClock.elapsedRealtime();
             // five returns in ten seconds means something is fighting us: back off
             if (returns[returnIdx] != 0 && now - returns[returnIdx] < RETURN_WINDOW_MS) {
@@ -65,24 +68,41 @@ public class GuardService extends AccessibilityService {
         }
     };
 
+    static final String KEY_CONNECTED = "guard_connected"; // true while Android has the service bound
+
     @Override
     protected void onServiceConnected() {
         refreshStock(true);
+        getSharedPreferences(PREFS, MODE_PRIVATE).edit().putBoolean(KEY_CONNECTED, true).apply();
         Log.i(TAG, "guard: connected, watching " + stock);
+    }
+
+    @Override
+    public boolean onUnbind(Intent intent) {
+        getSharedPreferences(PREFS, MODE_PRIVATE).edit().putBoolean(KEY_CONNECTED, false).apply();
+        handler.removeCallbacks(bringBack);
+        return super.onUnbind(intent);
     }
 
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
         if (event.getEventType() != AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) return;
         CharSequence pkg = event.getPackageName();
+        CharSequence cls = event.getClassName();
         if (pkg == null) return;
         String p = pkg.toString();
-        // the keyboard, system UI and our own overlays don't change what app is in front
+        // the keyboard, system UI and popups don't change which app is in front
         if (p.equals("com.android.systemui") || p.contains("inputmethod")) return;
-        front = p;
+        String c = cls == null ? "" : cls.toString();
+        // dialogs, menus and toasts report widget classes, not an activity: not a screen change
+        if (c.startsWith("android.widget.") || c.startsWith("android.app.Dialog")) return;
+        front = p + "/" + c;
         handler.removeCallbacks(bringBack);
         refreshStock(false);
-        if (stock.contains(p) && active(this)) handler.postDelayed(bringBack, DELAY_MS);
+        // only the launcher's home screen, never Recents or anything else in its package
+        if (stock.contains(front) && !c.contains("Recents") && active(this)) {
+            handler.postDelayed(bringBack, DELAY_MS);
+        }
     }
 
     @Override
@@ -94,7 +114,22 @@ public class GuardService extends AccessibilityService {
         long now = SystemClock.elapsedRealtime();
         if (!force && now - stockAt < STOCK_REFRESH_MS) return;
         stockAt = now;
-        stock = otherHomeApps(this);
+        stock = otherHomeActivities(this);
+    }
+
+    /** "package/ActivityClass" for every other launcher's home screen (aliases resolved to their real activity). */
+    static Set<String> otherHomeActivities(Context ctx) {
+        Set<String> out = new HashSet<>();
+        Intent home = new Intent(Intent.ACTION_MAIN);
+        home.addCategory(Intent.CATEGORY_HOME);
+        List<ResolveInfo> list = ctx.getPackageManager().queryIntentActivities(home, PackageManager.MATCH_ALL);
+        for (ResolveInfo ri : list) {
+            String p = ri.activityInfo.packageName;
+            if (p.equals(ctx.getPackageName()) || p.equals("com.android.settings")) continue;
+            out.add(p + "/" + ri.activityInfo.name);
+            if (ri.activityInfo.targetActivity != null) out.add(p + "/" + ri.activityInfo.targetActivity);
+        }
+        return out;
     }
 
     // ---- shared with LauncherBridge ---------------------------------------------------------

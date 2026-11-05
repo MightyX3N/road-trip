@@ -69,6 +69,14 @@ Long-press the clock any time for:
 - **Keep in front on / off**
 - **Default home app**
 
+## Updates
+
+Road Trip checks this repo's releases on Wi-Fi every few hours and shows a banner on
+Home when there's a newer version. Tap **Update**: it downloads in the background, then
+Android asks you to confirm the install. Your favorites and settings stay. The first
+time, Android asks you to allow Road Trip to install apps ("Allow from this source").
+Long-press the clock → **Check for updates** to check right away, on any connection.
+
 ## Install on the Ottocast later
 
 Copy the same `road-trip.apk` to a USB stick or download it on the box, open it in the

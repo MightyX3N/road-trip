@@ -314,6 +314,8 @@ local function stubCall(method, args)
     return true
   elseif method == "guardStatus" then
     return { serviceOn = false, enabled = true, stock = { "com.example.stocklauncher" } }
+  elseif method == "updateStatus" then
+    return { state = "none", current = 0, currentName = "desktop", latest = 0, latestName = "", notes = "", progress = 0 }
   end
   print("[android stub]", method, json.encode(args or {}))
   return true
@@ -339,5 +341,10 @@ function M.guardStatus() return M.call("guardStatus") end
 function M.setGuardEnabled(on) return M.call("setGuardEnabled", { on = on }) end
 function M.openStockLauncher() return M.call("openStockLauncher", { pauseMs = 120000 }) end
 function M.openAccessibilitySettings() return M.call("openAccessibilitySettings") end
+-- updates run on Java threads; poll updateStatus() for state/progress
+function M.updateStatus() return M.call("updateStatus") end
+function M.updateCheck(wifiOnly) return M.call("updateCheck", { wifiOnly = wifiOnly }) end
+function M.updateDownload() return M.call("updateDownload") end
+function M.updateInstall() return M.call("updateInstall") end
 
 return M
