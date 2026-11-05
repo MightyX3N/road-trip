@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="4.5"
+        android:pathData="M54,27a27,27 0,1 1,0 54a27,27 0,1 1,0 -54z" />
+    <!-- road with lane dashes cut out -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:fillType="evenOdd"
+        android:pathData="M52,34L56,34L65.58,78.39A27,27 0,0 1,42.42 78.39Z M53.1,66h1.8v7h-1.8z M53.1,55h1.8v5h-1.8z M53.1,46.5h1.8v3.5h-1.8z M53.1,40h1.8v2.5h-1.8z" />
+</vector>
