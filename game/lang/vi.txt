@@ -256,3 +256,5 @@ Lượt rẽ tiếp theo trên ứng dụng khác
 Khi Road Trip đang dẫn đường và một ứng dụng khác đang mở
 Cần Giữ phía trước, hoặc quyền hiển thị trên ứng dụng khác
 Bật Road Trip rồi quay lại
+Hướng bắc ở trên
+Hướng đi ở trên

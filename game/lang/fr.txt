@@ -256,3 +256,5 @@ Prochain virage par-dessus les autres apps
 Quand Road Trip vous guide et qu'une autre app est ouverte
 Nécessite Rester au premier plan, ou l'autorisation de s'afficher par-dessus les autres apps
 Activez Road Trip, puis revenez
+Nord en haut
+Direction en haut

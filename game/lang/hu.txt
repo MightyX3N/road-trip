@@ -256,3 +256,5 @@ Következő kanyar más alkalmazások felett
 Amikor a Road Trip vezet, és más alkalmazás van nyitva
 Az Előtérben tartás vagy más alkalmazások feletti megjelenítés engedélye kell
 Kapcsold be a Road Tripet, majd gyere vissza
+Észak felül
+Haladási irány felül

@@ -256,3 +256,5 @@ Naslednji zavoj čez druge aplikacije
 Ko te Road Trip vodi in je odprta druga aplikacija
 Potrebuje Drži v ospredju ali dovoljenje za prikaz čez druge aplikacije
 Vklopi Road Trip in se vrni
+Sever zgoraj
+Smer vožnje zgoraj

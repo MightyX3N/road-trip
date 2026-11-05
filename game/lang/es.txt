@@ -256,3 +256,5 @@ Próximo giro sobre otras apps
 Cuando Road Trip te guía y hay otra app abierta
 Necesita Mantener al frente o permiso para mostrarse sobre otras apps
 Activa Road Trip y luego vuelve
+Norte arriba
+Dirección de marcha arriba

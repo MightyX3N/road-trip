@@ -256,3 +256,5 @@ Próxima curva sobre outros apps
 Quando o Road Trip guia você e outro app está aberto
 Precisa do Manter à frente ou de permissão para aparecer sobre outros apps
 Ative o Road Trip e volte
+Norte para cima
+Direção de viagem para cima

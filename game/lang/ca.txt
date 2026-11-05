@@ -256,3 +256,5 @@ Proper gir damunt d'altres apps
 Quan Road Trip et guia i hi ha una altra app oberta
 Necessita Mantenir al davant o permís per mostrar-se damunt d'altres apps
 Activa Road Trip i torna
+Nord a dalt
+Direcció de marxa a dalt

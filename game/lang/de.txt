@@ -256,3 +256,5 @@ Nächste Abbiegung über anderen Apps
 Wenn Road Trip dich führt und eine andere App offen ist
 Braucht Im Vordergrund halten oder die Erlaubnis, über anderen Apps zu erscheinen
 Schalte Road Trip ein und komm dann zurück
+Norden oben
+Fahrtrichtung oben

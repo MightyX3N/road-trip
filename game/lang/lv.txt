@@ -256,3 +256,5 @@ Nākamais pagrieziens virs citām lietotnēm
 Kad Road Trip vada un ir atvērta cita lietotne
 Vajag Turēt priekšā vai atļauju rādīt virs citām lietotnēm
 Ieslēdz Road Trip un atgriezies
+Ziemeļi augšā
+Braukšanas virziens augšā

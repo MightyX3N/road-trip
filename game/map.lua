@@ -38,6 +38,12 @@ local queue = {}   -- tiles waiting to be decoded
 local dlCount = 0
 local zoomTarget
 local lastLocPoll = 0
+-- which way you're heading, smoothed: the map turns so the road ahead points up
+M.heading = 0          -- degrees from north, what the map shows
+local headingFix       -- the fix the last computed heading came from (for fixes without a bearing)
+local lastHeadingFix
+local headingTarget = 0
+local moving = false
 
 ----------------------------------------------------------------------------------------------
 -- geometry helpers
@@ -871,16 +877,37 @@ function M.update(dt, onScreen)
     end
   end
 
-  -- follow the car: centre on it, and in navigation turn the map so travel points up
+  -- which way the car is going: GPS bearing while moving, else from how far it moved
   local f = M.fix
+  if f and f ~= lastHeadingFix then
+    lastHeadingFix = f
+    local spd = f.speed or -1
+    if spd > 1.5 and (f.bearing or -1) >= 0 then
+      headingTarget, headingFix, moving = f.bearing, f, true
+    elseif headingFix then
+      local d = haversine(headingFix.lat, headingFix.lon, f.lat, f.lon)
+      if d > 12 and d > (f.accuracy or 0) then
+        local y = math.sin(math.rad(f.lon - headingFix.lon)) * math.cos(math.rad(f.lat))
+        local x = math.cos(math.rad(headingFix.lat)) * math.sin(math.rad(f.lat))
+          - math.sin(math.rad(headingFix.lat)) * math.cos(math.rad(f.lat)) * math.cos(math.rad(f.lon - headingFix.lon))
+        headingTarget, headingFix = (math.deg((math.atan2 or math.atan)(y, x)) + 360) % 360, f
+        moving = spd < 0 or spd > 1.5
+      end
+    else
+      headingFix = f
+    end
+    if spd >= 0 and spd < 0.8 then moving = false end
+  end
+  local target = config.get("mapNorthUp") and 0 or headingTarget
+  local hd = ((target - M.heading + 540) % 360) - 180
+  M.turning = math.abs(hd) > 0.5
+  if math.abs(hd) > 0.05 then M.heading = (M.heading + hd * math.min(1, dt * 2)) % 360 end
+  -- follow the car: centre on it, turned the way it's going (or north up, if chosen)
   if f and M.view.follow then
     local k = math.min(1, dt * 4)
     M.view.lat = M.view.lat + (f.lat - M.view.lat) * k
     M.view.lon = M.view.lon + (f.lon - M.view.lon) * k
-    if M.mode == "nav" and (f.speed or -1) > 1.5 and (f.bearing or -1) >= 0 then
-      local d = ((f.bearing - M.view.rot + 540) % 360) - 180
-      M.view.rot = (M.view.rot + d * math.min(1, dt * 2)) % 360
-    end
+    M.view.rot = M.heading
   end
   if zoomTarget then
     local d = zoomTarget - M.view.zoom
@@ -954,7 +981,9 @@ function M.drawMap(x0, y0, w, h, opts)
   local cx, cy = project(v.lat, v.lon, z)
   local tsz = TILE * 2 ^ (z - zs)
   local ax = x0 + w / 2
-  local ay = y0 + h * (M.mode == "nav" and 0.66 or 0.5)
+  -- looking ahead: the car sits lower on the screen while it's guided or driving heading-up
+  local ahead = M.mode == "nav" or (v.follow ~= false and moving and not config.get("mapNorthUp"))
+  local ay = y0 + h * (ahead and 0.66 or 0.5)
 
   lg.push()
   lg.translate(ax, ay)
@@ -1078,7 +1107,8 @@ function M.drawWidget(x, y, w, h, radius)
     homeView.lat = f and f.lat or M.view.lat
     homeView.lon = f and f.lon or M.view.lon
     homeView.zoom = M.nav and 16 or 15.5
-    homeView.rot = M.nav and M.view.rot or 0
+    homeView.follow = true
+    homeView.rot = M.heading
     v = homeView
   end
   M.drawMap(x, y, w, h, { view = v })
@@ -1141,7 +1171,18 @@ function M.drawUI(x0, y0, w, h)
   if mode == "browse" or mode == "nav" then
     mapButton({ kind = "map:zoom", d = 1 }, "plus", right, y0 + 20)
     mapButton({ kind = "map:zoom", d = -1 }, "minus", right, y0 + 96)
-    if not M.view.follow and M.fix then mapButton({ kind = "map:recenter" }, "locate", right, y0 + 172) end
+    -- compass: shows north; tap to switch between heading-up and north-up
+    ui.rect(ui.c.bg, right, y0 + 172, 64, 64, 20)
+    lg.push()
+    lg.translate(right + 32, y0 + 172 + 32)
+    lg.rotate(-math.rad(M.view.rot))
+    lg.setColor(hex("E86F5A"))
+    lg.polygon("fill", 0, -20, 7, 0, -7, 0)
+    lg.setColor(ui.c.text2)
+    lg.polygon("fill", 0, 20, 7, 0, -7, 0)
+    lg.pop()
+    ui.hit({ kind = "map:compass" }, right, y0 + 172, 64, 64)
+    if not M.view.follow and M.fix then mapButton({ kind = "map:recenter" }, "locate", right, y0 + 248) end
   end
 
   if mode == "nav" then
@@ -1280,7 +1321,11 @@ function M.activate(id)
       local w = M.waitingFix
       requestRoutes(w.lat, w.lon, { lat = M.view.lat, lon = M.view.lon })
     end
-  elseif k == "map:recenter" then M.view.follow = true if M.mode ~= "nav" then M.view.rot = 0 end
+  elseif k == "map:recenter" then M.view.follow = true
+  elseif k == "map:compass" then
+    config.set("mapNorthUp", not config.get("mapNorthUp"))
+    if config.get("mapNorthUp") then M.heading = 0 end
+    app.toast(config.get("mapNorthUp") and T("North up") or T("The way you're heading is up"))
   elseif k == "map:zoom" then
     zoomTarget = math.max(3, math.min(18, math.floor((zoomTarget or M.view.zoom) + 0.5) + id.d))
   end

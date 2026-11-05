@@ -254,3 +254,5 @@ Next turn over other apps
 While Road Trip guides you and another app is open
 Needs Keep in front, or permission to show over other apps
 Switch on Road Trip, then come back
+North up
+The way you're heading is up

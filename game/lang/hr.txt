@@ -256,3 +256,5 @@ Sljedeće skretanje preko drugih aplikacija
 Kad te Road Trip vodi i otvorena je druga aplikacija
 Treba Drži naprijed ili dopuštenje za prikaz preko drugih aplikacija
 Uključi Road Trip i vrati se
+Sjever gore
+Smjer vožnje gore

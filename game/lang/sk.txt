@@ -256,3 +256,5 @@ Zobraziť video
 Keď vás Road Trip vedie a je otvorená iná aplikácia
 Vyžaduje Držať v popredí alebo povolenie zobrazovať sa nad inými aplikáciami
 Zapnite Road Trip a vráťte sa
+Sever hore
+Smer jazdy hore

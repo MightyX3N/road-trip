@@ -256,3 +256,5 @@ Următorul viraj peste alte aplicații
 Când Road Trip te ghidează și e deschisă altă aplicație
 Necesită Păstrare în față sau permisiunea de afișare peste alte aplicații
 Activează Road Trip, apoi revino
+Nordul sus
+Direcția de mers sus

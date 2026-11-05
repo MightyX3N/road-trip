@@ -256,3 +256,5 @@ Volgende afslag boven andere apps
 Als Road Trip je begeleidt en een andere app open is
 Heeft Op de voorgrond houden nodig, of toestemming om over andere apps te tonen
 Zet Road Trip aan en kom dan terug
+Noorden boven
+Rijrichting boven

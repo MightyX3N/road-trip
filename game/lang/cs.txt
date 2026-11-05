@@ -256,3 +256,5 @@ Další odbočka přes jiné aplikace
 Když vás Road Trip vede a je otevřená jiná aplikace
 Vyžaduje Držet v popředí nebo povolení zobrazovat se přes jiné aplikace
 Zapněte Road Trip a vraťte se
+Sever nahoře
+Směr jízdy nahoře

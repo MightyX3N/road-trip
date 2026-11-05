@@ -256,3 +256,5 @@ Järgmine pööre teiste rakenduste peal
 Kui Road Trip juhatab ja teine rakendus on avatud
 Vajab Hoia ees funktsiooni või luba kuvada teiste rakenduste peal
 Lülita Road Trip sisse ja tule tagasi
+Põhi üleval
+Sõidusuund üleval

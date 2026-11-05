@@ -256,3 +256,5 @@ Seuraava käännös muiden sovellusten päällä
 Kun Road Trip opastaa ja toinen sovellus on auki
 Tarvitsee Pidä edessä -toiminnon tai luvan näkyä muiden sovellusten päällä
 Ota Road Trip käyttöön ja palaa sitten
+Pohjoinen ylös
+Ajosuunta ylös

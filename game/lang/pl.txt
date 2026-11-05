@@ -256,3 +256,5 @@ Następny skręt nad innymi aplikacjami
 Gdy Road Trip prowadzi, a otwarta jest inna aplikacja
 Wymaga Utrzymuj na wierzchu lub zgody na wyświetlanie nad innymi aplikacjami
 Włącz Road Trip i wróć
+Północ u góry
+Kierunek jazdy u góry

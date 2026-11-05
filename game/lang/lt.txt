@@ -256,3 +256,5 @@ Kitas posūkis virš kitų programų
 Kai Road Trip veda, o atidaryta kita programa
 Reikia Laikyti priekyje arba leidimo rodyti virš kitų programų
 Įjunkite Road Trip ir grįžkite
+Šiaurė viršuje
+Važiavimo kryptis viršuje

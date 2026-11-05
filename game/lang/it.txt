@@ -256,3 +256,5 @@ Prossima svolta sopra le altre app
 Quando Road Trip ti guida e un'altra app è aperta
 Serve Tieni in primo piano o il permesso di apparire sopra le altre app
 Attiva Road Trip, poi torna qui
+Nord in alto
+Direzione di marcia in alto

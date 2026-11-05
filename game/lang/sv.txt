@@ -256,3 +256,5 @@ Nästa sväng över andra appar
 När Road Trip guidar dig och en annan app är öppen
 Kräver Håll framme eller tillstånd att visas över andra appar
 Slå på Road Trip och kom sedan tillbaka
+Norr uppåt
+Färdriktningen är uppåt

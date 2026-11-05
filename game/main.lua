@@ -1832,7 +1832,7 @@ end
 local function animating()
   if press or state.toast or state.city or love.timer.getTime() < state.burstUntil then return true end
   if state.screen == "map" and map.busy() then return true end
-  if state.screen == "home" and map.nav then return true end
+  if state.screen == "home" and (map.nav or map.turning) then return true end
   if state.screen == "radio" and radio.busy() then return true end
   for _, pg in pairs(state.pagers) do
     if math.abs((pg.page - 1) - pg.x) > 0.001 then return true end

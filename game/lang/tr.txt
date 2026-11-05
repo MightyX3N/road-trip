@@ -256,3 +256,5 @@ Diğer uygulamaların üstünde sonraki dönüş
 Road Trip size yol gösterirken başka bir uygulama açıkken
 Önde tut ya da diğer uygulamaların üstünde gösterme izni gerekir
 Road Trip'i açın, sonra geri gelin
+Kuzey yukarıda
+Gidiş yönü yukarıda
