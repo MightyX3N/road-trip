@@ -56,8 +56,12 @@ Turn it on once: tap **Turn on** in the banner on Home (or long-press the clock 
 switch it on.
 
 On Android 13 and newer, if you installed the APK from a file manager or browser,
-Android may grey that switch out with "Restricted setting". To allow it: Settings →
-Apps → Road Trip → ⋮ (top right) → **Allow restricted settings**, then try again.
+Android greys that switch out as a "Restricted setting". Road Trip's **Turn on** button
+walks you through it, or by hand:
+1. In Accessibility, tap **Road Trip: keep in front** once and dismiss the
+   "Restricted setting" message. (This is what unlocks the next step.)
+2. Settings → Apps → Road Trip → ⋮ (top right) → **Allow restricted settings**.
+3. Back in Accessibility, switch it on.
 (APKs installed by dragging onto Genymotion or with adb aren't affected.)
 
 Long-press the clock any time for:

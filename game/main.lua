@@ -43,22 +43,33 @@ end
 -- data
 ----------------------------------------------------------------------------------------------
 
+-- Cheap when nothing changed: Java keeps the list and only rebuilds it after an install,
+-- removal or update, and returns just a version number otherwise.
 local function refreshApps()
   love.filesystem.createDirectory("icons")
   local dir = love.filesystem.getSaveDirectory() .. "/icons"
-  local apps, err = android.getApps(dir)
-  if not apps then
+  local res, err = android.getApps(dir, state.appsVersion)
+  if not res then
     state.error = err
     return
   end
-  table.sort(apps, function(a, b) return a.label:lower() < b.label:lower() end)
-  state.apps = apps
-  state.byKey = {}
-  for _, app in ipairs(apps) do state.byKey[keyOf(app)] = app end
+  if res.apps then
+    local apps = res.apps
+    table.sort(apps, function(a, b) return a.label:lower() < b.label:lower() end)
+    state.apps = apps
+    state.byKey = {}
+    for _, app in ipairs(apps) do state.byKey[keyOf(app)] = app end
+  end
+  state.appsVersion = res.version
   state.error = nil
   state.isHome = android.isDefaultHome() ~= false
   local g = android.guardStatus()
   if type(g) == "table" then state.guard = g end
+  -- came back from Accessibility with the guard now on: close the how-to
+  if state.menu and state.menu.restricted and state.guard.serviceOn then
+    state.menu = nil
+    toast("Keep in front is on")
+  end
   state.dirty = true
 end
 
@@ -283,6 +294,7 @@ local function drawFavorites(x, y, w, h)
   ui.hit({ kind = "editFavs" }, editX, y + (h - 60) / 2, 60, 60)
 
   if #favs == 0 then
+    if state.firstLoad then return end -- apps not loaded yet
     ui.text("Pick 3 to 5 favorite apps to keep them here", "semibold", 17, ui.c.muted, x + 28, y + (h - ui.fontHeight("semibold", 17)) / 2)
     ui.hit({ kind = "editFavs" }, x, y, w - 90, h)
     return
@@ -434,6 +446,19 @@ local function launcherMenu()
   return { title = "Road Trip", rows = rows }
 end
 
+-- Android 13+ hides accessibility for sideloaded apps behind "Allow restricted settings".
+-- Rows don't close the menu, so it's still there when you come back between steps.
+local function restrictedMenu()
+  return {
+    title = "Turn on Keep in front", restricted = true, w = 640,
+    rows = {
+      { id = { kind = "a11yOpen" }, icon = "check", label = "1 · Accessibility → tap Road Trip once" },
+      { id = { kind = "selfInfo" }, icon = "edit", label = "2 · App info → menu → Allow restricted settings" },
+      { id = { kind = "a11yOpen" }, icon = "check", label = "3 · Accessibility → switch it on" },
+    },
+  }
+end
+
 local function drawMenu()
   local m = state.menu
   if not m then return end
@@ -441,7 +466,7 @@ local function drawMenu()
   lg.rectangle("fill", 0, 0, W, H)
   ui.hit({ kind = "menuClose" }, 0, 0, W, H)
 
-  local w = 500
+  local w = m.w or 500
   local h = 108 + #m.rows * 76 + 8
   local x, y = (W - w) / 2, (H - h) / 2
   ui.rect(ui.c.card, x, y, w, h, 28)
@@ -501,6 +526,7 @@ function love.draw()
   drawMenu()
   drawToast()
   lg.pop()
+  state.drew = true
 end
 
 ----------------------------------------------------------------------------------------------
@@ -534,9 +560,17 @@ local function activate(id)
     android.openHomeSettings()
   elseif k == "dismissBanner" then config.set(id.key, true)
   elseif k == "a11y" then
-    state.menu = nil
+    if (state.guard.sdk or 0) >= 33 then
+      state.menu = restrictedMenu()
+    else
+      state.menu = nil
+      android.openAccessibilitySettings()
+      toast("Find Road Trip: keep in front and turn it on")
+    end
+  elseif k == "a11yOpen" then
     android.openAccessibilitySettings()
-    toast("Find Road Trip: keep in front and turn it on")
+  elseif k == "selfInfo" then
+    android.openAppInfo({ pkg = "self" })
   elseif k == "stock" then
     state.menu = nil
     android.openStockLauncher()
@@ -669,17 +703,27 @@ function love.load()
   ui.setAccent(config.get("accent"))
   lg.setBackgroundColor(ui.c.bg)
   layout(lg.getDimensions())
-  refreshApps()
-  if config.get("favorites") == nil then openPicker("setup") end
+  -- show a frame first, load apps right after (see love.update)
+  state.needRefresh, state.firstLoad, state.drew = true, true, false
 end
 
 function love.resize(w, h) layout(w, h) end
 
 function love.focus(f)
-  if f then refreshApps() end -- back from an app: catch installs, removals, home changes
+  -- back from an app: draw straight away, then catch installs, removals, home changes
+  if f then state.needRefresh, state.drew = true, false end
 end
 
 function love.update(dt)
+  if state.needRefresh and state.drew then
+    state.needRefresh = false
+    refreshApps()
+    if state.firstLoad then
+      state.firstLoad = false
+      if config.get("favorites") == nil then openPicker("setup") end
+    end
+  end
+
   -- long press: Apps tile -> menu, favorite -> edit favorites
   if press and not press.moved and not press.done and press.id
     and love.timer.getTime() - press.t > LONG_PRESS then

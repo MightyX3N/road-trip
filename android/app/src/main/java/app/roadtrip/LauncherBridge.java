@@ -39,7 +39,7 @@ public final class LauncherBridge {
             Object data;
             switch (method) {
                 case "getApps":
-                    data = getApps(ctx, a.optString("iconDir", null), a.optInt("iconSize", 192));
+                    data = getAppsCached(ctx, a.optString("iconDir", null), a.optInt("iconSize", 192), a.optInt("known", -1));
                     break;
                 case "launch":
                     data = launch(ctx, a.getString("pkg"), a.optString("activity", null));
@@ -50,9 +50,11 @@ public final class LauncherBridge {
                 case "openHomeSettings":
                     data = openHomeSettings(ctx);
                     break;
-                case "openAppInfo":
-                    data = openAppInfo(ctx, a.getString("pkg"));
+                case "openAppInfo": {
+                    String pkg = a.getString("pkg");
+                    data = openAppInfo(ctx, "self".equals(pkg) ? ctx.getPackageName() : pkg);
                     break;
+                }
                 case "voice":
                     data = voice(ctx);
                     break;
@@ -85,6 +87,49 @@ public final class LauncherBridge {
     }
 
     // ---- apps -------------------------------------------------------------------------------
+
+    // The app list is rebuilt only when Android says a package changed; otherwise Lua gets
+    // "unchanged" back at once, so returning to Road Trip doesn't re-read every app.
+    private static volatile int appsVersion = 1;
+    private static int cachedVersion = 0;
+    private static JSONArray cachedApps;
+    private static boolean receiverOn = false;
+
+    private static synchronized JSONObject getAppsCached(Context ctx, String iconDir, int iconSize, int known) throws Exception {
+        watchPackages(ctx);
+        if (cachedApps == null || cachedVersion != appsVersion) {
+            int v = appsVersion;
+            cachedApps = getApps(ctx, iconDir, iconSize);
+            cachedVersion = v;
+        }
+        JSONObject out = new JSONObject();
+        out.put("version", cachedVersion);
+        if (known != cachedVersion) out.put("apps", cachedApps);
+        return out;
+    }
+
+    private static void watchPackages(Context ctx) {
+        if (receiverOn) return;
+        receiverOn = true;
+        android.content.IntentFilter f = new android.content.IntentFilter();
+        f.addAction(Intent.ACTION_PACKAGE_ADDED);
+        f.addAction(Intent.ACTION_PACKAGE_REMOVED);
+        f.addAction(Intent.ACTION_PACKAGE_CHANGED);
+        f.addAction(Intent.ACTION_PACKAGE_REPLACED);
+        f.addDataScheme("package");
+        android.content.BroadcastReceiver r = new android.content.BroadcastReceiver() {
+            @Override
+            public void onReceive(Context c, Intent i) {
+                appsVersion++;
+            }
+        };
+        Context app = ctx.getApplicationContext();
+        if (android.os.Build.VERSION.SDK_INT >= 33) {
+            app.registerReceiver(r, f, Context.RECEIVER_NOT_EXPORTED); // system broadcasts still arrive
+        } else {
+            app.registerReceiver(r, f);
+        }
+    }
 
     private static JSONArray getApps(Context ctx, String iconDir, int iconSize) throws Exception {
         PackageManager pm = ctx.getPackageManager();
@@ -215,6 +260,7 @@ public final class LauncherBridge {
         o.put("enabled", sp.getBoolean(GuardService.KEY_ENABLED, true));
         o.put("pausedUntil", sp.getLong(GuardService.KEY_PAUSE_UNTIL, 0));
         o.put("now", System.currentTimeMillis());
+        o.put("sdk", android.os.Build.VERSION.SDK_INT); // 33+ puts sideloaded accessibility behind "restricted settings"
         JSONArray stock = new JSONArray();
         for (String p : GuardService.otherHomeApps(ctx)) stock.put(p);
         o.put("stock", stock);

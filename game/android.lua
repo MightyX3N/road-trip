@@ -304,11 +304,12 @@ local stubApps = { "Maps", "Music", "Phone", "Messages", "Podcasts", "Calendar",
 
 local function stubCall(method, args)
   if method == "getApps" then
+    if args and args.known == 1 then return { version = 1 } end
     local list = setmetatable({}, json.array)
     for i, label in ipairs(stubApps) do
       list[i] = { pkg = "com.example." .. label:lower(), activity = "Main", label = label }
     end
-    return list
+    return { version = 1, apps = list }
   elseif method == "isDefaultHome" then
     return true
   elseif method == "guardStatus" then
@@ -327,7 +328,8 @@ function M.call(method, args)
   return javaCall(method, args)
 end
 
-function M.getApps(iconDir) return M.call("getApps", { iconDir = iconDir, iconSize = 192 }) end
+-- returns { version, apps? }; apps is left out when `known` is already the current version
+function M.getApps(iconDir, known) return M.call("getApps", { iconDir = iconDir, iconSize = 192, known = known or -1 }) end
 function M.launch(app) return M.call("launch", { pkg = app.pkg, activity = app.activity }) end
 function M.isDefaultHome() return M.call("isDefaultHome") end
 function M.openHomeSettings() return M.call("openHomeSettings") end
