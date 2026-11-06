@@ -4,7 +4,7 @@
 
 local lg = love.graphics
 local T = require("lang").T
-local WEB = love.system.getOS() == "Web"
+local WEB = love.system ~= nil and love.system.getOS() == "Web"
 
 local M = {}
 local android, config, ui, json, app, map, lang

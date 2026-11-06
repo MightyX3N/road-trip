@@ -877,9 +877,13 @@ local function updateNav()
   n.along = r.cum[bestI] + bestT * (r.cum[bestI + 1] - r.cum[bestI])
   local now = love.timer.getTime()
 
-  -- off the route for three fixes in a row: ask for a new one (FOSSGIS allows 1/s; we wait 15 s)
-  if n.off > 50 and (f.accuracy or 99) < 40 then n.offCount = n.offCount + 1 else n.offCount = 0 end
-  if n.offCount >= 3 and now - n.lastReroute > 15 and M.dest then
+  -- off the route for a few fixes in a row: ask for a new one (FOSSGIS allows 1/s; we wait 12 s).
+  -- A vague position (no GPS: wifi or the mobile network) needs to be further off, and for longer.
+  local acc = f.accuracy or -1
+  if acc < 0 then acc = 20 end
+  local limit, need = math.max(50, acc + 30), acc > 60 and 5 or 3
+  if acc <= 250 and n.off > limit then n.offCount = n.offCount + 1 else n.offCount = 0 end
+  if n.offCount >= need and now - n.lastReroute > 12 and M.dest then
     n.lastReroute, n.offCount = now, 0
     requestRoutes(M.dest.lat, M.dest.lon)
   end

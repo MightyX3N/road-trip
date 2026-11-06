@@ -1107,6 +1107,13 @@ local function settingsCard(title, rows, x, y, w)
     elseif r.toggle then
       right = right - 60
       toggle(r.toggle[2], r.toggle[1], right, cy - 17)
+    elseif r.choice then -- side by side; the chosen one lit
+      for j = #r.choice, 1, -1 do
+        local c = r.choice[j]
+        local bw = ui.textWidth(c[1], "bold", 16) + 44
+        right = right - bw - (j < #r.choice and 8 or 0)
+        pill(not c[3] and c[2] or nil, c[1], right, cy - 24, 48, c[3] and "accent" or "off2")
+      end
     elseif r.swatches then
       local n = #ui.accents
       right = right - (n * 52 - 12)
@@ -1153,7 +1160,8 @@ local function drawSettings()
         or T("Needs Keep in front to see which app is open"),
       toggle = { config.get("overlayVideo") ~= false, { kind = "ovVideo" } } },
     { title = T("When the speed isn't known"), sub = T("No GPS signal, or no GPS in this box"),
-      button = { (config.get("overlayNoSpeed") or "block") == "block" and T("Hide video") or T("Show video"), { kind = "ovNoSpeed" } } },
+      choice = { { T("Hide video"), { kind = "ovNoSpeed" }, (config.get("overlayNoSpeed") or "block") == "block" },
+        { T("Show video"), { kind = "ovNoSpeed" }, config.get("overlayNoSpeed") == "allow" } } },
     { title = T("Next turn over other apps"),
       sub = (g.serviceOn or state.overlay.canDraw) and T("While Road Trip guides you and another app is open")
         or T("Needs Keep in front, or permission to show over other apps"),
@@ -1183,7 +1191,7 @@ local function drawSettings()
     -- a browser can't be the home app, read other apps or update itself
     local keep = { voiceOpen = true, ovVideo = true, ovNoSpeed = true }
     local drop = { updateCheckNow = true, wifiOnly = true, diag = true }
-    local function kind(r) return (r.button and r.button[2].kind) or (r.toggle and r.toggle[2].kind) end
+    local function kind(r) return (r.button and r.button[2].kind) or (r.toggle and r.toggle[2].kind) or (r.choice and r.choice[1][2].kind) end
     local l2, r2 = {}, {}
     for _, r in ipairs(left) do if keep[kind(r)] then l2[#l2 + 1] = r end end
     for _, r in ipairs(right) do if not drop[kind(r)] then r2[#r2 + 1] = r end end
