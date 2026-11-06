@@ -265,8 +265,11 @@ final class Panel {
         // covered while the car moves; video sound carries on
         boolean drive = Overlay.drivingNow();
         if (cover != null) {
-            cover.setText(label(kind.equals("web") ? "web" : "video",
-                kind.equals("web") ? "The browser is hidden while you drive" : "Video hidden while driving. The sound keeps playing."));
+            String t = label(kind.equals("web") ? "web" : "video",
+                kind.equals("web") ? "The browser is hidden while you drive" : "Video hidden while driving. The sound keeps playing.");
+            // no speed at all (a box without GPS): say why, and where to change it
+            if (Overlay.speedUnknown) t = t + "\n\n" + label("noSpeed", "This box can't tell your speed, so it counts as driving. Change it in Settings under \"When the speed isn't known\".");
+            cover.setText(t);
             cover.setVisibility(shown && drive ? View.VISIBLE : View.GONE);
         }
         // leaving Road Trip pauses the video (it lives in Road Trip's own screen)

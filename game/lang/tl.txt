@@ -435,3 +435,4 @@ Sabihin kung saan mo gustong pumunta
 Hindi makinig ang browser na ito
 Boses ng browser
 Kailangan ng Android app ang mga natural na boses.
+Hindi alam ng box na ito ang bilis mo, kaya itinuturing itong pagmamaneho. Palitan ito sa Settings sa ilalim ng “Kapag hindi alam ang bilis”.

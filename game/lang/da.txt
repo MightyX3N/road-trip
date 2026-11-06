@@ -435,3 +435,4 @@ Sig, hvor du vil hen
 Denne browser kan ikke lytte
 Browserens stemme
 Naturlige stemmer kræver Android-appen.
+Boksen kan ikke se din fart, så den regnes som kørsel. Skift det i Indstillinger under “Når farten ikke kendes”.

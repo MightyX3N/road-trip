@@ -435,3 +435,4 @@ Ve verzi pro prohlížeč se stránky otevírají na nové kartě: většina web
 Tento prohlížeč neumí poslouchat
 Hlas prohlížeče
 Přirozené hlasy vyžadují aplikaci pro Android.
+Tato krabička nezná vaši rychlost, takže se to počítá jako jízda. Změňte to v Nastavení v části „Když není známa rychlost“.

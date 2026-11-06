@@ -435,3 +435,4 @@ Pasakiet, kurp vēlaties doties
 Šis pārlūks nevar klausīties
 Pārlūka balss
 Dabiskajām balsīm vajag Android lietotni.
+Šī ierīce nezina jūsu ātrumu, tāpēc tas skaitās kā braukšana. Mainiet to Iestatījumos, sadaļā “Kad ātrums nav zināms”.

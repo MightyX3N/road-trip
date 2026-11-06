@@ -435,3 +435,4 @@ Brauseriversioonis avanevad lehed uuel vahelehel: enamik saite ei luba end teise
 See brauser ei oska kuulata
 Brauseri hääl
 Loomulikud hääled vajavad Androidi rakendust.
+See seade ei tea sinu kiirust, seega loetakse seda sõitmiseks. Muuda seda seadetes jaotises „Kui kiirus pole teada”.

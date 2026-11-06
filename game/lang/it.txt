@@ -435,3 +435,4 @@ Di' dove vuoi andare
 Questo browser non può ascoltare
 La voce del browser
 Le voci naturali richiedono l'app Android.
+Questo box non conosce la tua velocità, quindi conta come guida. Cambialo nelle Impostazioni, in «Quando la velocità non è nota».

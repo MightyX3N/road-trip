@@ -435,3 +435,4 @@ Diga para onde quer ir
 Este navegador não consegue ouvir
 A voz do navegador
 As vozes naturais precisam da app Android.
+Esta caixa não sabe a sua velocidade, por isso conta como a conduzir. Altere isto nas Definições, em «Quando a velocidade não é conhecida».

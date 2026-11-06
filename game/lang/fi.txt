@@ -435,3 +435,4 @@ Sano, minne haluat mennä
 Tämä selain ei osaa kuunnella
 Selaimen ääni
 Luonnolliset äänet vaativat Android-sovelluksen.
+Laite ei tiedä nopeuttasi, joten se lasketaan ajoksi. Muuta tätä asetuksista kohdasta ”Kun nopeutta ei tiedetä”.

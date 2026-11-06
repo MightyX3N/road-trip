@@ -60,6 +60,7 @@ final class Overlay {
     private static volatile long navAt = 0;
     static volatile boolean roadTripResumed = false;
     private static boolean moving = false;
+    static volatile boolean speedUnknown = true; // no GPS speed: "moving" comes from the setting
     private static long stillSince = 0;
     private static String lastReason = "";
 
@@ -189,6 +190,7 @@ final class Overlay {
         boolean known = l != null && l.hasSpeed()
             && SystemClock.elapsedRealtimeNanos() - l.getElapsedRealtimeNanos() < 8_000_000_000L;
         long now = SystemClock.elapsedRealtime();
+        speedUnknown = !known;
         if (!known) {
             stillSince = 0;
             moving = "block".equals(noSpeed);

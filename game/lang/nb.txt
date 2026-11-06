@@ -435,3 +435,4 @@ Si hvor du vil
 Denne nettleseren kan ikke lytte
 Nettleserens stemme
 Naturlige stemmer krever Android-appen.
+Boksen kan ikke se farten din, så den regnes som kjøring. Endre det i Innstillinger under «Når farten ikke er kjent».

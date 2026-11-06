@@ -435,3 +435,4 @@ Säg vart du vill åka
 Den här webbläsaren kan inte lyssna
 Webbläsarens röst
 Naturliga röster kräver Android-appen.
+Boxen kan inte se din hastighet, så den räknas som körning. Ändra det i Inställningar under ”När farten inte är känd”.

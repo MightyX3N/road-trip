@@ -435,3 +435,4 @@ Pasakykite, kur norite vykti
 Ši naršyklė negali klausytis
 Naršyklės balsas
 Natūraliems balsams reikia Android programos.
+Šis įrenginys nežino jūsų greičio, todėl laikoma, kad vairuojate. Pakeiskite tai Nustatymuose, skiltyje „Kai greitis nežinomas“.

@@ -435,3 +435,4 @@ Dites où vous voulez aller
 Ce navigateur ne peut pas écouter
 La voix du navigateur
 Les voix naturelles demandent l'application Android.
+Ce boîtier ne connaît pas votre vitesse, il considère donc que vous roulez. Modifiez-le dans Réglages, sous « Quand la vitesse est inconnue ».

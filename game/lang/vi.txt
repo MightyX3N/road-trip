@@ -435,3 +435,4 @@ Hãy nói nơi bạn muốn đến
 Trình duyệt này không nghe được
 Giọng của trình duyệt
 Giọng tự nhiên cần ứng dụng Android.
+Hộp này không biết tốc độ của bạn nên coi như đang lái xe. Hãy đổi trong Cài đặt, mục “Khi không biết tốc độ”.

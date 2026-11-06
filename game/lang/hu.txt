@@ -435,3 +435,4 @@ Mondd, hová szeretnél menni
 Ez a böngésző nem tud figyelni
 A böngésző hangja
 A természetes hangokhoz az Android-alkalmazás kell.
+Ez a doboz nem tudja a sebességedet, ezért vezetésnek számít. Módosítsd a Beállításokban, a „Ha a sebesség nem ismert” résznél.

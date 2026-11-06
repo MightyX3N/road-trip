@@ -435,3 +435,4 @@ Sag, wohin du willst
 Dieser Browser kann nicht zuhören
 Die Stimme des Browsers
 Natürliche Stimmen brauchen die Android-App.
+Diese Box kennt deine Geschwindigkeit nicht, also zählt es als Fahren. Ändere das in den Einstellungen unter „Wenn das Tempo unbekannt ist“.

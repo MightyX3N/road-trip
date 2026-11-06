@@ -433,3 +433,4 @@ Say where you want to go
 This browser can't listen
 The browser's voice
 Natural voices need the Android app.
+This box can't tell your speed, so it counts as driving. Change it in Settings under “When the speed isn't known”.

@@ -435,3 +435,4 @@ Povedzte, kam chcete ísť
 Tento prehliadač nevie počúvať
 Hlas prehliadača
 Prirodzené hlasy vyžadujú aplikáciu pre Android.
+Táto krabička nepozná vašu rýchlosť, takže sa to počíta ako jazda. Zmeňte to v Nastaveniach v časti „Keď rýchlosť nie je známa“.

@@ -435,3 +435,4 @@ Sebut ke mana anda mahu pergi
 Pelayar ini tidak dapat mendengar
 Suara pelayar
 Suara semula jadi memerlukan aplikasi Android.
+Kotak ini tidak tahu kelajuan anda, jadi ia dikira sebagai memandu. Tukar dalam Tetapan, di bawah “Apabila kelajuan tidak diketahui”.

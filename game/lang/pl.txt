@@ -435,3 +435,4 @@ Powiedz, dokąd chcesz jechać
 Ta przeglądarka nie potrafi słuchać
 Głos przeglądarki
 Naturalne głosy wymagają aplikacji na Androida.
+To urządzenie nie zna Twojej prędkości, więc liczy się to jako jazda. Zmień to w Ustawieniach, w „Gdy prędkość jest nieznana”.

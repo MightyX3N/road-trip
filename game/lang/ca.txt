@@ -435,3 +435,4 @@ Digues on vols anar
 Aquest navegador no pot escoltar
 La veu del navegador
 Les veus naturals necessiten l'app d'Android.
+Aquesta caixa no sap la teva velocitat, així que compta com a conducció. Canvia-ho a Configuració, a «Quan no se sap la velocitat».

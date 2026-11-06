@@ -1647,6 +1647,7 @@ end
 local function sendPanelLabels()
   android.panelLabels({ web = T("The browser is hidden while you drive"),
     video = T("Video hidden while driving. The sound keeps playing."),
+    noSpeed = T("This box can't tell your speed, so it counts as driving. Change it in Settings under “When the speed isn't known”."),
     webNote = android.isWeb and T("In the browser version, pages open in a new tab: most sites don't allow being shown inside another page.") or nil,
     webOpen = android.isWeb and T("Open") or nil })
 end

@@ -435,3 +435,4 @@ Sebutkan tujuan Anda
 Browser ini tidak bisa mendengarkan
 Suara browser
 Suara alami memerlukan aplikasi Android.
+Kotak ini tidak tahu kecepatan Anda, jadi dianggap sedang mengemudi. Ubah di Pengaturan, bagian “Saat kecepatan tidak diketahui”.

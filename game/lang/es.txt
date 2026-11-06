@@ -435,3 +435,4 @@ Di adónde quieres ir
 Este navegador no puede escuchar
 La voz del navegador
 Las voces naturales necesitan la app de Android.
+Esta caja no sabe tu velocidad, así que cuenta como conducir. Cámbialo en Ajustes, en «Cuando no se conoce la velocidad».

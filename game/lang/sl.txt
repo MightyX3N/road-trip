@@ -435,3 +435,4 @@ Povejte, kam želite iti
 Ta brskalnik ne more poslušati
 Glas brskalnika
 Naravni glasovi potrebujejo aplikacijo za Android.
+Ta naprava ne pozna vaše hitrosti, zato šteje kot vožnja. Spremenite to v Nastavitvah pod »Ko hitrost ni znana«.

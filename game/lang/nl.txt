@@ -435,3 +435,4 @@ Zeg waar je heen wilt
 Deze browser kan niet luisteren
 De stem van de browser
 Natuurlijke stemmen hebben de Android-app nodig.
+Dit kastje weet je snelheid niet, dus het telt als rijden. Wijzig dit in Instellingen onder ‘Als de snelheid onbekend is’.

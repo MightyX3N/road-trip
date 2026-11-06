@@ -435,3 +435,4 @@ Spune unde vrei să mergi
 Acest browser nu poate asculta
 Vocea browserului
 Vocile naturale au nevoie de aplicația Android.
+Această cutie nu îți cunoaște viteza, așa că se consideră că conduci. Schimbă asta în Setări, la „Când viteza nu e cunoscută”.

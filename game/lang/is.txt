@@ -435,3 +435,4 @@ Segðu hvert þú vilt fara
 Þessi vafri getur ekki hlustað
 Rödd vafrans
 Náttúrulegar raddir þurfa Android-appið.
+Boxið getur ekki séð hraðann þinn, svo það telst akstur. Breyttu því í Stillingum undir „Þegar hraðinn er óþekktur“.

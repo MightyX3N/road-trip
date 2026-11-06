@@ -435,3 +435,4 @@ Recite kamo želite ići
 Ovaj preglednik ne može slušati
 Glas preglednika
 Prirodni glasovi trebaju aplikaciju za Android.
+Ovaj uređaj ne zna vašu brzinu, pa se to računa kao vožnja. Promijenite to u Postavkama pod „Kad brzina nije poznata”.

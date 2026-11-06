@@ -435,3 +435,4 @@ Nereye gitmek istediğinizi söyleyin
 Bu tarayıcı dinleyemiyor
 Tarayıcının sesi
 Doğal sesler için Android uygulaması gerekir.
+Bu kutu hızınızı bilemiyor, bu yüzden sürüş sayılıyor. Bunu Ayarlar'da “Hız bilinmediğinde” bölümünden değiştirin.
