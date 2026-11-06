@@ -1101,7 +1101,7 @@ function M.init(deps)
   M.native = type(st) == "table" and st.attached == true
   M.engine = type(st) == "table" and st.engine or "classic"
   if M.native then
-    android.mapInit({ saveDir = love.filesystem.getSaveDirectory(), scale = ui.S, accent = config.get("accent") or "#F2A23A" })
+    android.mapInit({ saveDir = love.filesystem.getSaveDirectory(), accent = config.get("accent") or "#F2A23A" }) -- the pixel scale follows in M.sync
   end
 end
 
@@ -1291,7 +1291,9 @@ end
 function M.sync()
   if not M.native then return end
   local w = M.want
-  local S = ui.S
+  -- Android wants real pixels; ui.S is per LÖVE unit, and on a phone LÖVE's units are
+  -- density-scaled (a 3x screen has 3 pixels per unit). Panel placement does the same.
+  local S = ui.S * (lg.getDPIScale and lg.getDPIScale() or 1)
   if S ~= sent.scale then
     sent.scale = S
     android.mapInit({ scale = S })
