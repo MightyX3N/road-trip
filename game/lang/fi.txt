@@ -425,3 +425,13 @@ Tallenna
 Tyyli, 3D, offline-alueet
 Nopeuskamera
 Nopeuskamera edessä
+Tyyli, 3D
+Peittää videon ajon aikana
+Android-sovellus
+Aloitusnäkymä, offline-kartat, luonnolliset äänet
+Road Trip tässä selaimessa
+Selainversiossa sivut avautuvat uuteen välilehteen: useimmat sivustot eivät salli näyttämistä toisen sivun sisällä.
+Sano, minne haluat mennä
+Tämä selain ei osaa kuunnella
+Selaimen ääni
+Luonnolliset äänet vaativat Android-sovelluksen.

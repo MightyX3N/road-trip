@@ -425,3 +425,13 @@ Salva
 Stile, 3D, aree offline
 Autovelox
 Autovelox più avanti
+Stile, 3D
+Copre il video mentre guidi
+L'app Android
+Schermata Home, mappe offline, voci naturali
+Road Trip in questo browser
+Nella versione per browser le pagine si aprono in una nuova scheda: la maggior parte dei siti non consente di essere mostrata dentro un'altra pagina.
+Di' dove vuoi andare
+Questo browser non può ascoltare
+La voce del browser
+Le voci naturali richiedono l'app Android.

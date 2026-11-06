@@ -425,3 +425,13 @@ Saglabāt
 Stils, 3D, bezsaistes apgabali
 Ātruma kamera
 Priekšā ātruma kamera
+Stils, 3D
+Braukšanas laikā aizsedz video
+Android lietotne
+Sākuma ekrāns, bezsaistes kartes, dabiskas balsis
+Road Trip šajā pārlūkā
+Pārlūka versijā lapas atveras jaunā cilnē: vairums vietņu neļauj sevi rādīt citas lapas iekšpusē.
+Pasakiet, kurp vēlaties doties
+Šis pārlūks nevar klausīties
+Pārlūka balss
+Dabiskajām balsīm vajag Android lietotni.

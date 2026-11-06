@@ -425,3 +425,13 @@ Spara
 Stil, 3D, offlineområden
 Fartkamera
 Fartkamera framför
+Stil, 3D
+Täcker videon medan du kör
+Android-appen
+Hemskärm, offlinekartor, naturliga röster
+Road Trip i den här webbläsaren
+I webbläsarversionen öppnas sidor i en ny flik: de flesta sajter tillåter inte att visas inuti en annan sida.
+Säg vart du vill åka
+Den här webbläsaren kan inte lyssna
+Webbläsarens röst
+Naturliga röster kräver Android-appen.

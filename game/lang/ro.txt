@@ -425,3 +425,13 @@ Salvează
 Stil, 3D, zone offline
 Radar
 Radar în față
+Stil, 3D
+Acoperă videoclipul în timp ce conduci
+Aplicația Android
+Ecran de pornire, hărți offline, voci naturale
+Road Trip în acest browser
+În versiunea de browser, paginile se deschid într-o filă nouă: majoritatea site-urilor nu permit să fie afișate în altă pagină.
+Spune unde vrei să mergi
+Acest browser nu poate asculta
+Vocea browserului
+Vocile naturale au nevoie de aplicația Android.

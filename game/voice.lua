@@ -4,6 +4,7 @@
 
 local lg = love.graphics
 local T = require("lang").T
+local WEB = love.system.getOS() == "Web"
 
 local M = {}
 local android, config, ui, json, app, map, lang
@@ -110,7 +111,7 @@ function M.currentName()
     local v = find(config.get("voicePiper") or "")
     return v and (v[2] .. " · " .. T("Natural voice")) or T("Natural voice")
   end
-  return T("Android voice")
+  return WEB and T("The browser's voice") or T("Android voice")
 end
 
 ----------------------------------------------------------------------------------------------
@@ -206,14 +207,14 @@ end
 local function rows()
   local out = {
     { kind = "off", name = T("Off"), sub = T("No spoken directions") },
-    { kind = "system", name = T("Android voice"), sub = T("The voice built into this device"), sys = "" },
+    { kind = "system", name = WEB and T("The browser's voice") or T("Android voice"), sub = T("The voice built into this device"), sys = "" },
   }
   for i, v in ipairs(M.status.systemVoices or {}) do
     out[#out + 1] = { kind = "system", sys = v.name,
-      name = T("Android voice {n}", { n = i }) .. ((v.country and v.country ~= "") and (" · " .. v.country) or ""),
+      name = (WEB and v.name or T("Android voice {n}", { n = i })) .. ((v.country and v.country ~= "") and (" · " .. v.country) or ""),
       sub = v.network and T("Needs internet") or T("Works offline") }
   end
-  for _, v in ipairs(catalog()) do
+  for _, v in ipairs(WEB and {} or catalog()) do -- natural voices need the Android app
     local id = v[1]
     local dl = (M.status.downloads or {})[id]
     local sub
@@ -241,7 +242,7 @@ function M.draw(x0, y0, w, h)
   ui.pill({ kind = "voice:back" }, T("Back to Settings"), x - 8, y, 48, "off2")
   ui.text(T("Spoken directions"), "bold", 22, ui.c.text, x + 236, y + 10)
   y = y + 64
-  local note = #catalog() > 0 and T("Natural voices run on this device once downloaded. They come from the Piper project; each has its own licence.")
+  local note = WEB and T("Natural voices need the Android app.") or #catalog() > 0 and T("Natural voices run on this device once downloaded. They come from the Piper project; each has its own licence.")
     or T("There's no natural voice for this language yet; Android's voice speaks instead.")
   ui.textWrap(note, "semibold", 15, ui.c.muted, x, y, w - 64, 2)
   y = y + 48

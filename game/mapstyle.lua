@@ -1,6 +1,5 @@
 -- Road Trip: the Map settings screen. How the map looks (OpenFreeMap's styles and Waypoint's
 -- game-inspired worlds), 3D, which map engine, and offline areas.
--- know about traffic.
 
 local T = require("lang").T
 
@@ -117,11 +116,13 @@ function M.draw(x, y, w, h)
     lx, ry, lw, { T("Change"), { kind = "ms:engine" } })
   ry = ry + 76
   ui.rect(ui.c.line, lx + 20, ry, lw - 40, 1)
-  local areas = #(config.get("offlineAreas") or {})
-  row(T("Offline maps"), areas > 0 and T("{n} areas on this device", { n = areas }) or T("Download your area once; the map works without data"),
-    lx, ry, lw, { T("Open"), { kind = "offOpen" } })
-  ry = ry + 76
-  ui.rect(ui.c.line, lx + 20, ry, lw - 40, 1)
+  if not android.isWeb then -- a browser has no room for map downloads
+    local areas = #(config.get("offlineAreas") or {})
+    row(T("Offline maps"), areas > 0 and T("{n} areas on this device", { n = areas }) or T("Download your area once; the map works without data"),
+      lx, ry, lw, { T("Open"), { kind = "offOpen" } })
+    ry = ry + 76
+    ui.rect(ui.c.line, lx + 20, ry, lw - 40, 1)
+  end
   row(T("3D view"), native and T("Tilts the map while you drive") or T("Needs the MapLibre engine"), lx, ry, lw, nil,
     native and { config.get("map3D") == true, { kind = "ms:3d" } } or nil)
   ry = ry + 76
@@ -140,7 +141,7 @@ function M.draw(x, y, w, h)
   local cw = (rw - 44 - gap * (cols - 1)) / cols
   local ch = 150
   local gy = top + 50
-  local rows = math.max(1, math.floor((bottom - 70 - gy + gap) / (ch + gap)))
+  local rows = math.max(1, math.floor((bottom - 96 - gy + gap) / (ch + gap)))
   local per = rows * cols
   local pages = math.ceil(#items / per)
   M.page = math.max(1, math.min(pages, M.page))
@@ -175,7 +176,7 @@ function M.draw(x, y, w, h)
     ui.hit({ kind = "ms:pick", id = it.id }, cx, cy, cw, ch)
   end
   if pages > 1 then
-    local py = bottom - 64
+    local py = bottom - 88
     ui.pill(M.page > 1 and { kind = "ms:page", d = -1 } or nil, T("Previous"), rx + 22, py, 48, M.page > 1 and "off2" or "off")
     ui.text(T("{n} of {total}", { n = M.page, total = pages }), "semibold", 15, ui.c.muted, rx, py + 14, "center", rw)
     local nw = ui.textWidth(T("Next"), "bold", 16) + 44

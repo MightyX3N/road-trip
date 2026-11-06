@@ -425,3 +425,13 @@ Salvesta
 Stiil, 3D, võrguta alad
 Kiiruskaamera
 Ees on kiiruskaamera
+Stiil, 3D
+Katab sõidu ajal video
+Androidi rakendus
+Avakuva, võrguühenduseta kaardid, loomulikud hääled
+Road Trip selles brauseris
+Brauseriversioonis avanevad lehed uuel vahelehel: enamik saite ei luba end teise lehe sees näidata.
+Ütle, kuhu soovid minna
+See brauser ei oska kuulata
+Brauseri hääl
+Loomulikud hääled vajavad Androidi rakendust.

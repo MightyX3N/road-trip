@@ -439,12 +439,14 @@ end
 -- noticing; SDL then thinks it's still up and won't show it again, so close it first.
 -- Closing goes through Android's main thread, so it's shown again a moment later (ui.tick).
 function ui.openKeyboard()
+  if love.system.getOS() == "Web" then return require("android").call("keyboard", { on = true }) end
   love.keyboard.setTextInput(false)
   ui.keyboardAt = love.timer.getTime() + 0.15
 end
 
 function ui.closeKeyboard()
   ui.keyboardAt = nil
+  if love.system.getOS() == "Web" then return require("android").call("keyboard", { on = false }) end
   love.keyboard.setTextInput(false)
 end
 

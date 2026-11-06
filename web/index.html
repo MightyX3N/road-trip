@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Road Trip">
+<meta name="theme-color" content="#0E0F11">
+<title>Road Trip</title>
+<link rel="icon" href="icon.png">
+<link rel="apple-touch-icon" href="icon.png">
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css">
+<style>
+  :root { --bg: #0E0F11; --card: #17191C; --text: #E8E5DD; --muted: #8A8D93; --accent: #F2A23A; }
+  html, body { margin: 0; height: 100%; overflow: hidden; background: var(--bg); color: var(--text);
+    font-family: Manrope, system-ui, -apple-system, "Segoe UI", sans-serif; overscroll-behavior: none;
+    -webkit-user-select: none; user-select: none; -webkit-tap-highlight-color: transparent; }
+  body { position: fixed; inset: 0; }
+  #map { position: absolute; display: none; z-index: 0; }
+  /* clear of the iPhone's notch and home bar */
+  #canvas { position: fixed; left: env(safe-area-inset-left); top: 0;
+    width: calc(100vw - env(safe-area-inset-left) - env(safe-area-inset-right)) !important;
+    height: calc(100vh - env(safe-area-inset-bottom)) !important; height: calc(100dvh - env(safe-area-inset-bottom)) !important;
+    z-index: 1; touch-action: none; outline: none; visibility: hidden; }
+  #panel { position: absolute; display: none; z-index: 2; background: #000; overflow: hidden; border-radius: 0; }
+  #panel .note { position: absolute; inset: 0; display: none; align-items: center; justify-content: center; padding: 24px;
+    box-sizing: border-box; background: var(--card); text-align: center; }
+  #panel .note p { margin: 0 0 18px; color: var(--muted); font-size: 15px; line-height: 1.45; max-width: 420px; }
+  #panel .note button, #kbpill { font: inherit; font-weight: 700; color: #0E0F11; background: var(--accent); border: 0;
+    border-radius: 999px; padding: 12px 22px; font-size: 15px; cursor: pointer; max-width: 100%; overflow: hidden; text-overflow: ellipsis; }
+  #panel .cover { position: absolute; inset: 0; display: none; align-items: center; justify-content: center; padding: 24px;
+    background: var(--card); color: var(--text); font-weight: 700; font-size: 18px; text-align: center; }
+  #kbpill { position: fixed; right: 16px; bottom: calc(16px + env(safe-area-inset-bottom)); z-index: 5; display: none;
+    font-size: 22px; padding: 10px 18px; box-shadow: 0 6px 20px rgba(0,0,0,.5); }
+  #boot, #rotate { position: fixed; inset: 0; z-index: 10; display: flex; flex-direction: column; align-items: center;
+    justify-content: center; gap: 18px; background: var(--bg); text-align: center; padding: 24px; box-sizing: border-box; }
+  #boot h1, #rotate h1 { margin: 0; font-size: 28px; letter-spacing: -0.02em; }
+  #boot p, #rotate p { margin: 0; color: var(--muted); font-size: 15px; max-width: 420px; line-height: 1.45; }
+  #bar { width: 220px; height: 6px; border-radius: 3px; background: #22252A; overflow: hidden; }
+  #bar i { display: block; height: 100%; width: 0; background: var(--accent); transition: width .2s; }
+  #rotate { display: none; z-index: 11; }
+  @media (orientation: portrait) and (max-width: 900px) { body.running #rotate { display: flex; } }
+  .phone { width: 64px; height: 38px; border: 3px solid var(--text); border-radius: 8px; animation: turn 2.4s ease-in-out infinite; }
+  @keyframes turn { 0%, 30% { transform: rotate(90deg); } 60%, 100% { transform: rotate(0deg); } }
+  a { color: var(--accent); }
+</style>
+</head>
+<body>
+<div id="map"></div>
+<canvas id="canvas" oncontextmenu="event.preventDefault()"></canvas>
+<div id="panel"></div>
+
+<div id="boot">
+  <h1>Road Trip</h1>
+  <div id="bar"><i></i></div>
+  <p id="status">Loading…</p>
+</div>
+<div id="rotate">
+  <div class="phone"></div>
+  <h1>Turn your phone sideways</h1>
+  <p>Road Trip is made for a car's wide screen.</p>
+</div>
+
+<script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+<script src="bridge.js"></script>
+<script>
+  "use strict";
+  const status = document.getElementById("status"), bar = document.querySelector("#bar i");
+  function failed(text) {
+    status.innerHTML = text + '<br><br><a href="https://mightyx3n.github.io/road-trip/">Back to the Road Trip website</a>';
+    bar.parentNode.style.display = "none";
+  }
+  (function () {
+    const c = document.createElement("canvas");
+    if (!(c.getContext("webgl") || c.getContext("experimental-webgl"))) failed("This browser can't show Road Trip: it has no WebGL.");
+  })();
+  const canvas = document.getElementById("canvas");
+  canvas.addEventListener("webglcontextlost", e => { e.preventDefault(); failed("The graphics stopped. Reload the page to go on."); document.getElementById("boot").style.display = "flex"; }, false);
+  // first size: the window's, in real pixels (Road Trip follows later changes itself)
+  const dpr = window.devicePixelRatio || 1;
+  canvas.width = Math.round(canvas.clientWidth * dpr) || innerWidth;
+  canvas.height = Math.round(canvas.clientHeight * dpr) || innerHeight;
+  // stop the page scrolling or zooming under your fingers
+  document.addEventListener("touchmove", e => { if (e.target === canvas) e.preventDefault(); }, { passive: false });
+  document.addEventListener("gesturestart", e => e.preventDefault());
+  window.addEventListener("keydown", e => { if ([32, 37, 38, 39, 40].includes(e.keyCode) && e.target === document.body) e.preventDefault(); });
+
+  var Module = {
+    arguments: ["./game.love"],
+    INITIAL_MEMORY: 134217728,
+    printErr: console.error.bind(console),
+    print: console.log.bind(console),
+    canvas,
+    setStatus(text) {
+      const m = text && text.match(/\((\d+(\.\d+)?)\/(\d+)\)/);
+      if (m) bar.style.width = (100 * m[1] / m[3]) + "%";
+      if (text) status.textContent = text.replace(/\s*\(.*\)/, "").replace("Downloading data...", "Loading…").replace("Running...", "Starting…");
+    },
+    totalDependencies: 0,
+    monitorRunDependencies(left) {
+      this.totalDependencies = Math.max(this.totalDependencies, left);
+      if (!left) status.textContent = "Starting…";
+    },
+    // love.js calls this once the game's first frame is up
+    onRuntimeInitialized() {},
+  };
+  // the first frame drawn by Road Trip hides the loading screen
+  (function watch() {
+    const gl = canvas.getContext && Module.ctx;
+    if (Module.ctx || (window.GL && GL.currentContext)) {
+      setTimeout(() => { document.getElementById("boot").style.display = "none"; canvas.style.visibility = "visible"; document.body.classList.add("running"); }, 400);
+      return;
+    }
+    setTimeout(watch, 100);
+  })();
+  window.onerror = (msg) => { console.error(msg); };
+  RT.attach(Module);
+  function applicationLoad() { Love(Module); }
+</script>
+<script src="game.js"></script>
+<script async src="love.js" onload="applicationLoad()"></script>
+</body>
+</html>

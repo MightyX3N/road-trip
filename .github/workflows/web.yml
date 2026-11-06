@@ -1,0 +1,42 @@
+# Builds the browser version of Road Trip (the same Lua code, run by love.js) into app/ and
+# commits it, so GitHub Pages serves it at mightyx3n.github.io/road-trip/app/.
+name: Build web app
+
+on:
+  push:
+    branches: [main]
+    paths: [game/**, web/**, tools/build_web.sh, android/app/src/main/assets/waypoint/**, .github/workflows/web.yml]
+  workflow_dispatch:
+
+concurrency:
+  group: web-app
+  cancel-in-progress: true
+
+jobs:
+  web:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write   # to commit app/
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Build
+        run: bash tools/build_web.sh app
+
+      - name: Commit app/
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A app
+          if git diff --cached --quiet; then echo "no changes"; exit 0; fi
+          git commit -m "Web app from ${GITHUB_SHA::7} [skip ci]"
+          for i in 1 2 3; do
+            git pull --rebase origin main && git push origin HEAD:main && exit 0
+            sleep 5
+          done
+          exit 1

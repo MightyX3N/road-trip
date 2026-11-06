@@ -425,3 +425,13 @@ Lagre
 Stil, 3D, frakoblede områder
 Fotoboks
 Fotoboks foran
+Stil, 3D
+Dekker videoen mens du kjører
+Android-appen
+Startskjerm, frakoblede kart, naturlige stemmer
+Road Trip i denne nettleseren
+I nettleserversjonen åpnes sider i en ny fane: de fleste nettsteder tillater ikke å vises inne i en annen side.
+Si hvor du vil
+Denne nettleseren kan ikke lytte
+Nettleserens stemme
+Naturlige stemmer krever Android-appen.

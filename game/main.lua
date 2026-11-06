@@ -212,7 +212,7 @@ local function artImage(m)
   if img then return img end
   local path = "art/" .. m.art
   if not love.filesystem.getInfo(path) then return nil end
-  local ok, loaded = pcall(lg.newImage, path, { mipmaps = true })
+  local ok, loaded = pcall(lg.newImage, path, { mipmaps = not android.isWeb }) -- WebGL 1 has no mipmaps for odd sizes
   if not ok then return nil end
   loaded:setFilter("linear", "linear")
   state.art = { [m.art] = loaded } -- keep only the current track's art
@@ -397,7 +397,7 @@ local function iconFor(app)
   if not info then return nil end
   local cached = state.icons[app.icon]
   if cached and cached.modtime == info.modtime then return cached.img end
-  local ok, img = pcall(lg.newImage, path, { mipmaps = true })
+  local ok, img = pcall(lg.newImage, path, { mipmaps = not android.isWeb }) -- WebGL 1 has no mipmaps for odd sizes
   if not ok then return nil end
   img:setFilter("linear", "linear")
   state.icons[app.icon] = { img = img, modtime = info.modtime }
@@ -795,6 +795,13 @@ local function calendarWidget(x, y, w, h)
   ui.rect(ui.c.card, x, y, w, h, 26)
   local pad = 20
   local cal = state.cal
+  if android.isWeb then -- no calendar in a browser: today's date
+    local now = os.time()
+    ui.icon("calendar", x + pad, y + pad, 30, ui.c.accent, 1.6)
+    ui.text(ui.fit(lang.day(now), "bold", 16, w - pad * 2), "bold", 16, ui.c.text, x + pad, y + 66)
+    ui.text(os.date("%d", now):gsub("^0", "") .. ". " .. lang.month(now), "bold", 26, ui.c.text, x + pad, y + h - pad - 36)
+    return
+  end
   if not cal.permission then
     ui.hit({ kind = "calAllow" }, x, y, w, h)
     ui.icon("calendar", x + pad, y + pad, 30, ui.c.accent, 1.6)
@@ -1166,15 +1173,30 @@ local function drawSettings()
       button = { T("Check now"), { kind = "updateCheckNow" } } },
     { title = T("Check for updates on Wi-Fi only"), sub = T("Automatic checks, every 6 hours"),
       toggle = { config.get("updateWifiOnly") ~= false, { kind = "wifiOnly" } } },
-    { title = T("Map"), sub = T("Style, 3D, offline areas"), button = { T("Open"), { kind = "msOpen" } } },
+    { title = T("Map"), sub = android.isWeb and T("Style, 3D") or T("Style, 3D, offline areas"), button = { T("Open"), { kind = "msOpen" } } },
     { title = T("Diagnostics"), sub = T("What Keep in front saw and did"), button = { T("Show"), { kind = "diag" } } },
     { title = T("First-time setup"), sub = T("Permissions, favorite apps, Home and Work, radio"),
       button = { T("Start"), { kind = "setupStart" } } },
     { title = T("About Road Trip"), sub = "mightyx3n.github.io/road-trip", button = { T("Website"), { kind = "site" } } },
   }
+  if android.isWeb then
+    -- a browser can't be the home app, read other apps or update itself
+    local keep = { voiceOpen = true, ovVideo = true, ovNoSpeed = true }
+    local drop = { updateCheckNow = true, wifiOnly = true, diag = true }
+    local function kind(r) return (r.button and r.button[2].kind) or (r.toggle and r.toggle[2].kind) end
+    local l2, r2 = {}, {}
+    for _, r in ipairs(left) do if keep[kind(r)] then l2[#l2 + 1] = r end end
+    for _, r in ipairs(right) do if not drop[kind(r)] then r2[#r2 + 1] = r end end
+    for _, r in ipairs(l2) do
+      if kind(r) == "ovVideo" then r.sub = T("Covers the video while you drive") end
+    end
+    l2[#l2 + 1] = { title = T("The Android app"), sub = T("Home app, offline maps, natural voices"),
+      button = { T("Website"), { kind = "site" } } }
+    left, right = l2, r2
+  end
   local x, y = RAIL + 24, TOP + 24
   local colW = (W - RAIL - 48 - 20) / 2
-  settingsCard(T("Road Trip on this box"), left, x, y, colW)
+  settingsCard(android.isWeb and T("Road Trip in this browser") or T("Road Trip on this box"), left, x, y, colW)
   settingsCard(T("Yours"), right, x + colW + 20, y, colW)
 end
 
@@ -1397,9 +1419,10 @@ local function drawSetupPerms()
     { T("Location"), T("Your position on the map, and your speed"), state.setupLoc, { kind = "map:allow" }, "pin" },
     { T("Calendar"), T("Your next event on Home"), state.cal.permission, { kind = "calAllow" }, "calendar" },
   }
+  if android.isWeb then rows = { rows[5] } end
   local x, w = 56, W - 112
   local top, bottom, gap = 124, H - 120, 10
-  local rh = (bottom - top - gap * (#rows - 1)) / #rows
+  local rh = math.min(110, (bottom - top - gap * (#rows - 1)) / #rows)
   for i, r in ipairs(rows) do
     local y = top + (i - 1) * (rh + gap)
     ui.rect(ui.c.card, x, y, w, rh, 20)
@@ -1623,7 +1646,9 @@ end
 
 local function sendPanelLabels()
   android.panelLabels({ web = T("The browser is hidden while you drive"),
-    video = T("Video hidden while driving. The sound keeps playing.") })
+    video = T("Video hidden while driving. The sound keeps playing."),
+    webNote = android.isWeb and T("In the browser version, pages open in a new tab: most sites don't allow being shown inside another page.") or nil,
+    webOpen = android.isWeb and T("Open") or nil })
 end
 
 function love.draw()
@@ -1838,6 +1863,9 @@ local function activate(id, vx)
     state.screen = id.screen
     if id.screen == "map" then map.open() end
     if id.screen == "radio" then radio.open() end
+  elseif k == "voice" and android.isWeb then
+    -- in a browser the microphone button asks where to go
+    if android.voice() then toast(T("Say where you want to go")) else toast(T("This browser can't listen")) end
   elseif k == "voice" then android.voice()
   elseif k == "setHome" then
     state.menu = nil
@@ -2252,9 +2280,39 @@ local function timed(name, f, ...)
   if t > slowest then slowest, state.slowPart = t, name end
 end
 
+-- in a browser: follow the window's size, and take what's typed on the page's keyboard
+local webT, webSize = 1, nil
+local function webUpdate(dt)
+  for _, k in ipairs(android.call("keys") or {}) do
+    if k.t == "text" then love.textinput(k.v) elseif k.t == "key" then love.keypressed(k.v) end
+    if k.t == "heard" and k.v ~= "" then -- said into the microphone button: search for it
+      state.screen = "map"
+      map.open()
+      map.openSearch()
+      map.textinput(k.v)
+      ui.closeKeyboard()
+    end
+  end
+  webT = webT + dt
+  if webT < 0.5 then return end
+  webT = 0
+  local v = android.call("viewport")
+  if type(v) ~= "table" or not v.w or v.w < 50 or v.h < 50 then return end
+  local size = v.w .. "x" .. v.h
+  if size == webSize then return end
+  webSize = size
+  local w, h = lg.getDimensions()
+  if w ~= v.w or h ~= v.h or lg.getDPIScale() ~= (v.dpr or 1) then
+    -- sizes in CSS pixels; highdpi draws at the screen's real sharpness
+    love.window.setMode(v.w, v.h, { resizable = true, highdpi = true, vsync = 1 })
+  end
+  layout(lg.getDimensions())
+end
+
 function love.update(dt)
   slowest, state.slowPart = 0.1, nil
   ui.tick()
+  if android.isWeb then webUpdate(dt) end
   local splitMap = (state.screen == "web" or state.screen == "media") and navigating()
   timed("map", map.update, dt, state.screen == "map" or state.screen == "home" or splitMap)
   timed("jellyfin", jellyfin.update, dt)

@@ -423,3 +423,13 @@ Save
 Style, 3D, offline areas
 Speed camera
 Speed camera ahead
+Style, 3D
+Covers the video while you drive
+The Android app
+Home app, offline maps, natural voices
+Road Trip in this browser
+In the browser version, pages open in a new tab: most sites don't allow being shown inside another page.
+Say where you want to go
+This browser can't listen
+The browser's voice
+Natural voices need the Android app.

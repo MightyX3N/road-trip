@@ -87,6 +87,12 @@ ones, since they're all signed with the same key (`android/debug.keystore`).
 If the run fails with a red cross, open it, click the failed step, and send me the
 last 30 or so lines.
 
+## In a browser (and on iPhone)
+
+The same Lua code runs in a browser at **[mightyx3n.github.io/road-trip/app](https://mightyx3n.github.io/road-trip/app/)**, through [love.js](https://github.com/Davidobot/love.js) (LÖVE 11.4 compiled to WebAssembly). `web/bridge.js` answers the calls that go to `LauncherBridge.java` on Android: web requests, GPS, radio and Jellyfin audio, the browser's voice, a MapLibre GL JS map under the canvas, video, the keyboard and the microphone. The **Build web app** workflow rebuilds `app/` on every push that touches `game/` or `web/` (`tools/build_web.sh` does the same locally).
+
+Android-only, so hidden in the browser: being the home app, Keep in front, other apps' music and turns, offline maps, natural voices, updates. Web pages open in a new tab, because most sites refuse to be shown inside another page. On iPhone: Safari → Share → Add to Home Screen for full screen.
+
 ## Keep Road Trip in front (the guard)
 
 Some car boxes, the Ottocast included, switch back to their own launcher by themselves.

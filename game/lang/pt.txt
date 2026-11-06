@@ -425,3 +425,13 @@ Guardar
 Estilo, 3D, áreas offline
 Radar
 Radar à frente
+Estilo, 3D
+Tapa o vídeo enquanto conduz
+A app Android
+Ecrã inicial, mapas offline, vozes naturais
+Road Trip neste navegador
+Na versão para navegador, as páginas abrem num novo separador: a maioria dos sites não permite ser mostrada dentro de outra página.
+Diga para onde quer ir
+Este navegador não consegue ouvir
+A voz do navegador
+As vozes naturais precisam da app Android.

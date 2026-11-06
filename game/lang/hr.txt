@@ -425,3 +425,13 @@ Spremi
 Stil, 3D, izvanmrežna područja
 Radar
 Radar ispred
+Stil, 3D
+Prekriva video tijekom vožnje
+Aplikacija za Android
+Početni zaslon, izvanmrežne karte, prirodni glasovi
+Road Trip u ovom pregledniku
+U verziji za preglednik stranice se otvaraju u novoj kartici: većina web-mjesta ne dopušta prikaz unutar druge stranice.
+Recite kamo želite ići
+Ovaj preglednik ne može slušati
+Glas preglednika
+Prirodni glasovi trebaju aplikaciju za Android.

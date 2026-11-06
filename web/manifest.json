@@ -1,0 +1,10 @@
+{
+  "name": "Road Trip",
+  "short_name": "Road Trip",
+  "start_url": "./",
+  "display": "fullscreen",
+  "orientation": "landscape",
+  "background_color": "#0E0F11",
+  "theme_color": "#0E0F11",
+  "icons": [{ "src": "icon.png", "sizes": "512x512", "type": "image/png" }]
+}

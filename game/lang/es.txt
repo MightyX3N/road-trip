@@ -425,3 +425,13 @@ Guardar
 Estilo, 3D, zonas sin conexión
 Radar
 Radar a continuación
+Estilo, 3D
+Tapa el vídeo mientras conduces
+La app de Android
+Pantalla de inicio, mapas sin conexión, voces naturales
+Road Trip en este navegador
+En la versión para navegador, las páginas se abren en una pestaña nueva: la mayoría de los sitios no permiten mostrarse dentro de otra página.
+Di adónde quieres ir
+Este navegador no puede escuchar
+La voz del navegador
+Las voces naturales necesitan la app de Android.

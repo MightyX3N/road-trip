@@ -425,3 +425,13 @@ Enregistrer
 Style, 3D, zones hors ligne
 Radar
 Radar devant
+Style, 3D
+Masque la vidéo pendant la conduite
+L'application Android
+Écran d'accueil, cartes hors ligne, voix naturelles
+Road Trip dans ce navigateur
+Dans la version navigateur, les pages s'ouvrent dans un nouvel onglet : la plupart des sites refusent d'être affichés dans une autre page.
+Dites où vous voulez aller
+Ce navigateur ne peut pas écouter
+La voix du navigateur
+Les voix naturelles demandent l'application Android.

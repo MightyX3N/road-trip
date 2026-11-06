@@ -425,3 +425,13 @@ Kaydet
 Stil, 3D, çevrimdışı bölgeler
 Hız kamerası
 İleride hız kamerası
+Stil, 3D
+Sürüş sırasında videoyu kapatır
+Android uygulaması
+Ana ekran, çevrimdışı haritalar, doğal sesler
+Bu tarayıcıda Road Trip
+Tarayıcı sürümünde sayfalar yeni sekmede açılır: çoğu site başka bir sayfanın içinde gösterilmeye izin vermez.
+Nereye gitmek istediğinizi söyleyin
+Bu tarayıcı dinleyemiyor
+Tarayıcının sesi
+Doğal sesler için Android uygulaması gerekir.

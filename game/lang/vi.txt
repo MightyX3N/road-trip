@@ -425,3 +425,13 @@ Lưu
 Kiểu, 3D, khu vực ngoại tuyến
 Camera tốc độ
 Phía trước có camera tốc độ
+Kiểu, 3D
+Che video khi bạn lái xe
+Ứng dụng Android
+Màn hình chính, bản đồ ngoại tuyến, giọng tự nhiên
+Road Trip trong trình duyệt này
+Trong bản trình duyệt, trang mở ở thẻ mới: hầu hết các trang không cho hiển thị bên trong trang khác.
+Hãy nói nơi bạn muốn đến
+Trình duyệt này không nghe được
+Giọng của trình duyệt
+Giọng tự nhiên cần ứng dụng Android.

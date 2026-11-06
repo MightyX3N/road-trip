@@ -425,3 +425,13 @@ Simpan
 Gaya, 3D, area offline
 Kamera kecepatan
 Ada kamera kecepatan di depan
+Gaya, 3D
+Menutupi video saat Anda mengemudi
+Aplikasi Android
+Layar utama, peta offline, suara alami
+Road Trip di browser ini
+Di versi browser, halaman terbuka di tab baru: kebanyakan situs tidak mengizinkan ditampilkan di dalam halaman lain.
+Sebutkan tujuan Anda
+Browser ini tidak bisa mendengarkan
+Suara browser
+Suara alami memerlukan aplikasi Android.

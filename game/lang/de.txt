@@ -425,3 +425,13 @@ Speichern
 Stil, 3D, Offline-Gebiete
 Blitzer
 Blitzer voraus
+Stil, 3D
+Verdeckt das Video während der Fahrt
+Die Android-App
+Startbildschirm, Offline-Karten, natürliche Stimmen
+Road Trip in diesem Browser
+In der Browserversion öffnen sich Seiten in einem neuen Tab: Die meisten Websites erlauben nicht, in einer anderen Seite angezeigt zu werden.
+Sag, wohin du willst
+Dieser Browser kann nicht zuhören
+Die Stimme des Browsers
+Natürliche Stimmen brauchen die Android-App.

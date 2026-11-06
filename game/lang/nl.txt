@@ -425,3 +425,13 @@ Bewaren
 Stijl, 3D, offline gebieden
 Flitspaal
 Flitspaal in aantocht
+Stijl, 3D
+Bedekt de video tijdens het rijden
+De Android-app
+Startscherm, offline kaarten, natuurlijke stemmen
+Road Trip in deze browser
+In de browserversie openen pagina's in een nieuw tabblad: de meeste sites staan niet toe dat ze in een andere pagina worden getoond.
+Zeg waar je heen wilt
+Deze browser kan niet luisteren
+De stem van de browser
+Natuurlijke stemmen hebben de Android-app nodig.

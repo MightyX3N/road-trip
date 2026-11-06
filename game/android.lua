@@ -1,10 +1,11 @@
 -- Road Trip: bridge to the Java side (LauncherBridge.java) through LuaJIT FFI + JNI.
+-- In a browser (love.js) the same calls go to web/bridge.js, which does what the browser can.
 -- On desktop it returns stub data so the UI can be worked on in plain LÖVE.
 
-local ffi = require("ffi")
+local hasFfi, ffi = pcall(require, "ffi")
 local utf8 = require("utf8")
 
-local M = { isAndroid = love.system.getOS() == "Android" }
+local M = { isAndroid = love.system.getOS() == "Android", isWeb = love.system.getOS() == "Web" }
 
 ----------------------------------------------------------------------------------------------
 -- JSON (small, strict enough for our own bridge traffic)
@@ -488,9 +489,30 @@ end
 -- API
 ----------------------------------------------------------------------------------------------
 
+-- the browser: the request goes out on stdout (love.js hands it to web/bridge.js at once), and
+-- bridge.js has written the answer to a file in the save folder before print returns
+local webReady = false
+local function webCall(method, args)
+  if not webReady then
+    webReady = true
+    love.filesystem.write("__rt_reply", "") -- makes sure the save folder exists and is mounted
+  end
+  print("\1RT" .. json.encode({ m = method, a = args or {} }))
+  local body = love.filesystem.read("__rt_reply")
+  if not body or body == "" then return nil end
+  local ok, r = pcall(json.decode, body)
+  if not ok or type(r) ~= "table" then return nil end
+  return r.data
+end
+
+if M.isWeb then
+  love.system.openURL = function(url) return webCall("openURL", { url = url }) end
+end
+
 function M.call(method, args)
-  if not M.isAndroid then return stubCall(method, args) end
-  return javaCall(method, args)
+  if M.isAndroid then return javaCall(method, args) end
+  if M.isWeb then return webCall(method, args) end
+  return stubCall(method, args)
 end
 
 -- returns { version, apps? }; apps is left out when `known` is already the current version

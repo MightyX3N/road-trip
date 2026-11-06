@@ -425,3 +425,13 @@ Simpan
 Gaya, 3D, kawasan luar talian
 Kamera laju
 Kamera laju di hadapan
+Gaya, 3D
+Menutup video semasa anda memandu
+Aplikasi Android
+Skrin utama, peta luar talian, suara semula jadi
+Road Trip dalam pelayar ini
+Dalam versi pelayar, halaman dibuka dalam tab baharu: kebanyakan laman tidak membenarkan dipaparkan di dalam halaman lain.
+Sebut ke mana anda mahu pergi
+Pelayar ini tidak dapat mendengar
+Suara pelayar
+Suara semula jadi memerlukan aplikasi Android.

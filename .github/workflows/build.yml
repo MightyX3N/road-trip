@@ -5,7 +5,7 @@ name: Build APK
 on:
   push:
     branches: [main]
-    paths-ignore: [index.html, README.md]   # website and docs changes don't need a new APK
+    paths-ignore: [index.html, README.md, web/**, app/**, tools/build_web.sh, .github/workflows/web.yml]   # website, docs and the web app don't need a new APK
   workflow_dispatch:
 
 jobs:

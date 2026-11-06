@@ -425,3 +425,13 @@ Mentés
 Stílus, 3D, offline területek
 Traffipax
 Traffipax előttünk
+Stílus, 3D
+Vezetés közben eltakarja a videót
+Az Android-alkalmazás
+Kezdőképernyő, offline térképek, természetes hangok
+Road Trip ebben a böngészőben
+A böngészős változatban az oldalak új lapon nyílnak meg: a legtöbb webhely nem engedi, hogy egy másik oldalon belül jelenjen meg.
+Mondd, hová szeretnél menni
+Ez a böngésző nem tud figyelni
+A böngésző hangja
+A természetes hangokhoz az Android-alkalmazás kell.

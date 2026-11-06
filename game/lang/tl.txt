@@ -425,3 +425,13 @@ I-save
 Istilo, 3D, offline na lugar
 Speed camera
 May speed camera sa unahan
+Estilo, 3D
+Tinatakpan ang video habang nagmamaneho ka
+Ang Android app
+Home screen, offline na mapa, natural na boses
+Road Trip sa browser na ito
+Sa browser version, bumubukas ang mga page sa bagong tab: karamihan ng site ay ayaw maipakita sa loob ng ibang page.
+Sabihin kung saan mo gustong pumunta
+Hindi makinig ang browser na ito
+Boses ng browser
+Kailangan ng Android app ang mga natural na boses.

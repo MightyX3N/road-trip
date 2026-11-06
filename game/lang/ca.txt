@@ -425,3 +425,13 @@ Desa
 Estil, 3D, zones fora de línia
 Radar
 Radar més endavant
+Estil, 3D
+Tapa el vídeo mentre condueixes
+L'app d'Android
+Pantalla d'inici, mapes sense connexió, veus naturals
+Road Trip en aquest navegador
+A la versió de navegador, les pàgines s'obren en una pestanya nova: la majoria de llocs no permeten mostrar-se dins d'una altra pàgina.
+Digues on vols anar
+Aquest navegador no pot escoltar
+La veu del navegador
+Les veus naturals necessiten l'app d'Android.

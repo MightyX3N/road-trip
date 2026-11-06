@@ -425,3 +425,13 @@ Gem
 Stil, 3D, offlineområder
 Fotovogn
 Fotovogn forude
+Stil, 3D
+Dækker videoen, mens du kører
+Android-appen
+Startskærm, offlinekort, naturlige stemmer
+Road Trip i denne browser
+I browserversionen åbner sider i en ny fane: de fleste sider tillader ikke at blive vist inde i en anden side.
+Sig, hvor du vil hen
+Denne browser kan ikke lytte
+Browserens stemme
+Naturlige stemmer kræver Android-appen.

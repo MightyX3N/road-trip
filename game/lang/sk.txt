@@ -425,3 +425,13 @@ Uložiť
 Štýl, 3D, offline oblasti
 Radar
 Pozor, radar
+Štýl, 3D
+Zakryje video počas jazdy
+Aplikácia pre Android
+Domovská obrazovka, offline mapy, prirodzené hlasy
+Road Trip v tomto prehliadači
+Vo verzii pre prehliadač sa stránky otvárajú na novej karte: väčšina webov nedovolí zobrazenie vnútri inej stránky.
+Povedzte, kam chcete ísť
+Tento prehliadač nevie počúvať
+Hlas prehliadača
+Prirodzené hlasy vyžadujú aplikáciu pre Android.

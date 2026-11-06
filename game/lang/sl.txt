@@ -425,3 +425,13 @@ Shrani
 Slog, 3D, območja brez povezave
 Radar
 Radar pred vami
+Slog, 3D
+Med vožnjo prekrije video
+Aplikacija za Android
+Začetni zaslon, zemljevidi brez povezave, naravni glasovi
+Road Trip v tem brskalniku
+V različici za brskalnik se strani odprejo v novem zavihku: večina spletnih mest ne dovoli prikaza znotraj druge strani.
+Povejte, kam želite iti
+Ta brskalnik ne more poslušati
+Glas brskalnika
+Naravni glasovi potrebujejo aplikacijo za Android.

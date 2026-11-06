@@ -425,3 +425,13 @@ Zapisz
 Styl, 3D, obszary offline
 Fotoradar
 Fotoradar przed tobą
+Styl, 3D
+Zasłania wideo podczas jazdy
+Aplikacja na Androida
+Ekran główny, mapy offline, naturalne głosy
+Road Trip w tej przeglądarce
+W wersji przeglądarkowej strony otwierają się w nowej karcie: większość witryn nie pozwala na wyświetlanie wewnątrz innej strony.
+Powiedz, dokąd chcesz jechać
+Ta przeglądarka nie potrafi słuchać
+Głos przeglądarki
+Naturalne głosy wymagają aplikacji na Androida.

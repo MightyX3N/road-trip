@@ -425,3 +425,13 @@ Išsaugoti
 Stilius, 3D, neprisijungus naudojamos sritys
 Greičio kamera
 Priekyje greičio kamera
+Stilius, 3D
+Vairuojant uždengia vaizdo įrašą
+Android programa
+Pradžios ekranas, žemėlapiai be ryšio, natūralūs balsai
+Road Trip šioje naršyklėje
+Naršyklės versijoje puslapiai atsidaro naujame skirtuke: dauguma svetainių neleidžia būti rodomos kito puslapio viduje.
+Pasakykite, kur norite vykti
+Ši naršyklė negali klausytis
+Naršyklės balsas
+Natūraliems balsams reikia Android programos.
