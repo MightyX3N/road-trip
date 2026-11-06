@@ -418,3 +418,14 @@ Vivace
 Chiaro
 Scuro
 Colori di giorno, scuro di notte
+Impossibile avviare la digitazione dal telefono
+Digitato dal telefono
+Scrivi sul telefono
+In: {field}
+Inquadra il codice con la fotocamera del telefono.
+Scrivi o incolla nella pagina che si apre e tocca Invia.
+Arriva qui come se l'avessi digitato. Funziona con qualsiasi connessione; telefono e box non devono essere sulla stessa rete.
+Connesso al relay. In attesa del telefono…
+Relay non raggiungibile; controlla la connessione del box
+{n} ricevuto/i dal telefono
+Cifrato sul telefono; il relay ntfy.sh vede solo testo illeggibile.

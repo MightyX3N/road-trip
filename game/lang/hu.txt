@@ -418,3 +418,14 @@ Színes
 Világos
 Sötét
 Nappal színes, éjjel sötét
+Nem sikerült elindítani a telefonról gépelést
+Telefonról beírva
+Gépelj a telefonon
+Ide: {field}
+Olvasd be a kódot a telefon kamerájával.
+Írj vagy illessz be a megnyíló oldalon, és koppints a Küldésre.
+Úgy érkezik ide, mintha itt gépelted volna. Bármilyen kapcsolaton megy; a telefonnak és az eszköznek nem kell egy hálózaton lennie.
+Kapcsolódva a továbbítóhoz. Várakozás a telefonra…
+A továbbító nem érhető el; ellenőrizd az eszköz kapcsolatát
+{n} érkezett a telefonról
+A telefonon titkosítva; az ntfy.sh továbbító csak összekevert szöveget lát.

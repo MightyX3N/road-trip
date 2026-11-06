@@ -418,3 +418,14 @@ Hell
 Licht
 Dunkel
 Tagsüber farbig, nachts dunkel
+Tippen vom Handy konnte nicht starten
+Vom Handy getippt
+Auf dem Handy tippen
+In: {field}
+Scanne den Code mit der Handykamera.
+Tippe oder füge auf der Seite ein, die sich öffnet, und tippe auf Senden.
+Es kommt hier an, als hättest du es getippt. Geht mit jeder Verbindung; Handy und Box brauchen nicht dasselbe Netz.
+Mit dem Relay verbunden. Warte auf dein Handy…
+Relay nicht erreichbar; Verbindung der Box prüfen
+{n} vom Handy empfangen
+Auf dem Handy verschlüsselt; das ntfy.sh-Relay sieht nur unlesbaren Text.

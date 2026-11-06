@@ -1580,6 +1580,133 @@ local function drawMenu()
   end
 end
 
+----------------------------------------------------------------------------------------------
+-- typing from your phone (Relay.java): a QR code opens a page on Road Trip's website that
+-- sends encrypted text through the ntfy.sh relay; it arrives here as if typed
+
+-- the text field that's open, if any: its name for the phone's page
+local function fieldOpen()
+  if state.typing and (state.screen == "apps" or state.screen == "favs") then return T("Search apps") end
+  if state.screen == "map" and map.wantsText() then return T("Where to?") end
+  if state.screen == "radio" and radio.wantsText() then return T("Station name") end
+  if state.screen == "media" and jellyfin.wantsText() then return "Jellyfin" end
+  if state.screen == "web" and browser.wantsText() then return T("Search or type an address") end
+  if state.screen == "mapset" and mapstyle.wantsText() then return T("Mapbox key") end
+  if state.city then return T("Type a city or town") end
+  return nil
+end
+
+local function closeRemote()
+  if state.remote then android.relayStop() end
+  state.remote = nil
+  state.dirty = true
+end
+
+local function openRemote()
+  local label = fieldOpen()
+  if not label then return end
+  local r = android.relayStart(label)
+  if type(r) ~= "table" or not r.qr then
+    toast(T("Couldn't start typing from your phone"))
+    return
+  end
+  ui.closeKeyboard() -- the field stays open; the phone types into it
+  state.remote = { label = label, url = r.url, qr = r.qr, screen = state.screen, polled = 0, count = 0, status = "connecting" }
+end
+
+local function updateRemote()
+  local rm = state.remote
+  if not rm then return end
+  if state.screen ~= rm.screen or not fieldOpen() then closeRemote() return end
+  local now = love.timer.getTime()
+  if now - rm.polled < 0.25 then return end
+  rm.polled = now
+  local r = android.relayPoll()
+  if type(r) ~= "table" then return end
+  if r.status ~= rm.status then rm.status, state.dirty = r.status, true end
+  for _, m in ipairs(r.msgs or {}) do
+    if m.t == "text" and type(m.v) == "string" then
+      love.textinput(m.v)
+      rm.count = rm.count + 1
+      if m.enter then love.keypressed("return") end
+    elseif m.t == "enter" then
+      love.keypressed("return")
+    elseif m.t == "backspace" then
+      love.keypressed("backspace")
+    end
+    state.dirty = true
+    -- Enter can close the field (a search starts, a key is checked): then we're done
+    if not fieldOpen() then
+      closeRemote()
+      toast(T("Typed from your phone"))
+      return
+    end
+  end
+end
+
+local function drawRemoteButton()
+  if state.remote or not fieldOpen() then return end
+  local label = T("Type on your phone")
+  local pw = ui.textWidth(label, "bold", 16) + 72
+  local x, y = W - pw - 24, 12
+  ui.rect(ui.c.chipHi, x, y, pw, 52, 26)
+  ui.icon("phone", x + 18, y + 13, 26, ui.c.accent, 2)
+  ui.text(label, "bold", 16, ui.c.text2, x + 52, y + (52 - ui.fontHeight("bold", 16)) / 2)
+  ui.hit({ kind = "remoteOpen" }, x, y, pw, 52)
+end
+
+local function drawRemote()
+  local rm = state.remote
+  if not rm then return end
+  lg.setColor(0, 0, 0, 0.72)
+  lg.rectangle("fill", 0, 0, W, H)
+  ui.hit({ kind = "none" }, 0, 0, W, H)
+  local cw, ch = math.min(980, W - 80), 500
+  local cx, cy = (W - cw) / 2, (H - ch) / 2
+  ui.rect(ui.c.card, cx, cy, cw, ch, 28)
+  -- the QR code, on white with a quiet border
+  local n = #rm.qr
+  local qs = ch - 80
+  local cell = math.floor(qs / (n + 8) * 4) / 4
+  local size = cell * (n + 8)
+  local qx, qy = cx + 40, cy + (ch - size) / 2
+  ui.rect(ui.hex("FFFFFF"), qx, qy, size, size, 16)
+  lg.setColor(0, 0, 0, 1)
+  for r = 1, n do
+    local row = rm.qr[r]
+    for c = 1, #row do
+      if row:sub(c, c) == "1" then
+        lg.rectangle("fill", qx + (c + 3) * cell, qy + (r + 3) * cell, cell + 0.05, cell + 0.05)
+      end
+    end
+  end
+  local tx = qx + size + 36
+  local tw = cx + cw - 36 - tx
+  ui.text(ui.fit(T("Type on your phone"), "bold", 26, tw), "bold", 26, ui.c.text, tx, cy + 40)
+  ui.text(ui.fit(T("Into: {field}", { field = rm.label }), "semibold", 16, tw), "semibold", 16, ui.c.accent, tx, cy + 82)
+  local steps = {
+    T("Scan the code with your phone's camera."),
+    T("Type or paste on the page that opens, and tap Send."),
+    T("It arrives here as if you typed it. Works on any connection; your phone and the box don't need the same network."),
+  }
+  local sy = cy + 124
+  for i, st in ipairs(steps) do
+    ui.circle(ui.c.accentBg, tx + 15, sy + 14, 15)
+    ui.text(tostring(i), "bold", 15, ui.c.accent, tx, sy + 14 - ui.fontHeight("bold", 15) / 2, "center", 30)
+    local _, lines = ui.font("semibold", 16):getWrap(st, (tw - 44) * ui.S)
+    ui.textWrap(st, "semibold", 16, ui.c.text2, tx + 44, sy + 2, tw - 44, 3)
+    sy = sy + 16 + math.max(1, math.min(3, #lines)) * ui.fontHeight("semibold", 16)
+  end
+  local status = rm.status == "ready" and T("Connected to the relay. Waiting for your phone…")
+    or rm.status == "error" and T("Can't reach the relay; check the box's connection")
+    or T("Connecting…")
+  if rm.count > 0 then status = T("{n} received from your phone", { n = rm.count }) end
+  ui.textWrap(status, "semibold", 14, rm.status == "error" and ui.hex("F09A8A") or ui.c.muted, tx, cy + ch - 128, tw, 2)
+  pill({ kind = "remoteClose" }, T("Done"), tx, cy + ch - 76, 52, "accent")
+  ui.text(ui.fit(T("Encrypted on your phone; the ntfy.sh relay only sees scrambled text."), "semibold", 12, tw), "semibold", 12, ui.c.dim,
+    tx, cy + ch - 18 - ui.fontHeight("semibold", 12))
+end
+
 local function drawToast()
   local t = state.toast
   if not t then return end
@@ -1603,7 +1730,7 @@ end
 -- screen left room for it. Only tells Android when something changed.
 local function syncPanel()
   local want = state.panelWant
-  if state.menu or state.city or not state.foreground then want = nil end
+  if state.menu or state.city or state.remote or not state.foreground then want = nil end
   local key
   if want then
     local ps = select(2, lg.getPixelDimensions()) / DESIGN_H -- real pixels per virtual unit
@@ -1672,6 +1799,8 @@ function love.draw()
   end
   drawMenu()
   drawCityDialog()
+  drawRemoteButton()
+  drawRemote()
   drawToast()
   lg.pop()
   map.endFrame()
@@ -1748,6 +1877,8 @@ local function activate(id, vx)
     state.screen = "offline"
     offline.open()
   elseif k == "off:back" then state.screen = "mapset"
+  elseif k == "remoteOpen" then openRemote()
+  elseif k == "remoteClose" then closeRemote()
   elseif k == "msOpen" or k == "mapStyles" then
     state.mapsetFrom = k == "mapStyles" and "map" or "settings"
     state.screen = "mapset"
@@ -2154,7 +2285,9 @@ function love.keypressed(key)
   end
   if key ~= "escape" then return end
   -- Android's back button arrives as "escape"
-  if state.screen == "setup" then
+  if state.remote then
+    closeRemote()
+  elseif state.screen == "setup" then
     if state.setup and state.setup.step > 1 then setupGo(state.setup.step - 1) end
   elseif state.screen == "favs" and state.setup then
     setupGo(1)
@@ -2255,6 +2388,7 @@ end
 function love.update(dt)
   slowest, state.slowPart = 0.1, nil
   ui.tick()
+  updateRemote()
   local splitMap = (state.screen == "web" or state.screen == "media") and navigating()
   timed("map", map.update, dt, state.screen == "map" or state.screen == "home" or splitMap)
   timed("jellyfin", jellyfin.update, dt)

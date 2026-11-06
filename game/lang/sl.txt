@@ -418,3 +418,14 @@ Svetel
 Svetli
 Temni
 Podnevi barvni, ponoči temni
+Tipkanja s telefona ni bilo mogoče začeti
+Natipkano s telefona
+Tipkajte na telefonu
+V: {field}
+Kodo poskenirajte s kamero telefona.
+Tipkajte ali prilepite na strani, ki se odpre, in tapnite Pošlji.
+Prispe sem, kot da bi tipkali tukaj. Deluje z vsako povezavo; telefon in naprava ne potrebujeta istega omrežja.
+Povezano s posrednikom. Čakam na telefon …
+Posrednik ni dosegljiv; preverite povezavo naprave
+S telefona prejeto: {n}
+Šifrirano na telefonu; posrednik ntfy.sh vidi le nečitljivo besedilo.

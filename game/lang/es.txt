@@ -418,3 +418,14 @@ Brillante
 Claro
 Oscuro
 Color de día, oscuro de noche
+No se pudo empezar a escribir desde el móvil
+Escrito desde tu móvil
+Escribe en tu móvil
+En: {field}
+Escanea el código con la cámara del móvil.
+Escribe o pega en la página que se abre y toca Enviar.
+Llega aquí como si lo hubieras escrito. Funciona con cualquier conexión; el móvil y la caja no necesitan la misma red.
+Conectado al relé. Esperando a tu móvil…
+No se puede contactar con el relé; revisa la conexión de la caja
+{n} recibido(s) del móvil
+Cifrado en tu móvil; el relé ntfy.sh solo ve texto ilegible.

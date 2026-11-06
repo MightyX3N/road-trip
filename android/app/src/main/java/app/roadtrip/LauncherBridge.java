@@ -84,6 +84,15 @@ public final class LauncherBridge {
                 case "mapMarkers":
                     data = MapNative.markers(a);
                     break;
+                case "relayStart":
+                    data = Relay.start(a.optString("label"));
+                    break;
+                case "relayPoll":
+                    data = Relay.poll();
+                    break;
+                case "relayStop":
+                    data = Relay.stop();
+                    break;
                 case "logSlow":
                     Watchdog.add(a.optString("text"));
                     data = true;

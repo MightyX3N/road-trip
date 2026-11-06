@@ -418,3 +418,14 @@ Bjart
 Ljóst
 Dökkt
 Litir á daginn, dökkt á nóttunni
+Ekki tókst að hefja innslátt úr síma
+Slegið inn úr símanum
+Skrifaðu í símann
+Í: {field}
+Skannaðu kóðann með myndavél símans.
+Skrifaðu eða límdu á síðuna sem opnast og ýttu á Senda.
+Það birtist hér eins og þú hafir skrifað það. Virkar á hvaða tengingu sem er; síminn og boxið þurfa ekki sama net.
+Tengt við milliliðinn. Bíð eftir símanum…
+Næ ekki í milliliðinn; athugaðu tengingu boxins
+{n} móttekið úr símanum
+Dulkóðað í símanum; ntfy.sh-milliliðurinn sér aðeins ruglaðan texta.

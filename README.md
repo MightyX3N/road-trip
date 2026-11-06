@@ -49,6 +49,12 @@ switches back to Road Trip's own simpler map. An optional Mapbox key (yours, kep
 device) gives routes with live traffic, and the route line turns yellow, orange or red where
 it's slow; without it, routes come from the free servers below.
 
+Long text (a Mapbox key, a web address) can be typed on your phone instead: when a text field
+is open, **Type on your phone** shows a QR code. It opens a page on this site that encrypts what
+you type on the phone (AES-GCM, with a key that's only in the QR code) and sends it through
+[ntfy.sh](https://ntfy.sh), a free public relay, so it works even when the box is on its own SIM.
+The relay only sees scrambled text, and the channel closes with the field.
+
 Settings → Map → Offline maps downloads an area so the map works without data: every street
 around a place (about 60 km across), the main roads of a bigger region (about 250 km), or a
 band along the route you've planned. Each download keeps to OpenFreeMap's limit for offline

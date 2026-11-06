@@ -418,3 +418,14 @@ Parlak
 Açık
 Koyu
 Gündüz renkli, gece koyu
+Telefondan yazma başlatılamadı
+Telefondan yazıldı
+Telefonda yaz
+Alan: {field}
+Kodu telefonun kamerasıyla tarayın.
+Açılan sayfada yazın veya yapıştırın, sonra Gönder'e dokunun.
+Burada sizin yazmışsınız gibi görünür. Her bağlantıda çalışır; telefonun ve cihazın aynı ağda olması gerekmez.
+Aktarıcıya bağlandı. Telefon bekleniyor…
+Aktarıcıya ulaşılamıyor; cihazın bağlantısını kontrol edin
+Telefondan {n} alındı
+Telefonda şifrelenir; ntfy.sh aktarıcısı yalnızca karışık metin görür.

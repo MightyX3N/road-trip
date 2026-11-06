@@ -402,6 +402,16 @@ local function stubCall(method, args)
     return "DK"
   elseif method == "overlayStatus" then
     return { canDraw = false, guard = false, moving = false, why = "desktop", front = "", covering = false }
+  elseif method == "relayStart" then
+    stubRelay = { label = args.label, msgs = {} }
+    return { url = "https://mightyx3n.github.io/road-trip/type.html#roadtrip-test.key", qr = { "1111111", "1000001", "1011101", "1011101", "1011101", "1000001", "1111111" } }
+  elseif method == "relayPoll" then
+    local m = stubRelay and stubRelay.msgs or {}
+    if stubRelay then stubRelay.msgs = {} end
+    return { status = "ready", msgs = m }
+  elseif method == "relayStop" then
+    stubRelay = nil
+    return true
   elseif method == "mapStatus" then
     return { attached = stubNative == true, engine = stubNative and "maplibre" or "classic", ready = true }
   elseif method:sub(1, 3) == "map" and (method == "mapInit" or method == "mapShow" or method == "mapHide" or method == "mapCamera"
@@ -518,6 +528,9 @@ function M.mapDownloadCancel() return M.call("mapDownloadCancel") end
 function M.storage(path) return M.call("storage", { path = path }) end
 function M.deleteTree(path) return M.call("deleteTree", { path = path }) end
 function M.mapStatus() return M.call("mapStatus") end
+function M.relayStart(label) return M.call("relayStart", { label = label }) end
+function M.relayPoll() return M.call("relayPoll") end
+function M.relayStop() return M.call("relayStop") end
 function M.mapInit(a) return M.call("mapInit", a) end
 function M.mapSetEngine(e) return M.call("mapSetEngine", { engine = e }) end
 function M.mapShow(x, y, w, h) return M.call("mapShow", { x = x, y = y, w = w, h = h }) end

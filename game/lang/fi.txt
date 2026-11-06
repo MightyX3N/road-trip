@@ -418,3 +418,14 @@ Kirkas
 Vaalea
 Tumma
 Värikäs päivällä, tumma yöllä
+Puhelimesta kirjoittamista ei voitu aloittaa
+Kirjoitettu puhelimesta
+Kirjoita puhelimella
+Kenttään: {field}
+Skannaa koodi puhelimen kameralla.
+Kirjoita tai liitä avautuvalle sivulle ja napauta Lähetä.
+Teksti tulee tänne kuin olisit kirjoittanut sen. Toimii millä tahansa yhteydellä; puhelimen ja laitteen ei tarvitse olla samassa verkossa.
+Yhdistetty välityspalvelimeen. Odotetaan puhelinta…
+Välityspalvelimeen ei saada yhteyttä; tarkista laitteen yhteys
+{n} vastaanotettu puhelimesta
+Salattu puhelimessa; ntfy.sh-välitin näkee vain sekavaa tekstiä.

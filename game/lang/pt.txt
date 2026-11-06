@@ -418,3 +418,14 @@ Vivo
 Claro
 Escuro
 Cor de dia, escuro à noite
+Não foi possível começar a escrever a partir do telemóvel
+Escrito a partir do telemóvel
+Escreva no telemóvel
+Em: {field}
+Leia o código com a câmara do telemóvel.
+Escreva ou cole na página que abre e toque em Enviar.
+Chega aqui como se o tivesse escrito. Funciona com qualquer ligação; o telemóvel e a caixa não precisam da mesma rede.
+Ligado ao relay. À espera do telemóvel…
+Não é possível contactar o relay; verifique a ligação da caixa
+{n} recebido(s) do telemóvel
+Encriptado no telemóvel; o relay ntfy.sh só vê texto ilegível.

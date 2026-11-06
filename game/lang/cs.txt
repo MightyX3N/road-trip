@@ -418,3 +418,14 @@ Jasná
 Světlá
 Tmavá
 Ve dne barevná, v noci tmavá
+Psaní z telefonu se nepodařilo spustit
+Napsáno z telefonu
+Pište na telefonu
+Do: {field}
+Naskenujte kód fotoaparátem telefonu.
+Napište nebo vložte text na stránce, která se otevře, a klepněte na Odeslat.
+Objeví se tu, jako byste to napsali. Funguje na jakémkoli připojení; telefon a zařízení nemusí být ve stejné síti.
+Připojeno k přenosovému serveru. Čekám na telefon…
+Přenosový server je nedostupný; zkontrolujte připojení zařízení
+Z telefonu přijato: {n}
+Šifrováno v telefonu; přenosový server ntfy.sh vidí jen nečitelný text.

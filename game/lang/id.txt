@@ -418,3 +418,14 @@ Cerah
 Terang
 Gelap
 Berwarna siang hari, gelap malam hari
+Tidak bisa memulai mengetik dari ponsel
+Diketik dari ponsel
+Ketik di ponsel
+Ke: {field}
+Pindai kode dengan kamera ponsel.
+Ketik atau tempel di halaman yang terbuka, lalu ketuk Kirim.
+Teks muncul di sini seperti Anda mengetiknya. Jalan di koneksi apa pun; ponsel dan perangkat tidak perlu di jaringan yang sama.
+Terhubung ke relay. Menunggu ponsel…
+Relay tidak bisa dijangkau; periksa koneksi perangkat
+{n} diterima dari ponsel
+Dienkripsi di ponsel; relay ntfy.sh hanya melihat teks acak.

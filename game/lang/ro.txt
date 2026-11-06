@@ -418,3 +418,14 @@ Viu
 Luminos
 Întunecat
 Color ziua, întunecat noaptea
+Nu s-a putut porni tastarea de pe telefon
+Tastat de pe telefon
+Tastează pe telefon
+În: {field}
+Scanează codul cu camera telefonului.
+Scrie sau lipește pe pagina care se deschide și atinge Trimite.
+Ajunge aici ca și cum l-ai fi tastat. Merge pe orice conexiune; telefonul și cutia nu au nevoie de aceeași rețea.
+Conectat la releu. Se așteaptă telefonul…
+Releul nu răspunde; verifică conexiunea cutiei
+{n} primit(e) de pe telefon
+Criptat pe telefon; releul ntfy.sh vede doar text amestecat.

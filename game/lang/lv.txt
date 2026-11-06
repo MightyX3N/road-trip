@@ -418,3 +418,14 @@ Spilgta
 Gaiša
 Tumša
 Dienā krāsaina, naktī tumša
+Neizdevās sākt rakstīšanu no tālruņa
+Uzrakstīts no tālruņa
+Raksti tālrunī
+Laukā: {field}
+Noskenējiet kodu ar tālruņa kameru.
+Ierakstiet vai ielīmējiet atvērtajā lapā un pieskarieties Sūtīt.
+Tas parādās šeit, it kā jūs to būtu ierakstījis. Darbojas ar jebkuru savienojumu; tālrunim un ierīcei nav jābūt vienā tīklā.
+Savienots ar starpnieku. Gaidu tālruni…
+Starpnieks nav sasniedzams; pārbaudiet ierīces savienojumu
+No tālruņa saņemti: {n}
+Šifrēts tālrunī; ntfy.sh starpnieks redz tikai nesaprotamu tekstu.
