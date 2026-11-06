@@ -731,18 +731,22 @@ local function avoids()
   return a, (a.motorway or a.toll or a.ferry) and true or false
 end
 
-local function valhallaURL(fromLat, fromLon, toLat, toLon)
+-- heading: which way the car is going (degrees), so a new route starts ahead instead of
+-- turning you round; nil when standing still
+local function valhallaURL(fromLat, fromLon, toLat, toLon, heading)
   local a = avoids()
-  local body = string.format('{"locations":[{"lat":%.6f,"lon":%.6f},{"lat":%.6f,"lon":%.6f}],"costing":"auto",'
+  local h = heading and string.format(',"heading":%d,"heading_tolerance":60', math.floor(heading + 0.5) % 360) or ""
+  local body = string.format('{"locations":[{"lat":%.6f,"lon":%.6f%s},{"lat":%.6f,"lon":%.6f}],"costing":"auto",'
     .. '"costing_options":{"auto":{"use_highways":%s,"use_tolls":%s,"use_ferry":%s}},'
     .. '"directions_options":{"units":"kilometers"},"alternates":2}',
-    fromLat, fromLon, toLat, toLon, a.motorway and "0" or "1", a.toll and "0" or "1", a.ferry and "0" or "1")
+    fromLat, fromLon, h, toLat, toLon, a.motorway and "0" or "1", a.toll and "0" or "1", a.ferry and "0" or "1")
   return VALHALLA .. (body:gsub("[^%w%-_%.~]", function(c) return string.format("%%%02X", c:byte()) end))
 end
 
-local function routeURL(fromLat, fromLon, toLat, toLon)
-  return string.format("%s%.6f,%.6f;%.6f,%.6f?overview=full&geometries=polyline6&steps=true&alternatives=true",
-    OSRM, fromLon, fromLat, toLon, toLat)
+local function routeURL(fromLat, fromLon, toLat, toLon, heading)
+  local b = heading and string.format("&bearings=%d,60;", math.floor(heading + 0.5) % 360) or ""
+  return string.format("%s%.6f,%.6f;%.6f,%.6f?overview=full&geometries=polyline6&steps=true&alternatives=true%s",
+    OSRM, fromLon, fromLat, toLon, toLat, b)
 end
 
 -- fit the view to show a whole route
@@ -769,7 +773,7 @@ end
 -- from: where to start; defaults to your position. Without one yet, the request waits for
 -- the first fix (or for "From the map's centre" in the route panel).
 local requestRoutes
-function requestRoutes(lat, lon, from)
+function requestRoutes(lat, lon, from, noHeading)
   local f = from or M.fix
   if not f then
     M.waitingFix = { lat = lat, lon = lon }
@@ -780,7 +784,9 @@ function requestRoutes(lat, lon, from)
   M.waitingFix = nil
   M.routesBusy = true
   local _, avoiding = avoids()
-  local id = android.fetch(avoiding and valhallaURL(f.lat, f.lon, lat, lon) or routeURL(f.lat, f.lon, lat, lon))
+  -- from your position while driving: start the way you're going (a re-route especially)
+  local heading = not from and not noHeading and moving and headingTarget or nil
+  local id = android.fetch(avoiding and valhallaURL(f.lat, f.lon, lat, lon, heading) or routeURL(f.lat, f.lon, lat, lon, heading))
   request(id, function(r)
     M.routesBusy = false
     local okd, dd = pcall(json.decode, r.ok and r.body or "")
@@ -795,6 +801,7 @@ function requestRoutes(lat, lon, from)
           if q then list[#list + 1] = q end
         end
       end
+      if #list == 0 and heading then return requestRoutes(lat, lon, from, true) end
       if #list == 0 then
         -- the avoid-router didn't answer: fall back to the usual route, and say so
         app.toast(T("Couldn't plan around those; showing the usual route"))
@@ -806,6 +813,8 @@ function requestRoutes(lat, lon, from)
       end
     else
       if not d or d.code ~= "Ok" or not d.routes or #d.routes == 0 then
+        -- no road nearby going that way (a car park, a wrong heading): try without it
+        if heading then return requestRoutes(lat, lon, from, true) end
         app.toast(d and d.message or T("Couldn't find a route"))
         return
       end
