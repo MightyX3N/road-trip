@@ -418,14 +418,7 @@ Lys
 Lyst
 Mørkt
 Farve om dagen, mørkt om natten
-Kunne ikke starte indtastning fra telefonen
-Skrevet fra din telefon
-Skriv på din telefon
-I: {field}
-Scan koden med telefonens kamera.
-Skriv eller indsæt på siden, der åbner, og tryk på Send.
-Det kommer frem her, som om du skrev det. Virker på enhver forbindelse; telefonen og boksen behøver ikke samme netværk.
-Forbundet til relæet. Venter på din telefon…
-Kan ikke nå relæet; tjek boksens forbindelse
-{n} modtaget fra din telefon
-Krypteret på telefonen; ntfy.sh-relæet ser kun uforståelig tekst.
+Det ligner ikke en Mapbox-nøgle; den starter med pk.
+Nøglen er gemt
+Nøglen er gemt. Mapbox kunne ikke spørges lige nu ({error}).
+Gem

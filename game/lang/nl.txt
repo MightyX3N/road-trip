@@ -418,14 +418,7 @@ Helder
 Licht
 Donker
 Kleur overdag, donker 's nachts
-Typen vanaf je telefoon kon niet starten
-Getypt vanaf je telefoon
-Typ op je telefoon
-In: {field}
-Scan de code met de camera van je telefoon.
-Typ of plak op de pagina die opent en tik op Verzenden.
-Het komt hier binnen alsof je het zelf typte. Werkt op elke verbinding; je telefoon en de box hoeven niet op hetzelfde netwerk.
-Verbonden met de relay. Wachten op je telefoon…
-Kan de relay niet bereiken; controleer de verbinding van de box
-{n} ontvangen van je telefoon
-Versleuteld op je telefoon; de ntfy.sh-relay ziet alleen onleesbare tekst.
+Dat lijkt geen Mapbox-sleutel; die begint met pk.
+Sleutel bewaard
+Sleutel bewaard. Mapbox was nu niet te bereiken ({error}).
+Bewaren

@@ -62,20 +62,35 @@ function M.mapboxKey() return config.get("mapboxKey") end
 ----------------------------------------------------------------------------------------------
 -- Mapbox key: checked once with Mapbox's token endpoint
 
-local function checkKey(k)
-  M.key.busy, M.key.msg, M.key.ok = true, nil, nil
+-- Saves the key straight away, then asks Mapbox about it. Only a clear "no" from Mapbox
+-- takes it out again; if Mapbox can't be reached, the key stays (routes fall back anyway).
+local function saveKey(k)
+  k = (k or ""):gsub("%s", "")
+  if not k:match("^[ps]k%.[%w%-_%.]+$") or #k < 40 then
+    M.key.ok, M.key.msg = false, T("That doesn't look like a Mapbox key; it starts with pk.")
+    return
+  end
+  config.set("mapboxKey", k)
+  M.key.text, M.key.typing = k, false
+  ui.closeKeyboard()
+  M.key.busy, M.key.ok, M.key.msg = true, nil, nil
   local id = android.fetch("https://api.mapbox.com/tokens/v2?access_token=" .. k)
-  if type(id) ~= "number" then M.key.busy = false return end
+  if type(id) ~= "number" then
+    M.key.busy, M.key.ok, M.key.msg = false, true, T("Key saved")
+    return
+  end
   pending[id] = function(r)
     M.key.busy = false
     local ok, d = pcall(json.decode, r.body or "")
-    local valid = ok and type(d) == "table" and d.code == "TokenValid"
-    if valid then
-      config.set("mapboxKey", k)
+    local code = ok and type(d) == "table" and d.code or nil
+    if code == "TokenValid" then
       M.key.ok, M.key.msg = true, T("Key works: routes now use live traffic")
+    elseif code then
+      config.set("mapboxKey", nil)
+      M.key.ok, M.key.msg = false, T("Mapbox didn't accept that key ({error})", { error = code })
     else
-      M.key.ok = false
-      M.key.msg = T("Mapbox didn't accept that key ({error})", { error = (ok and type(d) == "table" and d.code) or r.error or ("HTTP " .. tostring(r.status)) })
+      M.key.ok, M.key.msg = true, T("Key saved. Mapbox couldn't be asked about it just now ({error}).",
+        { error = r.error or ("HTTP " .. tostring(r.status)) })
     end
     app.dirty()
   end
@@ -107,7 +122,7 @@ function M.keypressed(key)
   elseif key == "return" or key == "kpenter" then
     M.key.typing = false
     ui.closeKeyboard()
-    if #M.key.text > 10 then checkKey(M.key.text) end
+    if M.key.text ~= "" then saveKey(M.key.text) end
   end
 end
 
@@ -193,8 +208,10 @@ function M.draw(x, y, w, h)
       M.key.text ~= "" and ui.c.text or ui.c.dim, lx + 36, fy + (52 - ui.fontHeight("semibold", 15)) / 2)
     ui.hit({ kind = "ms:keyField" }, lx + 20, fy, lw - 40, 52)
     if M.key.typing then
-      local pw = ui.textWidth(T("Paste"), "bold", 15) + 36
-      ui.pill({ kind = "ms:paste" }, T("Paste"), lx + lw - 26 - pw, fy + 6, 40, "accent")
+      local saving = M.key.text ~= ""
+      local label = saving and T("Save") or T("Paste")
+      local pw = ui.textWidth(label, "bold", 15) + 36
+      ui.pill({ kind = saving and "ms:save" or "ms:paste" }, label, lx + lw - 26 - pw, fy + 6, 40, "accent")
     end
     local msg = M.key.busy and T("Checking…") or M.key.msg
     if msg then
@@ -283,13 +300,12 @@ function M.activate(id)
     local ok, clip = pcall(love.system.getClipboardText)
     clip = ok and clip and clip:gsub("%s", "") or ""
     if clip ~= "" then
-      M.key.text = clip
-      M.key.typing = false
-      ui.closeKeyboard()
-      checkKey(clip)
+      saveKey(clip)
     else
       app.toast(T("Nothing to paste"))
     end
+  elseif k == "ms:save" then
+    saveKey(M.key.text)
   elseif k == "ms:keyRemove" then
     config.set("mapboxKey", nil)
     M.key.text, M.key.msg, M.key.ok, M.key.typing = "", nil, nil, false

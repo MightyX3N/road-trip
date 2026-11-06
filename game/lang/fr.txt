@@ -418,14 +418,7 @@ Vif
 Clair
 Sombre
 En couleur le jour, sombre la nuit
-Impossible de lancer la saisie depuis le téléphone
-Saisi depuis votre téléphone
-Saisir sur votre téléphone
-Dans : {field}
-Scannez le code avec l'appareil photo du téléphone.
-Tapez ou collez sur la page qui s'ouvre, puis touchez Envoyer.
-Le texte arrive ici comme si vous l'aviez tapé. Marche avec n'importe quelle connexion ; le téléphone et le boîtier n'ont pas besoin du même réseau.
-Connecté au relais. En attente du téléphone…
-Relais injoignable ; vérifiez la connexion du boîtier
-{n} reçu(s) du téléphone
-Chiffré sur le téléphone ; le relais ntfy.sh ne voit que du texte brouillé.
+Ce n'est pas une clé Mapbox ; elle commence par pk.
+Clé enregistrée
+Clé enregistrée. Mapbox n'a pas pu être interrogé pour l'instant ({error}).
+Enregistrer

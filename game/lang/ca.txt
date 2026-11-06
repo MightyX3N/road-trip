@@ -418,14 +418,7 @@ Brillant
 Clar
 Fosc
 Color de dia, fosc de nit
-No s'ha pogut començar a escriure des del mòbil
-Escrit des del mòbil
-Escriu al mòbil
-A: {field}
-Escaneja el codi amb la càmera del mòbil.
-Escriu o enganxa a la pàgina que s'obre i toca Envia.
-Arriba aquí com si ho haguessis escrit. Funciona amb qualsevol connexió; el mòbil i la caixa no necessiten la mateixa xarxa.
-Connectat al relé. Esperant el mòbil…
-No es pot contactar amb el relé; revisa la connexió de la caixa
-{n} rebut(s) del mòbil
-Xifrat al mòbil; el relé ntfy.sh només veu text il·legible.
+No sembla una clau de Mapbox; comença per pk.
+Clau desada
+Clau desada. Ara no s'ha pogut consultar Mapbox ({error}).
+Desa

@@ -418,14 +418,7 @@ Ere
 Hele
 Tume
 Päeval värviline, öösel tume
-Telefonist kirjutamist ei saanud alustada
-Telefonist kirjutatud
-Kirjuta telefonis
-Väljale: {field}
-Skanni kood telefoni kaameraga.
-Kirjuta või kleebi avanevale lehele ja puuduta Saada.
-See jõuab siia, nagu oleksid ise kirjutanud. Töötab iga ühendusega; telefon ja seade ei pea olema samas võrgus.
-Vahendajaga ühendatud. Ootan telefoni…
-Vahendajat ei saa kätte; kontrolli seadme ühendust
-Telefonist saadud: {n}
-Krüpteeritud telefonis; vahendaja ntfy.sh näeb vaid segast teksti.
+See ei näe välja nagu Mapboxi võti; see algab pk.
+Võti salvestatud
+Võti salvestatud. Mapboxilt ei saanud praegu küsida ({error}).
+Salvesta

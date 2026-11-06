@@ -418,14 +418,7 @@ Ljus
 Ljust
 Mörkt
 Färg på dagen, mörkt på natten
-Kunde inte starta skrivning från telefonen
-Skrivet från telefonen
-Skriv på telefonen
-Till: {field}
-Skanna koden med telefonens kamera.
-Skriv eller klistra in på sidan som öppnas och tryck på Skicka.
-Det dyker upp här som om du skrev det. Fungerar på alla anslutningar; telefonen och boxen behöver inte samma nätverk.
-Ansluten till reläet. Väntar på telefonen…
-Når inte reläet; kontrollera boxens anslutning
-{n} mottaget från telefonen
-Krypterat på telefonen; ntfy.sh-reläet ser bara oläslig text.
+Det ser inte ut som en Mapbox-nyckel; den börjar med pk.
+Nyckeln sparad
+Nyckeln sparad. Mapbox gick inte att fråga just nu ({error}).
+Spara

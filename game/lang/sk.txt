@@ -418,14 +418,7 @@ Jasná
 Svetlá
 Tmavá
 Cez deň farebná, v noci tmavá
-Písanie z telefónu sa nepodarilo spustiť
-Napísané z telefónu
-Píšte na telefóne
-Do: {field}
-Naskenujte kód fotoaparátom telefónu.
-Napíšte alebo vložte text na stránke, ktorá sa otvorí, a ťuknite na Odoslať.
-Objaví sa tu, ako keby ste to napísali. Funguje na akomkoľvek pripojení; telefón a zariadenie nemusia byť v rovnakej sieti.
-Pripojené k prenosovému serveru. Čakám na telefón…
-Prenosový server je nedostupný; skontrolujte pripojenie zariadenia
-Z telefónu prijaté: {n}
-Šifrované v telefóne; prenosový server ntfy.sh vidí len nečitateľný text.
+Toto nevyzerá ako kľúč Mapbox; začína na pk.
+Kľúč uložený
+Kľúč uložený. Mapbox sa teraz nepodarilo overiť ({error}).
+Uložiť

@@ -418,14 +418,7 @@ Maliwanag
 Mapusyaw
 Madilim
 Makulay sa araw, madilim sa gabi
-Hindi masimulan ang pag-type mula sa phone
-Na-type mula sa phone mo
-Mag-type sa phone mo
-Sa: {field}
-I-scan ang code gamit ang camera ng phone.
-Mag-type o mag-paste sa page na bubukas, at i-tap ang Send.
-Darating ito rito na parang ikaw ang nag-type. Gumagana sa anumang koneksyon; hindi kailangang iisang network ang phone at box.
-Nakakonekta sa relay. Hinihintay ang phone mo…
-Hindi maabot ang relay; tingnan ang koneksyon ng box
-{n} natanggap mula sa phone
-Naka-encrypt sa phone; magulong teksto lang ang nakikita ng ntfy.sh relay.
+Hindi ito mukhang Mapbox key; nagsisimula ito sa pk.
+Na-save ang key
+Na-save ang key. Hindi matanong ang Mapbox ngayon ({error}).
+I-save

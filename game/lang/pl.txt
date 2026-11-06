@@ -418,14 +418,7 @@ Jasny
 Jasna
 Ciemna
 Kolor w dzień, ciemna w nocy
-Nie udało się uruchomić pisania z telefonu
-Wpisano z telefonu
-Pisz na telefonie
-Do: {field}
-Zeskanuj kod aparatem telefonu.
-Wpisz lub wklej na stronie, która się otworzy, i dotknij Wyślij.
-Pojawi się tu, jakbyś to wpisał. Działa przy każdym połączeniu; telefon i urządzenie nie muszą być w tej samej sieci.
-Połączono z przekaźnikiem. Czekam na telefon…
-Brak połączenia z przekaźnikiem; sprawdź połączenie urządzenia
-Odebrano z telefonu: {n}
-Szyfrowane na telefonie; przekaźnik ntfy.sh widzi tylko nieczytelny tekst.
+To nie wygląda na klucz Mapbox; zaczyna się od pk.
+Klucz zapisany
+Klucz zapisany. Nie udało się teraz sprawdzić go w Mapbox ({error}).
+Zapisz

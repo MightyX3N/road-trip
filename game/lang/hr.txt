@@ -418,14 +418,7 @@ Svijetla
 Svijetla
 Tamna
 Danju u boji, noću tamna
-Tipkanje s mobitela nije se moglo pokrenuti
-Upisano s mobitela
-Tipkajte na mobitelu
-U: {field}
-Skenirajte kod kamerom mobitela.
-Upišite ili zalijepite na stranici koja se otvori i dodirnite Pošalji.
-Stiže ovamo kao da ste upisali. Radi uz bilo koju vezu; mobitel i uređaj ne trebaju istu mrežu.
-Povezano s posrednikom. Čekam mobitel…
-Posrednik nije dostupan; provjerite vezu uređaja
-S mobitela primljeno: {n}
-Šifrirano na mobitelu; posrednik ntfy.sh vidi samo nečitljiv tekst.
+To ne izgleda kao Mapbox ključ; počinje s pk.
+Ključ spremljen
+Ključ spremljen. Mapbox trenutno nije dostupan za provjeru ({error}).
+Spremi

@@ -418,14 +418,7 @@ Sáng
 Nhạt
 Tối
 Có màu ban ngày, tối ban đêm
-Không bắt đầu gõ từ điện thoại được
-Đã gõ từ điện thoại
-Gõ trên điện thoại
-Vào: {field}
-Quét mã bằng camera điện thoại.
-Gõ hoặc dán vào trang vừa mở, rồi chạm Gửi.
-Chữ xuất hiện ở đây như thể bạn tự gõ. Dùng được với mọi kết nối; điện thoại và thiết bị không cần chung mạng.
-Đã kết nối với máy chuyển tiếp. Đang chờ điện thoại…
-Không kết nối được máy chuyển tiếp; kiểm tra kết nối của thiết bị
-Đã nhận {n} từ điện thoại
-Mã hóa trên điện thoại; máy chuyển tiếp ntfy.sh chỉ thấy chữ lộn xộn.
+Đây không giống khóa Mapbox; khóa bắt đầu bằng pk.
+Đã lưu khóa
+Đã lưu khóa. Hiện không hỏi được Mapbox ({error}).
+Lưu

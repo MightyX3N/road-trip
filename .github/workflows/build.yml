@@ -67,8 +67,6 @@ jobs:
               // uses, which Road Trip extends to serve bundled fonts and offline areas
               implementation 'org.maplibre.gl:android-sdk:11.13.5'
               implementation 'com.squareup.okhttp3:okhttp:4.12.0'
-              // typing from your phone: the QR code
-              implementation 'com.google.zxing:core:3.5.3'
           }
           GRADLE
 

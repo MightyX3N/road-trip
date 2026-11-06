@@ -418,14 +418,7 @@ Cerah
 Terang
 Gelap
 Berwarna pada siang, gelap pada malam
-Tidak dapat mula menaip dari telefon
-Ditaip dari telefon
-Taip pada telefon
-Ke: {field}
-Imbas kod dengan kamera telefon.
-Taip atau tampal pada halaman yang dibuka, kemudian ketik Hantar.
-Teks sampai di sini seperti anda menaipnya. Berfungsi pada apa-apa sambungan; telefon dan peranti tidak perlu rangkaian yang sama.
-Disambungkan ke geganti. Menunggu telefon…
-Geganti tidak dapat dicapai; semak sambungan peranti
-{n} diterima dari telefon
-Disulitkan pada telefon; geganti ntfy.sh hanya melihat teks bercelaru.
+Itu tidak kelihatan seperti kunci Mapbox; ia bermula dengan pk.
+Kunci disimpan
+Kunci disimpan. Mapbox tidak dapat ditanya sekarang ({error}).
+Simpan

@@ -418,14 +418,7 @@ Ryškus
 Šviesus
 Tamsus
 Dieną spalvotas, naktį tamsus
-Nepavyko pradėti rašymo iš telefono
-Įvesta iš telefono
-Rašykite telefone
-Į: {field}
-Nuskaitykite kodą telefono kamera.
-Įveskite ar įklijuokite atsidariusiame puslapyje ir palieskite Siųsti.
-Atsiranda čia, lyg būtumėte įvedę patys. Veikia su bet kokiu ryšiu; telefonui ir įrenginiui nereikia to paties tinklo.
-Prisijungta prie tarpininko. Laukiama telefono…
-Tarpininkas nepasiekiamas; patikrinkite įrenginio ryšį
-Iš telefono gauta: {n}
-Šifruojama telefone; tarpininkas ntfy.sh mato tik nesuprantamą tekstą.
+Tai nepanašu į Mapbox raktą; jis prasideda pk.
+Raktas išsaugotas
+Raktas išsaugotas. Mapbox šiuo metu nepavyko paklausti ({error}).
+Išsaugoti

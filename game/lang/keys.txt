@@ -416,14 +416,7 @@ Bright
 Light
 Dark
 Colour by day, dark at night
-Couldn't start typing from your phone
-Typed from your phone
-Type on your phone
-Into: {field}
-Scan the code with your phone's camera.
-Type or paste on the page that opens, and tap Send.
-It arrives here as if you typed it. Works on any connection; your phone and the box don't need the same network.
-Connected to the relay. Waiting for your phone…
-Can't reach the relay; check the box's connection
-{n} received from your phone
-Encrypted on your phone; the ntfy.sh relay only sees scrambled text.
+That doesn't look like a Mapbox key; it starts with pk.
+Key saved
+Key saved. Mapbox couldn't be asked about it just now ({error}).
+Save

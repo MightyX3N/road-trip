@@ -364,11 +364,6 @@ function icons.mute()
   lg.line(22, 9, 16, 15)
 end
 
-function icons.phone()
-  lg.rectangle("line", 7, 2.5, 10, 19, 2.5, 2.5)
-  lg.line(10.5, 18, 13.5, 18)
-end
-
 function icons.layers()
   lg.polygon("line", 12, 4, 21, 9, 12, 14, 3, 9)
   lg.line(3, 13, 12, 18, 21, 13)
