@@ -14,7 +14,7 @@ local TILE = 512       -- tile size in pixels at its own zoom
 local MAXZ = 14        -- OpenFreeMap's deepest zoom; closer views scale z14 up
 local MAX_TILES = 80   -- decoded tiles kept in memory
 local TILEJSON = "https://tiles.openfreemap.org/planet"
-local PHOTON = "https://photon.komoot.io/api/?limit=6&q="
+local PHOTON = "https://photon.komoot.io/api/?limit=20&q="
 local OSRM = "https://routing.openstreetmap.de/routed-car/route/v1/driving/"
 -- routes that avoid motorways, tolls or ferries: FOSSGIS's Valhalla (their OSRM has no avoid options)
 local VALHALLA = "https://valhalla1.openstreetmap.de/route?json="
@@ -1099,15 +1099,18 @@ local function runSearch()
   local q = s.text:gsub("^%s+", ""):gsub("%s+$", "")
   if #q < 2 then s.results = nil return end
   s.busy, s.err, s.dueAt = true, nil, nil
-  local url = PHOTON .. urlEncode(q)
-  if M.fix then url = url .. string.format("&lat=%.4f&lon=%.4f", M.fix.lat, M.fix.lon) end
+  -- near you first: your position, or where the map is (the box has no GPS)
+  local at = M.fix or M.view
+  local url = PHOTON .. urlEncode(q) .. string.format("&lat=%.4f&lon=%.4f&zoom=9", at.lat, at.lon)
+  local home = android.country()
+  home = type(home) == "string" and #home == 2 and home:upper() or nil
   local asked = s.text
   request(android.fetch(url), function(r)
     if M.search ~= s then return end
     s.busy = false
     local d = r.ok and json.decode(r.body or "")
     if not d then s.err = T("Couldn't search; check the connection") return end
-    local list = {}
+    local list, abroad = {}, {}
     for _, f in ipairs(d.features or {}) do
       local p, g = f.properties or {}, f.geometry or {}
       local co = g.coordinates or {}
@@ -1118,10 +1121,15 @@ local function runSearch()
           subParts[#subParts + 1] = p.street .. (p.housenumber and (" " .. p.housenumber) or "")
         end
         if p.city and p.city ~= name then subParts[#subParts + 1] = p.city end
-        if p.country then subParts[#subParts + 1] = p.country end
-        list[#list + 1] = { name = name, sub = table.concat(subParts, ", "), lat = co[2], lon = co[1] }
+        local foreign = home and p.countrycode and p.countrycode:upper() ~= home
+        if p.country and (foreign or not home) then subParts[#subParts + 1] = p.country end
+        local item = { name = name, sub = table.concat(subParts, ", "), lat = co[2], lon = co[1] }
+        if foreign then abroad[#abroad + 1] = item else list[#list + 1] = item end
       end
     end
+    -- places in your own country first, then the rest; 8 at most
+    for _, it in ipairs(abroad) do list[#list + 1] = it end
+    for i = #list, 9, -1 do list[i] = nil end
     s.results = list
     if #list == 0 then s.err = T("Nothing found") end
     if s.text ~= asked then s.dueAt = love.timer.getTime() + 0.3 end -- typed more meanwhile

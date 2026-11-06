@@ -231,9 +231,20 @@ public final class LauncherBridge {
                 case "language":
                     data = java.util.Locale.getDefault().getLanguage();
                     break;
-                case "country":
-                    data = java.util.Locale.getDefault().getCountry();
+                case "country": {
+                    // the country the SIM is in (the box's eSIM), then the SIM's home, then the language setting
+                    String cc = "";
+                    try {
+                        android.telephony.TelephonyManager tm = (android.telephony.TelephonyManager) ctx.getSystemService(Context.TELEPHONY_SERVICE);
+                        if (tm != null) {
+                            cc = tm.getNetworkCountryIso();
+                            if (cc == null || cc.length() != 2) cc = tm.getSimCountryIso();
+                        }
+                    } catch (Exception e) { cc = ""; }
+                    if (cc == null || cc.length() != 2) cc = java.util.Locale.getDefault().getCountry();
+                    data = cc.toUpperCase(java.util.Locale.ROOT);
                     break;
+                }
                 case "fetchResult":
                     data = Net.result(a.getInt("id"));
                     break;
