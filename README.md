@@ -47,6 +47,12 @@ The 3D button tilts the map with 3D buildings where the style has them, and two 
 pinch to zoom. If the MapLibre map doesn't show on a device, Settings → Map → Map engine
 switches back to Road Trip's own simpler map.
 
+While Road Trip guides you, it shows which lanes to be in before a turn (where OpenStreetMap
+has the lanes mapped), the speed limit of the road you're on (OpenStreetMap's limits, matched to
+the route by FOSSGIS's Valhalla server; red when you're going faster), and warns about fixed
+speed cameras on the route (the ones mapped in OpenStreetMap, found with the Overpass API), by
+voice too. All keyless; where OpenStreetMap has no data, nothing shows.
+
 Settings → Map → Offline maps downloads an area so the map works without data: every street
 around a place (about 60 km across), the main roads of a bigger region (about 250 km), or a
 band along the route you've planned. Each download keeps to OpenFreeMap's limit for offline
@@ -176,7 +182,8 @@ Map data © [OpenStreetMap](https://www.openstreetmap.org/copyright) contributor
 from [OpenFreeMap](https://openfreemap.org), place search by [Photon](https://photon.komoot.io),
 routes by the [FOSSGIS OSRM server](https://routing.openstreetmap.de) (and FOSSGIS's Valhalla server for routes that avoid motorways, tolls or ferries). Radio stations come from
 [Radio Browser](https://www.radio-browser.info), a free community directory; Road Trip
-reports each play to it, as it asks. None of them need an account or key.
+reports each play to it, as it asks. Speed limits come from the same Valhalla server and speed cameras from the
+[Overpass API](https://overpass-api.de), once per route. None of them need an account or key.
 Map styles: OpenFreeMap's, and [Waypoint](https://github.com/the-geeky-couldron/waypoint)'s worlds
 (MIT licence; the game names say what inspired each look, Waypoint isn't linked to the games). Road Trip asks the routing server for at most one route at a time, and
 waits at least 15 seconds between new routes while you drive.

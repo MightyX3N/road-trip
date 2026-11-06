@@ -423,3 +423,5 @@ Klucz zapisany
 Klucz zapisany. Nie udało się teraz sprawdzić go w Mapbox ({error}).
 Zapisz
 Styl, 3D, obszary offline
+Fotoradar
+Fotoradar przed tobą

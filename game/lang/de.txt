@@ -423,3 +423,5 @@ Schlüssel gespeichert
 Schlüssel gespeichert. Mapbox war gerade nicht erreichbar ({error}).
 Speichern
 Stil, 3D, Offline-Gebiete
+Blitzer
+Blitzer voraus

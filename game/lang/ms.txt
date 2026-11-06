@@ -423,3 +423,5 @@ Kunci disimpan
 Kunci disimpan. Mapbox tidak dapat ditanya sekarang ({error}).
 Simpan
 Gaya, 3D, kawasan luar talian
+Kamera laju
+Kamera laju di hadapan

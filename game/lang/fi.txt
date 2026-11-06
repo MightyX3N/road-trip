@@ -423,3 +423,5 @@ Avain tallennettu
 Avain tallennettu. Mapboxilta ei voitu juuri nyt tarkistaa ({error}).
 Tallenna
 Tyyli, 3D, offline-alueet
+Nopeuskamera
+Nopeuskamera edessä

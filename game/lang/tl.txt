@@ -423,3 +423,5 @@ Na-save ang key
 Na-save ang key. Hindi matanong ang Mapbox ngayon ({error}).
 I-save
 Istilo, 3D, offline na lugar
+Speed camera
+May speed camera sa unahan

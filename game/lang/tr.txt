@@ -423,3 +423,5 @@ Anahtar kaydedildi
 Anahtar kaydedildi. Mapbox şu an kontrol edilemedi ({error}).
 Kaydet
 Stil, 3D, çevrimdışı bölgeler
+Hız kamerası
+İleride hız kamerası

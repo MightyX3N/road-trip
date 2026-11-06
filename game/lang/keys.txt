@@ -421,3 +421,5 @@ Key saved
 Key saved. Mapbox couldn't be asked about it just now ({error}).
 Save
 Style, 3D, offline areas
+Speed camera
+Speed camera ahead

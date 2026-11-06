@@ -423,3 +423,5 @@ Nøkkelen er lagret
 Nøkkelen er lagret. Fikk ikke spurt Mapbox akkurat nå ({error}).
 Lagre
 Stil, 3D, frakoblede områder
+Fotoboks
+Fotoboks foran

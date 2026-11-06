@@ -423,3 +423,5 @@ Raktas išsaugotas
 Raktas išsaugotas. Mapbox šiuo metu nepavyko paklausti ({error}).
 Išsaugoti
 Stilius, 3D, neprisijungus naudojamos sritys
+Greičio kamera
+Priekyje greičio kamera

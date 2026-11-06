@@ -423,3 +423,5 @@ Kulcs mentve
 Kulcs mentve. A Mapbox most nem volt elérhető az ellenőrzéshez ({error}).
 Mentés
 Stílus, 3D, offline területek
+Traffipax
+Traffipax előttünk

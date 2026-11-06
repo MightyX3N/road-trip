@@ -423,3 +423,5 @@ Clave guardada
 Clave guardada. No se pudo consultar a Mapbox ahora ({error}).
 Guardar
 Estilo, 3D, zonas sin conexión
+Radar
+Radar a continuación

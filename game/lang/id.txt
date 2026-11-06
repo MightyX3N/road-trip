@@ -423,3 +423,5 @@ Kunci disimpan
 Kunci disimpan. Mapbox tidak bisa ditanya saat ini ({error}).
 Simpan
 Gaya, 3D, area offline
+Kamera kecepatan
+Ada kamera kecepatan di depan

@@ -423,3 +423,5 @@ Sleutel bewaard
 Sleutel bewaard. Mapbox was nu niet te bereiken ({error}).
 Bewaren
 Stijl, 3D, offline gebieden
+Flitspaal
+Flitspaal in aantocht

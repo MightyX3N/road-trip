@@ -423,3 +423,5 @@ Atslēga saglabāta
 Atslēga saglabāta. Mapbox šobrīd nevarēja pajautāt ({error}).
 Saglabāt
 Stils, 3D, bezsaistes apgabali
+Ātruma kamera
+Priekšā ātruma kamera

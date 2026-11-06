@@ -18,6 +18,10 @@ local PHOTON = "https://photon.komoot.io/api/?limit=6&q="
 local OSRM = "https://routing.openstreetmap.de/routed-car/route/v1/driving/"
 -- routes that avoid motorways, tolls or ferries: FOSSGIS's Valhalla (their OSRM has no avoid options)
 local VALHALLA = "https://valhalla1.openstreetmap.de/route?json="
+-- speed limits along the route (OpenStreetMap's maxspeed, matched by FOSSGIS's Valhalla)
+local TRACE = "https://valhalla1.openstreetmap.de/trace_attributes"
+-- fixed speed cameras mapped in OpenStreetMap
+local OVERPASS = "https://overpass-api.de/api/interpreter"
 
 local hex = function(h) return ui.hex(h) end
 local listening = false -- location updates started (needs permission first)
@@ -658,9 +662,18 @@ local function parseRoute(r)
         end
         idx = best
       end
+      -- the lanes at this turn (OSRM gives them where OpenStreetMap has turn:lanes)
+      local lanes
+      local x1 = s.intersections and s.intersections[1]
+      if x1 and type(x1.lanes) == "table" and #x1.lanes > 1 then
+        lanes = {}
+        for _, l in ipairs(x1.lanes) do
+          lanes[#lanes + 1] = { ind = type(l.indications) == "table" and l.indications or { "straight" }, valid = l.valid == true }
+        end
+      end
       steps[#steps + 1] = {
         type = mv.type, modifier = mv.modifier, exit = mv.exit, name = s.name or "",
-        at = cum[idx], lat = lat, lon = lon,
+        at = cum[idx], lat = lat, lon = lon, lanes = lanes,
       }
     end
   end
@@ -907,6 +920,7 @@ function M.guidance()
     g.afterText = after and after.type ~= "arrive" and instruction(after) or nil
     g.afterGap = after and (after.at - next.at) or nil
     g.icon = arrowIcon(next)
+    if next.lanes and g.dist < 1500 then g.lanes = next.lanes end
     if after and after.type ~= "arrive" then 
       local nx = instruction(after)
       if require("lang").code == "en" then nx = nx:gsub("^%u", string.lower) end
@@ -914,6 +928,161 @@ function M.guidance()
     end
   end
   return g
+end
+
+----------------------------------------------------------------------------------------------
+-- speed limits and speed cameras along the route being followed
+----------------------------------------------------------------------------------------------
+
+local CHUNK = 40000 -- metres of route matched for speed limits per request
+local extras = { route = nil }
+
+local function dist2(lat1, lon1, lat2, lon2)
+  local k = math.cos(math.rad(lat1))
+  local dy, dx = (lat2 - lat1) * 111320, (lon2 - lon1) * 111320 * k
+  return dx * dx + dy * dy
+end
+
+-- the route from `from` metres, as Valhalla shape points about 25 m apart
+local function shapeFrom(rt, from, to)
+  local pts, lastAt, first = {}, -math.huge, nil
+  for i, c in ipairs(rt.coords) do
+    local at = rt.cum[i]
+    if at >= from and at <= to then
+      first = first or at
+      if at - lastAt >= 25 then
+        pts[#pts + 1] = { lat = c[1], lon = c[2] }
+        lastAt = at
+      end
+    elseif at > to then
+      pts[#pts + 1] = { lat = c[1], lon = c[2] }
+      return pts, first or from, at
+    end
+  end
+  return pts, first or from, rt.cum[#rt.cum]
+end
+
+local function requestLimits(rt, from)
+  local pts, a, b = shapeFrom(rt, from, from + CHUNK)
+  extras.limitsBusy = true
+  extras.chunkEnd = b
+  if #pts < 2 then extras.limitsBusy = false return end
+  local body = json.encode({ shape = pts, costing = "auto", shape_match = "walk_or_snap", units = "kilometers",
+    filters = { attributes = { "edge.speed_limit", "edge.length" }, action = "include" } })
+  request(android.httpRequest("POST", TRACE, { ["Content-Type"] = "application/json" }, body), function(r)
+    extras.limitsBusy = false
+    if extras.route ~= rt then return end
+    local ok, d = pcall(json.decode, r.ok and r.body or "")
+    if not ok or type(d) ~= "table" or type(d.edges) ~= "table" then return end
+    -- edge lengths along the matched road, stretched to this part of our route
+    local total = 0
+    for _, e in ipairs(d.edges) do total = total + (tonumber(e.length) or 0) end
+    if total <= 0 then return end
+    local k = (b - a) / (total * 1000)
+    local at = a
+    for _, e in ipairs(d.edges) do
+      local len = (tonumber(e.length) or 0) * 1000 * k
+      local lim = tonumber(e.speed_limit)
+      if lim and lim > 0 and lim < 200 then
+        extras.limits[#extras.limits + 1] = { from = at, to = at + len, kph = lim }
+      else
+        extras.limits[#extras.limits + 1] = { from = at, to = at + len }
+      end
+      at = at + len
+    end
+    app.dirty()
+  end)
+end
+
+local function requestCameras(rt)
+  local s, w, n, e = 90, 180, -90, -180
+  for _, c in ipairs(rt.coords) do
+    s, n = math.min(s, c[1]), math.max(n, c[1])
+    w, e = math.min(w, c[2]), math.max(e, c[2])
+  end
+  local q = string.format('[out:json][timeout:25];node["highway"="speed_camera"](%.4f,%.4f,%.4f,%.4f);out body;',
+    s - 0.01, w - 0.01, n + 0.01, e + 0.01)
+  local body = "data=" .. q:gsub("[^%w%-_%.~]", function(c) return string.format("%%%02X", c:byte()) end)
+  request(android.httpRequest("POST", OVERPASS, { ["Content-Type"] = "application/x-www-form-urlencoded" }, body), function(r)
+    if extras.route ~= rt then return end
+    local ok, d = pcall(json.decode, r.ok and r.body or "")
+    if not ok or type(d) ~= "table" or type(d.elements) ~= "table" then return end
+    local cams = {}
+    for _, el in ipairs(d.elements) do
+      if el.lat and el.lon then
+        -- on our route? (within 25 m of it; further is likely the other side of a motorway)
+        local best, bestI = math.huge, nil
+        for i = 1, #rt.coords, 2 do
+          local c = rt.coords[i]
+          if math.abs(c[1] - el.lat) < 0.003 then
+            local d2 = dist2(el.lat, el.lon, c[1], c[2])
+            if d2 < best then best, bestI = d2, i end
+          end
+        end
+        if bestI then
+          -- look closer around the nearest point
+          for i = math.max(1, bestI - 2), math.min(#rt.coords, bestI + 2) do
+            local c = rt.coords[i]
+            local d2 = dist2(el.lat, el.lon, c[1], c[2])
+            if d2 <= best then best, bestI = d2, i end
+          end
+        end
+        if bestI and best < 25 * 25 then
+          local tags = el.tags or {}
+          cams[#cams + 1] = { at = rt.cum[bestI], kph = tonumber(tags.maxspeed) }
+        end
+      end
+    end
+    table.sort(cams, function(x, y) return x.at < y.at end)
+    extras.cameras = cams
+    app.dirty()
+  end)
+end
+
+-- keeps the data in step with the route; called from M.update
+local function updateExtras()
+  local rt = M.nav and M.nav.route
+  if rt ~= extras.route then
+    extras = { route = rt, limits = {}, cameras = {}, warned = {} }
+    if rt then
+      requestLimits(rt, 0)
+      requestCameras(rt)
+    end
+    return
+  end
+  if rt and not extras.limitsBusy and extras.chunkEnd and extras.chunkEnd < rt.distance - 1
+    and (M.nav.along or 0) > extras.chunkEnd - 10000 then
+    requestLimits(rt, extras.chunkEnd)
+  end
+end
+
+-- what the speed sign and camera warning show: { kph?, speed (km/h)?, over?, camera = metres? }
+function M.roadInfo()
+  local n = M.nav
+  if not n or not extras.route then return nil end
+  local at = n.along or 0
+  local info = {}
+  for _, l in ipairs(extras.limits) do
+    if at >= l.from and at < l.to then info.kph = l.kph break end
+  end
+  local f = M.fix
+  if f and (f.speed or -1) >= 0 then info.speed = f.speed * 3.6 end
+  if info.kph and info.speed then info.over = info.speed > info.kph + 3 end
+  for i, c in ipairs(extras.cameras) do
+    local d = c.at - at
+    if d > -20 and d < 600 then
+      info.camera, info.cameraIndex, info.cameraKph = math.max(0, d), i, c.kph
+      break
+    end
+  end
+  return info
+end
+
+-- once per camera, for the voice
+function M.cameraWarned(i)
+  if extras.warned[i] then return true end
+  extras.warned[i] = true
+  return false
 end
 
 ----------------------------------------------------------------------------------------------
@@ -1154,6 +1323,7 @@ function M.update(dt, onScreen)
     else M.view.zoom = M.view.zoom + d * math.min(1, dt * 8) end
   end
   if M.search and M.search.dueAt and now > M.search.dueAt then runSearch() end
+  updateExtras()
   -- arrived: finish 20 s later, whether or not new positions come in
   if M.nav and M.nav.arrivedAt and now - M.nav.arrivedAt > 20 then
     endNav()
@@ -1616,7 +1786,13 @@ function M.drawWidget(x, y, w, h, radius)
   if g then
     local cw = math.min(500, w - 32)
     drawTurnCard(g, x + 16, y + 16, cw)
+    if g.lanes and h > 360 then M.drawLanes(g.lanes, x + 16, y + 16 + 148, cw) end
     local by = y + h - 16 - 64
+    local info = M.roadInfo()
+    if info and (info.kph or info.camera) then
+      local used = M.drawSpeed(info, x + 16, by - 12 - 72, 36)
+      M.drawCamera(info, x + 16 + used, by - 12 - 72 + 8)
+    end
     ui.rect(ui.c.bg, x + 16, by, w - 32, 64, 20)
     local sub = T("{time} arrival", { time = g.arrival }) .. " · " .. fmtDur(g.remTime) .. " · " .. fmtDist(g.remaining)
     ui.text(ui.fit(sub, "bold", 20, w - 72), "bold", 20, ui.c.text, x + 36, by + (64 - ui.fontHeight("bold", 20)) / 2)
@@ -1636,6 +1812,86 @@ local function attribution(x, y, w)
   ui.text(ui.fit(T("© OpenFreeMap © OpenMapTiles · data © OpenStreetMap contributors · routes FOSSGIS OSRM"), "semibold", 12, w),
     "semibold", 12, hex("5A5C61"), x, y)
 end
+
+-- one lane's arrows, 0..1 box of size sz at x,y
+local LANE_ANGLE = { straight = 0, ["slight right"] = 40, right = 90, ["sharp right"] = 135,
+  ["slight left"] = -40, left = -90, ["sharp left"] = -135 }
+local function laneArrow(ind, x, y, sz, col)
+  lg.setColor(col)
+  lg.setLineWidth(sz * 0.11)
+  lg.setLineJoin("bevel")
+  local cx, base, mid = x + sz / 2, y + sz * 0.92, y + sz * 0.5
+  if ind == "uturn" then
+    lg.line(cx + sz * 0.12, base, cx + sz * 0.12, y + sz * 0.3)
+    lg.arc("line", "open", cx - sz * 0.06, y + sz * 0.3, sz * 0.18, math.pi, 2 * math.pi, 10)
+    local tx = cx - sz * 0.24
+    lg.line(tx, y + sz * 0.3, tx, y + sz * 0.55)
+    lg.polygon("fill", tx - sz * 0.12, y + sz * 0.5, tx + sz * 0.12, y + sz * 0.5, tx, y + sz * 0.68)
+    return
+  end
+  local a = math.rad(LANE_ANGLE[ind] or 0)
+  local len = sz * 0.36
+  local tx, ty = cx + math.sin(a) * len, mid - math.cos(a) * len
+  lg.line(cx, base, cx, mid, tx, ty)
+  local hx, hy = math.sin(a), -math.cos(a)
+  local px, py = -hy, hx
+  local h = sz * 0.16
+  lg.polygon("fill", tx + hx * h, ty + hy * h, tx + px * h * 0.8, ty + py * h * 0.8, tx - px * h * 0.8, ty - py * h * 0.8)
+end
+
+-- which lanes to be in, under the turn card
+local function drawLanes(lanes, x, y, maxW)
+  local n = #lanes
+  local cell = math.min(56, (maxW - 24) / n)
+  local w = cell * n + 24
+  ui.rect(ui.c.bg, x, y, w, cell + 20, 18)
+  for i, l in ipairs(lanes) do
+    local lx = x + 12 + (i - 1) * cell
+    if i > 1 then ui.rect(hex("2A2C31"), lx, y + 14, 1, cell - 8) end
+    local col = l.valid and ui.c.text or hex("4A4C52")
+    for _, ind in ipairs(l.ind) do
+      laneArrow(ind == "none" and "straight" or ind, lx + cell * 0.12, y + 10, cell * 0.76, col)
+    end
+  end
+  return cell + 20
+end
+M.drawLanes = drawLanes
+
+-- the speed limit sign (and how fast you're going, when over it)
+local function drawSpeed(info, x, y, r)
+  if not info then return 0 end
+  local used = 0
+  if info.kph then
+    ui.circle(info.over and hex("D63B2F") or hex("FFFFFF"), x + r, y + r, r)
+    ui.ring(hex("D63B2F"), x + r, y + r, r - r * 0.1, r * 0.2)
+    if info.over then ui.circle(hex("D63B2F"), x + r, y + r, r * 0.72) end
+    local t = tostring(math.floor(info.kph + 0.5))
+    local fs = t:len() >= 3 and math.floor(r * 0.62) or math.floor(r * 0.8)
+    ui.text(t, "bold", fs, info.over and hex("FFFFFF") or hex("111111"), x, y + r - ui.fontHeight("bold", fs) / 2, "center", r * 2)
+    used = r * 2 + 12
+  end
+  if info.speed and (info.over or not info.kph) and info.speed > 3 then
+    local t = string.format("%d", math.floor(info.speed + 0.5))
+    local pw = math.max(ui.textWidth(t, "bold", 22), ui.textWidth("km/h", "semibold", 12)) + 28
+    ui.rect(ui.c.bg, x + used, y + r - 32, pw, 64, 20)
+    ui.text(t, "bold", 22, info.over and hex("F09A8A") or ui.c.text, x + used, y + r - 28, "center", pw)
+    ui.text("km/h", "semibold", 12, ui.c.muted, x + used, y + r + 6, "center", pw)
+    used = used + pw + 12
+  end
+  return used
+end
+M.drawSpeed = drawSpeed
+
+-- a speed camera ahead
+local function drawCamera(info, x, y)
+  if not (info and info.camera) then return end
+  local label = T("Speed camera") .. " · " .. fmtDist(info.camera)
+  local w = ui.textWidth(label, "bold", 17) + 76
+  ui.rect(hex("3A2A12"), x, y, w, 56, 20)
+  ui.icon("camera", x + 16, y + 14, 28, ui.c.accent, 2)
+  ui.text(label, "bold", 17, ui.c.accent, x + 56, y + (56 - ui.fontHeight("bold", 17)) / 2)
+end
+M.drawCamera = drawCamera
 
 function drawTurnCard(g, x, y, w)
   ui.rect(ui.c.bg, x, y, w, 140, 26)
@@ -1703,7 +1959,11 @@ function M.drawUI(x0, y0, w, h)
     local g = M.guidance()
     if g then
       drawTurnCard(g, x0 + 20, y0 + 20, math.min(500, w - 140))
+      if g.lanes then drawLanes(g.lanes, x0 + 20, y0 + 20 + 148, math.min(500, w - 140)) end
       local by = y0 + h - 20 - 92
+      local info = M.roadInfo()
+      local used = drawSpeed(info, x0 + 20, by - 16 - 88, 44)
+      drawCamera(info, x0 + 20 + used, by - 16 - 88 + 16)
       ui.rect(ui.c.bg, x0 + 20, by, w - 40, 92, 26)
       ui.text(g.arrival, "bold", 30, ui.c.text, x0 + 46, by + 14)
       ui.text(T("Arrival"), "semibold", 14, ui.c.muted, x0 + 46, by + 56)
@@ -1718,7 +1978,7 @@ function M.drawUI(x0, y0, w, h)
       ui.text(T("End"), "bold", 18, hex("F09A8A"), ex, by + 14 + (64 - ui.fontHeight("bold", 18)) / 2, "center", endW)
       ui.hit({ kind = "map:end" }, ex, by + 14, endW, 64)
       if M.nav.off > 50 then
-        ui.text(T("Off the route"), "bold", 15, hex("F09A8A"), x0 + 26, y0 + 172)
+        ui.text(T("Off the route"), "bold", 15, hex("F09A8A"), x0 + 26, y0 + 172 + (g.lanes and 84 or 0))
       end
     end
   elseif mode == "browse" then

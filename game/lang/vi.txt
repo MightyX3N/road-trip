@@ -423,3 +423,5 @@ Có màu ban ngày, tối ban đêm
 Đã lưu khóa. Hiện không hỏi được Mapbox ({error}).
 Lưu
 Kiểu, 3D, khu vực ngoại tuyến
+Camera tốc độ
+Phía trước có camera tốc độ

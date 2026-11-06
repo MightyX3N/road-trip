@@ -423,3 +423,5 @@ Clau desada
 Clau desada. Ara no s'ha pogut consultar Mapbox ({error}).
 Desa
 Estil, 3D, zones fora de línia
+Radar
+Radar més endavant

@@ -423,3 +423,5 @@ Võti salvestatud
 Võti salvestatud. Mapboxilt ei saanud praegu küsida ({error}).
 Salvesta
 Stiil, 3D, võrguta alad
+Kiiruskaamera
+Ees on kiiruskaamera

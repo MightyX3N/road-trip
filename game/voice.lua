@@ -151,6 +151,12 @@ function M.update(dt)
     end
   end
 
+  -- a speed camera ahead: said once, about 400 m before it
+  local info = map.roadInfo and map.roadInfo()
+  if info and info.camera and info.camera < 420 and info.camera > 30 and not map.cameraWarned(info.cameraIndex) then
+    say(T("Speed camera ahead"))
+  end
+
   local g = map.guidance()
   if not g then
     saidKey, arrivedSaid = nil, false

@@ -343,6 +343,12 @@ local function stubCall(method, args)
     if url:find("routed%-car") then
       return { done = true, ok = true, body = '{"code":"Ok","routes":[{"distance":2400,"duration":420,"geometry":"_ibagBsz`pVvJtL","legs":[{"steps":[{"distance":1200,"duration":200,"name":"Vesterbrogade","maneuver":{"type":"depart","modifier":"straight","location":[12.5683,55.6761]}},{"distance":1200,"duration":220,"name":"Bernstorffsgade","maneuver":{"type":"turn","modifier":"right","location":[12.565,55.672]}},{"distance":0,"duration":0,"name":"","maneuver":{"type":"arrive","location":[12.5681,55.6737]}}]}]},{"distance":2700,"duration":480,"geometry":"_ibagBsz`pVvJtL","legs":[{"steps":[]}]}]}' }
     end
+    if url:find("trace_attributes") then
+      return { done = true, ok = true, body = '{"edges":[{"speed_limit":50,"length":0.02},{"length":0.01},{"speed_limit":80,"length":5}],"units":"kilometers"}' }
+    end
+    if url:find("overpass") then
+      return { done = true, ok = true, body = '{"elements":[{"type":"node","id":1,"lat":54.56030,"lon":12.33790,"tags":{"highway":"speed_camera","maxspeed":"50"}},{"type":"node","id":2,"lat":55.0,"lon":13.0,"tags":{"highway":"speed_camera"}}]}' }
+    end
     if url:find("^jf:") then
       if url:find("/PlaybackInfo") then return { done = true, ok = true, body = '{"PlaySessionId":"ps1","MediaSources":[{"Id":"m1","SupportsDirectPlay":true,"TranscodingUrl":"/videos/m1/master.m3u8?MediaSourceId=m1&ApiKey=tok123"}]}' } end
       if url:find("/System/Info/Public") then return { done = true, ok = true, body = '{"ServerName":"Home","Version":"10.10.3"}' } end

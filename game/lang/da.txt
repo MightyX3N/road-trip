@@ -423,3 +423,5 @@ Nøglen er gemt
 Nøglen er gemt. Mapbox kunne ikke spørges lige nu ({error}).
 Gem
 Stil, 3D, offlineområder
+Fotovogn
+Fotovogn forude

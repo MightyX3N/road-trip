@@ -423,3 +423,5 @@ Ključ shranjen
 Ključ shranjen. Mapboxa trenutno ni bilo mogoče vprašati ({error}).
 Shrani
 Slog, 3D, območja brez povezave
+Radar
+Radar pred vami
