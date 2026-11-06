@@ -1239,6 +1239,39 @@ local function drawLanguages()
   end
 end
 
+-- Smooth edges. The window asks for 4× MSAA, but many car boxes' GPUs give none, and then
+-- every circle and line is jagged. Then the frame is drawn into a multisampled canvas and
+-- copied to the screen (holes for the map stay see-through: the copy replaces).
+local smooth = { tried = false }
+local function smoothCanvas()
+  local pw, ph = lg.getPixelDimensions()
+  if smooth.canvas and smooth.w == pw and smooth.h == ph then return smooth.canvas end
+  if smooth.tried and smooth.w == pw and smooth.h == ph then return nil end
+  smooth.tried, smooth.w, smooth.h, smooth.canvas = true, pw, ph, nil
+  local _, _, flags = love.window.getMode()
+  smooth.window = flags and flags.msaa or 0
+  if smooth.window >= 2 or android.isWeb then return nil end
+  local lim = lg.getSystemLimits()
+  local max = lim.canvasmsaa or lim.texturemsaa or 0
+  if max < 2 then return nil end
+  -- only with full colour: a 16-bit canvas would band every dark grey
+  local ok8, fmts = pcall(function()
+    if lg.getCanvasFormats then return lg.getCanvasFormats() end
+    return lg.getTextureFormats({ canvas = true })
+  end)
+  if not (ok8 and type(fmts) == "table" and fmts.rgba8) then return nil end
+  local ok, c = pcall(lg.newCanvas, lg.getWidth(), lg.getHeight(), { format = "rgba8", msaa = math.min(4, max), dpiscale = lg.getDPIScale() })
+  if ok and c then smooth.canvas, smooth.msaa = c, c:getMSAA() end
+  return smooth.canvas
+end
+
+local function graphicsInfo()
+  local pw, ph = lg.getPixelDimensions()
+  local _, _, flags = love.window.getMode()
+  return string.format("%dx%d px, dpi %.2f, scale %.2f · window MSAA %d · smoothing %s", pw, ph, lg.getDPIScale(), ui.S,
+    flags and flags.msaa or 0, smooth.canvas and ("canvas " .. tostring(smooth.msaa) .. "×") or "off")
+end
+
 local function drawDiagnostics()
   local d = state.diag or {}
   local x, y = RAIL + 32, TOP + 24
@@ -1267,7 +1300,8 @@ local function drawDiagnostics()
     .. tostring(o.moving) .. " · cover " .. tostring(o.covering) .. " · banner " .. tostring(o.bannerShown)
     .. " · nav age " .. tostring(o.navAgeS) .. "s · draw " .. tostring(o.canDraw) .. " · guard " .. tostring(o.guard),
     "semibold", 14, W - x - 32), "semibold", 14, ui.c.text2, x, y + 96)
-  y = y + 136
+  ui.text(ui.fit("Graphics: " .. graphicsInfo(), "semibold", 14, W - x - 32), "semibold", 14, ui.c.text2, x, y + 120)
+  y = y + 160
   local colW = (W - x - 32 - 48) / 3
   local function list(title, lines, lx)
     ui.text(title, "bold", 14, ui.c.muted, lx, y)
@@ -2286,7 +2320,11 @@ local function timed(name, f, ...)
   local t = love.timer.getTime()
   f(...)
   t = love.timer.getTime() - t
-  if t > slowest then slowest, state.slowPart = t, name end
+  if t > slowest then
+    slowest = t
+    local sub = name == "map" and map.slowPart
+    state.slowPart = string.format("%s %.2fs", sub and (name .. "/" .. sub) or name, t)
+  end
 end
 
 -- in a browser: follow the window's size, and take what's typed on the page's keyboard
@@ -2319,7 +2357,7 @@ local function webUpdate(dt)
 end
 
 function love.update(dt)
-  slowest, state.slowPart = 0.1, nil
+  slowest, state.slowPart = 0.05, nil
   ui.tick()
   if android.isWeb then webUpdate(dt) end
   local splitMap = (state.screen == "web" or state.screen == "media") and navigating()
@@ -2492,8 +2530,9 @@ local function noteSlow(tUpdate, tDraw)
   local now = love.timer.getTime()
   if now - lastSlow < 2 then return end
   lastSlow = now
-  android.logSlow(string.format("Lua frame %.1fs on %s (update %.1fs%s, draw %.1fs)", tUpdate + tDraw, state.screen,
-    tUpdate, state.slowPart and (" mostly " .. state.slowPart) or "", tDraw))
+  -- what took the time first, so the line still says it when Diagnostics cuts it short
+  android.logSlow(string.format("%.1fs on %s: %s (update %.1fs, draw %.1fs)", tUpdate + tDraw, state.screen,
+    tUpdate >= tDraw and (state.slowPart or "nothing measured") or "drawing", tUpdate, tDraw))
 end
 
 -- Draw only when something changed, so the launcher idles quietly on the car box.
@@ -2539,9 +2578,21 @@ function love.run()
     local busy = state.foreground and animating()
     if (state.dirty or busy) and state.foreground and lg.isActive() then
       lg.origin()
+      local sc = smoothCanvas()
+      if sc then
+        lg.setCanvas(sc)
+      end
       lg.clear(lg.getBackgroundColor())
       local t1 = love.timer.getTime()
       love.draw()
+      if sc then
+        lg.setCanvas()
+        lg.origin()
+        lg.setBlendMode("replace", "premultiplied")
+        lg.setColor(1, 1, 1, 1)
+        lg.draw(sc)
+        lg.setBlendMode("alpha")
+      end
       lg.present()
       state.dirty = false
       lastDraw = now

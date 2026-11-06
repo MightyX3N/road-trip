@@ -128,7 +128,8 @@ final class MapNative {
             MapLibre.getInstance(a);
             HttpRequestUtil.setOkHttpClient(new OkHttpClient.Builder().addInterceptor(new Local(a)).build());
             MapLibreMapOptions o = MapLibreMapOptions.createFromAttributes(a)
-                .textureMode(false).logoEnabled(false).attributionEnabled(false).compassEnabled(false);
+                .textureMode(false).logoEnabled(false).attributionEnabled(false).compassEnabled(false)
+                .pixelRatio(ratio()); // a bit bigger than the phone default: read at a glance, at arm's length
             view = new MapView(a, o);
             view.onCreate(null);
             view.addOnDidFailLoadingMapListener(new MapView.OnDidFailLoadingMapListener() {
@@ -211,8 +212,7 @@ final class MapNative {
             @Override public void run() {
                 if (map == null) return;
                 try {
-                    float density = act.getResources().getDisplayMetrics().density;
-                    double zoom = a.getDouble("zoom") + Math.log(luaScale / density) / Math.log(2);
+                    double zoom = a.getDouble("zoom") + Math.log(luaScale / ratio()) / Math.log(2);
                     zoom = Math.max(0, Math.min(21, zoom));
                     double ahead = a.optDouble("ahead", 0.5); // where the target sits, 0.5 = middle
                     int h = view.getHeight();
@@ -241,7 +241,7 @@ final class MapNative {
 
     /** The route: { route: [{c: [[lon,lat]...], color}], alt: [[[lon,lat]...]], width (Lua units) } */
     static boolean route(JSONObject a) throws Exception {
-        routeWidth = (float) a.optDouble("width", 16) * luaScale / density();
+        routeWidth = (float) a.optDouble("width", 16) * luaScale / ratio();
         routeJson = lines(a.optJSONArray("route"), null);
         altJson = lines(a.optJSONArray("alt"), "#8A8D93");
         ui(new Runnable() { @Override public void run() { pushOverlays(); } });
@@ -273,6 +273,10 @@ final class MapNative {
     }
 
     private static float density() { return act == null ? 1f : act.getResources().getDisplayMetrics().density; }
+    /** MapLibre's pixels per point: labels and lines 35% larger than Android's default, so a
+     *  low-resolution car screen still shows street names you can read. */
+    static final float MAP_TEXT = 1.35f;
+    private static float ratio() { return density() * MAP_TEXT; }
 
     private static String lines(JSONArray list, String color) throws Exception {
         if (list == null || list.length() == 0) return EMPTY;

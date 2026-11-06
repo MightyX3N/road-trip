@@ -1265,19 +1265,30 @@ end
 
 function M.update(dt, onScreen)
   frame = frame + 1
+  -- which part was slowest, for Diagnostics' "Slow moments"
+  local clock, worst = love.timer.getTime(), 0
+  M.slowPart = nil
+  local function lap(name)
+    local t = love.timer.getTime()
+    if t - clock > worst then worst, M.slowPart = t - clock, name end
+    clock = t
+  end
   -- collect first: a handler may start a new request (adding to `pending` mid-loop isn't allowed)
   local done = {}
   for id in pairs(pending) do
     local r = android.fetchResult(id)
     if type(r) == "table" and r.done then done[#done + 1] = { id, r } end
   end
+  lap("polling requests")
   for _, d in ipairs(done) do
     local handler = pending[d[1]]
     pending[d[1]] = nil
     if handler then handler(d[2]) end
     app.dirty()
   end
+  lap("handling answers")
   if onScreen then decodeNext() end
+  lap("tile decoding")
 
   local now = love.timer.getTime()
   if (onScreen or M.nav or M.waitingFix) and now - lastLocPoll > 0.5 then
@@ -1296,6 +1307,7 @@ function M.update(dt, onScreen)
     end
   end
 
+  lap("location")
   -- which way the car is going: GPS bearing while moving, else from how far it moved
   local f = M.fix
   if f and f ~= lastHeadingFix then
@@ -1334,8 +1346,10 @@ function M.update(dt, onScreen)
     if math.abs(d) < 0.01 then M.view.zoom, zoomTarget = zoomTarget, nil
     else M.view.zoom = M.view.zoom + d * math.min(1, dt * 8) end
   end
+  lap("following")
   if M.search and M.search.dueAt and now > M.search.dueAt then runSearch() end
   updateExtras()
+  lap("route extras")
   -- arrived: finish 20 s later, whether or not new positions come in
   if M.nav and M.nav.arrivedAt and now - M.nav.arrivedAt > 20 then
     endNav()
