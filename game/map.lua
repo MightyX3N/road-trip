@@ -18,8 +18,6 @@ local PHOTON = "https://photon.komoot.io/api/?limit=6&q="
 local OSRM = "https://routing.openstreetmap.de/routed-car/route/v1/driving/"
 -- routes that avoid motorways, tolls or ferries: FOSSGIS's Valhalla (their OSRM has no avoid options)
 local VALHALLA = "https://valhalla1.openstreetmap.de/route?json="
--- with the user's own key only: Mapbox's traffic-aware router (OSRM-style answers)
-local MAPBOX = "https://api.mapbox.com/directions/v5/mapbox/driving-traffic/"
 
 local hex = function(h) return ui.hex(h) end
 local listening = false -- location updates started (needs permission first)
@@ -768,60 +766,7 @@ function requestRoutes(lat, lon, from)
   end
   M.waitingFix = nil
   M.routesBusy = true
-  local avoid, avoiding = avoids()
-  -- with a Mapbox key: Mapbox's routes, which know about live traffic
-  local key = config.get("mapboxKey")
-  if key and not M.mapboxDown then
-    local ex = {}
-    if avoid.motorway then ex[#ex + 1] = "motorway" end
-    if avoid.toll then ex[#ex + 1] = "toll" end
-    if avoid.ferry then ex[#ex + 1] = "ferry" end
-    local url = string.format("%s%.6f,%.6f;%.6f,%.6f?overview=full&geometries=polyline6&steps=true&alternatives=true"
-      .. "&annotations=congestion%s&access_token=%s", MAPBOX, f.lon, f.lat, lon, lat,
-      #ex > 0 and ("&exclude=" .. table.concat(ex, ",")) or "", key)
-    request(android.fetch(url), function(r)
-      local ok, d = pcall(json.decode, r.body or "")
-      local list = {}
-      if ok and type(d) == "table" and d.code == "Ok" then
-        for _, rr in ipairs(d.routes or {}) do
-          local p = parseRoute(rr)
-          if p then
-            -- congestion per stretch of the line, all legs together
-            local cg = {}
-            for _, leg in ipairs(rr.legs or {}) do
-              for _, c in ipairs((leg.annotation or {}).congestion or {}) do cg[#cg + 1] = c end
-            end
-            if #cg > 0 then p.congestion = cg end
-            p.traffic = true
-            list[#list + 1] = p
-          end
-        end
-      end
-      if #list == 0 then
-        -- Mapbox said no (a wrong key, the free allowance used up, no connection): use the
-        -- usual router instead, and don't ask Mapbox again until Road Trip restarts
-        M.routesBusy = false
-        if ok and type(d) == "table" and (d.code == "InvalidToken" or d.message == "Not Authorized - Invalid Token") then M.mapboxDown = true end
-        app.toast(T("Mapbox didn't answer; using the usual routes"))
-        local k = config.data.mapboxKey
-        config.data.mapboxKey = nil
-        requestRoutes(lat, lon, from)
-        config.data.mapboxKey = k
-        return
-      end
-      M.routesBusy = false
-      if not M.dest then return end
-      if M.mode == "nav" and M.nav then
-        M.nav.route, M.nav.idx, M.nav.off = list[1], 1, 0
-        app.toast(T("New route"))
-      else
-        M.routes, M.sel, M.mode = list, 1, "overview"
-        M.wantFit = true
-      end
-      app.dirty()
-    end)
-    return
-  end
+  local _, avoiding = avoids()
   local id = android.fetch(avoiding and valhallaURL(f.lat, f.lon, lat, lon) or routeURL(f.lat, f.lon, lat, lon))
   request(id, function(r)
     M.routesBusy = false
@@ -1256,29 +1201,11 @@ function M.styleId()
   return st
 end
 
--- congestion from Mapbox -> line colour (low traffic keeps the route colour)
-local TRAFFIC = { moderate = "#F5C542", heavy = "#E8613C", severe = "#B3261E" }
-
 local function routeFeatures(rt, color)
-  local out = {}
-  if not rt then return out end
-  local cg = rt.congestion
-  local cur, curCol
-  for i, c in ipairs(rt.coords) do
-    local col = color
-    if cg and i < #rt.coords then col = TRAFFIC[cg[i]] or color elseif cg then col = curCol end
-    if col ~= curCol then
-      if cur then cur[#cur + 1] = { c[2], c[1] } end -- join the pieces
-      cur = { { c[2], c[1] } }
-      out[#out + 1] = { c = cur, color = col }
-      curCol = col
-    else
-      cur[#cur + 1] = { c[2], c[1] }
-    end
-  end
-  local list = {}
-  for _, f in ipairs(out) do if #f.c >= 2 then list[#list + 1] = f end end
-  return list
+  if not rt then return {} end
+  local c = {}
+  for _, p in ipairs(rt.coords) do c[#c + 1] = { p[2], p[1] } end
+  return { { c = c, color = color } }
 end
 
 local function lonlat(rt)

@@ -422,3 +422,4 @@ Ce n'est pas une clé Mapbox ; elle commence par pk.
 Clé enregistrée
 Clé enregistrée. Mapbox n'a pas pu être interrogé pour l'instant ({error}).
 Enregistrer
+Style, 3D, zones hors ligne

@@ -422,3 +422,4 @@ Nu arată a cheie Mapbox; începe cu pk.
 Cheie salvată
 Cheie salvată. Mapbox nu a putut fi întrebat acum ({error}).
 Salvează
+Stil, 3D, zone offline

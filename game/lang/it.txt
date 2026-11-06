@@ -422,3 +422,4 @@ Non sembra una chiave Mapbox; inizia con pk.
 Chiave salvata
 Chiave salvata. Al momento non è stato possibile verificarla con Mapbox ({error}).
 Salva
+Stile, 3D, aree offline

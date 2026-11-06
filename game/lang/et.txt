@@ -422,3 +422,4 @@ See ei näe välja nagu Mapboxi võti; see algab pk.
 Võti salvestatud
 Võti salvestatud. Mapboxilt ei saanud praegu küsida ({error}).
 Salvesta
+Stiil, 3D, võrguta alad

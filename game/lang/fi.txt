@@ -422,3 +422,4 @@ Tämä ei näytä Mapbox-avaimelta; se alkaa pk.
 Avain tallennettu
 Avain tallennettu. Mapboxilta ei voitu juuri nyt tarkistaa ({error}).
 Tallenna
+Tyyli, 3D, offline-alueet

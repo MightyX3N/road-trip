@@ -422,3 +422,4 @@ Det ser inte ut som en Mapbox-nyckel; den börjar med pk.
 Nyckeln sparad
 Nyckeln sparad. Mapbox gick inte att fråga just nu ({error}).
 Spara
+Stil, 3D, offlineområden

@@ -422,3 +422,4 @@ Não parece uma chave Mapbox; começa por pk.
 Chave guardada
 Chave guardada. Não foi possível consultar o Mapbox agora ({error}).
 Guardar
+Estilo, 3D, áreas offline

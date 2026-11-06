@@ -422,3 +422,4 @@ Litir á daginn, dökkt á nóttunni
 Lykill vistaður
 Lykill vistaður. Ekki náðist í Mapbox í bili ({error}).
 Vista
+Stíll, 3D, ótengd svæði

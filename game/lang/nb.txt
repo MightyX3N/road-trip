@@ -422,3 +422,4 @@ Det ser ikke ut som en Mapbox-nøkkel; den starter med pk.
 Nøkkelen er lagret
 Nøkkelen er lagret. Fikk ikke spurt Mapbox akkurat nå ({error}).
 Lagre
+Stil, 3D, frakoblede områder

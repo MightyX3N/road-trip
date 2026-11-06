@@ -422,3 +422,4 @@ Tai nepanašu į Mapbox raktą; jis prasideda pk.
 Raktas išsaugotas
 Raktas išsaugotas. Mapbox šiuo metu nepavyko paklausti ({error}).
 Išsaugoti
+Stilius, 3D, neprisijungus naudojamos sritys

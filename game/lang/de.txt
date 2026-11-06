@@ -422,3 +422,4 @@ Das sieht nicht wie ein Mapbox-Schlüssel aus; er beginnt mit pk.
 Schlüssel gespeichert
 Schlüssel gespeichert. Mapbox war gerade nicht erreichbar ({error}).
 Speichern
+Stil, 3D, Offline-Gebiete

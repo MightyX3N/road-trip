@@ -422,3 +422,4 @@ Ez nem tűnik Mapbox-kulcsnak; pk. kezdetű
 Kulcs mentve
 Kulcs mentve. A Mapbox most nem volt elérhető az ellenőrzéshez ({error}).
 Mentés
+Stílus, 3D, offline területek

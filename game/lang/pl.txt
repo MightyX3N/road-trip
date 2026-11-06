@@ -422,3 +422,4 @@ To nie wygląda na klucz Mapbox; zaczyna się od pk.
 Klucz zapisany
 Klucz zapisany. Nie udało się teraz sprawdzić go w Mapbox ({error}).
 Zapisz
+Styl, 3D, obszary offline

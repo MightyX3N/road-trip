@@ -420,3 +420,4 @@ That doesn't look like a Mapbox key; it starts with pk.
 Key saved
 Key saved. Mapbox couldn't be asked about it just now ({error}).
 Save
+Style, 3D, offline areas

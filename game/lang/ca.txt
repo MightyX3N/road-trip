@@ -422,3 +422,4 @@ No sembla una clau de Mapbox; comença per pk.
 Clau desada
 Clau desada. Ara no s'ha pogut consultar Mapbox ({error}).
 Desa
+Estil, 3D, zones fora de línia

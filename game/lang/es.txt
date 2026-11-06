@@ -422,3 +422,4 @@ No parece una clave de Mapbox; empieza por pk.
 Clave guardada
 Clave guardada. No se pudo consultar a Mapbox ahora ({error}).
 Guardar
+Estilo, 3D, zonas sin conexión

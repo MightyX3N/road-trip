@@ -1,5 +1,5 @@
 -- Road Trip: the Map settings screen. How the map looks (OpenFreeMap's styles and Waypoint's
--- game-inspired worlds), 3D, which map engine, and an optional Mapbox key for routes that
+-- game-inspired worlds), 3D, which map engine, and offline areas.
 -- know about traffic.
 
 local T = require("lang").T
@@ -20,7 +20,6 @@ local BASIC = {
 }
 
 M.page = 1
-M.key = { typing = false, text = "", busy = false, msg = nil, ok = nil }
 
 local images = {}
 local pending = {}
@@ -57,45 +56,6 @@ function M.init(deps)
   android, config, ui, json, app, map = deps.android, deps.config, deps.ui, deps.android.json, deps.app, deps.map
 end
 
-function M.mapboxKey() return config.get("mapboxKey") end
-
-----------------------------------------------------------------------------------------------
--- Mapbox key: checked once with Mapbox's token endpoint
-
--- Saves the key straight away, then asks Mapbox about it. Only a clear "no" from Mapbox
--- takes it out again; if Mapbox can't be reached, the key stays (routes fall back anyway).
-local function saveKey(k)
-  k = (k or ""):gsub("%s", "")
-  if not k:match("^[ps]k%.[%w%-_%.]+$") or #k < 40 then
-    M.key.ok, M.key.msg = false, T("That doesn't look like a Mapbox key; it starts with pk.")
-    return
-  end
-  config.set("mapboxKey", k)
-  M.key.text, M.key.typing = k, false
-  ui.closeKeyboard()
-  M.key.busy, M.key.ok, M.key.msg = true, nil, nil
-  local id = android.fetch("https://api.mapbox.com/tokens/v2?access_token=" .. k)
-  if type(id) ~= "number" then
-    M.key.busy, M.key.ok, M.key.msg = false, true, T("Key saved")
-    return
-  end
-  pending[id] = function(r)
-    M.key.busy = false
-    local ok, d = pcall(json.decode, r.body or "")
-    local code = ok and type(d) == "table" and d.code or nil
-    if code == "TokenValid" then
-      M.key.ok, M.key.msg = true, T("Key works: routes now use live traffic")
-    elseif code then
-      config.set("mapboxKey", nil)
-      M.key.ok, M.key.msg = false, T("Mapbox didn't accept that key ({error})", { error = code })
-    else
-      M.key.ok, M.key.msg = true, T("Key saved. Mapbox couldn't be asked about it just now ({error}).",
-        { error = r.error or ("HTTP " .. tostring(r.status)) })
-    end
-    app.dirty()
-  end
-end
-
 function M.update(dt)
   local done = {}
   for id in pairs(pending) do
@@ -109,31 +69,8 @@ function M.update(dt)
   end
 end
 
-function M.wantsText() return M.key.typing end
-
-function M.textinput(t)
-  if M.key.typing then M.key.text = M.key.text .. t:gsub("%s", "") end
-end
-
-function M.keypressed(key)
-  if not M.key.typing then return end
-  if key == "backspace" then
-    M.key.text = M.key.text:sub(1, -2)
-  elseif key == "return" or key == "kpenter" then
-    M.key.typing = false
-    ui.closeKeyboard()
-    if M.key.text ~= "" then saveKey(M.key.text) end
-  end
-end
-
-function M.back()
-  if M.key.typing then
-    M.key.typing = false
-    ui.closeKeyboard()
-    return true
-  end
-  return false
-end
+function M.wantsText() return false end
+function M.back() return false end
 
 ----------------------------------------------------------------------------------------------
 -- drawing
@@ -172,7 +109,7 @@ function M.draw(x, y, w, h)
   local rw = x + w - 24 - rx
   local bottom = y + h - 20
 
-  -- left: engine, 3D, Mapbox
+  -- left: engine, offline areas, 3D
   ui.rect(ui.c.card, lx, top, lw, bottom - top, 20)
   local ry = top + 8
   local native = map.native
@@ -189,38 +126,6 @@ function M.draw(x, y, w, h)
     native and { config.get("map3D") == true, { kind = "ms:3d" } } or nil)
   ry = ry + 76
   ui.rect(ui.c.line, lx + 20, ry, lw - 40, 1)
-  local key = config.get("mapboxKey")
-  row(T("Mapbox key"), key and T("Routes use live traffic") or T("Optional: routes with live traffic"), lx, ry, lw,
-    { key and T("Remove") or T("Add"), { kind = key and "ms:keyRemove" or "ms:keyAdd" } })
-  ry = ry + 76
-  if M.key.typing or M.key.busy or M.key.msg then
-    local fy = ry + 4
-    ui.rect(ui.c.chip, lx + 20, fy, lw - 40, 52, 16)
-    if M.key.typing then
-      love.graphics.setColor(ui.c.accent)
-      love.graphics.setLineWidth(2)
-      love.graphics.rectangle("line", lx + 20, fy, lw - 40, 52, 16, 16, 12)
-    end
-    local shown = M.key.text ~= "" and (M.key.text:sub(1, 6) .. string.rep("•", math.max(0, math.min(24, #M.key.text - 6))))
-      or T("Paste your public key (pk.…)")
-    local blink = M.key.typing and math.floor(love.timer.getTime() * 2) % 2 == 0
-    ui.text(ui.fit(shown, "semibold", 15, lw - 80) .. (blink and "|" or ""), "semibold", 15,
-      M.key.text ~= "" and ui.c.text or ui.c.dim, lx + 36, fy + (52 - ui.fontHeight("semibold", 15)) / 2)
-    ui.hit({ kind = "ms:keyField" }, lx + 20, fy, lw - 40, 52)
-    if M.key.typing then
-      local saving = M.key.text ~= ""
-      local label = saving and T("Save") or T("Paste")
-      local pw = ui.textWidth(label, "bold", 15) + 36
-      ui.pill({ kind = saving and "ms:save" or "ms:paste" }, label, lx + lw - 26 - pw, fy + 6, 40, "accent")
-    end
-    local msg = M.key.busy and T("Checking…") or M.key.msg
-    if msg then
-      ui.textWrap(msg, "semibold", 14, M.key.ok == false and ui.hex("F09A8A") or ui.c.muted, lx + 22, fy + 62, lw - 44, 2)
-    end
-    ry = fy + 112
-  end
-  ui.textWrap(T("A Mapbox key is free to make at mapbox.com (Account → Tokens). It stays on this device. Routes then come from Mapbox with live traffic, and the route line shows where it's slow."),
-    "semibold", 13, ui.c.muted, lx + 22, ry + 4, lw - 44, 4)
 
   -- right: how the map looks
   ui.rect(ui.c.card, rx, top, rw, bottom - top, 20)
@@ -292,24 +197,6 @@ function M.activate(id)
     local to = map.native and "classic" or "maplibre"
     app.toast(T("Starting Road Trip again with the other map…"))
     android.mapSetEngine(to)
-  elseif k == "ms:keyAdd" or k == "ms:keyField" then
-    M.key.typing, M.key.msg, M.key.ok = true, nil, nil
-    if k == "ms:keyAdd" then M.key.text = "" end
-    ui.openKeyboard()
-  elseif k == "ms:paste" then
-    local ok, clip = pcall(love.system.getClipboardText)
-    clip = ok and clip and clip:gsub("%s", "") or ""
-    if clip ~= "" then
-      saveKey(clip)
-    else
-      app.toast(T("Nothing to paste"))
-    end
-  elseif k == "ms:save" then
-    saveKey(M.key.text)
-  elseif k == "ms:keyRemove" then
-    config.set("mapboxKey", nil)
-    M.key.text, M.key.msg, M.key.ok, M.key.typing = "", nil, nil, false
-    app.toast(T("Mapbox key removed"))
   else
     return false
   end

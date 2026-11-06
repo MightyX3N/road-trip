@@ -422,3 +422,4 @@ Tohle nevypadá jako klíč Mapbox; začíná na pk.
 Klíč uložen
 Klíč uložen. Mapbox se teď nepodařilo ověřit ({error}).
 Uložit
+Styl, 3D, offline oblasti

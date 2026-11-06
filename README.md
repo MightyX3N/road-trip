@@ -45,9 +45,7 @@ sunset), or one of the 38 game-inspired worlds from [Waypoint](https://github.co
 (MIT licence; its styles, map fonts and patterns are bundled, see `third_party/waypoint`).
 The 3D button tilts the map with 3D buildings where the style has them, and two fingers
 pinch to zoom. If the MapLibre map doesn't show on a device, Settings → Map → Map engine
-switches back to Road Trip's own simpler map. An optional Mapbox key (yours, kept on the
-device) gives routes with live traffic, and the route line turns yellow, orange or red where
-it's slow; without it, routes come from the free servers below.
+switches back to Road Trip's own simpler map.
 
 Settings → Map → Offline maps downloads an area so the map works without data: every street
 around a place (about 60 km across), the main roads of a bigger region (about 250 km), or a
@@ -178,8 +176,7 @@ Map data © [OpenStreetMap](https://www.openstreetmap.org/copyright) contributor
 from [OpenFreeMap](https://openfreemap.org), place search by [Photon](https://photon.komoot.io),
 routes by the [FOSSGIS OSRM server](https://routing.openstreetmap.de) (and FOSSGIS's Valhalla server for routes that avoid motorways, tolls or ferries). Radio stations come from
 [Radio Browser](https://www.radio-browser.info), a free community directory; Road Trip
-reports each play to it, as it asks. None of them need an account or key. With your own Mapbox key, routes come from Mapbox's
-traffic-aware router instead (if Mapbox doesn't answer, Road Trip falls back to the free one).
+reports each play to it, as it asks. None of them need an account or key.
 Map styles: OpenFreeMap's, and [Waypoint](https://github.com/the-geeky-couldron/waypoint)'s worlds
 (MIT licence; the game names say what inspired each look, Waypoint isn't linked to the games). Road Trip asks the routing server for at most one route at a time, and
 waits at least 15 seconds between new routes while you drive.

@@ -1166,7 +1166,7 @@ local function drawSettings()
       button = { T("Check now"), { kind = "updateCheckNow" } } },
     { title = T("Check for updates on Wi-Fi only"), sub = T("Automatic checks, every 6 hours"),
       toggle = { config.get("updateWifiOnly") ~= false, { kind = "wifiOnly" } } },
-    { title = T("Map"), sub = T("Style, 3D, offline areas, Mapbox key"), button = { T("Open"), { kind = "msOpen" } } },
+    { title = T("Map"), sub = T("Style, 3D, offline areas"), button = { T("Open"), { kind = "msOpen" } } },
     { title = T("Diagnostics"), sub = T("What Keep in front saw and did"), button = { T("Show"), { kind = "diag" } } },
     { title = T("First-time setup"), sub = T("Permissions, favorite apps, Home and Work, radio"),
       button = { T("Start"), { kind = "setupStart" } } },

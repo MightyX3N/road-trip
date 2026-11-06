@@ -422,3 +422,4 @@ To ni videti kot ključ Mapbox; začne se s pk.
 Ključ shranjen
 Ključ shranjen. Mapboxa trenutno ni bilo mogoče vprašati ({error}).
 Shrani
+Slog, 3D, območja brez povezave

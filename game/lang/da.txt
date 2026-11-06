@@ -422,3 +422,4 @@ Det ligner ikke en Mapbox-nøgle; den starter med pk.
 Nøglen er gemt
 Nøglen er gemt. Mapbox kunne ikke spørges lige nu ({error}).
 Gem
+Stil, 3D, offlineområder

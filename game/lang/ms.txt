@@ -422,3 +422,4 @@ Itu tidak kelihatan seperti kunci Mapbox; ia bermula dengan pk.
 Kunci disimpan
 Kunci disimpan. Mapbox tidak dapat ditanya sekarang ({error}).
 Simpan
+Gaya, 3D, kawasan luar talian

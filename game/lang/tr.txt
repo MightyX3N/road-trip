@@ -422,3 +422,4 @@ Bu bir Mapbox anahtarına benzemiyor; pk. ile başlar
 Anahtar kaydedildi
 Anahtar kaydedildi. Mapbox şu an kontrol edilemedi ({error}).
 Kaydet
+Stil, 3D, çevrimdışı bölgeler
