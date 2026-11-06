@@ -386,3 +386,35 @@ Berhenti pada 50 MB
 Belum selesai
 Selesaikan
 Kawasan luar talian dipadam
+Gaya, 3D, kawasan luar talian, kunci Mapbox
+Mapbox tidak menjawab; guna laluan biasa
+Diilhamkan oleh {game}
+Kunci berfungsi: laluan kini guna trafik langsung
+Mapbox tidak menerima kunci itu ({error})
+Enjin peta
+MapLibre: gaya, 3D, lancar
+Milik Road Trip: lebih ringkas
+Paparan 3D
+Mencondongkan peta semasa memandu
+Perlu enjin MapLibre
+Kunci Mapbox
+Laluan guna trafik langsung
+Pilihan: laluan dengan trafik langsung
+Buang
+Tambah
+Tampal kunci awam anda (pk.…)
+Tampal
+Menyemak…
+Kunci Mapbox boleh dibuat percuma di mapbox.com (Account → Tokens). Ia kekal pada peranti ini. Laluan kemudian datang dari Mapbox dengan trafik langsung, dan garis laluan menunjukkan bahagian yang perlahan.
+Rupa peta
+Gaya perlu enjin MapLibre. Tukar di sebelah kiri.
+Dunia diilhamkan permainan daripada Waypoint (lesen MIT) · data peta © OpenStreetMap
+Memulakan semula Road Trip dengan peta lain…
+Tiada apa untuk ditampal
+Kunci Mapbox dibuang
+Auto
+Berwarna
+Cerah
+Terang
+Gelap
+Berwarna pada siang, gelap pada malam

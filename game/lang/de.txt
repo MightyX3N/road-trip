@@ -386,3 +386,35 @@ Bei 50 MB gestoppt
 Nicht fertig
 Fertig laden
 Offline-Gebiet gelöscht
+Stil, 3D, Offline-Gebiete, Mapbox-Schlüssel
+Mapbox hat nicht geantwortet; normale Routen
+Inspiriert von {game}
+Schlüssel funktioniert: Routen nutzen jetzt Live-Verkehr
+Mapbox hat den Schlüssel nicht angenommen ({error})
+Karten-Engine
+MapLibre: Stile, 3D, flüssig
+Road Trips eigene: einfacher
+3D-Ansicht
+Neigt die Karte während der Fahrt
+Braucht die MapLibre-Engine
+Mapbox-Schlüssel
+Routen nutzen Live-Verkehr
+Optional: Routen mit Live-Verkehr
+Entfernen
+Hinzufügen
+Füge deinen öffentlichen Schlüssel ein (pk.…)
+Einfügen
+Prüfe…
+Einen Mapbox-Schlüssel erstellst du kostenlos auf mapbox.com (Account → Tokens). Er bleibt auf dem Gerät. Routen kommen dann von Mapbox mit Live-Verkehr, und die Routenlinie zeigt, wo es langsam ist.
+So sieht die Karte aus
+Stile brauchen die MapLibre-Engine. Links umstellen.
+Spielinspirierte Welten von Waypoint (MIT-Lizenz) · Kartendaten © OpenStreetMap
+Road Trip startet neu mit der anderen Karte…
+Nichts zum Einfügen
+Mapbox-Schlüssel entfernt
+Auto
+Farbe
+Hell
+Licht
+Dunkel
+Tagsüber farbig, nachts dunkel

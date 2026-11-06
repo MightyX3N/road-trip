@@ -386,3 +386,35 @@ Sustabdyta ties 50 MB
 Nebaigta
 Užbaigti
 Sritis ištrinta
+Stilius, 3D, neprisijungus naudojamos sritys, Mapbox raktas
+Mapbox neatsakė; įprasti maršrutai
+Įkvėpta {game}
+Raktas veikia: maršrutai naudoja eismą realiuoju laiku
+Mapbox nepriėmė rakto ({error})
+Žemėlapio variklis
+MapLibre: stiliai, 3D, sklandu
+Road Trip nuosavas: paprastesnis
+3D vaizdas
+Vairuojant pakreipia žemėlapį
+Reikia MapLibre variklio
+Mapbox raktas
+Maršrutai naudoja eismą realiuoju laiku
+Neprivaloma: maršrutai su eismu realiuoju laiku
+Pašalinti
+Pridėti
+Įklijuokite viešąjį raktą (pk.…)
+Įklijuoti
+Tikrinama…
+Mapbox raktą nemokamai susikursite mapbox.com (Account → Tokens). Jis lieka šiame įrenginyje. Tada maršrutai ateina iš Mapbox su eismu realiuoju laiku, o maršruto linija rodo, kur važiuojama lėtai.
+Kaip atrodo žemėlapis
+Stiliams reikia MapLibre variklio. Pakeiskite kairėje.
+Žaidimų įkvėpti pasauliai iš Waypoint (MIT licencija) · duomenys © OpenStreetMap
+Road Trip paleidžiamas iš naujo su kitu žemėlapiu…
+Nėra ko įklijuoti
+Mapbox raktas pašalintas
+Automatinis
+Spalvotas
+Ryškus
+Šviesus
+Tamsus
+Dieną spalvotas, naktį tamsus

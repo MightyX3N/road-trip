@@ -386,3 +386,35 @@ Stoppet ved 50 MB
 Ikke færdig
 Gør færdig
 Offlineområde slettet
+Stil, 3D, offlineområder, Mapbox-nøgle
+Mapbox svarede ikke; bruger de sædvanlige ruter
+Inspireret af {game}
+Nøglen virker: ruterne bruger nu trafik i realtid
+Mapbox godtog ikke nøglen ({error})
+Kortmotor
+MapLibre: stilarter, 3D, glidende
+Road Trips egen: enklere
+3D-visning
+Vipper kortet, mens du kører
+Kræver MapLibre-motoren
+Mapbox-nøgle
+Ruter bruger trafik i realtid
+Valgfrit: ruter med trafik i realtid
+Fjern
+Tilføj
+Indsæt din offentlige nøgle (pk.…)
+Indsæt
+Tjekker…
+En Mapbox-nøgle er gratis at lave på mapbox.com (Account → Tokens). Den bliver på enheden. Ruterne kommer så fra Mapbox med trafik i realtid, og rutelinjen viser, hvor det går langsomt.
+Sådan ser kortet ud
+Stilarter kræver MapLibre-motoren. Skift den til venstre.
+Spilinspirerede verdener fra Waypoint (MIT-licens) · kortdata © OpenStreetMap
+Starter Road Trip igen med det andet kort…
+Intet at indsætte
+Mapbox-nøgle fjernet
+Auto
+Farve
+Lys
+Lyst
+Mørkt
+Farve om dagen, mørkt om natten

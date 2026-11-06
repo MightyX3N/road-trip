@@ -386,3 +386,35 @@ Zaustavljeno na 50 MB
 Nije dovršeno
 Dovrši
 Izvanmrežno područje izbrisano
+Stil, 3D, izvanmrežna područja, Mapbox ključ
+Mapbox nije odgovorio; uobičajene rute
+Inspirirano igrom {game}
+Ključ radi: rute sada koriste promet uživo
+Mapbox nije prihvatio ključ ({error})
+Pogon karte
+MapLibre: stilovi, 3D, glatko
+Vlastiti Road Trip: jednostavniji
+3D prikaz
+Naginje kartu dok vozite
+Treba pogon MapLibre
+Mapbox ključ
+Rute koriste promet uživo
+Neobavezno: rute s prometom uživo
+Ukloni
+Dodaj
+Zalijepite javni ključ (pk.…)
+Zalijepi
+Provjera…
+Mapbox ključ besplatno napravite na mapbox.com (Account → Tokens). Ostaje na ovom uređaju. Rute tada dolaze s Mapboxa s prometom uživo, a crta rute pokazuje gdje je sporo.
+Kako karta izgleda
+Stilovi trebaju pogon MapLibre. Promijenite ga lijevo.
+Svjetovi inspirirani igrama, Waypoint (MIT licenca) · podaci © OpenStreetMap
+Road Trip se ponovno pokreće s drugom kartom…
+Nema ničega za zalijepiti
+Mapbox ključ uklonjen
+Automatski
+Boja
+Svijetla
+Svijetla
+Tamna
+Danju u boji, noću tamna

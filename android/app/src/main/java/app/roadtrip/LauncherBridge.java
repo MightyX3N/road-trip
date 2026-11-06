@@ -57,6 +57,33 @@ public final class LauncherBridge {
                 case "deleteTree":
                     data = MapDownload.deleteTree(ctx, a.getString("path"));
                     break;
+                case "mapInit":
+                    data = MapNative.init(a);
+                    break;
+                case "mapStatus":
+                    data = MapNative.status();
+                    break;
+                case "mapSetEngine":
+                    data = MapNative.setEngine(ctx, a.optString("engine"));
+                    break;
+                case "mapShow":
+                    data = MapNative.show(a.getInt("x"), a.getInt("y"), a.getInt("w"), a.getInt("h"));
+                    break;
+                case "mapHide":
+                    data = MapNative.hide();
+                    break;
+                case "mapCamera":
+                    data = MapNative.camera(a);
+                    break;
+                case "mapStyle":
+                    data = MapNative.setStyle(a.getString("id"));
+                    break;
+                case "mapRoute":
+                    data = MapNative.route(a);
+                    break;
+                case "mapMarkers":
+                    data = MapNative.markers(a);
+                    break;
                 case "logSlow":
                     Watchdog.add(a.optString("text"));
                     data = true;

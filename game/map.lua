@@ -18,6 +18,8 @@ local PHOTON = "https://photon.komoot.io/api/?limit=6&q="
 local OSRM = "https://routing.openstreetmap.de/routed-car/route/v1/driving/"
 -- routes that avoid motorways, tolls or ferries: FOSSGIS's Valhalla (their OSRM has no avoid options)
 local VALHALLA = "https://valhalla1.openstreetmap.de/route?json="
+-- with the user's own key only: Mapbox's traffic-aware router (OSRM-style answers)
+local MAPBOX = "https://api.mapbox.com/directions/v5/mapbox/driving-traffic/"
 
 local hex = function(h) return ui.hex(h) end
 local listening = false -- location updates started (needs permission first)
@@ -766,11 +768,65 @@ function requestRoutes(lat, lon, from)
   end
   M.waitingFix = nil
   M.routesBusy = true
-  local _, avoiding = avoids()
+  local avoid, avoiding = avoids()
+  -- with a Mapbox key: Mapbox's routes, which know about live traffic
+  local key = config.get("mapboxKey")
+  if key and not M.mapboxDown then
+    local ex = {}
+    if avoid.motorway then ex[#ex + 1] = "motorway" end
+    if avoid.toll then ex[#ex + 1] = "toll" end
+    if avoid.ferry then ex[#ex + 1] = "ferry" end
+    local url = string.format("%s%.6f,%.6f;%.6f,%.6f?overview=full&geometries=polyline6&steps=true&alternatives=true"
+      .. "&annotations=congestion%s&access_token=%s", MAPBOX, f.lon, f.lat, lon, lat,
+      #ex > 0 and ("&exclude=" .. table.concat(ex, ",")) or "", key)
+    request(android.fetch(url), function(r)
+      local ok, d = pcall(json.decode, r.body or "")
+      local list = {}
+      if ok and type(d) == "table" and d.code == "Ok" then
+        for _, rr in ipairs(d.routes or {}) do
+          local p = parseRoute(rr)
+          if p then
+            -- congestion per stretch of the line, all legs together
+            local cg = {}
+            for _, leg in ipairs(rr.legs or {}) do
+              for _, c in ipairs((leg.annotation or {}).congestion or {}) do cg[#cg + 1] = c end
+            end
+            if #cg > 0 then p.congestion = cg end
+            p.traffic = true
+            list[#list + 1] = p
+          end
+        end
+      end
+      if #list == 0 then
+        -- Mapbox said no (a wrong key, the free allowance used up, no connection): use the
+        -- usual router instead, and don't ask Mapbox again until Road Trip restarts
+        M.routesBusy = false
+        if ok and type(d) == "table" and (d.code == "InvalidToken" or d.message == "Not Authorized - Invalid Token") then M.mapboxDown = true end
+        app.toast(T("Mapbox didn't answer; using the usual routes"))
+        local k = config.data.mapboxKey
+        config.data.mapboxKey = nil
+        requestRoutes(lat, lon, from)
+        config.data.mapboxKey = k
+        return
+      end
+      M.routesBusy = false
+      if not M.dest then return end
+      if M.mode == "nav" and M.nav then
+        M.nav.route, M.nav.idx, M.nav.off = list[1], 1, 0
+        app.toast(T("New route"))
+      else
+        M.routes, M.sel, M.mode = list, 1, "overview"
+        M.wantFit = true
+      end
+      app.dirty()
+    end)
+    return
+  end
   local id = android.fetch(avoiding and valhallaURL(f.lat, f.lon, lat, lon) or routeURL(f.lat, f.lon, lat, lon))
   request(id, function(r)
     M.routesBusy = false
-    local d = r.ok and json.decode(r.body or "")
+    local okd, dd = pcall(json.decode, r.ok and r.body or "")
+    local d = okd and type(dd) == "table" and dd or nil
     local list = {}
     if avoiding then
       if d and d.trip then
@@ -1041,6 +1097,12 @@ function M.init(deps)
   -- the last known tile address, so cached and offline tiles show without a connection
   local mt = config.get("mapTiles")
   if mt then tileURL, tileVer = mt.url, mt.ver end
+  local st = android.mapStatus and android.mapStatus()
+  M.native = type(st) == "table" and st.attached == true
+  M.engine = type(st) == "table" and st.engine or "classic"
+  if M.native then
+    android.mapInit({ saveDir = love.filesystem.getSaveDirectory(), scale = ui.S, accent = config.get("accent") or "#F2A23A" })
+  end
 end
 
 function M.tileTemplate() return tileURL end
@@ -1130,6 +1192,7 @@ function M.update(dt, onScreen)
     if spd >= 0 and spd < 0.8 then moving = false end
   end
   local target = config.get("mapNorthUp") and 0 or headingTarget
+  M.headingTarget = target
   local hd = ((target - M.heading + 540) % 360) - 180
   M.turning = math.abs(hd) > 0.5
   if math.abs(hd) > 0.05 then M.heading = (M.heading + hd * math.min(1, dt * 2)) % 360 end
@@ -1155,7 +1218,159 @@ end
 
 -- keep drawing every frame while something moves
 function M.busy()
+  -- MapLibre animates the map itself; Road Trip only redraws for its own changes
+  if M.native then return zoomTarget ~= nil or M.pinching == true end
   return zoomTarget ~= nil or #queue > 0 or M.nav ~= nil or (M.view.follow and M.fix ~= nil and M.mode ~= "overview")
+end
+
+----------------------------------------------------------------------------------------------
+-- the MapLibre map (MapNative.java): where it shows, its camera, the route and markers
+----------------------------------------------------------------------------------------------
+
+local sent = { rect = nil, cam = nil, camAt = 0, route = nil, markers = nil, style = nil, styleAt = -100, scale = nil }
+
+function M.beginFrame() M.drewNative = false end
+function M.endFrame() if not M.drewNative then M.want = nil end end
+
+-- is the sun up where the map is? (for the automatic day and night style)
+local function sunUp(lat, lon)
+  local d = os.date("!*t")
+  local hour = d.hour + d.min / 60
+  local g = 2 * math.pi / 365 * (d.yday - 1 + (hour - 12) / 24)
+  local decl = 0.006918 - 0.399912 * math.cos(g) + 0.070257 * math.sin(g) - 0.006758 * math.cos(2 * g)
+    + 0.000907 * math.sin(2 * g) - 0.002697 * math.cos(3 * g) + 0.00148 * math.sin(3 * g)
+  local eqt = 229.18 * (0.000075 + 0.001868 * math.cos(g) - 0.032077 * math.sin(g) - 0.014615 * math.cos(2 * g) - 0.040849 * math.sin(2 * g))
+  local ha = math.rad(((hour * 60 + eqt + 4 * lon) / 4) - 180)
+  local la = math.rad(lat)
+  local cz = math.sin(la) * math.sin(decl) + math.cos(la) * math.cos(decl) * math.cos(ha)
+  return 90 - math.deg(math.acos(math.max(-1, math.min(1, cz)))) > -3
+end
+M.sunUp = sunUp
+
+function M.styleId()
+  local st = config.get("mapStyle") or "auto"
+  if st == "auto" then
+    local f = M.fix or M.view
+    return sunUp(f.lat, f.lon) and "ofm:liberty" or "ofm:dark"
+  end
+  return st
+end
+
+-- congestion from Mapbox -> line colour (low traffic keeps the route colour)
+local TRAFFIC = { moderate = "#F5C542", heavy = "#E8613C", severe = "#B3261E" }
+
+local function routeFeatures(rt, color)
+  local out = {}
+  if not rt then return out end
+  local cg = rt.congestion
+  local cur, curCol
+  for i, c in ipairs(rt.coords) do
+    local col = color
+    if cg and i < #rt.coords then col = TRAFFIC[cg[i]] or color elseif cg then col = curCol end
+    if col ~= curCol then
+      if cur then cur[#cur + 1] = { c[2], c[1] } end -- join the pieces
+      cur = { { c[2], c[1] } }
+      out[#out + 1] = { c = cur, color = col }
+      curCol = col
+    else
+      cur[#cur + 1] = { c[2], c[1] }
+    end
+  end
+  local list = {}
+  for _, f in ipairs(out) do if #f.c >= 2 then list[#list + 1] = f end end
+  return list
+end
+
+local function lonlat(rt)
+  local a = {}
+  for _, c in ipairs(rt.coords) do a[#a + 1] = { c[2], c[1] } end
+  return a
+end
+
+-- called every loop: tells Android what changed (cheap when nothing did)
+function M.sync()
+  if not M.native then return end
+  local w = M.want
+  local S = ui.S
+  if S ~= sent.scale then
+    sent.scale = S
+    android.mapInit({ scale = S })
+  end
+  local rect = w and string.format("%d %d %d %d", math.floor(w.x * S + 0.5), math.floor(w.y * S + 0.5),
+    math.floor(w.w * S + 0.5), math.floor(w.h * S + 0.5))
+  if rect ~= sent.rect then
+    sent.rect = rect
+    if w then
+      android.mapShow(math.floor(w.x * S + 0.5), math.floor(w.y * S + 0.5), math.floor(w.w * S + 0.5), math.floor(w.h * S + 0.5))
+      sent.cam = nil -- a new place: jump, don't glide
+    else
+      android.mapHide()
+    end
+  end
+  local now = love.timer.getTime()
+  -- style (the automatic one is checked once a minute)
+  if now - sent.styleAt > 60 or config.get("mapStyle") ~= sent.styleSetting then
+    sent.styleAt, sent.styleSetting = now, config.get("mapStyle")
+    local id = M.styleId()
+    if id ~= sent.style then
+      sent.style = id
+      android.mapStyle(id)
+    end
+  end
+  if not w then return end
+  -- camera: following the car glides to each new position (MapLibre animates between them)
+  local v = w.view
+  local follow = v.follow ~= false and M.fix ~= nil and not w.flat
+  local lat, lon, bearing = v.lat, v.lon, v.rot
+  if follow then lat, lon, bearing = M.fix.lat, M.fix.lon, M.headingTarget or v.rot end
+  local tilt = (config.get("map3D") and not w.flat) and 55 or 0
+  local cam = string.format("%.6f %.6f %.2f %.1f %d %.2f", lat, lon, v.zoom, bearing, tilt, w.ahead)
+  if cam ~= sent.cam and (not follow or now - sent.camAt > 0.05) then
+    local glide = 0
+    if sent.cam then glide = follow and 950 or 0 end
+    if follow and sent.lastZoom and math.abs(sent.lastZoom - v.zoom) > 0.01 then glide = 250 end
+    sent.cam, sent.camAt, sent.lastZoom = cam, now, v.zoom
+    android.mapCamera({ lat = lat, lon = lon, zoom = v.zoom, bearing = bearing, tilt = tilt, ahead = w.ahead, ms = glide })
+  end
+  -- the route line(s)
+  local rt, alts
+  if M.mode == "overview" and M.routes then
+    rt = M.routes[M.sel]
+    alts = {}
+    for i, r in ipairs(M.routes) do if i ~= M.sel then alts[#alts + 1] = r end end
+  elseif M.nav then
+    rt = M.nav.route
+  end
+  local key = tostring(rt) .. tostring(M.mode) .. tostring(M.sel) .. tostring(ui.c.accent[1])
+  if key ~= sent.route then
+    sent.route = key
+    local altLines = {}
+    for _, r in ipairs(alts or {}) do altLines[#altLines + 1] = lonlat(r) end
+    local accent = string.format("#%02X%02X%02X", math.floor(ui.c.accent[1] * 255 + 0.5),
+      math.floor(ui.c.accent[2] * 255 + 0.5), math.floor(ui.c.accent[3] * 255 + 0.5))
+    android.mapRoute({ route = routeFeatures(rt, accent), alt = altLines, width = M.nav and 14 or 11 })
+  end
+  -- you and the destination
+  local f = M.fix
+  local d = (M.mode == "overview" or M.mode == "nav") and M.dest or nil
+  local mk = (f and string.format("%.6f %.6f %d %d", f.lat, f.lon, ((f.bearing or -1) >= 0 and (f.speed or -1) > 1) and math.floor(f.bearing) or -1,
+    math.floor(f.accuracy or 0)) or "-") .. (d and string.format(" %.6f %.6f", d.lat, d.lon) or "")
+  if mk ~= sent.markers then
+    sent.markers = mk
+    android.mapMarkers({
+      pos = f and { lat = f.lat, lon = f.lon, acc = f.accuracy or 0,
+        bearing = ((f.bearing or -1) >= 0 and (f.speed or -1) > 1) and f.bearing or -1 } or nil,
+      dest = d and { lat = d.lat, lon = d.lon } or nil,
+    })
+  end
+end
+
+-- pinch: zoom to an exact level (cancels a + / − animation)
+function M.requestRoutes(lat, lon, from) return requestRoutes(lat, lon, from) end -- for tests
+
+function M.setZoom(z)
+  zoomTarget = nil
+  M.view.zoom = math.max(3, math.min(19.5, z))
 end
 
 function M.pan(dx, dy)
@@ -1204,6 +1419,22 @@ end
 function M.drawMap(x0, y0, w, h, opts)
   local S = ui.S
   local v = (opts and opts.view) or M.view
+  if M.native then
+    -- MapLibre draws the map under Road Trip's screen; leave it a hole and say where
+    ui.hole(x0, y0, w, h)
+    local ahead = not (opts and opts.centered) and (M.mode == "nav" or (v.follow ~= false and moving and not config.get("mapNorthUp")))
+    M.want = { x = x0, y = y0, w = w, h = h, view = v, ahead = ahead and 0.66 or 0.5,
+      flat = (opts and opts.centered) or M.mode == "overview" }
+    M.drewNative = true
+    if M.wantFit and M.routes and not opts then
+      M.wantFit = nil
+      fitRoute(M.routes[M.sel], w - 540, h)
+      local cx2, cy2 = project(M.view.lat, M.view.lon, M.view.zoom)
+      M.view.lat, M.view.lon = unproject(cx2 - 270, cy2, M.view.zoom)
+      app.dirty()
+    end
+    return
+  end
   lg.setScissor(x0 * S, y0 * S, w * S, h * S)
   ui.rect(COL.bg, x0, y0, w, h)
   local z = v.zoom
@@ -1521,10 +1752,21 @@ function M.drawUI(x0, y0, w, h)
     lg.polygon("fill", 0, 20, 7, 0, -7, 0)
     lg.pop()
     ui.hit({ kind = "map:compass" }, right, y0 + 172, 64, 64)
-    if not M.view.follow and M.fix then mapButton({ kind = "map:recenter" }, "locate", right, y0 + 248) end
+    local by = y0 + 248
+    if not M.view.follow and M.fix then mapButton({ kind = "map:recenter" }, "locate", right, by) by = by + 76 end
     if mode == "nav" then
       local muted = config.get("voiceMuted") == true
-      mapButton({ kind = "voiceMute" }, muted and "mute" or "sound", right, y0 + (M.view.follow and 248 or 324))
+      mapButton({ kind = "voiceMute" }, muted and "mute" or "sound", right, by)
+      by = by + 76
+    end
+    if M.native then
+      -- 2D / 3D, and (while browsing) the map's look
+      ui.rect(ui.c.bg, right, by, 64, 64, 20)
+      local t3 = config.get("map3D") and "2D" or "3D"
+      ui.text(t3, "bold", 20, ui.c.text2, right, by + (64 - ui.fontHeight("bold", 20)) / 2, "center", 64)
+      ui.hit({ kind = "map:3d" }, right, by, 64, 64)
+      by = by + 76
+      if mode == "browse" then mapButton({ kind = "mapStyles" }, "layers", right, by) end
     end
   end
 
@@ -1721,6 +1963,9 @@ function M.activate(id)
     config.set("mapNorthUp", not config.get("mapNorthUp"))
     if config.get("mapNorthUp") then M.heading = 0 end
     app.toast(config.get("mapNorthUp") and T("North up") or T("The way you're heading is up"))
+  elseif k == "map:3d" then
+    config.set("map3D", not config.get("map3D"))
+    if config.get("map3D") and M.view.zoom < 15.5 then zoomTarget = 16 end
   elseif k == "map:zoom" then
     zoomTarget = math.max(3, math.min(18, math.floor((zoomTarget or M.view.zoom) + 0.5) + id.d))
   end

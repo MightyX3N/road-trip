@@ -386,3 +386,35 @@ Zastavené na 50 MB
 Nedokončené
 Dokončiť
 Offline oblasť odstránená
+Štýl, 3D, offline oblasti, kľúč Mapbox
+Mapbox neodpovedal; obvyklé trasy
+Inšpirované hrou {game}
+Kľúč funguje: trasy teraz počítajú so živou dopravou
+Mapbox kľúč neprijal ({error})
+Mapový engine
+MapLibre: štýly, 3D, plynulo
+Vlastný Road Trip: jednoduchší
+3D zobrazenie
+Počas jazdy mapu nakloní
+Potrebuje engine MapLibre
+Kľúč Mapbox
+Trasy počítajú so živou dopravou
+Voliteľné: trasy so živou dopravou
+Odstrániť
+Pridať
+Vložte verejný kľúč (pk.…)
+Vložiť
+Overujem…
+Kľúč Mapbox si zadarmo vytvoríte na mapbox.com (Account → Tokens). Zostáva v tomto zariadení. Trasy potom prichádzajú z Mapboxu so živou dopravou a čiara trasy ukazuje, kde sa ide pomaly.
+Ako mapa vyzerá
+Štýly potrebujú engine MapLibre. Zmeňte ho vľavo.
+Svety inšpirované hrami od Waypoint (licencia MIT) · dáta © OpenStreetMap
+Road Trip sa spúšťa znova s druhou mapou…
+Nie je čo vložiť
+Kľúč Mapbox odstránený
+Auto
+Farebná
+Jasná
+Svetlá
+Tmavá
+Cez deň farebná, v noci tmavá

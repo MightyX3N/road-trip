@@ -386,3 +386,35 @@ Apturēts pie 50 MB
 Nav pabeigts
 Pabeigt
 Bezsaistes apgabals izdzēsts
+Stils, 3D, bezsaistes apgabali, Mapbox atslēga
+Mapbox neatbildēja; parastie maršruti
+Iedvesma: {game}
+Atslēga darbojas: maršruti izmanto satiksmi reāllaikā
+Mapbox nepieņēma atslēgu ({error})
+Kartes dzinējs
+MapLibre: stili, 3D, plūstoši
+Paša Road Trip: vienkāršāks
+3D skats
+Braucot sasver karti
+Vajag MapLibre dzinēju
+Mapbox atslēga
+Maršruti izmanto satiksmi reāllaikā
+Pēc izvēles: maršruti ar satiksmi reāllaikā
+Noņemt
+Pievienot
+Ielīmējiet publisko atslēgu (pk.…)
+Ielīmēt
+Pārbauda…
+Mapbox atslēgu var bez maksas izveidot mapbox.com (Account → Tokens). Tā paliek šajā ierīcē. Maršruti tad nāk no Mapbox ar satiksmi reāllaikā, un maršruta līnija rāda, kur ir lēni.
+Kā izskatās karte
+Stiliem vajag MapLibre dzinēju. Nomainiet to pa kreisi.
+Spēļu iedvesmotas pasaules no Waypoint (MIT licence) · kartes dati © OpenStreetMap
+Road Trip startē no jauna ar otru karti…
+Nav ko ielīmēt
+Mapbox atslēga noņemta
+Automātiski
+Krāsaina
+Spilgta
+Gaiša
+Tumša
+Dienā krāsaina, naktī tumša

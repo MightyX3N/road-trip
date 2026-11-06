@@ -386,3 +386,35 @@ Pysäytetty 50 megatavuun
 Kesken
 Viimeistele
 Offline-alue poistettu
+Tyyli, 3D, offline-alueet, Mapbox-avain
+Mapbox ei vastannut; käytetään tavallisia reittejä
+Innoittajana {game}
+Avain toimii: reitit käyttävät nyt reaaliaikaista liikennettä
+Mapbox ei hyväksynyt avainta ({error})
+Karttamoottori
+MapLibre: tyylit, 3D, sujuva
+Road Tripin oma: yksinkertaisempi
+3D-näkymä
+Kallistaa karttaa ajaessa
+Vaatii MapLibre-moottorin
+Mapbox-avain
+Reitit käyttävät reaaliaikaista liikennettä
+Valinnainen: reitit reaaliaikaisella liikenteellä
+Poista
+Lisää
+Liitä julkinen avaimesi (pk.…)
+Liitä
+Tarkistetaan…
+Mapbox-avaimen voi tehdä ilmaiseksi osoitteessa mapbox.com (Account → Tokens). Se pysyy laitteella. Reitit tulevat silloin Mapboxilta reaaliaikaisen liikenteen kanssa, ja reittiviiva näyttää, missä on hidasta.
+Kartan ulkoasu
+Tyylit vaativat MapLibre-moottorin. Vaihda se vasemmalta.
+Pelien innoittamat maailmat: Waypoint (MIT-lisenssi) · karttadata © OpenStreetMap
+Käynnistetään Road Trip uudelleen toisella kartalla…
+Ei liitettävää
+Mapbox-avain poistettu
+Automaattinen
+Värikäs
+Kirkas
+Vaalea
+Tumma
+Värikäs päivällä, tumma yöllä

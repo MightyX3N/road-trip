@@ -386,3 +386,35 @@ Stöðvað við 50 MB
 Ekki lokið
 Ljúka
 Svæði eytt
+Stíll, 3D, ótengd svæði, Mapbox-lykill
+Mapbox svaraði ekki; venjulegar leiðir notaðar
+Innblásið af {game}
+Lykillinn virkar: leiðir nota nú rauntímaumferð
+Mapbox samþykkti ekki lykilinn ({error})
+Kortavél
+MapLibre: stílar, 3D, mjúkt
+Eigin vél Road Trip: einfaldari
+3D-sýn
+Hallar kortinu meðan þú ekur
+Þarf MapLibre-vélina
+Mapbox-lykill
+Leiðir nota rauntímaumferð
+Valfrjálst: leiðir með rauntímaumferð
+Fjarlægja
+Bæta við
+Límdu inn opinbera lykilinn (pk.…)
+Líma
+Athuga…
+Mapbox-lykil má búa til ókeypis á mapbox.com (Account → Tokens). Hann helst í tækinu. Leiðir koma þá frá Mapbox með rauntímaumferð og leiðarlínan sýnir hvar hægist á.
+Útlit kortsins
+Stílar þurfa MapLibre-vélina. Breyttu því til vinstri.
+Leikjainnblásnir heimar frá Waypoint (MIT-leyfi) · kortagögn © OpenStreetMap
+Ræsi Road Trip aftur með hinu kortinu…
+Ekkert til að líma
+Mapbox-lykli eytt
+Sjálfvirkt
+Litir
+Bjart
+Ljóst
+Dökkt
+Litir á daginn, dökkt á nóttunni

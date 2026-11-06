@@ -386,3 +386,35 @@ Gestopt bij 50 MB
 Niet klaar
 Afmaken
 Offline gebied verwijderd
+Stijl, 3D, offline gebieden, Mapbox-sleutel
+Mapbox gaf geen antwoord; gewone routes
+Geïnspireerd door {game}
+Sleutel werkt: routes gebruiken nu live verkeer
+Mapbox accepteerde de sleutel niet ({error})
+Kaartmotor
+MapLibre: stijlen, 3D, vloeiend
+Die van Road Trip: eenvoudiger
+3D-weergave
+Kantelt de kaart tijdens het rijden
+Heeft de MapLibre-motor nodig
+Mapbox-sleutel
+Routes gebruiken live verkeer
+Optioneel: routes met live verkeer
+Verwijderen
+Toevoegen
+Plak je publieke sleutel (pk.…)
+Plakken
+Controleren…
+Een Mapbox-sleutel maak je gratis op mapbox.com (Account → Tokens). Hij blijft op dit apparaat. Routes komen dan van Mapbox met live verkeer, en de routelijn laat zien waar het langzaam gaat.
+Zo ziet de kaart eruit
+Stijlen hebben de MapLibre-motor nodig. Wissel links.
+Op games geïnspireerde werelden van Waypoint (MIT-licentie) · kaartgegevens © OpenStreetMap
+Road Trip start opnieuw met de andere kaart…
+Niets om te plakken
+Mapbox-sleutel verwijderd
+Auto
+Kleur
+Helder
+Licht
+Donker
+Kleur overdag, donker 's nachts

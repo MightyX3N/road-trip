@@ -386,3 +386,35 @@ Oprit la 50 MB
 Neterminat
 Termină
 Zona offline a fost ștearsă
+Stil, 3D, zone offline, cheie Mapbox
+Mapbox nu a răspuns; trasee obișnuite
+Inspirat de {game}
+Cheia merge: traseele folosesc trafic în timp real
+Mapbox nu a acceptat cheia ({error})
+Motor de hartă
+MapLibre: stiluri, 3D, fluid
+Al lui Road Trip: mai simplu
+Vedere 3D
+Înclină harta în timp ce conduci
+Are nevoie de motorul MapLibre
+Cheie Mapbox
+Traseele folosesc trafic în timp real
+Opțional: trasee cu trafic în timp real
+Elimină
+Adaugă
+Lipește cheia publică (pk.…)
+Lipește
+Se verifică…
+O cheie Mapbox se face gratuit pe mapbox.com (Account → Tokens). Rămâne pe acest dispozitiv. Traseele vin atunci de la Mapbox cu trafic în timp real, iar linia traseului arată unde se circulă greu.
+Cum arată harta
+Stilurile au nevoie de motorul MapLibre. Schimbă-l în stânga.
+Lumi inspirate din jocuri, de la Waypoint (licență MIT) · date © OpenStreetMap
+Road Trip repornește cu cealaltă hartă…
+Nimic de lipit
+Cheia Mapbox a fost eliminată
+Auto
+Color
+Viu
+Luminos
+Întunecat
+Color ziua, întunecat noaptea

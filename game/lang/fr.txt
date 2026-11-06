@@ -386,3 +386,35 @@ Arrêté à 50 Mo
 Pas terminé
 Terminer
 Zone hors ligne supprimée
+Style, 3D, zones hors ligne, clé Mapbox
+Mapbox n'a pas répondu ; itinéraires habituels
+Inspiré de {game}
+La clé marche : les itinéraires utilisent le trafic en direct
+Mapbox a refusé cette clé ({error})
+Moteur de carte
+MapLibre : styles, 3D, fluide
+Celui de Road Trip : plus simple
+Vue 3D
+Incline la carte pendant la conduite
+Nécessite le moteur MapLibre
+Clé Mapbox
+Itinéraires avec le trafic en direct
+Facultatif : itinéraires avec le trafic en direct
+Retirer
+Ajouter
+Collez votre clé publique (pk.…)
+Coller
+Vérification…
+Une clé Mapbox se crée gratuitement sur mapbox.com (Account → Tokens). Elle reste sur cet appareil. Les itinéraires viennent alors de Mapbox avec le trafic en direct, et la ligne de l'itinéraire montre où ça ralentit.
+L'aspect de la carte
+Les styles nécessitent le moteur MapLibre. Changez-le à gauche.
+Mondes inspirés de jeux par Waypoint (licence MIT) · données © OpenStreetMap
+Road Trip redémarre avec l'autre carte…
+Rien à coller
+Clé Mapbox retirée
+Auto
+Couleur
+Vif
+Clair
+Sombre
+En couleur le jour, sombre la nuit

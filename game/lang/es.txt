@@ -386,3 +386,35 @@ Detenido en 50 MB
 Sin terminar
 Terminar
 Zona sin conexión eliminada
+Estilo, 3D, zonas sin conexión, clave de Mapbox
+Mapbox no respondió; rutas habituales
+Inspirado en {game}
+La clave funciona: las rutas usan tráfico en directo
+Mapbox no aceptó esa clave ({error})
+Motor del mapa
+MapLibre: estilos, 3D, fluido
+El de Road Trip: más simple
+Vista 3D
+Inclina el mapa mientras conduces
+Necesita el motor MapLibre
+Clave de Mapbox
+Las rutas usan tráfico en directo
+Opcional: rutas con tráfico en directo
+Quitar
+Añadir
+Pega tu clave pública (pk.…)
+Pegar
+Comprobando…
+Una clave de Mapbox se crea gratis en mapbox.com (Account → Tokens). Se queda en este dispositivo. Las rutas vienen entonces de Mapbox con el tráfico en directo, y la línea de la ruta muestra dónde va lento.
+Cómo se ve el mapa
+Los estilos necesitan el motor MapLibre. Cámbialo a la izquierda.
+Mundos inspirados en juegos de Waypoint (licencia MIT) · datos © OpenStreetMap
+Reiniciando Road Trip con el otro mapa…
+No hay nada que pegar
+Clave de Mapbox quitada
+Auto
+Color
+Brillante
+Claro
+Oscuro
+Color de día, oscuro de noche

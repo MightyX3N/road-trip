@@ -9,6 +9,7 @@ local voice = require("voice")
 local jellyfin = require("jellyfin")
 local browser = require("browser")
 local offline = require("offline")
+local mapstyle = require("mapstyle")
 local lang = require("lang")
 local T = lang.T
 
@@ -460,7 +461,7 @@ local function drawRail()
   ui.rect(ui.c.line, RAIL - 1, 0, 1, H)
   for i, item in ipairs(RAIL_ITEMS) do
     local x, y = 12, 16 + (i - 1) * 84
-    local on = state.screen == item.screen or (item.screen == "settings" and (state.screen == "diag" or state.screen == "lang" or state.screen == "voice" or state.screen == "offline"))
+    local on = state.screen == item.screen or (item.screen == "settings" and (state.screen == "diag" or state.screen == "lang" or state.screen == "voice" or state.screen == "offline" or state.screen == "mapset"))
     local color = on and ui.c.accent or ui.c.muted
     if on then ui.rect(ui.c.accentBg, x, y, 88, 80, 20) end
     ui.icon(item.icon, x + 30, y + 12, 28, color)
@@ -1165,10 +1166,7 @@ local function drawSettings()
       button = { T("Check now"), { kind = "updateCheckNow" } } },
     { title = T("Check for updates on Wi-Fi only"), sub = T("Automatic checks, every 6 hours"),
       toggle = { config.get("updateWifiOnly") ~= false, { kind = "wifiOnly" } } },
-    { title = T("Offline maps"),
-      sub = #(config.get("offlineAreas") or {}) > 0 and T("{n} areas on this device", { n = #config.get("offlineAreas") })
-        or T("Download your area once; the map works without data"),
-      button = { T("Open"), { kind = "offOpen" } } },
+    { title = T("Map"), sub = T("Style, 3D, offline areas, Mapbox key"), button = { T("Open"), { kind = "msOpen" } } },
     { title = T("Diagnostics"), sub = T("What Keep in front saw and did"), button = { T("Show"), { kind = "diag" } } },
     { title = T("First-time setup"), sub = T("Permissions, favorite apps, Home and Work, radio"),
       button = { T("Start"), { kind = "setupStart" } } },
@@ -1630,6 +1628,7 @@ end
 
 function love.draw()
   ui.beginFrame()
+  map.beginFrame()
   state.panelWant = nil
   lg.push()
   lg.scale(ui.S)
@@ -1650,6 +1649,7 @@ function love.draw()
     elseif state.screen == "lang" then drawLanguages()
     elseif state.screen == "voice" then voice.draw(RAIL, TOP, W - RAIL, H - TOP)
     elseif state.screen == "offline" then offline.draw(RAIL, TOP, W - RAIL, H - TOP)
+    elseif state.screen == "mapset" then mapstyle.draw(RAIL, TOP, W - RAIL, H - TOP)
     elseif state.screen == "map" then
       map.drawMap(RAIL, 0, W - RAIL, H)
       map.drawUI(RAIL, 0, W - RAIL, H)
@@ -1674,6 +1674,7 @@ function love.draw()
   drawCityDialog()
   drawToast()
   lg.pop()
+  map.endFrame()
   syncPanel()
   state.drew = true
 end
@@ -1746,7 +1747,12 @@ local function activate(id, vx)
   elseif k == "offOpen" then
     state.screen = "offline"
     offline.open()
-  elseif k == "off:back" then state.screen = "settings"
+  elseif k == "off:back" then state.screen = "mapset"
+  elseif k == "msOpen" or k == "mapStyles" then
+    state.mapsetFrom = k == "mapStyles" and "map" or "settings"
+    state.screen = "mapset"
+  elseif k == "ms:back" then state.screen = state.mapsetFrom or "settings"
+  elseif k:sub(1, 3) == "ms:" then mapstyle.activate(id)
   elseif k == "off:pick" then
     state.offlinePick = true
     state.screen = "map"
@@ -1980,6 +1986,56 @@ function love.mousemoved(x, y)
   end
 end
 
+-- two fingers on the map: pinch to zoom (and move it with them)
+local touches, pinch = {}, nil
+local function twoTouches()
+  local a, b, n = nil, nil, 0
+  for _, t in pairs(touches) do
+    n = n + 1
+    if not a then a = t elseif not b then b = t end
+  end
+  return a, b, n
+end
+
+function love.touchpressed(id, x, y)
+  touches[id] = { x = x / ui.S, y = y / ui.S }
+  local a, b, n = twoTouches()
+  if n == 2 and state.screen == "map" and not state.menu then
+    local d = math.sqrt((a.x - b.x) ^ 2 + (a.y - b.y) ^ 2)
+    if d > 20 then
+      pinch = { d0 = d, z0 = map.view.zoom, mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2, moved = 0 }
+      map.pinching = true
+      if press then press.done = true end -- the first finger isn't a tap or a drag any more
+    end
+  end
+end
+
+function love.touchmoved(id, x, y)
+  local t = touches[id]
+  if not t then return end
+  t.x, t.y = x / ui.S, y / ui.S
+  if not pinch then return end
+  local a, b = twoTouches()
+  if not (a and b) then return end
+  local d = math.sqrt((a.x - b.x) ^ 2 + (a.y - b.y) ^ 2)
+  map.setZoom(pinch.z0 + math.log(math.max(1, d) / pinch.d0) / math.log(2))
+  local mx, my = (a.x + b.x) / 2, (a.y + b.y) / 2
+  pinch.moved = pinch.moved + math.abs(mx - pinch.mx) + math.abs(my - pinch.my)
+  -- only move the map when the fingers move together (a plain pinch keeps following the car)
+  if pinch.moved > 24 then map.pan(mx - pinch.mx, my - pinch.my) end
+  pinch.mx, pinch.my = mx, my
+  state.dirty = true
+end
+
+function love.touchreleased(id)
+  touches[id] = nil
+  local _, _, n = twoTouches()
+  if pinch and n < 2 then
+    pinch = nil
+    map.pinching = false
+  end
+end
+
 function love.mousereleased(x, y, button)
   if button ~= 1 or not press then return end
   local p = press
@@ -2032,6 +2088,11 @@ function love.textinput(t)
     state.dirty = true
     return
   end
+  if state.screen == "mapset" and mapstyle.wantsText() then
+    mapstyle.textinput(t)
+    state.dirty = true
+    return
+  end
   if state.city then
     state.city.text = state.city.text .. t
     state.dirty = true
@@ -2073,6 +2134,11 @@ function love.keypressed(key)
     state.dirty = true
     return
   end
+  if state.screen == "mapset" and mapstyle.wantsText() and key ~= "escape" then
+    mapstyle.keypressed(key)
+    state.dirty = true
+    return
+  end
   if state.city then
     if key == "backspace" then
       local u8 = require("utf8")
@@ -2092,7 +2158,13 @@ function love.keypressed(key)
     if state.setup and state.setup.step > 1 then setupGo(state.setup.step - 1) end
   elseif state.screen == "favs" and state.setup then
     setupGo(1)
-  elseif state.screen == "diag" or state.screen == "lang" or state.screen == "voice" or state.screen == "offline" then
+  elseif state.screen == "mapset" and mapstyle.back() then
+    -- closed the key field
+  elseif state.screen == "offline" then
+    state.screen = "mapset"
+  elseif state.screen == "mapset" then
+    state.screen = state.mapsetFrom or "settings"
+  elseif state.screen == "diag" or state.screen == "lang" or state.screen == "voice" then
     state.screen = "settings"
   elseif state.screen == "map" and state.offlinePick and not state.menu and not map.wantsText() then
     state.offlinePick = nil
@@ -2148,6 +2220,7 @@ function love.load()
   browser.init(deps)
   offline.init(deps)
   offline.check()
+  mapstyle.init(deps)
   sendPanelLabels()
   -- show a frame first, load apps right after (see love.update)
   state.needRefresh, state.firstLoad, state.drew = true, true, false
@@ -2189,6 +2262,7 @@ function love.update(dt)
   timed("radio", radio.update, dt, state.screen == "radio" or state.screen == "home")
   timed("voice", voice.update, dt)
   timed("offline maps", offline.update, dt)
+  timed("map settings", mapstyle.update, dt)
   if state.needRefresh and state.drew then
     state.needRefresh = false
     timed("app list", refreshApps)
@@ -2409,6 +2483,7 @@ function love.run()
       noteSlow(tUpdate, 0)
     end
 
+    map.sync() -- the MapLibre map's place, camera, route and markers
     love.timer.sleep(busy and 0.001 or (state.foreground and 0.05 or 0.2))
   end
 end

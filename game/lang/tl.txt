@@ -386,3 +386,35 @@ Huminto sa 50 MB
 Hindi tapos
 Tapusin
 Nabura ang offline na lugar
+Istilo, 3D, offline na lugar, Mapbox key
+Hindi sumagot ang Mapbox; karaniwang ruta ang gamit
+Hango sa {game}
+Gumagana ang key: may live na trapiko na ang mga ruta
+Hindi tinanggap ng Mapbox ang key ({error})
+Map engine
+MapLibre: mga istilo, 3D, makinis
+Sariling engine ng Road Trip: mas simple
+3D view
+Ikinikiling ang mapa habang nagmamaneho
+Kailangan ang MapLibre engine
+Mapbox key
+May live na trapiko ang mga ruta
+Opsyonal: mga rutang may live na trapiko
+Alisin
+Idagdag
+I-paste ang public key mo (pk.…)
+I-paste
+Tinitingnan…
+Libre ang paggawa ng Mapbox key sa mapbox.com (Account → Tokens). Nananatili ito sa device na ito. Manggagaling na ang mga ruta sa Mapbox na may live na trapiko, at ipinapakita ng linya ng ruta kung saan mabagal.
+Itsura ng mapa
+Kailangan ng MapLibre engine ang mga istilo. Palitan ito sa kaliwa.
+Mga mundong hango sa laro mula sa Waypoint (MIT license) · data ng mapa © OpenStreetMap
+Muling binubuksan ang Road Trip gamit ang ibang mapa…
+Walang mai-paste
+Inalis ang Mapbox key
+Auto
+Makulay
+Maliwanag
+Mapusyaw
+Madilim
+Makulay sa araw, madilim sa gabi

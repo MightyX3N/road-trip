@@ -63,6 +63,10 @@ jobs:
               // Jellyfin: streaming music in the background, and video in Road Trip's screen
               implementation 'androidx.media3:media3-exoplayer:1.4.1'
               implementation 'androidx.media3:media3-exoplayer-hls:1.4.1'
+              // the map: MapLibre (vector maps on the GPU, 3D tilt, styles), and the HTTP client it
+              // uses, which Road Trip extends to serve bundled fonts and offline areas
+              implementation 'org.maplibre.gl:android-sdk:11.13.5'
+              implementation 'com.squareup.okhttp3:okhttp:4.12.0'
           }
           GRADLE
 

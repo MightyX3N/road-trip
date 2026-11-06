@@ -386,3 +386,35 @@ Fermato a 50 MB
 Non finito
 Completa
 Area offline eliminata
+Stile, 3D, aree offline, chiave Mapbox
+Mapbox non ha risposto; percorsi soliti
+Ispirato a {game}
+La chiave funziona: i percorsi usano il traffico in tempo reale
+Mapbox non ha accettato la chiave ({error})
+Motore della mappa
+MapLibre: stili, 3D, fluido
+Quello di Road Trip: più semplice
+Vista 3D
+Inclina la mappa mentre guidi
+Serve il motore MapLibre
+Chiave Mapbox
+I percorsi usano il traffico in tempo reale
+Facoltativo: percorsi con traffico in tempo reale
+Rimuovi
+Aggiungi
+Incolla la tua chiave pubblica (pk.…)
+Incolla
+Verifica…
+Una chiave Mapbox si crea gratis su mapbox.com (Account → Tokens). Resta su questo dispositivo. I percorsi arrivano allora da Mapbox con il traffico in tempo reale, e la linea del percorso mostra dove si va piano.
+Come appare la mappa
+Gli stili richiedono il motore MapLibre. Cambialo a sinistra.
+Mondi ispirati ai giochi di Waypoint (licenza MIT) · dati © OpenStreetMap
+Road Trip riparte con l'altra mappa…
+Niente da incollare
+Chiave Mapbox rimossa
+Auto
+Colori
+Vivace
+Chiaro
+Scuro
+Colori di giorno, scuro di notte

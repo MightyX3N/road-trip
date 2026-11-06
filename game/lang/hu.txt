@@ -386,3 +386,35 @@ Letöltés… {done} / {total}
 Nincs kész
 Befejezés
 Offline terület törölve
+Stílus, 3D, offline területek, Mapbox-kulcs
+A Mapbox nem válaszolt; a szokásos útvonalak
+{game} ihlette
+A kulcs működik: az útvonalak élő forgalmat használnak
+A Mapbox nem fogadta el a kulcsot ({error})
+Térképmotor
+MapLibre: stílusok, 3D, gördülékeny
+A Road Trip sajátja: egyszerűbb
+3D nézet
+Vezetés közben megdönti a térképet
+A MapLibre motor kell hozzá
+Mapbox-kulcs
+Az útvonalak élő forgalmat használnak
+Nem kötelező: útvonalak élő forgalommal
+Eltávolítás
+Hozzáadás
+Illeszd be a nyilvános kulcsot (pk.…)
+Beillesztés
+Ellenőrzés…
+Mapbox-kulcsot ingyen készíthetsz a mapbox.com oldalon (Account → Tokens). Az eszközön marad. Az útvonalak ezután a Mapboxtól jönnek élő forgalommal, és az útvonal vonala mutatja, hol lassú.
+Így néz ki a térkép
+A stílusokhoz a MapLibre motor kell. Bal oldalt válthatsz.
+Játékok ihlette világok a Waypointtól (MIT-licenc) · térképadatok © OpenStreetMap
+A Road Trip újraindul a másik térképpel…
+Nincs mit beilleszteni
+A Mapbox-kulcs eltávolítva
+Automatikus
+Színes
+Élénk
+Világos
+Sötét
+Nappal színes, éjjel sötét

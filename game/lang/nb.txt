@@ -386,3 +386,35 @@ Stoppet ved 50 MB
 Ikke ferdig
 Fullfør
 Området er slettet
+Stil, 3D, frakoblede områder, Mapbox-nøkkel
+Mapbox svarte ikke; bruker vanlige ruter
+Inspirert av {game}
+Nøkkelen virker: rutene bruker nå sanntidstrafikk
+Mapbox godtok ikke nøkkelen ({error})
+Kartmotor
+MapLibre: stiler, 3D, jevnt
+Road Trips egen: enklere
+3D-visning
+Vipper kartet mens du kjører
+Krever MapLibre-motoren
+Mapbox-nøkkel
+Rutene bruker sanntidstrafikk
+Valgfritt: ruter med sanntidstrafikk
+Fjern
+Legg til
+Lim inn den offentlige nøkkelen (pk.…)
+Lim inn
+Sjekker…
+En Mapbox-nøkkel lager du gratis på mapbox.com (Account → Tokens). Den blir på enheten. Rutene kommer da fra Mapbox med sanntidstrafikk, og rutelinjen viser hvor det går sakte.
+Slik ser kartet ut
+Stiler krever MapLibre-motoren. Bytt til venstre.
+Spillinspirerte verdener fra Waypoint (MIT-lisens) · kartdata © OpenStreetMap
+Starter Road Trip på nytt med det andre kartet…
+Ingenting å lime inn
+Mapbox-nøkkelen er fjernet
+Auto
+Farge
+Lys
+Lyst
+Mørkt
+Farge om dagen, mørkt om natten

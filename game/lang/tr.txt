@@ -386,3 +386,35 @@ Henüz yok. Soldan bir boyut seçip İndir'e dokunun.
 Tamamlanmadı
 Tamamla
 Çevrimdışı bölge silindi
+Stil, 3D, çevrimdışı bölgeler, Mapbox anahtarı
+Mapbox yanıt vermedi; olağan rotalar
+{game} esinli
+Anahtar çalışıyor: rotalar artık canlı trafiği kullanıyor
+Mapbox anahtarı kabul etmedi ({error})
+Harita motoru
+MapLibre: stiller, 3D, akıcı
+Road Trip'in kendi motoru: daha basit
+3D görünüm
+Sürerken haritayı eğer
+MapLibre motoru gerekir
+Mapbox anahtarı
+Rotalar canlı trafiği kullanıyor
+İsteğe bağlı: canlı trafikli rotalar
+Kaldır
+Ekle
+Genel anahtarınızı yapıştırın (pk.…)
+Yapıştır
+Kontrol ediliyor…
+Mapbox anahtarını mapbox.com'da (Account → Tokens) ücretsiz oluşturabilirsiniz. Bu cihazda kalır. Rotalar o zaman canlı trafikle Mapbox'tan gelir ve rota çizgisi nerenin yavaş olduğunu gösterir.
+Haritanın görünümü
+Stiller için MapLibre motoru gerekir. Soldan değiştirin.
+Waypoint'ten oyun esinli dünyalar (MIT lisansı) · harita verisi © OpenStreetMap
+Road Trip diğer haritayla yeniden başlıyor…
+Yapıştırılacak bir şey yok
+Mapbox anahtarı kaldırıldı
+Otomatik
+Renkli
+Parlak
+Açık
+Koyu
+Gündüz renkli, gece koyu

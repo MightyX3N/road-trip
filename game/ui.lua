@@ -364,6 +364,12 @@ function icons.mute()
   lg.line(22, 9, 16, 15)
 end
 
+function icons.layers()
+  lg.polygon("line", 12, 4, 21, 9, 12, 14, 3, 9)
+  lg.line(3, 13, 12, 18, 21, 13)
+  lg.line(3, 17, 12, 22, 21, 17)
+end
+
 function icons.globe()
   lg.circle("line", 12, 12, 8.5, 32)
   lg.ellipse("line", 12, 12, 3.6, 8.5, 24)
@@ -449,6 +455,14 @@ function ui.split(x, w, gap, swap)
   local pw = w - gap - mw
   if swap then return x + pw + gap, mw, x, pw end
   return x, mw, x + mw + gap, pw
+end
+
+-- leave a see-through hole: something Android draws under Road Trip's screen shows there
+function ui.hole(x, y, w, h)
+  lg.setBlendMode("replace")
+  lg.setColor(0, 0, 0, 0)
+  lg.rectangle("fill", x, y, w, h)
+  lg.setBlendMode("alpha")
 end
 
 function ui.beginFrame() ui.hits = {} end

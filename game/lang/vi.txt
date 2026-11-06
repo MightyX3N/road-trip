@@ -386,3 +386,35 @@ rộng {km} km
 Chưa xong
 Hoàn tất
 Đã xóa khu vực ngoại tuyến
+Kiểu, 3D, khu vực ngoại tuyến, khóa Mapbox
+Mapbox không trả lời; dùng lộ trình thường
+Lấy cảm hứng từ {game}
+Khóa hoạt động: lộ trình giờ dùng giao thông trực tiếp
+Mapbox không chấp nhận khóa ({error})
+Bộ máy bản đồ
+MapLibre: kiểu, 3D, mượt
+Của Road Trip: đơn giản hơn
+Chế độ 3D
+Nghiêng bản đồ khi bạn lái
+Cần bộ máy MapLibre
+Khóa Mapbox
+Lộ trình dùng giao thông trực tiếp
+Tùy chọn: lộ trình có giao thông trực tiếp
+Xóa
+Thêm
+Dán khóa công khai của bạn (pk.…)
+Dán
+Đang kiểm tra…
+Bạn có thể tạo khóa Mapbox miễn phí tại mapbox.com (Account → Tokens). Khóa chỉ lưu trên thiết bị này. Khi đó lộ trình đến từ Mapbox với giao thông trực tiếp, và đường lộ trình cho thấy chỗ nào chậm.
+Giao diện bản đồ
+Các kiểu cần bộ máy MapLibre. Đổi ở bên trái.
+Thế giới lấy cảm hứng từ game của Waypoint (giấy phép MIT) · dữ liệu © OpenStreetMap
+Đang mở lại Road Trip với bản đồ kia…
+Không có gì để dán
+Đã xóa khóa Mapbox
+Tự động
+Màu
+Sáng
+Nhạt
+Tối
+Có màu ban ngày, tối ban đêm

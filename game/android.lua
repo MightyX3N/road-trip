@@ -340,6 +340,12 @@ local function stubCall(method, args)
     if url:find("photon") then
       return { done = true, ok = true, body = '{"features":[{"geometry":{"coordinates":[12.5681,55.6737]},"properties":{"name":"Tivoli Gardens","street":"Vesterbrogade","city":"Copenhagen","country":"Denmark"}},{"geometry":{"coordinates":[12.6,55.7]},"properties":{"name":"Nyhavn","city":"Copenhagen","country":"Denmark"}}]}' }
     end
+    if url:find("api%.mapbox%.com/tokens") then
+      return { done = true, ok = url:find("pk%.good") ~= nil, body = url:find("pk%.good") and '{"code":"TokenValid"}' or '{"code":"TokenInvalid"}' }
+    end
+    if url:find("api%.mapbox%.com/directions") then
+      return { done = true, ok = true, body = '{"code":"Ok","routes":[{"distance":2400,"duration":520,"geometry":"_ibagBsz`pVvJtLvJtL","legs":[{"annotation":{"congestion":["low","heavy"]},"steps":[{"distance":1200,"duration":200,"name":"Vesterbrogade","maneuver":{"type":"depart","modifier":"straight","location":[12.5683,55.6761]}},{"distance":0,"duration":0,"name":"","maneuver":{"type":"arrive","location":[12.57,55.68]}}]}]}]}' }
+    end
     if url:find("routed%-car") then
       return { done = true, ok = true, body = '{"code":"Ok","routes":[{"distance":2400,"duration":420,"geometry":"_ibagBsz`pVvJtL","legs":[{"steps":[{"distance":1200,"duration":200,"name":"Vesterbrogade","maneuver":{"type":"depart","modifier":"straight","location":[12.5683,55.6761]}},{"distance":1200,"duration":220,"name":"Bernstorffsgade","maneuver":{"type":"turn","modifier":"right","location":[12.565,55.672]}},{"distance":0,"duration":0,"name":"","maneuver":{"type":"arrive","location":[12.5681,55.6737]}}]}]},{"distance":2700,"duration":480,"geometry":"_ibagBsz`pVvJtL","legs":[{"steps":[]}]}]}' }
     end
@@ -396,6 +402,14 @@ local function stubCall(method, args)
     return "DK"
   elseif method == "overlayStatus" then
     return { canDraw = false, guard = false, moving = false, why = "desktop", front = "", covering = false }
+  elseif method == "mapStatus" then
+    return { attached = stubNative == true, engine = stubNative and "maplibre" or "classic", ready = true }
+  elseif method:sub(1, 3) == "map" and (method == "mapInit" or method == "mapShow" or method == "mapHide" or method == "mapCamera"
+      or method == "mapStyle" or method == "mapRoute" or method == "mapMarkers" or method == "mapSetEngine") then
+    stubMap = stubMap or { calls = {} }
+    stubMap[method] = args
+    stubMap.calls[#stubMap.calls + 1] = method
+    return true
   elseif method == "mapDownload" then
     stubMapDl = { state = "running", id = args.id, done = 0, total = #args.tiles, failed = 0, bytes = 0 }
     return true
@@ -503,6 +517,15 @@ function M.mapDownloadStatus() return M.call("mapDownloadStatus") end
 function M.mapDownloadCancel() return M.call("mapDownloadCancel") end
 function M.storage(path) return M.call("storage", { path = path }) end
 function M.deleteTree(path) return M.call("deleteTree", { path = path }) end
+function M.mapStatus() return M.call("mapStatus") end
+function M.mapInit(a) return M.call("mapInit", a) end
+function M.mapSetEngine(e) return M.call("mapSetEngine", { engine = e }) end
+function M.mapShow(x, y, w, h) return M.call("mapShow", { x = x, y = y, w = w, h = h }) end
+function M.mapHide() return M.call("mapHide") end
+function M.mapCamera(a) return M.call("mapCamera", a) end
+function M.mapStyle(id) return M.call("mapStyle", { id = id }) end
+function M.mapRoute(a) return M.call("mapRoute", a) end
+function M.mapMarkers(a) return M.call("mapMarkers", a) end
 -- position: locationStart() asks for permission and starts listening; location() -> { permission, fix? }
 function M.locationStart() return M.call("locationStart") end
 function M.location() return M.call("location") end

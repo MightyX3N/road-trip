@@ -386,3 +386,35 @@ Aturat a 50 MB
 Sense acabar
 Acaba
 Zona fora de línia suprimida
+Estil, 3D, zones fora de línia, clau de Mapbox
+Mapbox no ha respost; rutes habituals
+Inspirat en {game}
+La clau funciona: les rutes fan servir trànsit en directe
+Mapbox no ha acceptat la clau ({error})
+Motor del mapa
+MapLibre: estils, 3D, fluid
+El de Road Trip: més simple
+Vista 3D
+Inclina el mapa mentre condueixes
+Necessita el motor MapLibre
+Clau de Mapbox
+Les rutes fan servir trànsit en directe
+Opcional: rutes amb trànsit en directe
+Treu
+Afegeix
+Enganxa la clau pública (pk.…)
+Enganxa
+Comprovant…
+Una clau de Mapbox es crea de franc a mapbox.com (Account → Tokens). Es queda en aquest dispositiu. Les rutes vénen llavors de Mapbox amb el trànsit en directe, i la línia de la ruta mostra on va lent.
+Com es veu el mapa
+Els estils necessiten el motor MapLibre. Canvia'l a l'esquerra.
+Mons inspirats en jocs de Waypoint (llicència MIT) · dades © OpenStreetMap
+Reiniciant Road Trip amb l'altre mapa…
+No hi ha res per enganxar
+Clau de Mapbox treta
+Auto
+Color
+Brillant
+Clar
+Fosc
+Color de dia, fosc de nit

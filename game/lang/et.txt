@@ -386,3 +386,35 @@ Peatus 50 MB juures
 Pooleli
 Lõpeta
 Võrguta ala kustutatud
+Stiil, 3D, võrguta alad, Mapboxi võti
+Mapbox ei vastanud; tavalised teekonnad
+Inspiratsioon: {game}
+Võti töötab: teekonnad arvestavad reaalajas liiklust
+Mapbox ei võtnud võtit vastu ({error})
+Kaardimootor
+MapLibre: stiilid, 3D, sujuv
+Road Tripi oma: lihtsam
+3D-vaade
+Kallutab sõidu ajal kaarti
+Vajab MapLibre mootorit
+Mapboxi võti
+Teekonnad arvestavad reaalajas liiklust
+Valikuline: teekonnad reaalajas liiklusega
+Eemalda
+Lisa
+Kleebi avalik võti (pk.…)
+Kleebi
+Kontrollin…
+Mapboxi võtme saab tasuta teha aadressil mapbox.com (Account → Tokens). See jääb sellesse seadmesse. Teekonnad tulevad siis Mapboxist reaalajas liiklusega ja teekonna joon näitab, kus on aeglane.
+Kaardi välimus
+Stiilid vajavad MapLibre mootorit. Vaheta see vasakul.
+Mängudest inspireeritud maailmad: Waypoint (MIT-litsents) · kaardiandmed © OpenStreetMap
+Road Trip käivitub teise kaardiga uuesti…
+Pole midagi kleepida
+Mapboxi võti eemaldatud
+Automaatne
+Värviline
+Ere
+Hele
+Tume
+Päeval värviline, öösel tume

@@ -386,3 +386,35 @@ Zatrzymano na 50 MB
 Nieukończone
 Dokończ
 Obszar offline usunięty
+Styl, 3D, obszary offline, klucz Mapbox
+Mapbox nie odpowiedział; zwykłe trasy
+Inspiracja: {game}
+Klucz działa: trasy uwzględniają ruch na żywo
+Mapbox nie przyjął klucza ({error})
+Silnik mapy
+MapLibre: style, 3D, płynnie
+Własny Road Trip: prostszy
+Widok 3D
+Pochyla mapę podczas jazdy
+Wymaga silnika MapLibre
+Klucz Mapbox
+Trasy uwzględniają ruch na żywo
+Opcjonalnie: trasy z ruchem na żywo
+Usuń
+Dodaj
+Wklej klucz publiczny (pk.…)
+Wklej
+Sprawdzanie…
+Klucz Mapbox założysz za darmo na mapbox.com (Account → Tokens). Zostaje na tym urządzeniu. Trasy przychodzą wtedy z Mapbox z ruchem na żywo, a linia trasy pokazuje, gdzie jest wolno.
+Wygląd mapy
+Style wymagają silnika MapLibre. Zmień go po lewej.
+Światy inspirowane grami od Waypoint (licencja MIT) · dane © OpenStreetMap
+Uruchamiam Road Trip ponownie z drugą mapą…
+Nie ma czego wkleić
+Usunięto klucz Mapbox
+Auto
+Kolor
+Jasny
+Jasna
+Ciemna
+Kolor w dzień, ciemna w nocy

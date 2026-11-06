@@ -386,3 +386,35 @@ Parado nos 50 MB
 Por terminar
 Terminar
 Área offline eliminada
+Estilo, 3D, áreas offline, chave Mapbox
+O Mapbox não respondeu; rotas habituais
+Inspirado em {game}
+A chave funciona: as rotas usam trânsito em tempo real
+O Mapbox não aceitou a chave ({error})
+Motor do mapa
+MapLibre: estilos, 3D, fluido
+O do Road Trip: mais simples
+Vista 3D
+Inclina o mapa enquanto conduz
+Precisa do motor MapLibre
+Chave Mapbox
+As rotas usam trânsito em tempo real
+Opcional: rotas com trânsito em tempo real
+Remover
+Adicionar
+Cole a sua chave pública (pk.…)
+Colar
+A verificar…
+Uma chave Mapbox cria-se grátis em mapbox.com (Account → Tokens). Fica neste dispositivo. As rotas passam a vir do Mapbox com trânsito em tempo real, e a linha da rota mostra onde está lento.
+O aspeto do mapa
+Os estilos precisam do motor MapLibre. Mude-o à esquerda.
+Mundos inspirados em jogos, do Waypoint (licença MIT) · dados © OpenStreetMap
+A reiniciar o Road Trip com o outro mapa…
+Nada para colar
+Chave Mapbox removida
+Auto
+Cor
+Vivo
+Claro
+Escuro
+Cor de dia, escuro à noite

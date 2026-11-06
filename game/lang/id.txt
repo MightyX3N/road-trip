@@ -386,3 +386,35 @@ Berhenti di 50 MB
 Belum selesai
 Selesaikan
 Area offline dihapus
+Gaya, 3D, area offline, kunci Mapbox
+Mapbox tidak menjawab; memakai rute biasa
+Terinspirasi {game}
+Kunci berfungsi: rute kini memakai lalu lintas langsung
+Mapbox tidak menerima kunci itu ({error})
+Mesin peta
+MapLibre: gaya, 3D, mulus
+Milik Road Trip: lebih sederhana
+Tampilan 3D
+Memiringkan peta saat mengemudi
+Perlu mesin MapLibre
+Kunci Mapbox
+Rute memakai lalu lintas langsung
+Opsional: rute dengan lalu lintas langsung
+Hapus
+Tambah
+Tempel kunci publik Anda (pk.…)
+Tempel
+Memeriksa…
+Kunci Mapbox bisa dibuat gratis di mapbox.com (Account → Tokens). Kunci tetap di perangkat ini. Rute lalu datang dari Mapbox dengan lalu lintas langsung, dan garis rute menunjukkan bagian yang lambat.
+Tampilan peta
+Gaya perlu mesin MapLibre. Ganti di sebelah kiri.
+Dunia terinspirasi game dari Waypoint (lisensi MIT) · data peta © OpenStreetMap
+Memulai ulang Road Trip dengan peta lain…
+Tidak ada yang bisa ditempel
+Kunci Mapbox dihapus
+Otomatis
+Berwarna
+Cerah
+Terang
+Gelap
+Berwarna siang hari, gelap malam hari

@@ -314,8 +314,8 @@ local function preview(x, y, w, h)
 end
 
 function M.draw(x, y, w, h)
-  ui.pill({ kind = "off:back" }, T("Back to Settings"), x + 24, y + 16, 48, "off2")
-  ui.text(T("Offline maps"), "bold", 22, ui.c.text, x + 24 + ui.textWidth(T("Back to Settings"), "bold", 16) + 64, y + 26)
+  ui.pill({ kind = "off:back" }, T("Back"), x + 24, y + 16, 48, "off2")
+  ui.text(T("Offline maps"), "bold", 22, ui.c.text, x + 24 + ui.textWidth(T("Back"), "bold", 16) + 64, y + 26)
   local top = y + 84
   local colW = (w - 48 - 20) / 2
   local lx, rx = x + 24, x + 24 + colW + 20

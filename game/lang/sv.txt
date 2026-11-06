@@ -386,3 +386,35 @@ Stoppade vid 50 MB
 Inte klar
 Slutför
 Offlineområdet raderat
+Stil, 3D, offlineområden, Mapbox-nyckel
+Mapbox svarade inte; använder vanliga rutter
+Inspirerad av {game}
+Nyckeln fungerar: rutterna använder nu trafik i realtid
+Mapbox godtog inte nyckeln ({error})
+Kartmotor
+MapLibre: stilar, 3D, mjukt
+Road Trips egen: enklare
+3D-vy
+Lutar kartan medan du kör
+Kräver MapLibre-motorn
+Mapbox-nyckel
+Rutterna använder trafik i realtid
+Valfritt: rutter med trafik i realtid
+Ta bort
+Lägg till
+Klistra in din publika nyckel (pk.…)
+Klistra in
+Kontrollerar…
+En Mapbox-nyckel skapar du gratis på mapbox.com (Account → Tokens). Den stannar på enheten. Rutterna kommer då från Mapbox med trafik i realtid, och ruttlinjen visar var det går långsamt.
+Så ser kartan ut
+Stilar kräver MapLibre-motorn. Byt till vänster.
+Spelinspirerade världar från Waypoint (MIT-licens) · kartdata © OpenStreetMap
+Startar om Road Trip med den andra kartan…
+Inget att klistra in
+Mapbox-nyckeln borttagen
+Auto
+Färg
+Ljus
+Ljust
+Mörkt
+Färg på dagen, mörkt på natten

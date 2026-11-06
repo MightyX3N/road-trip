@@ -386,3 +386,35 @@ Ustavljeno pri 50 MB
 Ni dokončano
 Dokončaj
 Območje izbrisano
+Slog, 3D, območja brez povezave, ključ Mapbox
+Mapbox se ni odzval; običajne poti
+Navdih: {game}
+Ključ deluje: poti zdaj upoštevajo promet v živo
+Mapbox ključa ni sprejel ({error})
+Pogon zemljevida
+MapLibre: slogi, 3D, gladko
+Lastni Road Trip: preprostejši
+3D-pogled
+Med vožnjo nagne zemljevid
+Potrebuje pogon MapLibre
+Ključ Mapbox
+Poti upoštevajo promet v živo
+Neobvezno: poti s prometom v živo
+Odstrani
+Dodaj
+Prilepite javni ključ (pk.…)
+Prilepi
+Preverjanje …
+Ključ Mapbox naredite brezplačno na mapbox.com (Account → Tokens). Ostane v tej napravi. Poti potem prihajajo iz Mapboxa s prometom v živo, črta poti pa pokaže, kje je počasi.
+Kako je videti zemljevid
+Slogi potrebujejo pogon MapLibre. Zamenjajte ga levo.
+Svetovi po navdihu iger, Waypoint (licenca MIT) · podatki © OpenStreetMap
+Road Trip se znova zažene z drugim zemljevidom …
+Ni ničesar za prilepiti
+Ključ Mapbox odstranjen
+Samodejno
+Barvni
+Svetel
+Svetli
+Temni
+Podnevi barvni, ponoči temni

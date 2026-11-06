@@ -384,3 +384,35 @@ Stopped at 50 MB
 Not finished
 Finish
 Offline area deleted
+Style, 3D, offline areas, Mapbox key
+Mapbox didn't answer; using the usual routes
+Inspired by {game}
+Key works: routes now use live traffic
+Mapbox didn't accept that key ({error})
+Map engine
+MapLibre: styles, 3D, smooth
+Road Trip's own: simpler
+3D view
+Tilts the map while you drive
+Needs the MapLibre engine
+Mapbox key
+Routes use live traffic
+Optional: routes with live traffic
+Remove
+Add
+Paste your public key (pk.…)
+Paste
+Checking…
+A Mapbox key is free to make at mapbox.com (Account → Tokens). It stays on this device. Routes then come from Mapbox with live traffic, and the route line shows where it's slow.
+How the map looks
+Styles need the MapLibre engine. Change it on the left.
+Game-inspired worlds by Waypoint (MIT licence) · map data © OpenStreetMap
+Starting Road Trip again with the other map…
+Nothing to paste
+Mapbox key removed
+Auto
+Colour
+Bright
+Light
+Dark
+Colour by day, dark at night
