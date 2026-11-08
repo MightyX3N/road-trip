@@ -870,7 +870,10 @@ local function updateNav()
   local c = r.coords
   local lat0 = f.lat
   local px, py = toLocal(f.lat, f.lon, lat0)
-  local bestI, bestD, bestT = n.idx, math.huge, 0
+  -- while driving, a piece of the route going the other way counts as 40 m further away (so a
+  -- road that loops back, or the other carriageway, isn't taken for where you are)
+  local useHead = moving and (f.speed or -1) > 3
+  local bestI, bestD, bestT, bestScore, bestDiff = n.idx, math.huge, 0, math.huge, 0
   for i = math.max(1, n.idx - 10), math.min(#c - 1, n.idx + 400) do
     local ax, ay = toLocal(c[i][1], c[i][2], lat0)
     local bx, by = toLocal(c[i + 1][1], c[i + 1][2], lat0)
@@ -878,20 +881,30 @@ local function updateNav()
     local l2 = dx * dx + dy * dy
     local t = l2 > 0 and math.max(0, math.min(1, ((px - ax) * dx + (py - ay) * dy) / l2)) or 0
     local qx, qy = ax + t * dx - px, ay + t * dy - py
-    local d = qx * qx + qy * qy
-    if d < bestD then bestI, bestD, bestT = i, d, t end
+    local d = math.sqrt(qx * qx + qy * qy)
+    local diff = 0
+    if useHead and l2 > 1 then
+      local sb = math.deg((math.atan2 or math.atan)(dx, dy))
+      diff = math.abs(((sb - headingTarget + 540) % 360) - 180)
+    end
+    local score = d + (diff > 100 and 40 or 0)
+    if score < bestScore then bestI, bestD, bestT, bestScore, bestDiff = i, d, t, score, diff end
   end
   n.idx = bestI
-  n.off = math.sqrt(bestD)
+  n.off = bestD
   n.along = r.cum[bestI] + bestT * (r.cum[bestI + 1] - r.cum[bestI])
   local now = love.timer.getTime()
 
   -- off the route for a few fixes in a row: ask for a new one (FOSSGIS allows 1/s; we wait 12 s).
-  -- A vague position (no GPS: wifi or the mobile network) needs to be further off, and for longer.
+  -- Good GPS: 30 m off is enough (a road beside the route), or 15 m off while heading a different
+  -- way than the route (turned into a side road). A vague position (wifi or the mobile network)
+  -- needs to be further off, and for longer.
   local acc = f.accuracy or -1
   if acc < 0 then acc = 20 end
-  local limit, need = math.max(50, acc + 30), acc > 60 and 5 or 3
-  if acc <= 250 and n.off > limit then n.offCount = n.offCount + 1 else n.offCount = 0 end
+  local limit = acc <= 15 and 30 or math.max(50, acc + 30)
+  local need = acc > 60 and 5 or 3
+  local wrongWay = useHead and acc <= 25 and bestDiff > 50 and n.off > 15
+  if acc <= 250 and (n.off > limit or wrongWay) then n.offCount = n.offCount + 1 else n.offCount = 0 end
   if n.offCount >= need and now - n.lastReroute > 12 and M.dest then
     n.lastReroute, n.offCount = now, 0
     requestRoutes(M.dest.lat, M.dest.lon)
@@ -2012,7 +2025,7 @@ function M.drawUI(x0, y0, w, h)
       ui.rect(hex("2A1C1A"), ex, by + 14, endW, 64, 32)
       ui.text(T("End"), "bold", 18, hex("F09A8A"), ex, by + 14 + (64 - ui.fontHeight("bold", 18)) / 2, "center", endW)
       ui.hit({ kind = "map:end" }, ex, by + 14, endW, 64)
-      if M.nav.off > 50 then
+      if M.nav.off > 50 or (M.nav.offCount or 0) > 0 then
         ui.text(T("Off the route"), "bold", 15, hex("F09A8A"), x0 + 26, y0 + 172 + (g.lanes and 84 or 0))
       end
     end

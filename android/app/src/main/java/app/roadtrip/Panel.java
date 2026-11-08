@@ -263,7 +263,8 @@ final class Panel {
 
     private static void tick() {
         // covered while the car moves; video sound carries on
-        boolean drive = Overlay.drivingNow();
+        // Road Trip's own screen follows "Hide video while driving" as Lua sends it with the labels
+        boolean drive = labels.optBoolean("coverDriving", true) && Overlay.movingNow();
         if (cover != null) {
             String t = label(kind.equals("web") ? "web" : "video",
                 kind.equals("web") ? "The browser is hidden while you drive" : "Video hidden while driving. The sound keeps playing.");

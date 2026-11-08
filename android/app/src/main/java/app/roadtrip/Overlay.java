@@ -121,6 +121,11 @@ final class Overlay {
     /** Moving now (or no speed and "hide video" chosen), and hiding video while driving is on. */
     static boolean drivingNow() {
         if (!video) return false;
+        return movingNow();
+    }
+
+    /** Moving (or speed unknown and set to count as moving), whatever the video setting. */
+    static boolean movingNow() {
         if (app == null) return "block".equals(noSpeed);
         return moving;
     }

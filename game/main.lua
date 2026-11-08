@@ -1296,7 +1296,7 @@ local function drawDiagnostics()
     .. (r.station and r.station.url and (" · " .. r.station.url) or ""), "semibold", 14, W - x - 32),
     "semibold", 14, ui.c.text2, x, y + 72)
   local o = d.overlay or {}
-  ui.text(ui.fit("Overlay: front " .. tostring(o.front or "?") .. " · " .. tostring(o.why or "") .. " · moving "
+  ui.text(ui.fit("Overlay: hide video " .. tostring(o.video) .. " (" .. tostring(o.noSpeed) .. " when no speed) · front " .. tostring(o.front or "?") .. " · " .. tostring(o.why or "") .. " · moving "
     .. tostring(o.moving) .. " · cover " .. tostring(o.covering) .. " · banner " .. tostring(o.bannerShown)
     .. " · nav age " .. tostring(o.navAgeS) .. "s · draw " .. tostring(o.canDraw) .. " · guard " .. tostring(o.guard),
     "semibold", 14, W - x - 32), "semibold", 14, ui.c.text2, x, y + 96)
@@ -1689,6 +1689,7 @@ end
 local function sendPanelLabels()
   android.panelLabels({ web = T("The browser is hidden while you drive"),
     video = T("Video hidden while driving. The sound keeps playing."),
+    coverDriving = config.get("overlayVideo") ~= false,
     noSpeed = T("This box can't tell your speed, so it counts as driving. Change it in Settings under “When the speed isn't known”."),
     webNote = android.isWeb and T("In the browser version, pages open in a new tab: most sites don't allow being shown inside another page.") or nil,
     webOpen = android.isWeb and T("Open") or nil })
@@ -1850,6 +1851,7 @@ local function activate(id, vx)
   elseif k == "ovVideo" then
     config.set("overlayVideo", config.get("overlayVideo") == false)
     sendOverlayConfig()
+    sendPanelLabels()
   elseif k == "ovBanner" then
     config.set("overlayBanner", config.get("overlayBanner") == false)
     sendOverlayConfig()
